@@ -1,0 +1,453 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = CoporateBooking
+build_property.RootNamespace = CoporateBooking
+build_property.ProjectDir = D:\JetwaysPortal\CoporateBooking\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\JetwaysPortal\CoporateBooking
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 6.0
+build_property.EnableCodeStyleSeverity = 
+
+[D:/JetwaysPortal/CoporateBooking/wwwroot/img/_FlightViewPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxpbWdcX0ZsaWdodFZpZXdQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/LoadSeatMapList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxMb2FkU2VhdE1hcExpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/PostSeatMapModaldataView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxQb3N0U2VhdE1hcE1vZGFsZGF0YVZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/Tripsell.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxUcmlwc2VsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_AddCartlPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfQWRkQ2FydGxQYXRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_ContactDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfQ29udGFjdERldGFpbHNQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_EditContactDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfRWRpdENvbnRhY3REZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_FareDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfRmFyZURldGFpbHNQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_GSTDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfR1NURGV0YWlsc1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_ServiceRequestsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfU2VydmljZVJlcXVlc3RzUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_TravelInsurancePatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfVHJhdmVsSW5zdXJhbmNlUGF0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_TravellerInfoPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfVHJhdmVsbGVySW5mb1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_TravellingBebefitPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfVHJhdmVsbGluZ0JlYmVmaXRQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AATripsell/_TripsellPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUFUcmlwc2VsbFxfVHJpcHNlbGxQYXRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AirAsiaOneWayPayment/AirAsiaOneWayPaymentView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlyQXNpYU9uZVdheVBheW1lbnRcQWlyQXNpYU9uZVdheVBheW1lbnRWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AirLinesTicket/GetTicketBooking.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWlyTGluZXNUaWNrZXRcR2V0VGlja2V0Qm9va2luZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AkasaAirCommitBooking/AkasaAirBookingView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWthc2FBaXJDb21taXRCb29raW5nXEFrYXNhQWlyQm9va2luZ1ZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AkasaAirPayment/AkasaAirPaymentView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWthc2FBaXJQYXltZW50XEFrYXNhQWlyUGF5bWVudFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AKTripsell/AkPostSeatMapdataView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUtUcmlwc2VsbFxBa1Bvc3RTZWF0TWFwZGF0YVZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AKTripsell/AkTripsellView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUtUcmlwc2VsbFxBa1RyaXBzZWxsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AKTripsell/_AKContactDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUtUcmlwc2VsbFxfQUtDb250YWN0RGV0YWlsc1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AKTripsell/_AKFareDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUtUcmlwc2VsbFxfQUtGYXJlRGV0YWlsc1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AKTripsell/_AkServiceRequestsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUtUcmlwc2VsbFxfQWtTZXJ2aWNlUmVxdWVzdHNQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AKTripsell/_AKTravellerInfoPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUtUcmlwc2VsbFxfQUtUcmF2ZWxsZXJJbmZvUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/AKTripsell/_AKTripsellPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUtUcmlwc2VsbFxfQUtUcmlwc2VsbFBhdGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/CommitBooking/booking.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbWl0Qm9va2luZ1xib29raW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Date/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0ZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Employee/EmployeeIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRW1wbG95ZWVJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/FlightSearchIndex/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0U2VhcmNoSW5kZXhcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/FlightSearchIndex/MyBooking.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0U2VhcmNoSW5kZXhcTXlCb29raW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/FlightSearchIndex/SearchResultFlight.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0U2VhcmNoSW5kZXhcU2VhcmNoUmVzdWx0RmxpZ2h0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/FlightSearchIndex/SearchResultFlightView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0U2VhcmNoSW5kZXhcU2VhcmNoUmVzdWx0RmxpZ2h0Vmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/FlightSearchIndex/Tripsell12.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0U2VhcmNoSW5kZXhcVHJpcHNlbGwxMi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/FlightSearch/SearchFlight.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmxpZ2h0U2VhcmNoXFNlYXJjaEZsaWdodC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSCommitBooking/booking.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTQ29tbWl0Qm9va2luZ1xib29raW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSPaymentGateway/GDSPayment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTUGF5bWVudEdhdGV3YXlcR0RTUGF5bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/GDSSaverTripsell.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcR0RTU2F2ZXJUcmlwc2VsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/PostSeatMapModaldataView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcUG9zdFNlYXRNYXBNb2RhbGRhdGFWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/_GDSContactDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcX0dEU0NvbnRhY3REZXRhaWxzUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/_GDSFareDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcX0dEU0ZhcmVEZXRhaWxzUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/_GDSGSTDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcX0dEU0dTVERldGFpbHNQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/_GDSServiceRequestsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcX0dEU1NlcnZpY2VSZXF1ZXN0c1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/_GDSTravelInsurancePatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcX0dEU1RyYXZlbEluc3VyYW5jZVBhdGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/_GDSTravellerInfoPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcX0dEU1RyYXZlbGxlckluZm9QYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/_GDSTravellingBebefitPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcX0dEU1RyYXZlbGxpbmdCZWJlZml0UGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/GDSTripsell/_GDSTripsellPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR0RTVHJpcHNlbGxcX0dEU1RyaXBzZWxsUGF0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoCommitBooking/booking.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvQ29tbWl0Qm9va2luZ1xib29raW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoPaymentGateway/IndigoPayment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvUGF5bWVudEdhdGV3YXlcSW5kaWdvUGF5bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/IndigoSaverTripsell.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcSW5kaWdvU2F2ZXJUcmlwc2VsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/PostSeatMapModaldataView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcUG9zdFNlYXRNYXBNb2RhbGRhdGFWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/_IndigoAddCartlPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcX0luZGlnb0FkZENhcnRsUGF0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/_IndigoContactDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcX0luZGlnb0NvbnRhY3REZXRhaWxzUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/_IndigoFareDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcX0luZGlnb0ZhcmVEZXRhaWxzUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/_IndigoGSTDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcX0luZGlnb0dTVERldGFpbHNQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/_IndigoServiceRequestsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcX0luZGlnb1NlcnZpY2VSZXF1ZXN0c1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/_IndigoTravelInsurancePatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcX0luZGlnb1RyYXZlbEluc3VyYW5jZVBhdGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/_IndigoTravellerInfoPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcX0luZGlnb1RyYXZlbGxlckluZm9QYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/_IndigoTravellingBebefitPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcX0luZGlnb1RyYXZlbGxpbmdCZWJlZml0UGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/IndigoTripsell/_IndigoTripsellPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kaWdvVHJpcHNlbGxcX0luZGlnb1RyaXBzZWxsUGF0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Login/AdminHomecshtml.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cQWRtaW5Ib21lY3NodG1sLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Login/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Login/UserLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cVXNlckxvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/PaymentGateway/Payment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudEdhdGV3YXlcUGF5bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/ResultFlightView/FlightView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdWx0RmxpZ2h0Vmlld1xGbGlnaHRWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/ResultFlightView/_FlightResultsSortingPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdWx0RmxpZ2h0Vmlld1xfRmxpZ2h0UmVzdWx0c1NvcnRpbmdQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/ResultFlightView/_FlightViewPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzdWx0RmxpZ2h0Vmlld1xfRmxpZ2h0Vmlld1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/RoundAATripsellView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXFJvdW5kQUFUcmlwc2VsbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/RTPostSeatMapModaldataView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXFJUUG9zdFNlYXRNYXBNb2RhbGRhdGFWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_AddCartlPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9BZGRDYXJ0bFBhdGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_ContactDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9Db250YWN0RGV0YWlsc1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_FareDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9GYXJlRGV0YWlsc1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_GSTDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9HU1REZXRhaWxzUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_RTFlightViewPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9SVEZsaWdodFZpZXdQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_ServiceRequestsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9TZXJ2aWNlUmVxdWVzdHNQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_TravelInsurancePatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9UcmF2ZWxJbnN1cmFuY2VQYXRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_TravellerInfoPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9UcmF2ZWxsZXJJbmZvUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_TravellingBebefitPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9UcmF2ZWxsaW5nQmViZWZpdFBhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundAATripsell/_TripsellPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRBQVRyaXBzZWxsXF9Ucmlwc2VsbFBhdGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundTripCommitBooking/RoundTripBookingView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRUcmlwQ29tbWl0Qm9va2luZ1xSb3VuZFRyaXBCb29raW5nVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundTripPaymentGateway/RoundTripPaymentView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRUcmlwUGF5bWVudEdhdGV3YXlcUm91bmRUcmlwUGF5bWVudFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundTrip/PostReturnAATripsellView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRUcmlwXFBvc3RSZXR1cm5BQVRyaXBzZWxsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundTrip/RTFlightView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRUcmlwXFJURmxpZ2h0Vmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundTrip/_RTFlightResultsSortingPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRUcmlwXF9SVEZsaWdodFJlc3VsdHNTb3J0aW5nUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/RoundTrip/_RTFlightViewPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm91bmRUcmlwXF9SVEZsaWdodFZpZXdQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Searchdata/cancelBooking.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoZGF0YVxjYW5jZWxCb29raW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Searchdata/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoZGF0YVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGCommitBooking/booking.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dDb21taXRCb29raW5nXGJvb2tpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGPaymentGateway/SpiceJetPayment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dQYXltZW50R2F0ZXdheVxTcGljZUpldFBheW1lbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/PostSeatMapModaldataView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxQb3N0U2VhdE1hcE1vZGFsZGF0YVZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/SpiceJetSaverTripsell.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxTcGljZUpldFNhdmVyVHJpcHNlbGwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/_AddCartlPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxfQWRkQ2FydGxQYXRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/_ContactDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxfQ29udGFjdERldGFpbHNQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/_FareDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxfRmFyZURldGFpbHNQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/_GSTDetailsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxfR1NURGV0YWlsc1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/_ServiceRequestsPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxfU2VydmljZVJlcXVlc3RzUGFydGlhbFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/_TravelInsurancePatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxfVHJhdmVsSW5zdXJhbmNlUGF0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/_TravellerInfoPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxfVHJhdmVsbGVySW5mb1BhcnRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/_TravellingBebefitPartialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxfVHJhdmVsbGluZ0JlYmVmaXRQYXJ0aWFsVmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/SGTripsell/_TripsellPatialView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0dUcmlwc2VsbFxfVHJpcHNlbGxQYXRpYWxWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Shared/_Dashoard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EYXNob2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/test.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcdGVzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/JetwaysPortal/CoporateBooking/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-p58h064grf

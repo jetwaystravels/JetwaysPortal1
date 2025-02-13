@@ -1292,6 +1292,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         string queryorigin = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[0][0].DepartureStation;
                         Designatorobj.origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
                         string querydestination = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[0][0].ArrivalStation;
+                        if (string.IsNullOrEmpty(querydestination))
+                            querydestination = _GetfligthModel.destination;
 
                         Designatorobj.destination = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
 

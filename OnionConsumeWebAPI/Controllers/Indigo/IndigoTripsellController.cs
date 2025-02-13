@@ -123,7 +123,7 @@ namespace OnionConsumeWebAPI.Controllers
             MongoHelper objMongoHelper = new MongoHelper();
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "SpiceJet").Result;
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Indigo").Result;
             string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
 
             ViewModel vm = new ViewModel();

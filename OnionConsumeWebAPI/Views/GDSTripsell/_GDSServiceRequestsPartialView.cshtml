@@ -450,7 +450,7 @@
 
 	    e.preventDefault();
 	    $.ajax({
-				url: '@Url.Action("PostSeatMapModaldataView", "GDSTripsell")',
+				url: "/GDSTripsell/PostSeatMapModaldataView?GUID=" + GetParameterValues("Guid"),
 		type: "GET",
 		success: function (data) {
 		    //console.log('POST request successful');

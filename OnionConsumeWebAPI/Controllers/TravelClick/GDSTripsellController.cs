@@ -95,7 +95,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
         }
 
         //Seat map meal Pip Up bind Code 
-        public IActionResult PostSeatMapModaldataView()
+        public IActionResult PostSeatMapModaldataView(string GUID)
         {
 
             List<SelectListItem> Title = new()
@@ -114,7 +114,14 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
             string Seatmap = HttpContext.Session.GetString("Seatmap");
             string Meals = HttpContext.Session.GetString("Meals");
-            string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+            //string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "GDS").Result;
+            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+
             ViewModel vm = new ViewModel();
             if (passengerInfant != null)
             {

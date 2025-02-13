@@ -200,10 +200,13 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                             Hashtable htseatdata = new Hashtable();
                             Hashtable htmealdata = new Hashtable();
                             Hashtable htbagdata = new Hashtable();
-                            int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                            int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                            int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
-                            int TotalCount = adultcount + childcount;
+                            //int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
+                            //int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
+                            //int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+							int adultcount = searchLog.Adults;
+							int childcount = searchLog.Children;
+							int infantcount = searchLog.Infants;
+							int TotalCount = adultcount + childcount;
                             //string _responceGetBooking = JsonConvert.SerializeObject(_getBookingResponse);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
 

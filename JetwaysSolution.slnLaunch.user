@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "OnionArchitectureAPI\\OnionArchitectureAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

@@ -1,0 +1,2 @@
+D:\JetwaysPortal\OnionArchitectureAPI\obj\Debug\net6.0\staticwebassets.build.json
+D:\JetwaysPortal\OnionArchitectureAPI\obj\Debug\net6.0\staticwebassets.build.json
