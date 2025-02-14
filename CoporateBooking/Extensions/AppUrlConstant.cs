@@ -3,10 +3,11 @@
 {
     public static class AppUrlConstant
     {
-
         public static string BaseURL = "http://localhost:5225/";
-        // public static string BaseURL = "http://192.168.1.104/";
+       // public static string BaseURL = "http://192.168.1.104/";
         public static string GDSURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/AirService";
+        public static string GDSSeatURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/AirService";
+        public static string GDSSSRURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/ReferenceDataLookupService";
         public static string GDSUniversalRecordURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/UniversalRecordService";
         public static string URLAirasia = "https://dotrezapi.test.I5.navitaire.com";
         public static string URLAkasaAir = "https://tbnk-reyalrb.qp.akasaair.com";
@@ -61,7 +62,6 @@
 
         public static string AkasaAirPNRBooking = URLAkasaAir + "/api/nsk/v1/booking/retrieve/byRecordLocator/";
         #endregion
-
 
     }
 }

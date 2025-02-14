@@ -212,19 +212,19 @@
 
                                             @if (Model.SimpleAvailibilityaAddResponcelist[j].Airline == Airlines.Vistara || Model.SimpleAvailibilityaAddResponcelist[j].Airline == Airlines.AirIndia || Model.SimpleAvailibilityaAddResponcelist[j].Airline == Airlines.Hehnair)
                                             {
-                                                @if(Model.SimpleAvailibilityaAddResponcelist[j].segments.Count == 3)
+                                                @if (Model.SimpleAvailibilityaAddResponcelist[j].segments.Count == 3)
                                                 {
                                                     <div class="mt-1"> @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[0].designator.destination,@Model.SimpleAvailibilityaAddResponcelist[j].segments[1].legs[0].designator.destination </div>
 
                                                 }
-                                                else if(Model.SimpleAvailibilityaAddResponcelist[j].segments.Count == 2)
+                                                else if (Model.SimpleAvailibilityaAddResponcelist[j].segments.Count == 2)
                                                 {
                                                     <div class="mt-1"> @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].legs[0].designator.destination </div>
 
                                                 }
                                                 else
                                                 {
-                                                    
+
 
                                                 }
                                             }
@@ -416,10 +416,10 @@
                                         Faretype = "Xpress lite";
                                     else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("VV"))
                                         Faretype = "Xpress Bizz";
-                                     else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("FS"))
+                                    else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("FS"))
                                         Faretype = "Corporate Flex";
                                     //else
-                                        //Faretype = "Saver Fare";
+                                    //Faretype = "Saver Fare";
                                 }
 
                             }
@@ -557,9 +557,9 @@
                                         </div>
                                     </td>
 
-                                } 
+                                }
 
-                              else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "FS")
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "FS")
                                 {
                                     <td>7 Kg</td>
                                     <td><strong>15 (kg)</strong></td>
@@ -612,7 +612,7 @@
 
 
                                 // Spice Jet Corporate Fare
-                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "CP")
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "CP")
                                 {
                                     <td>7 Kg</td>
                                     <td><strong>15 kg (1 piece)</strong></td>
@@ -821,7 +821,7 @@
 
                                 }
 
-                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "BR")
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "BR")
                                 {
                                     <td>7 Kg</td>
                                     <td><strong>30 k.g.</strong></td>
@@ -874,7 +874,7 @@
                                 }
 
 
-                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "F")
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "F")
                                 {
                                     <td>10 K.g.</td>
                                     <td><strong>15 k.g.</strong></td>
@@ -900,7 +900,7 @@
 
                                 }
 
-                               else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "M")
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "M")
                                 {
                                     <td>7 Kg</td>
                                     <td><strong>40 k.g.</strong></td>
@@ -925,7 +925,7 @@
                                     </td>
 
                                 }
-                            else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "C")
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "C")
                                 {
                                     <td>7 Kg</td>
                                     <td><strong>40 k.g.</strong></td>
@@ -1040,7 +1040,7 @@
                                     </td>
                                     <td>
                                         <div>
-                                           Free
+                                            Free
                                         </div>
                                     </td>
 
@@ -1259,7 +1259,7 @@
                                 }
 
 
-                                //Air India Fare   
+                                //Air India Fare
 
                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "Eco Comfort")
                                 {
@@ -1289,7 +1289,7 @@
                                         </div>
                                     </td>
 
-                                } 
+                                }
 
                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "Eco Comfort Plus")
                                 {
@@ -1323,31 +1323,31 @@
 
                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "Premium Comfort Plus")
                                 {
-                                <td>7 k.g</td>
-                                <td><strong>15 k.g </strong></td>
-                                <td>
+                                    <td>7 k.g</td>
+                                    <td><strong>15 k.g </strong></td>
+                                    <td>
 
-                                    <div>
-                                        Fee starts at (Rs. 3500) Onward.
-                                    </div>
-                                </td>
-                                <td>
+                                        <div>
+                                            Fee starts at (Rs. 3500) Onward.
+                                        </div>
+                                    </td>
+                                    <td>
 
-                                    <div>
-                                        Fee starts at (Rs. 3000) Onward.
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        Free seats
-                                    </div>
+                                        <div>
+                                            Fee starts at (Rs. 3000) Onward.
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            Free seats
+                                        </div>
 
-                                </td>
-                                <td>
-                                    <div>
-                                        Complimentary meal
-                                    </div>
-                                </td>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            Complimentary meal
+                                        </div>
+                                    </td>
 
                                 }
                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "Premium Flex")
@@ -1394,7 +1394,7 @@
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="taxes" name="taxes" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].taxamount" />
-
+                                                <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" value="Book Now" class="button small-btn">
                                             </form>
                                         }
@@ -1403,7 +1403,7 @@
                                             <form asp-action="IndigoTripsell" asp-controller="IndigoResultFlightView">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
-
+                                                <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" value="Book Now" class="button small-btn">
                                             </form>
                                         }
@@ -1412,11 +1412,15 @@
                                             <form asp-action="AkasaAirTripsell" asp-controller="AKResultFlight">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
-
+                                                <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" value="Book Now" class="button small-btn">
                                             </form>
                                         }
-                                        else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("H1"))
+                                        else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("H1")
+                                        || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("MH")
+                                        || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("TG") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EY") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QR") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("CX")
+                                        || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("EK") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SQ") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("OD") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UL")
+                                        || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("WY") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SV"))
                                         {
                                             string data = "";
                                             try
@@ -1430,8 +1434,8 @@
 
                                             <form asp-action="GDSTripsell" asp-controller="GDSResultFlightView">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@data" />
-                                                <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass" />
-
+                                                <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
+                                                <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" value="Book Now" class="button small-btn">
                                             </form>
                                         }
@@ -1440,7 +1444,7 @@
                                             <form asp-controller="FlightSearchIndex" asp-action="Tripsell">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
-
+                                                <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn">
                                             </form>
                                         }
@@ -1814,7 +1818,7 @@
                             else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI"))
                             {
                                 <td>Adult</td>
-                                if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual!=null && Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Eco Flex"))
+                                if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual != null && Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Eco Flex"))
                                 {
                                     <td>25 kg</td>
                                     <td>7 kg</td>
@@ -1883,7 +1887,7 @@
                                 if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("EC"))
                                 {
                                     <td>2999 Rs.</td>
-                                     <td>4 days & above</td>
+                                    <td>4 days & above</td>
                                     <td>As per Airline Fare rule</td>
                                 }
                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("AV"))
@@ -1892,8 +1896,8 @@
                                     <td>4 days & above</td>
                                     <td>As per Airline Fare rule</td>
                                 }
-                                
-                              
+
+
                             }
                             else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK"))
                             {
@@ -1921,7 +1925,7 @@
                                     <td>Fees starts at onward</td>
                                     <td>As per Airline Fare rule</td>
                                 }
-                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Premium Economy Standard"))
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Premium Economy Standard"))
                                 {
                                     <td>Rs. 3180</td>
                                     <td>Fees starts at onward</td>
@@ -1937,7 +1941,7 @@
                             else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI"))
                             {
 
-                               
+
                                 if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Eco Flex"))
                                 {
                                     <td>Rs. 500</td>

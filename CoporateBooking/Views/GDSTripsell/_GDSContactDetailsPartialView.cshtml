@@ -7,6 +7,11 @@
 
         <div class="col-md-3">
             <div class="form-input ">
+                <select id="title" name="title" class="titleClass" style="border: 1px solid var(--color-border);">
+                    <option value="MR">Mr.</option>
+                    <option value="MRS">Mrs.</option>
+                    <option value="MS">Ms.</option>
+                </select>
                 <input type="text" name="first" maxlength="32" oninput="validateInput(event)" id="first" class="firstNClass" style='text-transform:uppercase' placeholder="First Name">
             </div>
             <p id="error-message1" class="error-message" style="display:none">Enter First name</p>
@@ -24,20 +29,24 @@
 
         <div class="col-md-3">
             <div class="form-input">
-                <input type="text" name="emailAddress" maxlength="266" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
+                <input type="text" name="emailAddress" maxlength="30" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
             </div>
             <p id="error-message7" class="error-message" style="display:none">Enter email ID</p>
             <p id="emailErrorMessage" style="color: red; font-size:13px;"></p>
         </div>
 
         <div class="col-md-1 phone-code">
-            <select class="form-control form-control-lg">
-                <option>+91</option>
+            <select name="countrycode" class="form-control form-control-lg">
+                <option value="+91">+91 (India)</option>
+                <option value="+1">+1 (USA)</option>
+                <option value="+44">+44 (UK)</option>
+                <option value="+61">+61 (Australia)</option>
+                <option value="+81">+81 (Japan)</option>
             </select>
         </div>
         <div class="col-md-2 phone-number">
             <div class="form-input">
-                <input type="text" name="number" id="number" class="phoneNClass" placeholder="Phone Number" oninput="validatePhoneNumber(event)">
+                <input type="text" name="number" id="number" maxlength="10" class="phoneNClass" placeholder="Phone Number" oninput="validatePhoneNumber(event)">
 
             </div>
             <p id="error-message8" class="error-message" style="display:none">Enter Phone Number</p>
@@ -72,7 +81,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-input">
-                <input type="text" id="gstnumber" name="customerNumber" oninput="validateGST(event)" class="companyName hid-block hidden" placeholder="GST Number">
+                <input type="text" id="gstnumber" maxlength="15" name="customerNumber" oninput="validateGST(event)" class="companyName hid-block hidden" placeholder="GST Number">
             </div>
             <p id="gstErrorMessage" style="color: red;font-size:13px;"></p>
             <p id="error-message10" class="error-message" style="display:none">Enter GST Number</p>
@@ -302,12 +311,24 @@
                 document.getElementById("number").focus();
                 return false;
             }
-            var mobileNumberPattern = /^\d{10}$/; // Assumes a 10-digit number
+
+            var mobileNumberPattern = /^\d{10}$/; //Assumes a 10-digit number
 
             if (!mobileNumberPattern.test(phonefocus)) {
                 alert("Please enter a valid 10-digit mobile number.");
                 return false;
             }
+            const regexgd = /^[1-9][0-9]{9}$/;
+            if (!regexgd.test(phonefocus)) {
+                document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
+                let phoneToDisplay = document.getElementById("error-message8");
+                phoneToDisplay.style.display = "none";
+                return false;
+
+            } else {
+                document.getElementById('phoneNumberErrorMessage').innerText = "";
+            }
+
 
             //Gst
             var buttongst = document.getElementById('GSTButton2');
@@ -350,12 +371,20 @@
 
             }
 
-
+            function GetParameterValues(param) {
+                var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < url.length; i++) {
+                    var urlparam = url[i].split('=');
+                    if (urlparam[0] == param) {
+                        return urlparam[1];
+                    }
+                }
+            }
 
             var contactFormDataIndigo = new FormData($("#contactFormIndigo")[0]);
             //alert("form data:"+ contactFormData);
             $.ajax({
-                url: "/GDSTripsell/GDSContactDetails",
+                url: "/GDSTripsell/GDSContactDetails?GUID=" + GetParameterValues("Guid"),
                 type: "POST",
                 data: contactFormDataIndigo,
                 processData: false,
@@ -438,7 +467,7 @@
     function validateEmail(event) {
 
         var email = event.target.value;
-        var regex = /^(?!.*\.\.)[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        var regex = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var errorMessage = document.getElementById('emailErrorMessage');
         var errorDisplay = document.getElementById('error-message7');
 
@@ -464,12 +493,14 @@
     function validatePhoneNumber(event) {
         const phoneNumber = event.target.value;
         //const regex = /^(0|91)?[6-9][0-9]{9}$/;
-        const regex = /^\d{10,}$/;
+        const regex = /^[1-9][0-9]{9}$/;
         if (!regex.test(phoneNumber)) {
 
             document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
             let phoneToDisplay = document.getElementById("error-message8");
             phoneToDisplay.style.display = "none";
+
+
         } else {
             document.getElementById('phoneNumberErrorMessage').innerText = "";
         }
@@ -491,7 +522,8 @@
     //Comapny
     function validateInputgst(event) {
         const input = event.target.value;
-        var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        //var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        var regex = /^(?!\.)(?!.*\.\.\.)[a-zA-Z\s.,'-]{1,100}$/;
         if (!regex.test(input)) {
             document.getElementById('errorMessagegst').innerText = "";
             event.target.value = input.replace(/[^a-zA-Z]/g, '');
@@ -540,8 +572,41 @@
         }
 
     }
-</script>
 
+    window.addEventListener('load', function () {
+        document.querySelectorAll('#contactFormSG input').forEach(input => {
+            if (input.type === 'text') {
+                input.value = ''; // Clear only text inputs
+            }
+        });
+    });
+</script>
+@* <script type="text/javascript">
+    document.getElementById('number').addEventListener('keypress', function (event) {
+	const input = event.target;
+	const value = input.value;
+	let phonefocus = document.getElementById("number").value;
+	if (phonefocus == "") {
+
+	    let phoneToDisplay = document.getElementById("error-message8");
+	    phoneToDisplay.style.display = "block";
+	    document.getElementById('phoneNumberErrorMessage').innerText = "";
+	    document.getElementById("number").focus();
+	    return false;
+	}
+
+	// Allow input only if it matches the criteria (1-9 followed by 0-9 up to 9 digits)
+	//const regex = /^(?!0)\d{0,9}$/;
+	const regex = /^[1-9]\d{0,9}$/;
+
+	// Get the current value after appending the pressed key
+	const nextValue = value.slice(0, input.selectionStart) + event.key + value.slice(input.selectionEnd);
+
+	if (!regex.test(nextValue)) {
+	    event.preventDefault(); // Prevent the keypress event
+	}
+    });
+</script> *@
 
 
 

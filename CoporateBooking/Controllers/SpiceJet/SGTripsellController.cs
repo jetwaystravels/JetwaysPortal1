@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Bookingmanager_;
 using Utility;
+using OnionConsumeWebAPI.Models;
+using System;
 
 namespace OnionConsumeWebAPI.Controllers
 {
@@ -23,7 +25,14 @@ namespace OnionConsumeWebAPI.Controllers
         string journeyKey = string.Empty;
         string uniquekey = string.Empty;
         AirAsiaTripResponceModel passeengerlist = null;
-        public IActionResult SpiceJetSaverTripsell()
+        private readonly IConfiguration _configuration;
+
+        public SGTripsellController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public IActionResult SpiceJetSaverTripsell(string GUID)
         {
 
             List<SelectListItem> Title = new()
@@ -43,7 +52,15 @@ namespace OnionConsumeWebAPI.Controllers
             string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
             string Seatmap = HttpContext.Session.GetString("Seatmap");
             string Meals = HttpContext.Session.GetString("Meals");
-            string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+            // string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "SpiceJet").Result;
+            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+
+
             ViewModel vm = new ViewModel();
             if (passengerInfant != null)
             {
@@ -79,7 +96,7 @@ namespace OnionConsumeWebAPI.Controllers
         }
 
         //Seat map meal Pip Up bind Code 
-        public IActionResult PostSeatMapModaldataView()
+        public IActionResult PostSeatMapModaldataView(string GUID)
         {
 
             List<SelectListItem> Title = new()
@@ -98,7 +115,14 @@ namespace OnionConsumeWebAPI.Controllers
             string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
             string Seatmap = HttpContext.Session.GetString("Seatmap");
             string Meals = HttpContext.Session.GetString("Meals");
-            string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+            // string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "SpiceJet").Result;
+            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+
             ViewModel vm = new ViewModel();
             if (passengerInfant != null)
             {
@@ -136,22 +160,31 @@ namespace OnionConsumeWebAPI.Controllers
             }
             return View(vm);
         }
-        public async Task<IActionResult> SGContactDetails(ContactModel obj)
+        public async Task<IActionResult> SGContactDetails(ContactModel obj, string GUID)
         {
-            string tokenview = HttpContext.Session.GetString("SpicejetSignature");
-            if (tokenview == null) { tokenview = ""; }
-            token = tokenview.Replace(@"""", string.Empty);
+            //string tokenview = HttpContext.Session.GetString("SpicejetSignature");
+            //if (tokenview == null) { tokenview = ""; }
+            //token = tokenview.Replace(@"""", string.Empty);
+
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "SpiceJet").Result;
+
+            // string tokenview = tokenData.Token;
 
             using (HttpClient client = new HttpClient())
             {
                 UpdateContactsRequest _ContactModel = new UpdateContactsRequest();
                 //  _ContactModel.emailAddress = passengerdetails.Email;
+                string countryCode = obj.countrycode;
+                TempData["CountryCodeSG"] = countryCode;
                 _ContactModel.updateContactsRequestData = new UpdateContactsRequestData();
-                _ContactModel.Signature = token;
+                _ContactModel.Signature = tokenData.Token;
                 _ContactModel.ContractVersion = 420;
                 _ContactModel.updateContactsRequestData.BookingContactList = new BookingContact[1];
                 _ContactModel.updateContactsRequestData.BookingContactList[0] = new BookingContact();
-              
+
                 if (obj.customerNumber != null && obj.customerNumber != "")
                 {
                     _ContactModel.updateContactsRequestData.BookingContactList[0].TypeCode = "G";
@@ -170,34 +203,58 @@ namespace OnionConsumeWebAPI.Controllers
                     _ContactModel.updateContactsRequestData.BookingContactList[0].EmailAddress = obj.emailAddress;
                     _ContactModel.updateContactsRequestData.BookingContactList[0].TypeCode = "P";
                     _ContactModel.updateContactsRequestData.BookingContactList[0].CountryCode = "IN";
-                    _ContactModel.updateContactsRequestData.BookingContactList[0].HomePhone = obj.number;
+                    _ContactModel.updateContactsRequestData.BookingContactList[0].HomePhone = obj.countrycode + obj.number;
                     BookingName[] Name = new BookingName[1];
                     Name[0] = new BookingName();
                     Name[0].FirstName = obj.first;
                     Name[0].LastName = obj.last;
-                    Name[0].Title = "MR";
+                    Name[0].Title = obj.title;
                     _ContactModel.updateContactsRequestData.BookingContactList[0].Names = Name;
                 }
                 SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                 UpdateContactsResponse responseAddContact = await objSpiceJet.GetUpdateContactsAsync(_ContactModel);
-                HttpContext.Session.SetString("ContactDetails", JsonConvert.SerializeObject(_ContactModel));
-                String Str1 = JsonConvert.SerializeObject(responseAddContact);
+                // HttpContext.Session.SetString("ContactDetails", JsonConvert.SerializeObject(_ContactModel));
 
-                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_ContactModel) + "\n\n Response: " + JsonConvert.SerializeObject(responseAddContact), "UpdateContact", "SpicejetOneWay", "oneway");
+                MongoHelper objMongoHelper = new MongoHelper();
+                string contobj = objMongoHelper.Zip(JsonConvert.SerializeObject(_ContactModel));
+                _mongoDBHelper.UpdateFlightTokenContact(GUID, "SpiceJet", contobj);
+
+                String Str1 = JsonConvert.SerializeObject(responseAddContact);
+                logs.WriteLogs(JsonConvert.SerializeObject(_ContactModel), "10-ADDContactRequest", "SpicejetOneWay", "oneway");
+                logs.WriteLogs(Str1, "10-ADDContactResponse", "SpicejetOneWay", "oneway");
+
+                //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_ContactModel) + "\n\n Response: " + JsonConvert.SerializeObject(responseAddContact), "UpdateContact", "SpicejetOneWay", "oneway");
 
             }
-            return RedirectToAction("SpiceJetSaverTripsell", "SGTripsell");
+            return RedirectToAction("SpiceJetSaverTripsell", "SGTripsell", new { Guid = GUID });
         }
 
         //Passenger Data on Trip Page
-        //[HttpPost]
-        public async Task<PartialViewResult> SGTravllerDetails(List<passkeytype> passengerdetails)
+        [HttpPost]
+        public async Task<PartialViewResult> SGTravllerDetails(List<passkeytype> passengerdetails, string GUID)
         {
-            HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
+            // HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
 
-            string tokenview = HttpContext.Session.GetString("SpicejetSignature");
-            if (tokenview == null) { tokenview = ""; }
-            token = tokenview.Replace(@"""", string.Empty);
+
+
+
+            //string tokenview = HttpContext.Session.GetString("SpicejetSignature");
+            //if (tokenview == null) { tokenview = ""; }
+            //token = tokenview.Replace(@"""", string.Empty);
+
+
+
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            string passobj = objMongoHelper.Zip(JsonConvert.SerializeObject(passengerdetails));
+
+            _mongoDBHelper.UpdateFlightTokenPassenger(GUID, "SpiceJet", passobj);
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "SpiceJet").Result;
+
+            //	string tokenview = tokenData.Token;
 
             using (HttpClient client = new HttpClient())
             {
@@ -207,7 +264,7 @@ namespace OnionConsumeWebAPI.Controllers
                 try
                 {
                     updatePaxReq = new UpdatePassengersRequest(); //Assign Signature generated from Session
-                    updatePaxReq.Signature = token;
+                    updatePaxReq.Signature = tokenData.Token;
                     updatePaxReq.ContractVersion = 420;
                     updatePaxReq.updatePassengersRequestData = new UpdatePassengersRequestData();
                     updatePaxReq.updatePassengersRequestData.Passengers = GetPassenger(passengerdetails);
@@ -217,9 +274,11 @@ namespace OnionConsumeWebAPI.Controllers
                         SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                         updatePaxResp = await objSpiceJet.UpdatePassengers(updatePaxReq);
 
-                        string Str2 = JsonConvert.SerializeObject(updatePaxResp);
+                        //string Str2 = JsonConvert.SerializeObject(updatePaxResp);
+                        logs.WriteLogs(JsonConvert.SerializeObject(updatePaxReq), "11-UpdatePassengerRequest", "SpicejetOneWay", "oneway");
+                        logs.WriteLogs(JsonConvert.SerializeObject(updatePaxResp), "11-UpdatePassengerResponse", "SpicejetOneWay", "oneway");
 
-                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(updatePaxReq) + "\n\n Response: " + JsonConvert.SerializeObject(updatePaxResp), "UpdatePassenger", "SpicejetOneWay", "oneway");
+                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(updatePaxReq) + "\n\n Response: " + JsonConvert.SerializeObject(updatePaxResp), "UpdatePassenger", "SpicejetOneWay", "oneway");
 
                     }
                     catch (Exception ex)
@@ -235,7 +294,8 @@ namespace OnionConsumeWebAPI.Controllers
                 string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
                 string Seatmap = HttpContext.Session.GetString("Seatmap");
                 string Meals = HttpContext.Session.GetString("Meals");
-                string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+                // string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+                string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
                 ViewModel vm = new ViewModel();
                 passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
                 SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
@@ -356,7 +416,7 @@ namespace OnionConsumeWebAPI.Controllers
         //    return RedirectToAction("Tripsell", "AATripsell");
         //}
         ////public async Task<IActionResult> PostUnitkey(string selectedIds, List<string> ssrKey)
-        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey)
+        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey, string GUID)
         {
             List<string> _unitkey = new List<string>();
             for (int i = 0; i < unitKey.Count; i++)
@@ -387,8 +447,15 @@ namespace OnionConsumeWebAPI.Controllers
             ////ConnetedBaggageSSrkey = BaggageSSrkey;
             //BaggageSSrkey.AddRange(ConnetedBaggageSSrkey);
 
-            string tokenview = HttpContext.Session.GetString("SpicejetSignature");
-            token = tokenview.Replace(@"""", string.Empty);
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "SpiceJet").Result;
+
+            token = tokenData.Token;
+
+            //string tokenview = HttpContext.Session.GetString("SpicejetSignature");
+            //token = tokenview.Replace(@"""", string.Empty);
             if (token == "" || token == null)
             {
                 return RedirectToAction("Index");
@@ -401,7 +468,7 @@ namespace OnionConsumeWebAPI.Controllers
             //string journeyKey = passeengerKeyList.journeys[0].journeyKey;
             using (HttpClient client = new HttpClient())
             {
-                if (ssrKey.Count > 0 || BaggageSSrkey.Count>0)
+                if (ssrKey.Count > 0 || BaggageSSrkey.Count > 0)
                 {
                     #region SellSSr
                     SellRequest sellSsrRequest = new SellRequest();
@@ -546,7 +613,7 @@ namespace OnionConsumeWebAPI.Controllers
                                         else
                                         {
                                             int idx = 0;
-                                            if (_obj.SSRcode0.Count > 0 || _obj.SSRbaggagecode0.Count>0)//&& i1 + 1 <= ssrKey.Count
+                                            if (_obj.SSRcode0.Count > 0 || _obj.SSRbaggagecode0.Count > 0)//&& i1 + 1 <= ssrKey.Count
                                             {
                                                 for (int i1 = 0; i1 < _obj.SSRcode0.Count; i1++)//Paxnum 1 adult,1 child,1 infant 2 meal
                                                 {
@@ -729,15 +796,15 @@ namespace OnionConsumeWebAPI.Controllers
                     SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                     sellSsrResponse = await objSpiceJet.sellssR(sellSsrRequest);
 
-                    string Str3 = JsonConvert.SerializeObject(sellSsrResponse);
-                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(sellSsrRequest) + "\n\n Response: " + JsonConvert.SerializeObject(sellSsrResponse), "SellSSR", "SpicejetOneWay", "oneway");
-
-
-                    if (sellSsrResponse != null)
-                    {
-                        //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                        var JsonObjSeatAssignment = sellSsrResponse;
-                    }
+                    //string Str3 = JsonConvert.SerializeObject(sellSsrResponse);
+                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(sellSsrRequest) + "\n\n Response: " + JsonConvert.SerializeObject(sellSsrResponse), "SellSSR", "SpicejetOneWay", "oneway");
+                    logs.WriteLogs(JsonConvert.SerializeObject(sellSsrRequest), "12-SellSSRRequest", "SpicejetOneWay", "oneway");
+                    logs.WriteLogs(JsonConvert.SerializeObject(sellSsrResponse), "12-SellSSRResponse", "SpicejetOneWay", "oneway");
+                    //if (sellSsrResponse != null)
+                    //{
+                    //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
+                    //var JsonObjSeatAssignment = sellSsrResponse;
+                    //}
                     #endregion
 
                 }
@@ -811,9 +878,11 @@ namespace OnionConsumeWebAPI.Controllers
                         SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                         _AssignseatRes = await objSpiceJet.Assignseat(_AssignSeatReq);
 
-                        string Str2 = JsonConvert.SerializeObject(_AssignseatRes);
+                        //string Str2 = JsonConvert.SerializeObject(_AssignseatRes);
 
-                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_AssignSeatReq) + "\n\n Response: " + JsonConvert.SerializeObject(_AssignseatRes), "AssignSeat", "SpicejetOneWay", "oneway");
+                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_AssignSeatReq) + "\n\n Response: " + JsonConvert.SerializeObject(_AssignseatRes), "AssignSeat", "SpicejetOneWay", "oneway");
+                        logs.WriteLogs(JsonConvert.SerializeObject(_AssignSeatReq), "13-AssignSeatRequest", "SpicejetOneWay", "oneway");
+                        logs.WriteLogs(JsonConvert.SerializeObject(_AssignseatRes), "13-AssignSeatResponse", "SpicejetOneWay", "oneway");
 
                         if (_AssignseatRes != null)
                         {
@@ -1488,9 +1557,10 @@ namespace OnionConsumeWebAPI.Controllers
                         {
                             p1.Infant = new PassengerInfant();
                             p1.Infant.DOBSpecified = true;
-                            p1.Infant.DOB = Convert.ToDateTime("2023-08-01");//Convert.ToDateTime(_paxes.Infant_[cntAdt].dateOfBirth);
-                                                                             //p1.Infant.Gender = Gender.Male;
-                            if (_paxes.Infant_[cntAdt].title.ToUpper().Replace(".", "") == "MR")
+                            p1.Infant.DOB = Convert.ToDateTime(_paxes.Infant_[cntAdt].dateOfBirth);
+
+
+                            if (_paxes.Infant_[cntAdt].title.ToUpper().Replace(".", "") == "MSTR")
                             {
                                 p1.Infant.Gender = Gender.Male;
                             }
@@ -1548,7 +1618,7 @@ namespace OnionConsumeWebAPI.Controllers
                         }
                         p1.Names[0].Title = _paxes.Childs_[cntChd].title.ToUpper().Replace(".", "");
                         p1.PassengerInfo = new PassengerInfo();
-                        if (_paxes.Childs_[cntChd].title.ToUpper().Replace(".", "") == "Mr")
+                        if (_paxes.Childs_[cntChd].title.ToUpper().Replace(".", "") == "MSTR")
                         {
                             p1.PassengerInfo.Gender = Gender.Male;
                             p1.PassengerInfo.WeightCategory = WeightCategory.Male;

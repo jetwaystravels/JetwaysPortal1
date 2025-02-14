@@ -1,4 +1,5 @@
-﻿@model DomainLayer.ViewModel.ViewModel
+﻿@using Microsoft.AspNetCore.Mvc;
+@model DomainLayer.ViewModel.ViewModel
 @{
     Layout = null;
     var data = Model;
@@ -17,13 +18,14 @@
     <!-- Favicon  -->
     <link rel="icon" href="~/img/favicon.png">
     <!-- Style css -->
-    <link rel="stylesheet" href="~/css/vendors.css">
-    <link rel="stylesheet" href="~/css/main.css">
+    <link rel="stylesheet" href="~/css/vendors.min.css">
+     <link rel="stylesheet" href="~/css/main.css">
     <link rel="stylesheet" href="~/css/style.css">
-    <link rel="stylesheet" href="~/css/daterangepicker.css">
-    <link href="~/css/roundviewpage.css" rel="stylesheet" />
-    <link href="~/css/indexvny.css" rel="stylesheet" />
-   
+    <link rel="stylesheet" href="~/css/daterangepicker.css"> 
+    <link rel="stylesheet" href="/css/style.min.css" />
+     <link href="~/css/roundviewpage.css" rel="stylesheet" />
+    <link href="~/css/indexvny.css" rel="stylesheet" /> 
+
 </head>
 <body>
 
@@ -122,33 +124,23 @@
                                     <form asp-action="SearchResultFlight" asp-controller="FlightSearchIndex" method="post" id="multipleValuesForm" onsubmit="return validateInputs()">
                                         <div class="col-lg-12">
                                             <div class="row S-optionlist">
-                                                <div class="col-12 col-md-10 col-lg-2 space  autocomplete">
-                                                  @*   <div class="d-flex radioW-400">
+                                                <div class="col-12 col-md-10 col-lg-2 space autocomplete">
+                                                    <div class="d-flex radioW-400">
                                                         <input type="radio" name="SameAirlineRT" value="OneWay" onclick="checkRadio(this)" checked>
                                                         <label class="form-check-label">One Way</label>
                                                         <input type="radio" name="SameAirlineRT" value="RoundTrip" onclick="checkRadio(this)">
                                                         <label class="form-check-label">Round Trip</label>
                                                         <input type="radio" name="SameAirlineRT" value="AirlineRT" onclick="checkRadio(this)">
                                                         <label class="form-check-label">Same Airline Roundtrip</label>
-                                                    </div> *@
-                                                    <label style="margin-bottom: 0.1rem;">Flying from</label>
+                                                    </div>
                                                     <span class="input-group-text">
-                                                        @{
-                                                            var selectedCity = Citynamelist.GetAllCityData()
-                                                            .FirstOrDefault(city => city.citycode == Model.simpleAvailabilityRequestModelEdit.origin);
-
-                                                            var displayValue = selectedCity != null
-                                                            ? $"{selectedCity.cityname} - {selectedCity.citycode}"
-                                                            : Model.simpleAvailabilityRequestModelEdit.origin;
-                                                        }
-
-                                                       <input id="myInput" name="origin" type="text" value="@displayValue" class="form-control" onclick="onewayDropdown()"> 
+                                                        <input id="myInput" name="origin" type="text" value="" class="form-control" onclick="onewayDropdown()">
                                                         @* <span id="airportName"></span> *@
                                                     </span>
                                                     <span class="autodropdownOneWay">
                                                         <select id="autodropdownOneWayId" name="autodropdownOneWayId" onchange="OnewaySelection()">
                                                             <option value="" style="display:none;">Please select</option>
-                                                            @foreach (var item in Citynamelist.GetAllCityData())
+                                                            @foreach (var item in Citynamelist.GetCityData())
                                                             {
                                                                 <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
 
@@ -160,17 +152,10 @@
                                                     <img src="~/img/direction-arrows.png" />
                                                 </div>
                                                 <div class="col-12 col-md-10 col-lg-2 space autocomplete">
-                                                    <label style="margin-bottom: 0.1rem;">Flying to</label>
+                                                    <label class=""></label>
                                                     <span class="input-group-text" id="basic-addon1">
-                                                        @{
-                                                            var selectedCityArival = Citynamelist.GetAllCityData()
-                                                            .FirstOrDefault(city => city.citycode == Model.simpleAvailabilityRequestModelEdit.destination);
 
-                                                            var displayValueArival = selectedCityArival != null
-                                                            ? $"{selectedCityArival.cityname} - {selectedCityArival.citycode}"
-                                                            : Model.simpleAvailabilityRequestModelEdit.destination;
-                                                        }
-                                                        <input type="text" id="myInput1" name="destination" class="form-control" value="@displayValueArival" onclick="toggleArrivalOneway()">
+                                                        <input type="text" id="myInput1" name="destination" class="form-control" value="" onclick="toggleArrivalOneway()">
                                                         @* <span id="airportArval"></span> *@
                                                     </span>
                                                     <div id="errordestinaton" class="errorbox" style="display:none;">Enter Destination Name*</div>
@@ -178,8 +163,8 @@
                                                     <span class="autoarrivalOneway">
                                                         <select id="arrivalItemOnewayId" name="arrivalItemOnewayId" onchange="arrivalOneway()">
                                                             @* <option value="">Please select</option> *@
-                                                            <option value="" style="display:none;">Please select</option> 
-                                                            @foreach (var item in Citynamelist.GetAllCityData())
+                                                            <option value="" style="display:none;">Please select</option>
+                                                            @foreach (var item in Citynamelist.GetCityData())
                                                             {
                                                                 <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
 
@@ -192,7 +177,7 @@
                                                 <div class="col-12 col-md-10 col-lg-2 space">
                                                     <label style="margin-bottom: 0.1rem;">Departure</label>
                                                     <span class="input-group-text">
-                                                        <input id="Oneway-date" name="beginDate" type="text" value="@Model.simpleAvailabilityRequestModelEdit.beginDate" class="form-control">
+                                                        <input id="Oneway-date" name="beginDate" type="text" value="" class="form-control">
                                                     </span>
                                                 </div>
                                                 <div class="col-12 col-md-10 col-lg-2 space">
@@ -201,32 +186,54 @@
                                                         <input id="Oneway-endDate" name="endDate" type="text" class="form-control" value="" disabled>
                                                     </span>
                                                 </div>
+                                                <script type="text/javascript">
+
+                                                    function GetParameterValues(param) {
+                                                        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                                                        for (var i = 0; i < url.length; i++) {
+                                                            var urlparam = url[i].split('=');
+                                                            if (urlparam[0] == param) {
+                                                                return urlparam[1];
+                                                            }
+                                                        }
+                                                    }
+
+                                                    document.getElementById("myInput").value = GetParameterValues("Origin").replace("%20", " ") + " - " + GetParameterValues("OriginCode");
+                                                    document.getElementById("myInput1").value = GetParameterValues("Destination").replace("%20", " ") + " - " + GetParameterValues("DestinationCode");
+                                                    document.getElementById("Oneway-date").value = GetParameterValues("BeginDate");
+
+
+                                                    if (GetParameterValues("TripType") != "OneWay") {
+                                                        document.getElementById("Oneway-endDate").value = GetParameterValues("EndDate");
+                                                    }
+
+                                                </script>
                                                 @{
-                                                   
+
 
                                                     int AdultCount = 0;
                                                     int ChildCount = 0;
                                                     int InfantCount = 0;
-                                                   
-                                                    if (Model.simpleAvailabilityRequestModelEdit.passengers.types.Count > 0
-                                                    && Model.simpleAvailabilityRequestModelEdit.passengers.types[0].type == "ADT")
-                                                    {
-                                                        AdultCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[0].count;
-                                                    }
 
-                                                    
-                                                    if (Model.simpleAvailabilityRequestModelEdit.passengers.types.Count > 1
-                                                    && Model.simpleAvailabilityRequestModelEdit.passengers.types[1].type == "CHD")
-                                                    {
-                                                        ChildCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[1].count;
-                                                    }
+            // if (Model.simpleAvailabilityRequestModelEdit.passengers.types.Count > 0
+                                                    // && Model.simpleAvailabilityRequestModelEdit.passengers.types[0].type == "ADT")
+                                                    // {
+                                                    //     AdultCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[0].count;
+                                                    // }
 
-                                                    
-                                                    if (Model.simpleAvailabilityRequestModelEdit.passengers.types.Count > 2
-                                                    && Model.simpleAvailabilityRequestModelEdit.passengers.types[2].type == "INFT")
-                                                    {
-                                                        InfantCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[2].count;
-                                                    }
+
+                                                    // if (Model.simpleAvailabilityRequestModelEdit.passengers.types.Count > 1
+                                                    // && Model.simpleAvailabilityRequestModelEdit.passengers.types[1].type == "CHD")
+                                                    // {
+                                                    //     ChildCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[1].count;
+                                                    // }
+
+
+                                                    // if (Model.simpleAvailabilityRequestModelEdit.passengers.types.Count > 2
+                                                    // && Model.simpleAvailabilityRequestModelEdit.passengers.types[2].type == "INFT")
+                                                    // {
+                                                    //     InfantCount = Model.simpleAvailabilityRequestModelEdit.passengers.types[2].count;
+                                                    // }
 
 
                                                     <div class="col-12 col-md-10 col-lg-2 space travellers">
@@ -253,7 +260,7 @@
                                                                         <div class="btn-incr-adult text-dark">
                                                                             <div class="text-13 fw-600">Adults</div>
 
-                                                                            <input type="hidden" name="adulttype" value="ADT" asp-for="@AdultCount" />
+                                                                            <input type="hidden" id="adulttype" name="adulttype" value="ADT" asp-for="@AdultCount" />
                                                                             <div class="text-13 fw-500">Aged 12+ yrs</div>
                                                                         </div>
                                                                         <div class="btn-increase">
@@ -269,7 +276,7 @@
                                                                             <div class="text-13 fw-600">
                                                                                 Children
                                                                             </div>
-                                                                            <input type="hidden" name="childtype" value="CHD" asp-for="@ChildCount" />
+                                                                            <input type="hidden" id="childtype" name="childtype" value="CHD" asp-for="@ChildCount" />
                                                                             <div class="text-13 fw-500">
                                                                                 Aged 2-12 yrs
                                                                             </div>
@@ -285,7 +292,7 @@
                                                                     <div class="d-flex y-gap-10 justify-between items-center">
                                                                         <div class="infant-area  text-dark">
                                                                             <div class="text-13 fw-600">Infants</div>
-                                                                            <input type="hidden" name="infanttype" value="INFT" asp-for="@InfantCount" />
+                                                                            <input type="hidden" id="infanttype" name="infanttype" value="INFT" asp-for="@InfantCount" />
                                                                             <div class="text-13 fw-500">
                                                                                 Below 2 yrs
                                                                             </div>
@@ -305,7 +312,21 @@
                                                             </div>
                                                         </div>
 
-                                                      
+                                                        <script>
+
+                                                            document.getElementById("field_adult").value = GetParameterValues("AdultCount");
+                                                            document.getElementById("field_child").value = GetParameterValues("ChildCount");
+                                                            document.getElementById("field_infant").value = GetParameterValues("InfantCount");
+
+
+                                                            document.getElementById("count_adult").innerHTML = GetParameterValues("AdultCount");
+                                                            document.getElementById("count_child").innerHTML = GetParameterValues("ChildCount");
+                                                            document.getElementById("count_infant").innerHTML = GetParameterValues("InfantCount");
+
+
+                                                        </script>
+
+
                                                     </div>
                                                 }
                                                 <div class="col-12 col-md-10 col-lg-2"><button style="margin-top:0px;" type="submit" class="btn btn-lg btn-block" onclick="validateInputs()"><i class="fa fa-search mr-10" aria-hidden="true"></i>Modify Search</button></div>
@@ -2147,11 +2168,11 @@
 
         //***********Strip Validation*/
         $(document).ready(function () {
-           
+
 
             var maxField = 6;
             var maxField_adult = 9;
-            var count_adult = parseInt(localStorage.getItem("adultcount")) || 1; 
+            var count_adult = parseInt(localStorage.getItem("adultcount")) || 1;
             var count_child = 0;
             var count_infant = 0;
 
@@ -2202,16 +2223,16 @@
             $('.increment2').on('click', function (event) {
                 debugger;
                 if (count_infant < maxField) {
-                    var adultcounttotal = parseInt(localStorage.getItem("adultcount")) || 1; 
+                    var adultcounttotal = parseInt(localStorage.getItem("adultcount")) || 1;
                     if (count_infant >= adultcounttotal) {
                         alert("Number of infants cannot be more than adults");
                         return false;
                         event.preventDefault();
                     }
-                        count_infant++;
-                        $('#count_infant').text(count_infant);
-                        $('#field_infant').val(count_infant);
-                   
+                    count_infant++;
+                    $('#count_infant').text(count_infant);
+                    $('#field_infant').val(count_infant);
+
                 }
             });
 
@@ -2222,7 +2243,7 @@
                     $('#field_infant').val(count_infant);
                 }
             });
-            
+
 
         });
 
@@ -2268,7 +2289,7 @@
                 return false;
                 event.preventDefault();
             }
-           
+
             var adulttravelcount = $('#field_adult').val();
             var infanttravelcount = $('#field_infant').val();
             if (infanttravelcount > adulttravelcount || infanttravelcount > 6) {
@@ -2453,7 +2474,8 @@
                     FilterId: filterId,
                     departure: selectedDepartureTimes,
                     arrival: selectedArrivalTimes,
-                    sortOrderName: sortOrderName
+                    sortOrderName: sortOrderName,
+                    Guid: GetParameterValues("Guid")
                 },
                 success: function (response) {
 
@@ -2630,6 +2652,12 @@
             $('.autoarrivalOneway').hide();
             var chosenInput = document.querySelector('.chosen-search input');
             chosenInput.focus();
+
+
+
+            if (!chosenInput.hasAttribute("onkeyup")) {
+                chosenInput.setAttribute("onkeyup", "filterCities(this.value)");
+            }
         });
 
 
@@ -2657,7 +2685,7 @@
             var cityName = cityDetails[0].trim();
             var cityCode = cityDetails[1].trim();
             var airportName = cityDetails[2].trim();
-            document.getElementById("myInput").value = cityName+"-"+cityCode;
+            document.getElementById("myInput").value = cityName + "-" + cityCode;
             $('.chosen-drop').hide();
             dropdown.selectedIndex = -1;
         }
@@ -2675,6 +2703,10 @@
             $('.autodropdownOneWay').hide();
             var chosenInput3 = document.querySelector('.autoarrivalOneway input');
             chosenInput3.focus();
+
+            if (!chosenInput3.hasAttribute("onkeyup")) {
+                chosenInput3.setAttribute("onkeyup", "filterCities(this.value)");
+            }
         });
 
         $(document.body).on('click', function (event) {
@@ -2703,7 +2735,7 @@
             var cityName = cityDetails[0].trim();
             var cityCode = cityDetails[1].trim();
             var airportName = cityDetails[2].trim();
-            document.getElementById("myInput1").value = cityName+"-"+cityCode;
+            document.getElementById("myInput1").value = cityName + "-" + cityCode;
             $('.chosen-drop').hide();
             dropdown.selectedIndex = -1;
         }
@@ -2734,10 +2766,32 @@
         window.onupload = function () { null };
 
 
+        function filterCities(query) {
+            if (query.length < 3) return;
+            fetch(`/FlightSearchIndex/GetFilteredCities?query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    currentResults = data;
+                    updateDropdown(currentResults, query);
+                });
+        }
 
+        function updateDropdown(data, query) {
+            const isArrivalDropdownVisible = $('#arrivalItemOnewayId').next('.chosen-container').find('.chosen-drop').is(':visible');
+            const dropdown = document.getElementById(isArrivalDropdownVisible ? "arrivalItemOnewayId" : "autodropdownOneWayId");
+            const inputField = document.querySelector(isArrivalDropdownVisible ? '.autoarrivalOneway input' : '.chosen-search input');
+            const currentInput = inputField.value;
 
+            dropdown.innerHTML = `<option value="" style="display: none;">Please select</option>
+                                        ${data.map(item => `<option value="${item.citycode}">${item.cityname} - ${item.citycode} - ${item.airportname}</option>`).join('')}`;
 
+            $(dropdown).trigger("chosen:updated");
 
+            if (currentInput === query) {
+                inputField.value = currentInput;
+            }
+            inputField.focus();
+        }
 
     </script>
 

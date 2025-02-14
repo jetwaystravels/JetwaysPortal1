@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 //using OnionArchitectureAPI.Services.Indigo;
 using Utility;
 using static DomainLayer.Model.ReturnTicketBooking;
+using OnionConsumeWebAPI.Models;
+using System;
 
 namespace OnionConsumeWebAPI.Controllers.TravelClick
 {
@@ -26,7 +28,15 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
         string uniquekey = string.Empty;
         AirAsiaTripResponceModel passeengerlist = null;
         IHttpContextAccessor httpContextAccessorInstance = new HttpContextAccessor();
-        public IActionResult GDSSaverTripsell()
+
+        private readonly IConfiguration _configuration;
+
+        public GDSTripsellController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public IActionResult GDSSaverTripsell(string GUID)
         {
 
             List<SelectListItem> Title = new()
@@ -45,14 +55,22 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
             string Seatmap = HttpContext.Session.GetString("Seatmap");
             string Meals = HttpContext.Session.GetString("Meals");
-            string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "GDS").Result;
+            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+
+            // string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
             ViewModel vm = new ViewModel();
             if (passengerInfant != null)
             {
                 AirAsiaTripResponceModel passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerInfant, typeof(AirAsiaTripResponceModel));
                 passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-                SeatMapResponceModel Seatmaplist = null;// (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                SSRAvailabiltyResponceModel Mealslist = null;// (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
                 vm.passeengerlist = passeengerlist;
                 vm.passeengerlistItanary = passeengerlistItanary;
                 vm.Seatmaplist = Seatmaplist;
@@ -61,11 +79,11 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             else
             {
                 passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-               // SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                //SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
                 vm.passeengerlist = passeengerlist;
-                vm.Seatmaplist = null;// Seatmaplist;
-                vm.Meals = null;// Mealslist;
+                vm.Seatmaplist = Seatmaplist;
+                vm.Meals = Mealslist;
             }
             if (!string.IsNullOrEmpty(passengerNamedetails))
             {
@@ -77,7 +95,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
         }
 
         //Seat map meal Pip Up bind Code 
-        public IActionResult PostSeatMapModaldataView()
+        public IActionResult PostSeatMapModaldataView(string GUID)
         {
 
             List<SelectListItem> Title = new()
@@ -96,7 +114,14 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
             string Seatmap = HttpContext.Session.GetString("Seatmap");
             string Meals = HttpContext.Session.GetString("Meals");
-            string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+            //string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "GDS").Result;
+            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+
             ViewModel vm = new ViewModel();
             if (passengerInfant != null)
             {
@@ -136,7 +161,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
         }
 
 
-        public async Task<IActionResult> GDSContactDetails(ContactModel contactobject)
+        public async Task<IActionResult> GDSContactDetails(ContactModel contactobject, string GUID)
         {
 
             //string Signature = HttpContext.Session.GetString("GDSSignature");
@@ -148,15 +173,22 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             //    IndigoBookingManager_.UpdateContactsResponse _responseAddContact6E = null;// await obj.GetUpdateContacts(Signature, contactobject.emailAddress, contactobject.number, contactobject.companyName, contactobject.customerNumber, "OneWay");
             //    string Str1 = JsonConvert.SerializeObject(_responseAddContact6E);
             //}
-            HttpContext.Session.SetString("GDSContactdetails", JsonConvert.SerializeObject(contactobject));
-            return RedirectToAction("GDSSaverTripsell", "GDSTripsell");
+
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            string contobj = objMongoHelper.Zip(JsonConvert.SerializeObject(contactobject));
+            _mongoDBHelper.UpdateFlightTokenContact(GUID, "GDS", contobj);
+
+            // HttpContext.Session.SetString("GDSContactdetails", JsonConvert.SerializeObject(contactobject));
+            return RedirectToAction("GDSSaverTripsell", "GDSTripsell", new { Guid = GUID });
         }
 
         //Passenger Data on Trip Page
 
-        public async Task<PartialViewResult> GDSTravllerDetails(List<passkeytype> passengerdetails)
+        public async Task<PartialViewResult> GDSTravllerDetails(List<passkeytype> passengerdetails, string GUID)
         {
-            HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
+            // HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
 
             //string Signature = HttpContext.Session.GetString("PassengerNameDetails");
             //if (Signature == null) { Signature = ""; }
@@ -167,15 +199,27 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             //    IndigoBookingManager_.UpdatePassengersResponse updatePaxResp = null;// await obj.UpdatePassengers(Signature, passengerdetails, "OneWay");
             //    string Str2 = JsonConvert.SerializeObject(updatePaxResp);
             //}
+
+
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            string passobj = objMongoHelper.Zip(JsonConvert.SerializeObject(passengerdetails));
+
+            _mongoDBHelper.UpdateFlightTokenPassenger(GUID, "GDS", passobj);
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "GDS").Result;
+
             string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
             string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
             //string Seatmap = HttpContext.Session.GetString("Seatmap");
-            //string Meals = HttpContext.Session.GetString("Meals");
-            string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+            string Meals = HttpContext.Session.GetString("Meals");
+            string passengerNamedetails = JsonConvert.SerializeObject(passengerdetails); // HttpContext.Session.GetString("PassengerNameDetails");
             ViewModel vm = new ViewModel();
             passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
             SeatMapResponceModel Seatmaplist = new SeatMapResponceModel(); //(SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-            SSRAvailabiltyResponceModel Mealslist = new SSRAvailabiltyResponceModel();// (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+            SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
             if (!string.IsNullOrEmpty(passengerNamedetails))
             {
                 List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
@@ -190,8 +234,9 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
             //return RedirectToAction("IndigoSaverTripsell", "IndigoTripsell", passengerdetails);
         }
-        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey, List<string> FastfarwardAddon, List<string> PPBGAddon)
+        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey, string GUID)
         {
+
             List<string> _unitkey = new List<string>();
             for (int i = 0; i < unitKey.Count; i++)
             {
@@ -201,6 +246,28 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             }
             unitKey = new List<string>();
             unitKey = _unitkey;
+
+            string serializedUnitKey = JsonConvert.SerializeObject(unitKey);
+            // Store the serialized string in session
+            HttpContext.Session.SetString("UnitKey", serializedUnitKey);
+
+            List<string> _ssrKey = new List<string>();
+            for (int i = 0; i < ssrKey.Count; i++)
+            {
+                if (ssrKey[i] == null)
+                    continue;
+                _ssrKey.Add(ssrKey[i].Trim());
+            }
+            ssrKey = new List<string>();
+            ssrKey = _ssrKey;
+
+            string serializedSSRKey = JsonConvert.SerializeObject(ssrKey);
+            // Store the serialized string in session
+            HttpContext.Session.SetString("ssrKey", serializedSSRKey);
+
+            //string serializedssrKey = JsonConvert.SerializeObject(ssrKey);
+            //// Store the serialized string in session
+            //HttpContext.Session.SetString("SSRKey", serializedssrKey);
             if (BaggageSSrkey.Count > 0 && BaggageSSrkey[0] == null)
             {
                 BaggageSSrkey = new List<string>();
@@ -212,14 +279,6 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             if (unitKey.Count > 0 && unitKey[0] == null)
             {
                 unitKey = new List<string>();
-            }
-            if (FastfarwardAddon.Count > 0 && FastfarwardAddon[0] == null)
-            {
-                FastfarwardAddon = new List<string>();
-            }
-            if (PPBGAddon.Count > 0 && PPBGAddon[0] == null)
-            {
-                PPBGAddon = new List<string>();
             }
 
             string tokenview = HttpContext.Session.GetString("IndigoSignature");
@@ -283,7 +342,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                 }
             }
 
-            return RedirectToAction("GDSPayment", "GDSPaymentGateway");
+            return RedirectToAction("GDSPayment", "GDSPaymentGateway", new { Guid = GUID });
         }
 
         public async Task<IActionResult> PostMeal(legpassengers legpassengers)

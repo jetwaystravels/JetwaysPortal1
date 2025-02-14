@@ -249,13 +249,37 @@
                                         imagePath = "~/img/flight-logo-icon/vistara.png";
                                         break;
                                     case "OD":
-                                        CarrierCodeName = "MALINDO AIRWAYS";
+                                        CarrierCodeName = "Batik Airlines";
+                                        break;
+                                    case "UL":
+                                        CarrierCodeName = "SriLankan Airlines";
                                         break;
                                     case "TG":
                                         CarrierCodeName = "Thai Airways International";
                                         break;
-                                    case "UL":
-                                        CarrierCodeName = "SriLankan Airlines";
+                                    case "SV":
+                                        CarrierCodeName = "Saudia";
+                                        break;
+                                    case "SG":
+                                        CarrierCodeName = "SpiceJet";
+                                        break;
+                                    case "6E":
+                                        CarrierCodeName = "Indigo";
+                                        break;
+                                    case "CX":
+                                        CarrierCodeName = "Cathay Pacific Airways";
+                                        break;
+                                    case "SQ":
+                                        CarrierCodeName = "Singapore Airlines";
+                                        break;
+                                    case "EY":
+                                        CarrierCodeName = "Etihad Airways";
+                                        break;
+                                    case "QR":
+                                        CarrierCodeName = "Qatar Airways";
+                                        break;
+                                    case "EK":
+                                        CarrierCodeName = "Emirates Airlines";
                                         break;
                                     default:
                                         try
@@ -279,6 +303,57 @@
                                         else if (@item.segments[i].identifier.carrierCode == "H1")
                                         {
                                             <img class="size-30" src="~/img/flight-logo-icon/hahnair.png" alt="Hahnair">
+                                        }
+
+                                        else if (@item.segments[i].identifier.carrierCode == "AI")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/airindia.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "TG")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/ta.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "SV")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/SV.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "QR")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/qa.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "EK")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/eta.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "EY")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/ea.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "CX")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/cp.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "SQ")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/sp.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "MH")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/ml.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "WY")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/wy.png" alt="image">
+                                        }
+                                        else if (@item.segments[i].identifier.carrierCode == "UL")
+                                        {
+                                            <img class="size-40" src="~/img/flight-logo-icon/SL.png" alt="image">
+                                        }
+
+                                        else if (@item.segments[i].identifier.carrierCode == "OD")
+                                        {
+
+                                            <img class="size-40" src="~/img/flight-logo-icon/batik.png" alt="image">
                                         }
                                         else
                                         {
@@ -332,11 +407,11 @@
                                             <div class="col-auto">
                                                 @{
                                                     var allCityData = Citynamelist.GetAllCityData();
-                                                    string QueryOriginAirportName = item.segments[i].legs[j].designator.origin;
-                                                    string QueryDestinationAirportName = item.segments[i].legs[j].designator.destination;
+                                                    string QueryOriginAirportName = queryorigin;// item.segments[i].legs[j].designator.origin;
+                                                    string QueryDestinationAirportName = querydestination;//item.segments[i].legs[j].designator.destination;
 
-                                                    var originCity = allCityData.SingleOrDefault(x => x.cityname == QueryOriginAirportName);
-                                                    var destinationCity = allCityData.SingleOrDefault(x => x.cityname == QueryDestinationAirportName);
+                                                    var originCity = allCityData.SingleOrDefault(x => x.citycode == QueryOriginAirportName);
+                                                    var destinationCity = allCityData.SingleOrDefault(x => x.citycode == QueryDestinationAirportName);
 
                                                     if (originCity != null)
                                                     {
@@ -349,7 +424,7 @@
                                                 }
                                                 @*<div class="lh-14 fw-500">@item.segments[i].legs[j].designator.origin <span class="text-13 ml-2 fw-600">( @formatteddepartureDate<span class="text-13 text-light-1 ml-2"> Indira Gandhi, T-@item.segments[i].legs[j].legInfo.departureTerminal </span> )</span></div>*@
                                                 <div class="lh-14 fw-500">
-                                                    @QueryOriginAirportName<span class="text-13 ml-2 fw-600">
+                                                    @originCity.cityname<span class="text-13 ml-2 fw-600">
                                                         ( @formatteddepartureDate<span class="text-13 text-light-1 ml-2">@originCity?.airportname</span>
                                                         @if (@item.segments[i].legs[j].legInfo.departureTerminal != null && @item.segments[i].legs[j].legInfo.departureTerminal != "")
                                                         {
@@ -397,7 +472,7 @@
                                             <div class="col-auto">
                                                 @*<div class="lh-14 fw-500">@item.segments[i].legs[j].designator.destination<span class="text-13 ml-2 fw-600">( @formattedarrivalDate<span class="text-13 text-light-1 ml-2"> Sanganeer, T-@item.segments[i].legs[j].legInfo.arrivalTerminal </span> )</span></div>*@
                                                 <div class="lh-14 fw-500">
-                                                    @QueryDestinationAirportName
+                                                    @destinationCity.cityname
                                                     <span class="text-13 ml-2 fw-600">
                                                         (@formattedarrivalDate
                                                         <span class="text-13 text-light-1 ml-2">@destinationCity?.airportname</span>
@@ -421,7 +496,8 @@
                         {
                             @for (int f = 0; f < @item.segments[i].fares.Count; f++)
                             {
-
+                                string[] parts = item.segments[i].fares[f].productClass.Split('_');
+                                item.segments[i].fares[f].productClass = parts[0].Trim();
                                 <div class="col-auto text-right md:text-left">
 
                                     @{
@@ -578,20 +654,94 @@
                                         {
 
                                             <span class="tooltipF">
-                                                Fare Type:  @Faretype<b>Premium Comfort Plus</b>
+                                                Fare Type:  @Faretype<b>Premium Flex</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: Cabin Bag: 7 k.g</li>
                                                         <li>2: Check-In: 15 k.g</li>
-                                                        <li>3: Cancellation: Rs. 3500:- Fee starts at Onward.</li>
-                                                        <li>4: Date Change: Rs. 3000:- Fee starts at Onward.</li>
-                                                        <li>5: Seat : Free seats</li>
-                                                        <li>6: Meal : Complimentary meal</li>
+                                                        <li>3: Cancellation: Rs. 1000 :- 3 days upto 2 hrs prior from departure</li>
+                                                        <li>4: Date Change: Free</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
                                                     </ul>
                                                 </span>
                                             </span>
 
                                         }
+                                        else if (item.segments[i].fares[f].productClass.Equals("Eco Flex"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Fare Type:  @Faretype<b>Eco Flex</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: 7 k.g</li>
+                                                        <li>2: Check-In: 25 k.g</li>
+                                                        <li>3: Cancellation: 1000 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>4: Date Change: FREE</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
+                                        else if (item.segments[i].fares[f].productClass.Equals("Eco Value"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Fare Type:  @Faretype<b>Eco Value</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: 7 k.g</li>
+                                                        <li>2: Check-In: 15 k.g</li>
+                                                        <li>3: Cancellation: 4000 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>4: Date Change: 3000 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
+                                        else if (item.segments[i].fares[f].productClass.Equals("Eco Classic"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Fare Type:  @Faretype<b>Eco Classic</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: 7 k.g</li>
+                                                        <li>2: Check-In: 15 k.g</li>
+                                                        <li>3: Cancellation: 3500 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>4: Date Change: 1000 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
+
+                                        else if (item.segments[i].fares[f].productClass.Equals("Premium Classic"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Fare Type:  @Faretype<b>Premium Classic</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: 7 k.g</li>
+                                                        <li>2: Check-In: 15 k.g</li>
+                                                        <li>3: Cancellation: 3500 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>4: Date Change: 2500 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
+
 
                                         <div class="text-13 mt-1">
                                             <button id="openModal_0" style="color:#366480;">View Fare Rules</button>
@@ -698,6 +848,24 @@
 
                                         </table>
                                     }
+
+                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs.3500</td>
+
+                                            </tr>
+
+                                        </table>
+                                    }
+
                                     else if (item.segments[i].fares[f].productClass.Equals("Economy Flexi"))
                                     {
                                         <table style="width:100%">
@@ -791,12 +959,50 @@
                                                 <td><b>Charges</b></td>
                                             </tr>
                                             <tr>
-                                                <td>Fee starts at Onward.</td>
-                                                <td>Rs. 3500</td>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 1000</td>
                                             </tr>
                                         </table>
                                     }
-
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Flex"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>(3 days upto 2 hrs prior from departure)</td>
+                                                <td>Rs. 1000 </td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Value"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>Rs. 4000  </td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>(3 days upto 2 hrs prior from departure)</td>
+                                                <td>Rs. 3500 </td>
+                                            </tr>
+                                        </table>
+                                    }
 
 
                                 }
@@ -894,7 +1100,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Economy Standard")) 
+                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Economy Standard"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -955,12 +1161,64 @@
                                                 <td><b>Charges</b></td>
                                             </tr>
                                             <tr>
-                                                <td>Fee starts at Onward.</td>
-                                                <td>Rs. 3000</td>
+                                                <td>-</td>
+                                                <td>Free</td>
                                             </tr>
                                         </table>
                                     }
 
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Flex"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>FREE</td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Value"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>(3 days upto 2 hrs prior from departure)</td>
+                                                <td>Rs. 3000 </td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>(3 days upto 2 hrs prior from departure)</td>
+                                                <td>Rs. 1000</td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 2500</td>
+                                            </tr>
+                                        </table>
+                                    }
                                 }
                             </div>
                         }

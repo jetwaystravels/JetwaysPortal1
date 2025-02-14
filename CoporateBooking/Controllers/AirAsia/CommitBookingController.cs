@@ -64,8 +64,14 @@ namespace OnionConsumeWebAPI.Controllers
         double taxMinusBaggage = 0;
         double TotalAmountMeal = 0;
         double TotaAmountBaggage = 0;
+        private readonly IConfiguration _configuration;
         Logs logs = new Logs();
-        public async Task<IActionResult> booking()
+
+        public CommitBookingController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        public async Task<IActionResult> booking(string Guid)
         {
 
 
@@ -73,11 +79,72 @@ namespace OnionConsumeWebAPI.Controllers
             _AirLinePNRTicket.AirlinePNR = new List<ReturnTicketBooking>();
 
 
-            string tokenview = HttpContext.Session.GetString("AirasiaTokan");
-            token = tokenview.Replace(@"""", string.Empty);
+            //string tokenview = HttpContext.Session.GetString("AirasiaTokan");
+            //token = tokenview.Replace(@"""", string.Empty);
+
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+
+            token = tokenData.Token;
 
             using (HttpClient client = new HttpClient())
             {
+
+                //GetBOoking FRom State
+                // STRAT Get INFO
+
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.URLAirasia + "/api/nsk/v1/booking");
+                if (responceGetBookingSate.IsSuccessStatusCode)
+                {
+                    string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
+                    var DataBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+                    decimal Totalpayment = 0M;
+                    if (_responceGetBooking != null)
+                    {
+                        Totalpayment = DataBooking.data.breakdown.totalAmount;
+                    }
+
+                    //Logs logs = new Logs();
+                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject("GetBookingStateRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBookingState", "AirAsiaOneWay");
+
+                    //ADD Payment
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    // Payment request payload
+                    PaymentRequest paymentRequest = new PaymentRequest();
+                    paymentRequest.PaymentMethodCode = "AG";
+                    paymentRequest.Amount = Totalpayment;
+                    paymentRequest.PaymentFields = new PaymentFields();
+                    paymentRequest.PaymentFields.ACCTNO = "CRPAPI";
+                    paymentRequest.PaymentFields.AMT = Totalpayment;
+                    paymentRequest.CurrencyCode = "INR";
+                    paymentRequest.Installments = 1;
+
+                    // Serializing the payload to JSON
+                    string jsonPayload = JsonConvert.SerializeObject(paymentRequest);
+                    HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                    // Sending the POST request
+                    string url = AppUrlConstant.AirasiaPayment;
+
+                    HttpResponseMessage response = await client.PostAsync(url, content);
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var responseData = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(paymentRequest) + "\nUrl: " + url + "\nResponse: " + responseContent, "CommitPayment", "AirAsiaOneWay");
+                    logs.WriteLogs(jsonPayload, "17-AddpaymentRequest", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs(responseContent, "17-AddpaymentResponse", "AirAsiaOneWay", "oneway");
+                }
+
+
+
+
                 #region Commit Booking
                 string[] NotifyContacts = new string[1];
                 NotifyContacts[0] = "P";
@@ -98,8 +165,11 @@ namespace OnionConsumeWebAPI.Controllers
                 if (responceCommit_Booking.IsSuccessStatusCode)
                 {
                     var _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaCommitBooking) + "Request:" + jsonCommitBookingRequest + "\n Response: " + _responceCommit_Booking, "CommitBooking", "AirAsiaOneWay", "oneway");
-                    var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
+                    //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaCommitBooking) + "Request:" + jsonCommitBookingRequest + "\n Response: " + _responceCommit_Booking, "CommitBooking", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs(jsonCommitBookingRequest, "18-CommitBookingRequest", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs(_responceCommit_Booking, "18-CommitBookingResponse", "AirAsiaOneWay", "oneway");
+
+                    //var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
                 }
                 #endregion
                 #region Booking GET
@@ -139,7 +209,9 @@ namespace OnionConsumeWebAPI.Controllers
                     var _responcePNRBooking = responceGetBooking.Content.ReadAsStringAsync().Result;
                     //string path = "C:\\Users\\Jet\\Desktop\\a.txt";
                     //string _responcePNRBooking = System.IO.File.ReadAllText(path);
-                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaPNRBooking + AirLinePNR) + "\n Response: " + _responcePNRBooking, "GetBookingDeatils", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaGetBoking), "18-GetBookingPnrRequest", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs(_responcePNRBooking, "18-GetBookingPnrResponse", "AirAsiaOneWay", "oneway");
+                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaPNRBooking + AirLinePNR) + "\n Response: " + _responcePNRBooking, "GetBookingDeatils", "AirAsiaOneWay", "oneway");
                     var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
 
                     //var _responcePNRBooking = responceGetBooking.Content.ReadAsStringAsync().Result;
@@ -159,7 +231,7 @@ namespace OnionConsumeWebAPI.Controllers
                     returnTicketBooking.bookingKey = JsonObjPNRBooking.data.bookingKey;
                     // var zxvx= JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                     Breakdown breakdown = new Breakdown();
-                    breakdown.balanceDue = JsonObjPNRBooking.data.breakdown.balanceDue;
+                    breakdown.balanceDue = JsonObjPNRBooking.data.breakdown.totalAmount;
                     JourneyTotals journeyTotalsobj = new JourneyTotals();
                     journeyTotalsobj.totalAmount = JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                     journeyTotalsobj.totalTax = JsonObjPNRBooking.data.breakdown.journeyTotals.totalTax;
@@ -341,7 +413,7 @@ namespace OnionConsumeWebAPI.Controllers
                         int SegmentReturnCount = JsonObjPNRBooking.data.journeys[i].segments.Count;
                         List<SegmentReturn> segmentReturnsList = new List<SegmentReturn>();
 
-                        
+
 
 
 
@@ -386,7 +458,7 @@ namespace OnionConsumeWebAPI.Controllers
                             {
                                 carriercode = carriercode.PadRight(3);
                             }
-                            
+
                             foreach (var items in JsonObjPNRBooking.data.passengers)
                             {
                                 if (!htnameempty.Contains(items.Value.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination))
@@ -610,7 +682,7 @@ namespace OnionConsumeWebAPI.Controllers
                         //returnPassengersobj.name.last = items.Value.name.last;
                         for (int i = 0; i < PassengerDataDetailsList.Count; i++)
                         {
-                            if (returnPassengersobj.passengerTypeCode == PassengerDataDetailsList[i].passengertypecode && returnPassengersobj.name.first.ToLower() == PassengerDataDetailsList[i].first.ToLower()  && returnPassengersobj.name.last.ToLower()== PassengerDataDetailsList[i].last.ToLower())
+                            if (returnPassengersobj.passengerTypeCode == PassengerDataDetailsList[i].passengertypecode && returnPassengersobj.name.first.ToLower() == PassengerDataDetailsList[i].first.ToLower() && returnPassengersobj.name.last.ToLower() == PassengerDataDetailsList[i].last.ToLower())
                             {
                                 returnPassengersobj.MobNumber = PassengerDataDetailsList[i].mobile;
                                 returnPassengersobj.passengerKey = PassengerDataDetailsList[i].passengerkey;
@@ -651,10 +723,10 @@ namespace OnionConsumeWebAPI.Controllers
                         //if (string.IsNullOrEmpty(flightseatnumber))
                         //{
                         //    seatnumber = "0000"; // Set to "0000" if not available
-                       // }
+                        // }
                         //else
                         //{
-                            //seatnumber = flightseatnumber.PadRight(4, '0'); // Right-pad with zeros if less than 4 characters
+                        //seatnumber = flightseatnumber.PadRight(4, '0'); // Right-pad with zeros if less than 4 characters
                         //}
                         //BarcodeString = "M" + "1" + items.Value.name.last + "/" + items.Value.name.first + " " + BarcodePNR + "" + orides + carriercode + "" + flightnumber + "" + julianDate + "Y" + seatnumber + sequencenumber + "1" + "00";
                         //BarcodeUtility BarcodeUtility = new BarcodeUtility();

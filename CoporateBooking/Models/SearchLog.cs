@@ -23,7 +23,10 @@ namespace OnionConsumeWebAPI.Models
         public int Log_SearchTypeID { get; set; }
         public string Origin { get; set; }
         public string Destination { get; set; }
-        public string Log_RefNumber { get; set; }
+
+		public string OrgCode { get; set; }
+		public string DestCode { get; set; }
+		public string Log_RefNumber { get; set; }
         public string DepartDateTime { get; set; }
         public string ArrivalDateTime { get; set; }
         public int Adults { get; set; }

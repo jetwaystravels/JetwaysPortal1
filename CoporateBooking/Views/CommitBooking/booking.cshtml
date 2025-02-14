@@ -481,7 +481,7 @@
                                     <tr>
                                         <th rowspan="2" class="align-middle">Passenger</th>
                                         <th colspan="2" class="text-center">Fllight Detail</th>
-                                        <th rowspan="2" class="align-middle">Meal Type</th>
+                                        <th rowspan="2" class="align-middle">Meal</th>
                                         <th rowspan="2" class="align-middle">Extra Bag(Kg)</th>
                                         <th rowspan="2" class="align-middle">Insurance Status</th>
                                     </tr>
@@ -518,7 +518,8 @@
                                                     // }
                                                 }
                                                 <td>@Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin - @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination </td>
-                                                <td>@Model.AirlinePNR[0].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[0].journeys[0].segments[i3].identifier.identifier</td>
+                                                <td colspan="1">@Model.AirlinePNR[0].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[0].journeys[0].segments[i3].identifier.identifier</td>
+
 
                                                 @{
                                                     string hashdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
@@ -527,6 +528,8 @@
                                                     {
 
                                                         var Mealcode = htmeal[hashdata].ToString();
+
+
                                                         var meal = MealImageList.GetAllmeal().Where(x => Mealcode.Contains(x.MealCode)).ToList();
                                                         // var meal = MealImageList.GetAllmeal().Where(x => mealcode.Contains(x.MealCode)).ToList();
                                                         if (meal != null)
@@ -534,15 +537,16 @@
                                                             foreach (var item in meal)
                                                             {
                                                                 <td>@item.MealCode</td>
-                                                                //THIS IS FOR MEAL
-                                                                // <td>@item.MealImage</td>
+
                                                             }
+
+
                                                         }
-                                                        // <td>@htmeal[hashdata]</td>
+
                                                     }
                                                     else
                                                     {
-                                                        <td></td>
+                                                        <td>NA</td>
                                                     }
                                                     // string hashBagdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
                                                     // if (htbag != null)
@@ -565,22 +569,18 @@
 
                                                                     <td>@item.MealImage</td>
                                                                 }
-                                                                else
-                                                                {
-                                                                    <td></td>
-                                                                }
-                                                                //THIS IS FOR BAGGAGE.
+
                                                             }
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        <td></td>
+                                                        <td>NA</td>
                                                     }
 
                                                 }
 
-                                                <td>Confirm</td>
+                                                <td>NA</td>
                                             </tr>
                                         }
                                     }
@@ -675,6 +675,28 @@
                                             </tr>
                                         }
 
+                                        if (@Model.AirlinePNR[0].TotalAmountMeal == 0)
+                                        {
+                                            if (@Model.AirlinePNR[0].TotalAmountMeal == 0)
+                                            {
+                                                <tr style="display: none;">
+                                                    <td>Addon Meal Amount:</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>Addon Meal Amount:</td>
+                                                    <td>Free</td>
+                                                </tr>
+                                            }
+
+
+                                        }
+
+
+
                                         if (@Model.AirlinePNR[0].TotaAmountBaggage > 0)
                                         {
 
@@ -684,6 +706,29 @@
                                             </tr>
 
                                         }
+
+                                        if (@Model.AirlinePNR[0].TotaAmountBaggage == 0)
+                                        {
+                                            if (@Model.AirlinePNR[0].TotaAmountBaggage == 0)
+                                            {
+                                                <tr style="display: none;">
+                                                    <td>Addon Bagg Amount:</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>Addon Bagg Amount:</td>
+                                                    <td>Free</td>
+                                                </tr>
+                                            }
+
+
+                                        }
+
+
+
                                         if (@Model.AirlinePNR[0].breakdown.passengerTotals.seats.totalSeatAmount > 0)
                                         {
                                             <tr>
@@ -692,6 +737,26 @@
                                             </tr>
                                         }
 
+
+                                        if (@Model.AirlinePNR[0].breakdown.passengerTotals.seats.totalSeatAmount == 0)
+                                        {
+                                            if (@Model.AirlinePNR[0].breakdown.passengerTotals.seats.totalSeatAmount == 0)
+                                            {
+                                                <tr style="display: none;">
+                                                    <td>Seat Amount:</td>
+                                                    <td>-</td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>Seat Amount:</td>
+                                                    <td>Free</td>
+                                                </tr>
+                                            }
+
+
+                                        }
                                     }
 
                                     <tr style="background:#FCE1E1;">

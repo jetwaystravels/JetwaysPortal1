@@ -10,11 +10,18 @@ using IndigoBookingManager_;
 using static DomainLayer.Model.ReturnTicketBooking;
 using OnionArchitectureAPI.Services.Indigo;
 using System.Collections;
+using OnionConsumeWebAPI.Models;
 namespace OnionConsumeWebAPI.Controllers
 {
     public class IndigoResultFlightViewController : Controller
     {
         Logs logs = new Logs();
+        private readonly IConfiguration _configuration;
+
+        public IndigoResultFlightViewController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         PaxPriceType[] getPaxdetails(int adult_, int child_, int infant_)
         {
             PaxPriceType[] paxPriceTypes = null;
@@ -77,23 +84,44 @@ namespace OnionConsumeWebAPI.Controllers
         }
 
         [HttpPost] // this APi is used to map trip data Amount
-        public async Task<ActionResult> IndigoTripsell(string fareKey, string journeyKey)
+        public async Task<ActionResult> IndigoTripsell(string fareKey, string journeyKey, string Guid)
         {
             AAIdentifier AAIdentifierobj = null;
-            TempData["farekey"] = fareKey;
-            TempData["journeyKey"] = journeyKey;
+            //TempData["farekey"] = fareKey;
+            //TempData["journeyKey"] = journeyKey;
 
             //List<_credentials> credentialslist = new List<_credentials>();
             using (HttpClient client = new HttpClient())
             {
-                int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+                //int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
+                //int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
+                //int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+
+                MongoHelper objMongoHelper = new MongoHelper();
+                MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+                MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+                SearchLog searchLog = new SearchLog();
+                searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
+
+                tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
+
+                //int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
+                //int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
+                //int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+
+                int adultcount = searchLog.Adults;
+                int childcount = searchLog.Children;
+                int infantcount = searchLog.Infants;
+
+
                 int TotalCount = adultcount + childcount;
                 string str3 = string.Empty;
-                string tokenview = HttpContext.Session.GetString("IndigoSignature");
-                if (tokenview == null) { tokenview = ""; }
-                string Signature = tokenview.Replace(@"""", string.Empty);
+                //string tokenview = HttpContext.Session.GetString("IndigoSignature");
+                //if (tokenview == null) { tokenview = ""; }
+                //string Signature = tokenview.Replace(@"""", string.Empty);
+
+                string Signature = tokenData.Token;
+
                 if (Signature == "" || Signature == null)
                 {
                     return RedirectToAction("Index");
@@ -104,15 +132,15 @@ namespace OnionConsumeWebAPI.Controllers
 
                 #region IndigoSellRequest
                 _sell objsell = new _sell();
-                IndigoBookingManager_.SellResponse _getSellRS = await objsell.Sell(Signature, journeyKey, fareKey, "", "", TotalCount, adultcount, childcount, infantcount,0, "OneWay");
-                string str = JsonConvert.SerializeObject(_getSellRS);
+                IndigoBookingManager_.SellResponse _getSellRS = await objsell.Sell(Signature, journeyKey, fareKey, "", "", TotalCount, adultcount, childcount, infantcount, 0, "OneWay");
+                //string str = JsonConvert.SerializeObject(_getSellRS);
                 #endregion
 
                 #region GetState
 
-                IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(Signature, 0,"OneWay");
+                IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(Signature, 0, "OneWay");
 
-                str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
+                //str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
 
                 if (_GetBookingFromStateRS1 != null)
                 {
@@ -282,22 +310,10 @@ namespace OnionConsumeWebAPI.Controllers
                             }
 
                             AASegmentobj.legs = AALeglist;
-
-
                             AASegmentlist.Add(AASegmentobj);
-
-
-
-
                         }
-
-
-
                         AAJourneyobj.segments = AASegmentlist;
-
-
                         AAJourneyList.Add(AAJourneyobj);
-
                     }
 
                     #endregion
@@ -403,11 +419,14 @@ namespace OnionConsumeWebAPI.Controllers
 
                     #region  GetItineraryPrice
 
-                    IndigoBookingManager_.PriceItineraryResponse _getPriceItineraryRS = await objsell.GetItineraryPrice(Signature, journeyKey, fareKey, "", "", TotalCount, adultcount, childcount, infantcount, 0,"OneWay");
-                    str = JsonConvert.SerializeObject(_getPriceItineraryRS);
+                    IndigoBookingManager_.PriceItineraryResponse _getPriceItineraryRS = await objsell.GetItineraryPrice(Signature, journeyKey, fareKey, "", "", TotalCount, adultcount, childcount, infantcount, 0, "OneWay");
+                    //str = JsonConvert.SerializeObject(_getPriceItineraryRS);
                     #endregion
 
-                    HttpContext.Session.SetString("journeySellKey", JsonConvert.SerializeObject(journeyKey));
+                    //   HttpContext.Session.SetString("journeySellKey", JsonConvert.SerializeObject(journeyKey));
+
+                    _mongoDBHelper.UpdateFlightTokenJourney(Guid, "Indigo", journeyKey);
+
                     SimpleAvailabilityRequestModel _SimpleAvailabilityobj = new SimpleAvailabilityRequestModel();
 
                     var jsonData = HttpContext.Session.GetString("IndigoPassengerModel");
@@ -420,24 +439,24 @@ namespace OnionConsumeWebAPI.Controllers
                         {
                             SellResponse sellSsrResponse = null;
 
-                            sellSsrResponse = await objsell.sellssrInft(Signature, _getPriceItineraryRS, infantcount, 0,0, "OneWay");
+                            sellSsrResponse = await objsell.sellssrInft(Signature, _getPriceItineraryRS, infantcount, 0, 0, "OneWay");
 
-                            str3 = JsonConvert.SerializeObject(sellSsrResponse);
+                            //str3 = JsonConvert.SerializeObject(sellSsrResponse);
 
-                            if (sellSsrResponse != null)
-                            {
-                                //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                var JsonsellSsrResponse = sellSsrResponse;
-                            }
+                            //if (sellSsrResponse != null)
+                            //{
+                            //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
+                            //var JsonsellSsrResponse = sellSsrResponse;
+                            //}
                         }
                         #endregion
                     }
 
 
                     #region GetBookingFromState
-                    IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS = await objsell.GetBookingFromState(Signature,0, "OneWay");
+                    IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS = await objsell.GetBookingFromState(Signature, 0, "OneWay");
 
-                    str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS);
+                    //str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS);
 
                     if (_GetBookingFromStateRS != null)
                     {
@@ -478,8 +497,8 @@ namespace OnionConsumeWebAPI.Controllers
                     passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
 
                     _GetSSR objssr = new _GetSSR();
-                    IndigoBookingManager_.GetSSRAvailabilityForBookingResponse _res = await objssr.GetSSRAvailabilityForBooking(Signature, passeengerlist, TotalCount, "0","OneWay");
-                    string Str2 = JsonConvert.SerializeObject(_res);
+                    IndigoBookingManager_.GetSSRAvailabilityForBookingResponse _res = await objssr.GetSSRAvailabilityForBooking(Signature, passeengerlist, TotalCount, "0", "OneWay");
+                    //string Str2 = JsonConvert.SerializeObject(_res);
 
                     //******Vinay***********//
                     if (_res != null)
@@ -602,7 +621,7 @@ namespace OnionConsumeWebAPI.Controllers
                     #region SeatMap
 
                     objssr = new _GetSSR();
-                    List<IndigoBookingManager_.GetSeatAvailabilityResponse> SeatGroup = await objssr.GetseatAvailability(Signature, AirAsiaTripResponceobj, 0,"OneWay");
+                    List<IndigoBookingManager_.GetSeatAvailabilityResponse> SeatGroup = await objssr.GetseatAvailability(Signature, AirAsiaTripResponceobj, 0, "OneWay");
                     if (SeatGroup != null)
                     {
                         string columncount0 = string.Empty;
@@ -631,8 +650,8 @@ namespace OnionConsumeWebAPI.Controllers
                             //Seatmapobj.categorySG = SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[x].EquipmentCategory.ToString();
                             //doubt
                             //Seatmapobj.seatmapReference = JsonObjSeatmap.data[x].seatMap.seatmapReference;
-                           
-                            
+
+
 
                             int compartmentsunitCount = SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].Compartments.Length;
                             List<Unit> compartmentsunitlist = new List<Unit>();
@@ -701,7 +720,7 @@ namespace OnionConsumeWebAPI.Controllers
                                         //{
                                         compartmentsunitobj.unitKey = compartmentsunitobj.designator;
 
-                                       
+
                                         //}
 
                                         int compartmentypropertiesCount = SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].Compartments[i].Seats[i1].PropertyList.Length;
@@ -715,30 +734,30 @@ namespace OnionConsumeWebAPI.Controllers
                                         }
 
                                         compartmentsunitobj.properties = Propertieslist;
-                                        if(compartmentsunitobj.designator.Contains('$'))
+                                        if (compartmentsunitobj.designator.Contains('$'))
                                         {
-                                            columncount0 = SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].Compartments[i].Seats[i1-1].SeatDesignator;
+                                            columncount0 = SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].Compartments[i].Seats[i1 - 1].SeatDesignator;
                                             break;
                                         }
 
                                         compartmentsunitlist.Add(compartmentsunitobj);
 
 
-                                        
+
                                     }
-                                    catch(Exception ex)
+                                    catch (Exception ex)
                                     {
 
                                     }
-                                    
+
                                 }
                                 Decksobj.units = compartmentsunitlist;
-                                Seatmapobj.SeatColumnCount= Regex.Replace(columncount0, "[^0-9]", "");
+                                Seatmapobj.SeatColumnCount = Regex.Replace(columncount0, "[^0-9]", "");
                                 //Decksobjarray.Add(Decksobj);
                                 //Decksobj.units = compartmentsunitlist;
                                 Seatmapobj.decksindigo.Add(Decksobj);
                             }
-                            
+
 
                             //var groupscount = JsonObjSeatmap.data[x].fees[passengerkey12].groups;
                             //var feesgroupcount = ((Newtonsoft.Json.Linq.JContainer)groupscount).Count;
@@ -818,7 +837,7 @@ namespace OnionConsumeWebAPI.Controllers
 
                     }
                 }
-                return RedirectToAction("IndigoSaverTripsell", "IndigoTripsell");
+                return RedirectToAction("IndigoSaverTripsell", "IndigoTripsell", new { Guid = Guid });
             }
         }
         #endregion

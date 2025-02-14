@@ -64,7 +64,7 @@
                         // }
 
 
-                    <div class="py-15 px-20 rounded-4 text-15  bg-blue-2 flex-center">
+                    <div class="py-15 px-70 rounded-4 text-15  bg-blue-2">
                         Change planes at 1 <span class="fw-600"> (@item.segments[i].designator.origin),</span> Connecting Time: <span class="fw-600">@formatTime</span>
                     </div>
 
@@ -117,9 +117,11 @@
                                         @{
 
                                             string seatMapName = @Model.Seatmaplist.datalist[i].seatMap.name;
-                                            int hyphenIndex = @Model.Seatmaplist.datalist[i].seatMap.name.LastIndexOf('-');
-                                            // Extract the substring before the hyphen
-                                            string aircraftModel = hyphenIndex == -1 ? seatMapName : seatMapName.Substring(0, hyphenIndex);
+
+                                            string aircraftModel = seatMapName.Split('_')[0];
+                                            // int hyphenIndex = @Model.Seatmaplist.datalist[i].seatMap.name.LastIndexOf('-');
+                                            // // Extract the substring before the hyphen
+                                            // string aircraftModel = hyphenIndex == -1 ? seatMapName : seatMapName.Substring(0, hyphenIndex);
 
                                        // var aircraftname= @Model.Seatmaplist.datalist[i].seatMap.name;
 
@@ -168,11 +170,11 @@
                                             <div class="col-auto">
                                                 @{
                                                     var allCityData = Citynamelist.GetAllCityData();
-                                                    string QueryOriginAirportName = item.segments[i].legs[j].designator.origin;
-                                                    string QueryDestinationAirportName = item.segments[i].legs[j].designator.destination;
+                                                    string QueryOriginAirportName = QueryOrigin;//item.segments[i].legs[j].designator.origin;
+                                                    string QueryDestinationAirportName = QueryDestination;//item.segments[i].legs[j].designator.destination;
 
-                                                    var originCity = allCityData.SingleOrDefault(x => x.cityname == QueryOriginAirportName);
-                                                    var destinationCity = allCityData.SingleOrDefault(x => x.cityname == QueryDestinationAirportName);
+                                                    var originCity = allCityData.SingleOrDefault(x => x.citycode == QueryOriginAirportName);
+                                                    var destinationCity = allCityData.SingleOrDefault(x => x.citycode == QueryDestinationAirportName);
 
                                                     if (originCity != null)
                                                     {
@@ -185,7 +187,7 @@
                                                 }
 
                                                 <div class="lh-14 fw-500">
-                                                    @QueryOriginAirportName
+                                                    @originCity.cityname
                                                     <span class="text-13 ml-2 fw-600">
                                                         (@FormatTeddepartureDate
                                                         <span class="text-13 text-light-1 ml-2">@originCity?.airportname</span>
@@ -235,7 +237,7 @@
 
 
                                                 <div class="lh-14 fw-500">
-                                                    @QueryDestinationAirportName
+                                                    @destinationCity.cityname
                                                     <span class="text-13 ml-2 fw-600">
                                                         (@formattedarrivalDate
                                                         <span class="text-13 text-light-1 ml-2">@destinationCity?.airportname</span>
@@ -273,30 +275,30 @@
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: CABIN BAG: 7 k.g</li>
-                                                        <li>2: CHECK-IN: 15 k.g  (1 piece)</li>
-                                                        <li>3: CANCELLATION: 3500 :-  (upto 2 hrs prior from departure)</li>
-                                                        <li>4: DATE CHANGE: 3000 :-  (upto 2 hrs prior from departure)</li>
-                                                        <li>5: SEAT : (Chargeable)</li>
-                                                        <li>6: MEAL : (Chargeable)</li>
-                                                        @* <li>7: Category Class : (Economy)</li>*@
+                                                        <li>2: CHECK-IN: 15 k.g </li>
+                                                        <li>3: CANCELLATION: 3500 (Upto 72 hrs before departure)</li>
+                                                        <li>4: DATE CHANGE: 3250 (Upto 72 hrs before departure)</li>
+                                                        <li>5: SEAT : Chargeable</li>
+                                                        <li>6: MEAL : Chargeable</li>
+                                                       
                                                     </ul>
                                                 </span>
                                             </span>
                                         }
                                         else if (item.segments[i].fares[f].productClass.Equals("HF"))
                                         {
-                                            //<div class="text-13 mt-1">Economy: @Faretype<b>Vista Flex</b></div>
+                                          
                                             <span class="tooltipF">
                                                 Economy:  @Faretype<b>Vista Flex</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: CABIN BAG: 7 k.g</li>
-                                                        <li>2: CHECK-IN: 15 k.g  (1 piece)</li>
-                                                        <li>3: CANCELLATION: 3500 :-  (upto 2 hrs prior from departure)</li>
-                                                        <li>4: DATE CHANGE:  :-  FREE  (upto 2 hrs prior from departure)</li>
+                                                        <li>2: CHECK-IN: 15 k.g </li>
+                                                        <li>3: CANCELLATION: 3500 (Upto 72 hrs before departure)</li>
+                                                        <li>4: DATE CHANGE: 3000 (Upto 72 hrs before departure)</li>
                                                         <li>5: SEAT : Standard seats free</li>
-                                                        <li>6: MEAL : Free meal) per person</li>
-                                                        @* <li>7: Category Class : (Economy)</li>*@
+                                                        <li>6: MEAL : Free</li>
+                                                        
                                                     </ul>
                                                 </span>
                                             </span>
@@ -304,18 +306,18 @@
                                         }
                                         else if (item.segments[i].fares[f].productClass.Equals("LT"))
                                         {
-                                            //<div class="text-13 mt-1">Economy: @Faretype<b>Xpress lite</b></div>
+                                           
                                             <span class="tooltipF">
                                                 Economy:  @Faretype<b>Xpress lite</b>
                                                 <span class="tooltiptext">
                                                     <ul>
-                                                        <li>1: CABIN BAG: 0</li>
-                                                        <li>2: CHECK-IN: 0</li>
-                                                        <li>3: CANCELLATION: </li>
-                                                        <li>4: DATE CHANGE: </li>
-                                                        <li>5: SEAT : </li>
-                                                        <li>6: MEAL : </li>
-                                                        @* <li>7: Category Class :</li>*@
+                                                        <li>1: CABIN BAG: 7 (kg)</li>
+                                                        <li>2: CHECK-IN: -</li>
+                                                        <li>3: CANCELLATION: 4000 (Upto 2 hrs before departure)</li>
+                                                        <li>4: DATE CHANGE: 3000 (Upto 2 hrs before departure)</li>
+                                                        <li>5: SEAT : Chargeable</li>
+                                                        <li>6: MEAL : Chargeable</li>
+                                                       
                                                     </ul>
                                                 </span>
                                             </span>
@@ -328,12 +330,11 @@
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: CABIN BAG: 7 k.g</li>
-                                                        <li>2: CHECK-IN: 25 k.g  (1 piece)</li>
-                                                        <li>3: CANCELLATION: 3500 :-  (upto 2 hrs prior from departure)</li>
-                                                        <li>4: DATE CHANGE: 3000 :-  FREE  (upto 2 hrs prior from departure)</li>
-                                                        <li>5: SEAT : (Free seats)</li>
-                                                        <li>6: MEAL : (Free meal) per person</li>
-                                                        @* <li>7: Category Class : (Business)</li>*@
+                                                        <li>2: CHECK-IN: 25 k.g</li>
+                                                        <li>3: CANCELLATION: 4000 (Upto 2 hrs before departure)</li>
+                                                        <li>4: DATE CHANGE: 3000 (Upto 2 hrs before departure)</li>
+                                                        <li>5: SEAT : Free</li>
+                                                        <li>6: MEAL : Free</li>
                                                     </ul>
                                                 </span>
                                             </span>
@@ -455,8 +456,8 @@
 
                                             </tr>
                                             <tr>
-                                                <td>0</td>
-                                                <td>0</td>
+                                                <td>Upto 2 hrs before departure</td>
+                                                <td>Rs. 4000</td>
 
                                             </tr>
 
@@ -471,8 +472,8 @@
 
                                             </tr>
                                             <tr>
-                                                <td>2 hrs prior from departure</td>
-                                                <td>Rs.3500 per adult</td>
+                                                <td>Upto 2 hrs before departure</td>
+                                                <td>Rs.4000</td>
 
                                             </tr>
 
@@ -531,8 +532,8 @@
 
                                             </tr>
                                             <tr>
-                                                <td>2 hrs prior from departure</td>
-                                                <td>Rs.3000 per adult</td>
+                                                <td>Upto 72 hrs before departure</td>
+                                                <td>Rs.3250</td>
 
                                             </tr>
 
@@ -547,8 +548,8 @@
 
                                             </tr>
                                             <tr>
-                                                <td>2 hrs prior from departure</td>
-                                                <td>Free</td>
+                                                <td>Upto 72 hrs before departure</td>
+                                                <td>Rs. 3000</td>
 
                                             </tr>
 
@@ -563,8 +564,8 @@
 
                                             </tr>
                                             <tr>
-                                                <td>0</td>
-                                                <td>0</td>
+                                                <td>Upto 2 hrs before departure</td>
+                                                <td>Rs. 3000</td>
 
                                             </tr>
 
@@ -579,8 +580,8 @@
 
                                             </tr>
                                             <tr>
-                                                <td>2 hrs prior from departure</td>
-                                                <td>Rs.3000 per adult</td>
+                                                <td>Upto 2 hrs before departure</td>
+                                                <td>Rs.3000</td>
 
                                             </tr>
 

@@ -313,11 +313,11 @@
                                             <div class="col-auto">
                                                 @{
                                                     var allCityData = Citynamelist.GetAllCityData();
-                                                    string QueryOriginAirportName = item.segments[i].legs[j].designator.origin;
-                                                    string QueryDestinationAirportName = item.segments[i].legs[j].designator.destination;
+                                                    string QueryOriginAirportName = queryorigin;//item.segments[i].legs[j].designator.origin;
+                                                    string QueryDestinationAirportName =querydestination;// item.segments[i].legs[j].designator.destination;
 
-                                                    var originCity = allCityData.SingleOrDefault(x => x.cityname == QueryOriginAirportName);
-                                                    var destinationCity = allCityData.SingleOrDefault(x => x.cityname == QueryDestinationAirportName);
+                                                    var originCity = allCityData.SingleOrDefault(x => x.citycode == QueryOriginAirportName);
+                                                    var destinationCity = allCityData.SingleOrDefault(x => x.citycode == QueryDestinationAirportName);
 
                                                     if (originCity != null)
                                                     {
@@ -330,7 +330,7 @@
                                                 }
                                                 @*<div class="lh-14 fw-500">@item.segments[i].legs[j].designator.origin <span class="text-13 ml-2 fw-600">( @formatteddepartureDate<span class="text-13 text-light-1 ml-2"> Indira Gandhi, T-@item.segments[i].legs[j].legInfo.departureTerminal </span> )</span></div>*@
                                                 <div class="lh-14 fw-500">
-                                                    @QueryOriginAirportName<span class="text-13 ml-2 fw-600">
+                                                    @originCity.cityname<span class="text-13 ml-2 fw-600">
                                                         ( @formatteddepartureDate<span class="text-13 text-light-1 ml-2">@originCity?.airportname</span><span class="text-13 ml-2 fw-600">
                                                             @if (@item.segments[i].legs[j].legInfo.departureTerminal != null)
                                                             {
@@ -387,7 +387,7 @@
 
                             </div> *@
                                             <div class="col-auto lh-14 fw-500">
-                                                @QueryDestinationAirportName
+                                                @destinationCity.cityname
                                                 <span class="text-13 ml-2 fw-600">
                                                     (@formattedarrivalDate
                                                     <span class="text-13 text-light-1 ml-2">@destinationCity?.airportname</span>
@@ -485,85 +485,6 @@
                                             //<div class="text-13 mt-1">Economy: @Faretype<b>Xpress Bizz</b></div>
                                             <span class="tooltipF">
                                                 Fare Type:  @Faretype<b>Saver Fare</b>
-                                                <span class="tooltiptext">
-                                                    <ul>
-                                                        <li>1: Cabin Bag: 7 k.g</li>
-                                                        <li>2: Check-In: 15 k.g (1 piece)</li>
-                                                        <li>3: Cancellation: 3600 :-  within 96 hrs from departure</li>
-                                                        <li>4: Date Change: 3350 :-  within 96 hrs from departure</li>
-                                                        <li>5: Seat : Free seats</li>
-                                                        <li>6: Meal : Complimentary meal</li>
-
-                                                    </ul>
-                                                </span>
-                                            </span>
-
-                                        }
-
-                                        else if (item.segments[i].fares[f].productClass.Equals("CP"))
-                                        {
-                                            //<div class="text-13 mt-1">Economy: @Faretype<b>Xpress Bizz</b></div>
-                                            <span class="tooltipF">
-                                                Fare Type:  @Faretype<b> Corporate Fare </b>
-                                                <span class="tooltiptext">
-                                                    <ul>
-                                                        <li>1: Cabin Bag: 7 k.g</li>
-                                                        <li>2: Check-In: 15 k.g (1 piece)</li>
-                                                        <li>3: Cancellation: 3600 :-  within 96 hrs from departure</li>
-                                                        <li>4: Date Change: 3350 :-  within 96 hrs from departure</li>
-                                                        <li>5: Seat : Free seats</li>
-                                                        <li>6: Meal : Complimentary meal</li>
-
-                                                    </ul>
-                                                </span>
-                                            </span>
-
-                                        }
-                                        else if (item.segments[i].fares[f].productClass.Equals("PC"))
-                                        {
-                                            //<div class="text-13 mt-1">Economy: @Faretype<b>Xpress Bizz</b></div>
-                                            <span class="tooltipF">
-                                                Fare Type:  @Faretype<b> Corporate Fare </b>
-                                                <span class="tooltiptext">
-                                                    <ul>
-                                                        <li>1: Cabin Bag: 7 k.g</li>
-                                                        <li>2: Check-In: 15 k.g (1 piece)</li>
-                                                        <li>3: Cancellation: 3600 :-  within 96 hrs from departure</li>
-                                                        <li>4: Date Change: 3350 :-  within 96 hrs from departure</li>
-                                                        <li>5: Seat : Free seats</li>
-                                                        <li>6: Meal : Complimentary meal</li>
-
-                                                    </ul>
-                                                </span>
-                                            </span>
-
-                                        }
-
-                                        else if (item.segments[i].fares[f].productClass.Equals("CM"))
-                                        {
-                                            //<div class="text-13 mt-1">Economy: @Faretype<b>Xpress Bizz</b></div>
-                                            <span class="tooltipF">
-                                                Fare Type:  @Faretype<b> Corporate Max fare </b>
-                                                <span class="tooltiptext">
-                                                    <ul>
-                                                        <li>1: Cabin Bag: 7 k.g</li>
-                                                        <li>2: Check-In: 15 k.g (1 piece)</li>
-                                                        <li>3: Cancellation: 3600 :-  within 96 hrs from departure</li>
-                                                        <li>4: Date Change: 3350 :-  within 96 hrs from departure</li>
-                                                        <li>5: Seat : Free seats</li>
-                                                        <li>6: Meal : Complimentary meal</li>
-
-                                                    </ul>
-                                                </span>
-                                            </span>
-
-                                        }
-
-                                        else if (item.segments[i].fares[f].productClass.Equals("MC"))
-                                        {
-                                            //<div class="text-13 mt-1">Economy: @Faretype<b>Xpress Bizz</b></div>
-                                            <span class="tooltipF">
-                                                Fare Type:  @Faretype<b> Corporate Max fare </b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: Cabin Bag: 7 k.g</li>

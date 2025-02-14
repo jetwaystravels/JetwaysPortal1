@@ -39,7 +39,14 @@ namespace OnionConsumeWebAPI.Controllers
         string uniquekey = string.Empty;
         string MealsData = string.Empty;
         string Baggagesdata = string.Empty;
+        private readonly IConfiguration _configuration;
         Logs logs = new Logs();
+
+
+        public AATripsellController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public IActionResult Tripsell()
         {
 
@@ -122,34 +129,44 @@ namespace OnionConsumeWebAPI.Controllers
             vm.passkeytype = PassengerDataDetails;
             return View(vm);
         }
-        public async Task<IActionResult> ContectDetails(ContactModel contactobject)
+        public async Task<IActionResult> ContectDetails(ContactModel contactobject, string GUID)
         {
-            string tokenview = HttpContext.Session.GetString("AirasiaTokan");
-            token = tokenview.Replace(@"""", string.Empty);
+            //string tokenview = HttpContext.Session.GetString("AirasiaTokan");
+            //token = tokenview.Replace(@"""", string.Empty);
+
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "AirAsia").Result;
+
+            token = tokenData.Token;
+
             using (HttpClient client = new HttpClient())
             {
                 ContactModel _ContactModel = new ContactModel();
+                string countryCode = contactobject.countrycode;
+
                 _ContactModel.emailAddress = contactobject.emailAddress;
                 _Phonenumber Phonenumber = new _Phonenumber();
                 List<_Phonenumber> Phonenumberlist = new List<_Phonenumber>();
                 Phonenumber.type = "Home";
-                Phonenumber.number = contactobject.number;
+                Phonenumber.number = countryCode + contactobject.number;
                 Phonenumberlist.Add(Phonenumber);
                 _Phonenumber Phonenumber1 = new _Phonenumber();
                 Phonenumber1.type = "Other";
-                Phonenumber1.number = contactobject.number;
+                Phonenumber1.number = countryCode + contactobject.number;
                 Phonenumberlist.Add(Phonenumber1);
                 foreach (var item in Phonenumberlist)
                 {
                     _ContactModel.phoneNumbers = Phonenumberlist;
                 }
-                _ContactModel.contactTypeCode = "P";
+                _ContactModel.contactTypeCode = "p";
                 _Address Address = new _Address();
                 _ContactModel.address = Address;
                 _Name Name = new _Name();
                 Name.first = contactobject.first;
                 Name.last = contactobject.last;
-                Name.title = "MR";
+                Name.title = contactobject.title;
                 _ContactModel.name = Name;
                 var jsonContactRequest = JsonConvert.SerializeObject(_ContactModel, Formatting.Indented);
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -158,26 +175,42 @@ namespace OnionConsumeWebAPI.Controllers
                 if (responseAddContact.IsSuccessStatusCode)
                 {
                     var _responseAddContact = responseAddContact.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaContactDetail) + "Request:"+ jsonContactRequest + "\n\n Response: " + JsonConvert.SerializeObject(_responseAddContact), "ADDContact", "AirAsiaOneWay", "oneway");
-                    var JsonObjAddContact = JsonConvert.DeserializeObject<dynamic>(_responseAddContact);
+                    logs.WriteLogs(jsonContactRequest, "7-ADDContactRequest", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs(_responseAddContact, "7-ADDContactResponse", "AirAsiaOneWay", "oneway");
+                    //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaContactDetail) + "Request:"+ jsonContactRequest + "\n\n Response: " + JsonConvert.SerializeObject(_responseAddContact), "ADDContact", "AirAsiaOneWay", "oneway");
+                    //var JsonObjAddContact = JsonConvert.DeserializeObject<dynamic>(_responseAddContact);
                 }
+
+                contactobject.notificationPreference = token;
 
             }
             return RedirectToAction("GetGstDetails", "AATripsell", contactobject);
         }
         public async Task<IActionResult> GetGstDetails(ContactModel contactobject, AddGSTInformation addGSTInformation)
         {
-            string tokenview = HttpContext.Session.GetString("AirasiaTokan");
-            token = tokenview.Replace(@"""", string.Empty);
+            //string tokenview = HttpContext.Session.GetString("AirasiaTokan");
+            //token = tokenview.Replace(@"""", string.Empty);
+
+            // string token = "";
+
+            //MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            //MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            //tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID("", "AirAsia").Result;
+
+            token = contactobject.notificationPreference;
 
             using (HttpClient client = new HttpClient())
             {
+                string title = contactobject.title;
+                string countryCode = contactobject.countrycode;
+                TempData["CountryCodeAA"] = countryCode;
                 AddGSTInformation addinformation = new AddGSTInformation();
                 addinformation.contactTypeCode = "G";
                 GSTPhonenumber Phonenumber = new GSTPhonenumber();
                 List<GSTPhonenumber> Phonenumberlist = new List<GSTPhonenumber>();
                 Phonenumber.type = "Other";
-                Phonenumber.number = contactobject.number; ;
+                Phonenumber.number = countryCode + contactobject.number; ;
                 Phonenumberlist.Add(Phonenumber);
 
                 foreach (var item in Phonenumberlist)
@@ -196,7 +229,7 @@ namespace OnionConsumeWebAPI.Controllers
                 GSTName Name = new GSTName();
                 Name.first = contactobject.first;
                 Name.last = contactobject.last;
-                Name.title = "MR";
+                Name.title = title;
                 Name.suffix = "";
                 addinformation.Name = Name;
                 if (contactobject.companyName != null)
@@ -208,9 +241,10 @@ namespace OnionConsumeWebAPI.Controllers
                     if (responseAddContact.IsSuccessStatusCode)
                     {
                         var _responseAddContact = responseAddContact.Content.ReadAsStringAsync().Result;
-                        logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaGstDetail) + "Request: " + jsonContactRequest+  "\n\n Response: " + JsonConvert.SerializeObject(_responseAddContact), "GstDetails", "AirAsiaOneWay", "oneway");
-
-                        var JsonObjAddContact = JsonConvert.DeserializeObject<dynamic>(_responseAddContact);
+                        //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaGstDetail) + "Request: " + jsonContactRequest+  "\n\n Response: " + JsonConvert.SerializeObject(_responseAddContact), "GstDetails", "AirAsiaOneWay", "oneway");
+                        logs.WriteLogs(jsonContactRequest, "8-GstDetailsRequest", "AirAsiaOneWay", "oneway");
+                        logs.WriteLogs(_responseAddContact, "8-GstDetailsResponse", "AirAsiaOneWay", "oneway");
+                        //var JsonObjAddContact = JsonConvert.DeserializeObject<dynamic>(_responseAddContact);
                     }
                 }
 
@@ -218,9 +252,17 @@ namespace OnionConsumeWebAPI.Controllers
 
             return RedirectToAction("Tripsell", "AATripsell");
         }
-        public async Task<PartialViewResult> TravllerDetails(List<passkeytype> passengerdetails, string formattedDates)
+        public async Task<PartialViewResult> TravllerDetails(List<passkeytype> passengerdetails, string formattedDates, string GUID)
         {
-            string tokenview = HttpContext.Session.GetString("AirasiaTokan");
+            // string tokenview = HttpContext.Session.GetString("AirasiaTokan");
+
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "AirAsia").Result;
+
+            string tokenview = tokenData.Token;
+
             string[] dateStrings = JsonConvert.DeserializeObject<string[]>(formattedDates);
             using (HttpClient client = new HttpClient())
             {
@@ -228,6 +270,7 @@ namespace OnionConsumeWebAPI.Controllers
                 {
                     token = tokenview.Replace(@"""", string.Empty);
                     PassengersModel _PassengersModel = new PassengersModel();
+                    string CountryCode = TempData["CountryCodeAA"].ToString();
                     for (int i = 0; i < passengerdetails.Count; i++)
                     {
                         if (passengerdetails[i].passengertypecode == "INFT")
@@ -237,7 +280,7 @@ namespace OnionConsumeWebAPI.Controllers
 
                             Name name = new Name();
                             _Info Info = new _Info();
-                            if (passengerdetails[i].title == "Mr")
+                            if (passengerdetails[i].title == "Mr" || passengerdetails[i].title == "MSTR")
                             {
                                 Info.gender = "Male";
                             }
@@ -249,7 +292,7 @@ namespace OnionConsumeWebAPI.Controllers
                             name.title = passengerdetails[i].title;
                             name.first = passengerdetails[i].first;
                             name.last = passengerdetails[i].last;
-                            name.mobile = passengerdetails[i].mobile;
+                            name.mobile = CountryCode + passengerdetails[i].mobile;
                             name.middle = "";
                             Info.dateOfBirth = "";
                             Info.nationality = "IN";
@@ -261,15 +304,16 @@ namespace OnionConsumeWebAPI.Controllers
                             var jsonPassengers = JsonConvert.SerializeObject(_PassengersModel, Formatting.Indented);
                             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                            HttpResponseMessage responsePassengers = await client.PutAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + passengerdetails[i].passengerkey, _PassengersModel);
+                            HttpResponseMessage responsePassengers = await client.PutAsJsonAsync(AppUrlConstant.AirasiaAddPassenger + passengerdetails[i].passengerkey, _PassengersModel);
                             if (responsePassengers.IsSuccessStatusCode)
                             {
                                 var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
-                                Logs logs = new Logs();
                                 //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_PassengersModel) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + passengerdetails[i].passengerkey + "\n Response: " + JsonConvert.SerializeObject(_responsePassengers), "Update passenger", "AirAsiaRT");
-                                logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + passengerdetails[i].passengerkey) +"Request:" + jsonPassengers + "\n\n Response: " + JsonConvert.SerializeObject(_responsePassengers), "ADDPassenger"+ i, "AirAsiaOneWay", "oneway");
+                                //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + passengerdetails[i].passengerkey) +"Request:" + jsonPassengers + "\n\n Response: " + JsonConvert.SerializeObject(_responsePassengers), "ADDPassenger"+ i, "AirAsiaOneWay","oneway");
+                                logs.WriteLogs(jsonPassengers, "9-ADDPassengerRequest" + i, "AirAsiaOneWay", "oneway");
+                                logs.WriteLogs(_responsePassengers, "9-ADDPassengerResponse" + i, "AirAsiaOneWay", "oneway");
 
-                                var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
+                                // var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
                             }
                         }
                     }
@@ -294,13 +338,21 @@ namespace OnionConsumeWebAPI.Controllers
                                 //_PassengersModel1.dateOfBirth = "2023-10-01";
                                 _PassengersModel1.dateOfBirth = dateStrings[k];
                                 _PassengersModel1.residentCountry = "IN";
-                                _PassengersModel1.gender = "Male";
-
+                                _Info Info = new _Info();
+                                if (passengerdetails[i].title == "MSTR")
+                                {
+                                    Info.gender = "Male";
+                                }
+                                else
+                                {
+                                    Info.gender = "Female";
+                                }
+                                _PassengersModel1.gender = Info.gender;
                                 InfantName nameINF = new InfantName();
                                 nameINF.first = passengerdetails[i].first;
                                 nameINF.middle = "";
                                 nameINF.last = passengerdetails[i].last;
-                                nameINF.title = "Mr";
+                                nameINF.title = passengerdetails[i].title;
                                 nameINF.suffix = "";
                                 _PassengersModel1.name = nameINF;
 
@@ -308,14 +360,14 @@ namespace OnionConsumeWebAPI.Controllers
                                 var jsonPassengers = JsonConvert.SerializeObject(_PassengersModel1, Formatting.Indented);
                                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + passengerdetails[k].passengerkey + "/infant", _PassengersModel1);
+                                HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.AirasiaAddPassenger + passengerdetails[k].passengerkey + "/infant", _PassengersModel1);
                                 if (responsePassengers.IsSuccessStatusCode)
                                 {
                                     var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
-                                    Logs logs = new Logs();
-                                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_PassengersModel1) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + passengerdetails[k].passengerkey + "/infant" + "\n Response: " + JsonConvert.SerializeObject(_responsePassengers), "ADD_Infant"+ k, "AirAsiaOneWay", "oneway");
-
-                                    var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
+                                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_PassengersModel1) + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v3/booking/passengers/" + passengerdetails[k].passengerkey + "/infant" + "\n Response: " + JsonConvert.SerializeObject(_responsePassengers), "ADD_Infant"+ k, "AirAsiaOneWay", "oneway");
+                                    logs.WriteLogs(jsonPassengers, "10-ADD_InfantRequest" + k, "AirAsiaOneWay", "oneway");
+                                    logs.WriteLogs(_responsePassengers, "10-ADD_InfantResponse" + k, "AirAsiaOneWay", "oneway");
+                                    // var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
                                 }
                                 i++;
                             }
@@ -323,14 +375,14 @@ namespace OnionConsumeWebAPI.Controllers
                             // var jsonPassengers = JsonConvert.SerializeObject(_PassengersModel1, Formatting.Indented);
                             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                            HttpResponseMessage responceGetBooking = await client.GetAsync(AppUrlConstant.URLAirasia + "/api/nsk/v1/booking");
+                            HttpResponseMessage responceGetBooking = await client.GetAsync(AppUrlConstant.AirasiaGetBoking);
                             if (responceGetBooking.IsSuccessStatusCode)
                             {
                                 var _responceGetBooking = responceGetBooking.Content.ReadAsStringAsync().Result;
-                                Logs logs = new Logs();
-                                logs.WriteLogs("Request: " + JsonConvert.SerializeObject("GetBookingRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBooking", "AirAsiaOneWay", "oneway");
-
-                                var JsonObjGetBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+                                //logs.WriteLogs("Request: " + JsonConvert.SerializeObject("GetBookingRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBooking", "AirAsiaOneWay", "oneway");
+                                logs.WriteLogs("Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking", "11-GetBookingRequest", "AirAsiaOneWay", "oneway");
+                                logs.WriteLogs(_responceGetBooking, "11-GetBookingResponse", "AirAsiaOneWay", "oneway");
+                                //var JsonObjGetBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
                             }
                         }
                     }
@@ -365,9 +417,10 @@ namespace OnionConsumeWebAPI.Controllers
                 {
                     // string BaseURL1 = "http://localhost:5225/";
                     var _responceGetBooking = responceGetBooking01.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogs( "Url: " + AppUrlConstant.AirasiaGetBoking + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBooking", "AirAsiaOneWay", "oneway");
-
-                    var JsonObjGetBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+                    //logs.WriteLogs( "Url: " + AppUrlConstant.AirasiaGetBoking + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBooking", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs("Url: " + AppUrlConstant.AirasiaGetBoking, "12-GetBookingRequest", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs(_responceGetBooking, "12-GetBookingResponse", "AirAsiaOneWay", "oneway");
+                    //var JsonObjGetBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
 
                 }
                 #endregion
@@ -438,7 +491,7 @@ namespace OnionConsumeWebAPI.Controllers
             }
             return RedirectToAction("Tripsell", "AATripsell");
         }
-        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> mealssrKey, List<string> BaggageSSrkey, List<string> wheelSsrkey)
+        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> mealssrKey, List<string> BaggageSSrkey, List<string> wheelSsrkey, string GUID)
         {
             List<string> _unitkey = new List<string>();
             for (int i = 0; i < unitKey.Count; i++)
@@ -480,8 +533,16 @@ namespace OnionConsumeWebAPI.Controllers
             }
 
 
-            string tokenview = HttpContext.Session.GetString("AirasiaTokan");
-            token = tokenview.Replace(@"""", string.Empty);
+            //string tokenview = HttpContext.Session.GetString("AirasiaTokan");
+            //token = tokenview.Replace(@"""", string.Empty);
+
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "AirAsia").Result;
+
+            token = tokenData.Token;
+
             if (token == "" || token == null)
             {
                 return RedirectToAction("Index");
@@ -549,12 +610,14 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_SsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_SsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                        logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_SsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSSRmeal"+ l, "AirAsiaOneWay", "oneway");
-                                        var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
+                                        logs.WriteLogs(jsonSellSSR, "13-SellSSSRmealReq" + l, "AirAsiaOneWay", "oneway");
+                                        logs.WriteLogs(_responseresponseSellSSR, "13-SellSSSRmealRes" + l, "AirAsiaOneWay", "oneway");
+                                        //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_SsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSSRmeal"+ l, "AirAsiaOneWay", "oneway");
+                                        //var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                     }
                                     mealid++;
                                 }
@@ -594,13 +657,15 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_BaggageSsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_BaggageSsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                        logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_BaggageSsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSRBaggage"+ k, "AirAsiaOneWay", "oneway");
+                                        //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_BaggageSsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSRBaggage"+ k, "AirAsiaOneWay", "oneway");
+                                        logs.WriteLogs(jsonSellSSR, "14-SellSSRBaggageReq" + k, "AirAsiaOneWay", "oneway");
+                                        logs.WriteLogs(_responseresponseSellSSR, "14-SellSSRBaggageRes" + k, "AirAsiaOneWay", "oneway");
 
-                                        var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
+                                        //var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                     }
                                     baggageid++;
                                 }
@@ -684,9 +749,11 @@ namespace OnionConsumeWebAPI.Controllers
                                 if (responceSeatAssignment.IsSuccessStatusCode)
                                 {
                                     var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                                    logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaSeatSelect + passengerkey + "/seats/" + pas_unitKey) + "Request: " + jsonSeatAssignmentRequest + "\n\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "Seat Assignment "+ j, "AirAsiaOneWay", "oneway");
+                                    //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaSeatSelect + passengerkey + "/seats/" + pas_unitKey) + "Request: " + jsonSeatAssignmentRequest + "\n\n Response: " + JsonConvert.SerializeObject(_responseSeatAssignment), "Seat Assignment "+ j, "AirAsiaOneWay", "oneway");
+                                    logs.WriteLogs(jsonSeatAssignmentRequest, "15-SeatAssignmentReq" + j, "AirAsiaOneWay", "oneway");
+                                    logs.WriteLogs(_responseSeatAssignment, "15-SeatAssignmentRes" + j, "AirAsiaOneWay", "oneway");
 
-                                    var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
+                                    //var JsonObjSeatAssignment = JsonConvert.DeserializeObject<dynamic>(_responseSeatAssignment);
                                 }
                                 seatid++;
                             }
@@ -721,12 +788,15 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_SsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_SsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                        logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_SsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSR Meal"+ l, "AirAsiaOneWay", "oneway");
-                                        var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
+                                        //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_SsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSR Meal"+ l, "AirAsiaOneWay", "oneway");
+                                        logs.WriteLogs(jsonSellSSR, "13-SellSSSRmealReq" + l, "AirAsiaOneWay", "oneway");
+                                        logs.WriteLogs(_responseresponseSellSSR, "13-SellSSSRmealRes" + l, "AirAsiaOneWay", "oneway");
+
+                                        //var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                     }
                                     mealid++;
                                 }
@@ -766,13 +836,14 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_BaggageSsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_BaggageSsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                        logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_BaggageSsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSR Baggage" + k, "AirAsiaOneWay", "oneway");
-
-                                        var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
+                                        //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_BaggageSsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellSSR Baggage" + k, "AirAsiaOneWay", "oneway");
+                                        logs.WriteLogs(jsonSellSSR, "14-SellSSRBaggageReq" + k, "AirAsiaOneWay", "oneway");
+                                        logs.WriteLogs(_responseresponseSellSSR, "14-SellSSRBaggageRes" + k, "AirAsiaOneWay", "oneway");
+                                        // var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                     }
                                     baggageid++;
                                 }
@@ -811,13 +882,15 @@ namespace OnionConsumeWebAPI.Controllers
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_WheelSsrKey, _sellSSRModel);
+                                    HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AirasiaMealSelect + pas_WheelSsrKey, _sellSSRModel);
                                     if (responseSellSSR.IsSuccessStatusCode)
                                     {
                                         var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;
-                                        logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_WheelSsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellWheelchairSSR", "AirAsiaOneWay", "oneway");
+                                        //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.URLAirasia + "/api/nsk/v2/booking/ssrs/" + pas_WheelSsrKey) + "Request: " + jsonSellSSR + "\n\n Response: " + JsonConvert.SerializeObject(_responseresponseSellSSR), "SellWheelchairSSR", "AirAsiaOneWay", "oneway");
+                                        logs.WriteLogs(jsonSellSSR, "15-SellWheelchairSSRReq", "AirAsiaOneWay", "oneway");
+                                        logs.WriteLogs(_responseresponseSellSSR, "15-SellWheelchairSSRRes", "AirAsiaOneWay", "oneway");
 
-                                        var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
+                                        //var JsonObjresponseresponseSellSSR = JsonConvert.DeserializeObject<dynamic>(_responseresponseSellSSR);
                                     }
                                     WheelChairid++;
                                 }
@@ -842,15 +915,19 @@ namespace OnionConsumeWebAPI.Controllers
                 {
 
                     var _responceGetBooking = responceGetBooking01.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaGetBoking) +  "\n\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBooking", "AirAsiaOneWay", "oneway");
+                    //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaGetBoking) +  "\n\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBooking", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaGetBoking), "16-GetBookingReq", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs(_responceGetBooking, "16-GetBookingRes", "AirAsiaOneWay", "oneway");
 
-                    var JsonObjGetBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+                    //var JsonObjGetBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
 
                 }
                 #endregion
             }
 
             return RedirectToAction("AirAsiaOneWayPaymentView", "AirAsiaOneWayPayment");
+
+
         }
 
     }

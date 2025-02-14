@@ -3,16 +3,8 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\airasia\\aatripsellcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\airasia\\aatripsellcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\airasia\\commitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\airasia\\commitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\coporatebooking.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\coporatebooking.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,39 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "FlightSearchIndexController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
-              "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYFAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-13T12:04:26.115Z",
+              "Title": "CoporateBooking",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj",
+              "RelativeDocumentMoniker": "CoporateBooking\\CoporateBooking.csproj",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj",
+              "RelativeToolTip": "CoporateBooking\\CoporateBooking.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-02-14T12:40:09.093Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AATripsellController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\AATripsellController.cs",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\AirAsia\\AATripsellController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\AATripsellController.cs",
-              "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\AirAsia\\AATripsellController.cs",
-              "ViewState": "AgIAAIYAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-13T12:16:18.095Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CommitBookingController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\CommitBookingController.cs",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\AirAsia\\CommitBookingController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\CommitBookingController.cs",
-              "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\AirAsia\\CommitBookingController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-13T12:12:12.03Z"
             }
           ]
         }
