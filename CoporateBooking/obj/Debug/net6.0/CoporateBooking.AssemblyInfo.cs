@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CoporateBooking")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0cc75ddb26d21411d162cb1d2e417a885dbc3682")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d1b763cc583cd3b559349dbd11c9833899a2c2c")]
 [assembly: System.Reflection.AssemblyProductAttribute("CoporateBooking")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CoporateBooking")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
