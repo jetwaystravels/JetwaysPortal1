@@ -70,6 +70,12 @@ namespace OnionConsumeWebAPI.Controllers
 
             string Response = _mongoDBHelper.GetALLFlightResulByGUID(guid).Result;
 
+
+            if(string.IsNullOrEmpty(Response))
+            {
+
+            }
+
             var ListResponse = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(Response));
 
             var searchcount = TempData["count"];

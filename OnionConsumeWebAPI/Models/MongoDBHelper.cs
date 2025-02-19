@@ -80,7 +80,21 @@ namespace OnionConsumeWebAPI.Models
             return guid;
         }
 
-        public async Task<string> GetALLFlightResulByGUID(string guid)
+		public async Task<MongoResponces> GetALLFlightResulByGUIDRoundTrip(string guid)
+		{
+			MongoResponces srchDataALL = new MongoResponces();
+			try
+			{
+				srchDataALL = await mDB.GetCollection<MongoResponces>("Result").Find(Builders<MongoResponces>.Filter.Eq("Guid", guid)).Sort(Builders<MongoResponces>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
+			}
+			catch (Exception ex)
+			{
+				logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
+			}
+			return srchDataALL;
+		}
+
+		public async Task<string> GetALLFlightResulByGUID(string guid)
         {
             MongoResponces srchDataALL = new MongoResponces();
             try
@@ -91,7 +105,16 @@ namespace OnionConsumeWebAPI.Models
             {
                 logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
             }
-            return srchDataALL.Response;
+
+            if (srchDataALL == null)
+            {
+                return string.Empty;
+            }
+            else
+            {
+
+                return srchDataALL.Response;
+            }
         }
 
         public async Task<string> GetALLRightFlightResulByGUID(string guid)

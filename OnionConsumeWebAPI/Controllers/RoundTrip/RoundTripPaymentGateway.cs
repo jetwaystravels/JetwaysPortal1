@@ -4,8 +4,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 {
     public class RoundTripPaymentGateway : Controller
     {
-        public IActionResult RoundTripPaymentView()
+        public IActionResult RoundTripPaymentView(string Guid)
         {
+            ViewBag.Guid = Guid;
             return View();
         }
     }

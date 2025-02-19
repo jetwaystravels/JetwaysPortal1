@@ -803,7 +803,7 @@
             GSTContinuebtn1.style.opacity = "1.0";
             var formData = new FormData($("#passengerFormRT")[0]);
             $.ajax({
-                url: "/RoundAATripsell/PostReturnTravllerData",
+                url: "/RoundAATripsell/PostReturnTravllerData?Guid=" + GetParameterValues("Guid"),
                 type: "POST",
                 data: formData,
                 processData: false,

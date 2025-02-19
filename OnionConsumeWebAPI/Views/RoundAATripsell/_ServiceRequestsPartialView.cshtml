@@ -378,12 +378,12 @@
                 BaggageSSrkey = BaggageSSrkey.concat(BaggageSSrkey_0);
             }
             $.ajax({
-                url: "/RoundAATripsell/PostUnitkey",
+                url: "/RoundAATripsell/PostUnitkey?Guid=" + GetParameterValues("Guid"),
                 type: "POST",
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 data: { unitKey: unitKey, ssrKey: ssrKey, BaggageSSrkey: BaggageSSrkey },
                 success: function (data) {
-                    window.location.href = '/RoundTripPaymentGateway/RoundTripPaymentView';
+                    window.location.href = '/RoundTripPaymentGateway/RoundTripPaymentView?Guid=' + GetParameterValues("Guid");
                 },
                 error: function (err) {
                     console.error(err);

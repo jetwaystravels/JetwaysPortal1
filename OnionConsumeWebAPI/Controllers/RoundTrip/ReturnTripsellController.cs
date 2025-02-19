@@ -25,6 +25,8 @@ using static DomainLayer.Model.SeatMapResponceModel;
 using OnionArchitectureAPI.Services.Travelport;
 using Microsoft.IdentityModel.Tokens;
 using static DomainLayer.Model.GDSResModel;
+using OnionConsumeWebAPI.Models;
+
 namespace OnionConsumeWebAPI.Controllers.RoundTrip
 {
     public class ReturnTripsellController : Controller
@@ -44,8 +46,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         SpiceJetApiController objSpiceJet = new SpiceJetApiController();
         string HostTokenKey = string.Empty;
         string HostTokenValue = string.Empty;
+        private readonly IConfiguration _configuration;
 
-        public async Task<IActionResult> ReturnTripsellView(List<string> fareKey, List<string> journeyKey)
+        public ReturnTripsellController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public async Task<IActionResult> ReturnTripsellView(List<string> fareKey, List<string> journeyKey, string Guid)
         {
             //Code for Same Airline Roundtrip 26-09-2024
             //string SameAirlineRT= JsonConvert.DeserializeObject<string>(HttpContext.Session.GetString("SameAirlineRT"));
@@ -57,6 +65,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             //    return RedirectToAction("ReturnTripsellView", "ReturnTripsellRT");
             //}
             //end here
+
+            string journeySellKeyAA = "";
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            SearchLog searchLog = new SearchLog();
+            searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
+
             SimpleAvailabilityRequestModel availibiltyRQGDS = null;
             StringBuilder fareRepriceReq = new StringBuilder();
             string farebasisdata = string.Empty;
@@ -121,6 +138,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
 
                 #region AirAsia
+                
                 string token = string.Empty;
                 AirAsiaTripResponceModel AirAsiaTripResponceobj = null;
                 List<_credentials> credentialslist = new List<_credentials>();
@@ -135,25 +153,34 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 {
                     if (_JourneykeyRTData.ToLower() == "airasia")
                     {
+                        
+
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+
+
                         string tokenview = string.Empty;
                         string infant = string.Empty;
                         if (_journeySide == "0j")
                         {
-                            tokenview = HttpContext.Session.GetString("AirasiaTokan");
+                            token = tokenData.Token;
                         }
                         else
                         {
-                            tokenview = HttpContext.Session.GetString("AirasiaTokanR");
+                            token = tokenData.RToken;
                         }
-                        tokenview = tokenview.Replace(@"""", string.Empty);
-                        if (tokenview == "" || tokenview == null)
+                        //tokenview = tokenview.Replace(@"""", string.Empty);
+                        if (token == "" || token == null)
                         {
                             return RedirectToAction("Index");
                         }
-                        token = tokenview.Replace(@"""", string.Empty);
+                        // token = tokenview.Replace(@"""", string.Empty);
 
-                        HttpContext.Session.SetString("journeyKey", JsonConvert.SerializeObject(journeyKey));
-                        string Leftshowpopupdata = HttpContext.Session.GetString("PassengerModel");
+                        _mongoDBHelper.UpdateFlightTokenJourney(Guid, "AirAsia", JsonConvert.SerializeObject(journeyKey));
+
+                        //  HttpContext.Session.SetString("journeyKey", JsonConvert.SerializeObject(journeyKey));
+                        // string Leftshowpopupdata = HttpContext.Session.GetString("PassengerModel");
+
+                        string Leftshowpopupdata = objMongoHelper.UnZip(tokenData.PassRequest);
                         SimpleAvailabilityRequestModel _SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(Leftshowpopupdata);
                         var AdtType = "";
                         var AdtCount = 0;
@@ -176,7 +203,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         _JourneykeyData = Jparts[0];
                         key.journeyKey = _JourneykeyData;
 
-                        HttpContext.Session.SetString("journeySellKeyAA", JsonConvert.SerializeObject(_JourneykeyData));
+                        journeySellKeyAA = JsonConvert.SerializeObject(_JourneykeyData);
+
+                       // HttpContext.Session.SetString("journeySellKeyAA", JsonConvert.SerializeObject(_JourneykeyData));
 
                         string fareKeyKeyOneway = fareKey[p];
                         string[] Fparts = fareKeyKeyOneway.Split('@');
@@ -424,7 +453,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                 SimpleAvailabilityRequestModel _SimpleAvailabilityobject = new SimpleAvailabilityRequestModel();
                                 //var jsonDataObject = TempData["PassengerModel"];
-                                var jsonDataObject = HttpContext.Session.GetString("PassengerModel");
+                               // var jsonDataObject = HttpContext.Session.GetString("PassengerModel");
+
+                                var jsonDataObject = objMongoHelper.UnZip(tokenData.PassRequest);
                                 _SimpleAvailabilityobject = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonDataObject.ToString());
 
                                 GetItenaryModel itenaryInfant = new GetItenaryModel();
@@ -750,23 +781,41 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     {
                         string tokenview = string.Empty;
                         string infant = string.Empty;
+                        //if (_journeySide == "0j")
+                        //{
+                        //    tokenview = HttpContext.Session.GetString("AkasaTokan");
+                        //}
+                        //else
+                        //{
+                        //    tokenview = HttpContext.Session.GetString("AkasaTokanR");
+                        //}
+                        //tokenview = tokenview.Replace(@"""", string.Empty);
+                        //if (tokenview == "" || tokenview == null)
+                        //{
+                        //    return RedirectToAction("Index");
+                        //}
+                        //token = tokenview.Replace(@"""", string.Empty);
+
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
                         if (_journeySide == "0j")
                         {
-                            tokenview = HttpContext.Session.GetString("AkasaTokan");
+                            token = tokenData.Token;
                         }
                         else
                         {
-                            tokenview = HttpContext.Session.GetString("AkasaTokanR");
+                            token = tokenData.RToken;
                         }
-                        tokenview = tokenview.Replace(@"""", string.Empty);
-                        if (tokenview == "" || tokenview == null)
+
+                        if (string.IsNullOrEmpty(token))
                         {
                             return RedirectToAction("Index");
                         }
-                        token = tokenview.Replace(@"""", string.Empty);
 
-                        HttpContext.Session.SetString("journeyKey", JsonConvert.SerializeObject(journeyKey));
-                        string Leftshowpopupdata = HttpContext.Session.GetString("PassengerModel");
+                        _mongoDBHelper.UpdateFlightTokenJourney(Guid, "Akasa", JsonConvert.SerializeObject(journeyKey));
+
+                      //  HttpContext.Session.SetString("journeyKey", JsonConvert.SerializeObject(journeyKey));
+                        string Leftshowpopupdata = objMongoHelper.UnZip(tokenData.PassRequest); //HttpContext.Session.GetString("PassengerModel");
                         SimpleAvailabilityRequestModel _SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(Leftshowpopupdata);
                         var AdtType = "";
                         var AdtCount = 0;
@@ -1362,24 +1411,40 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     if (_JourneykeyRTData.ToLower() == "spicejet")
                     {
                         #region SpiceJetSellRequest
+
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "SpiceJet").Result;
+
+
                         string stravailibitilityrequest = HttpContext.Session.GetString("SpicejetAvailibilityRequest");
                         GetAvailabilityRequest availibiltyRQ = JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
                         Signature = string.Empty;
                         str3 = string.Empty;
                         TotalCount = 0;
+                        //if (_journeySide == "0j")
+                        //{
+                        //    Signature = HttpContext.Session.GetString("SpicejetSignature");
+                        //}
+                        //else
+                        //{
+                        //    Signature = HttpContext.Session.GetString("SpicejetSignatureR");
+                        //}
+
                         if (_journeySide == "0j")
                         {
-                            Signature = HttpContext.Session.GetString("SpicejetSignature");
+                            Signature = tokenData.Token;
                         }
                         else
                         {
-                            Signature = HttpContext.Session.GetString("SpicejetSignatureR");
+                            Signature = tokenData.RToken;
                         }
+
+
+
                         if (Signature == null) { Signature = ""; }
-                        Signature = Signature.Replace(@"""", string.Empty);
-                        int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                        int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                        int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+                      //  Signature = Signature.Replace(@"""", string.Empty);
+                        int adultcount = searchLog.Adults;
+                        int childcount = searchLog.Children;
+                        int infantcount = searchLog.Infants;
                         TotalCount = adultcount + childcount;
                         SellResponse _getSellRS = null;
                         SellRequest _getSellRQ = null;
@@ -1877,19 +1942,32 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         Signature = string.Empty;
                         str3 = string.Empty;
                         TotalCount = 0;
+                        //if (_journeySide == "0j")
+                        //{
+                        //    Signature = HttpContext.Session.GetString("IndigoSignature");
+                        //    if (Signature == null) { Signature = ""; }
+                        //}
+                        //else
+                        //{
+                        //    Signature = HttpContext.Session.GetString("IndigoSignatureR");
+                        //}
+
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
+
+
                         if (_journeySide == "0j")
                         {
-                            Signature = HttpContext.Session.GetString("IndigoSignature");
-                            if (Signature == null) { Signature = ""; }
+                            Signature = tokenData.Token;
                         }
                         else
                         {
-                            Signature = HttpContext.Session.GetString("IndigoSignatureR");
+                            Signature = tokenData.RToken;
                         }
-                        Signature = Signature.Replace(@"""", string.Empty);
-                        int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                        int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                        int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+
+                        //  Signature = Signature.Replace(@"""", string.Empty);
+                        int adultcount = searchLog.Adults;
+                        int childcount = searchLog.Children;
+                        int infantcount = searchLog.Infants;
                         TotalCount = adultcount + childcount;
                         _JourneykeyData = _Jparts[0];
                         string fareKeyRTway = fareKey[p];
@@ -2205,9 +2283,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             farebasisdata = _farebasis;
                         }
                         newGuid = Signature.Replace(@"""", string.Empty);
-                        int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                        int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                        int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+                        //int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
+                        //int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
+                        //int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+
+                        int adultcount = searchLog.Adults;
+                        int childcount = searchLog.Children;
+                        int infantcount = searchLog.Infants;
                         TotalCount = adultcount + childcount;
                         if (newGuid == "" || newGuid == null)
                         {
@@ -2564,17 +2646,34 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     #region AirAsia SeatMap 
                     if (_JourneykeyRTData.ToLower() == "airasia")
                     {
+                        //if (_journeySide == "0j")
+                        //{
+                        //    token = HttpContext.Session.GetString("AirasiaTokan");
+                        //}
+                        //else
+                        //{
+                        //    token = HttpContext.Session.GetString("AirasiaTokanR");
+                        //}
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+
                         if (_journeySide == "0j")
                         {
-                            token = HttpContext.Session.GetString("AirasiaTokan");
+                            token = tokenData.Token;
                         }
                         else
                         {
-                            token = HttpContext.Session.GetString("AirasiaTokanR");
+                            token = tokenData.RToken;
                         }
-                        token = token.Replace(@"""", string.Empty);
+
+                      //  token = token.Replace(@"""", string.Empty);
                         TimeSpan timeSpan1 = new TimeSpan(0, 0, 0, 10);
-                        string _JourneykeyDataAA = HttpContext.Session.GetString("journeySellKeyAA");
+                      
+                        
+                     //   string _JourneykeyDataAA = HttpContext.Session.GetString("journeySellKeyAA");
+
+                        string _JourneykeyDataAA =  journeySellKeyAA;
+
+
                         _JourneykeyDataAA = _JourneykeyDataAA.Replace(@"""", string.Empty);
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -2844,15 +2943,19 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     #region AkasaSeatMap 
                     if (_JourneykeyRTData.ToLower() == "akasaair")
                     {
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
                         if (_journeySide == "0j")
                         {
-                            token = HttpContext.Session.GetString("AkasaTokan");
+                            token = tokenData.Token;
                         }
                         else
                         {
-                            token = HttpContext.Session.GetString("AkasaTokanR");
+                            token = tokenData.RToken;
                         }
-                        token = token.Replace(@"""", string.Empty);
+
+
+                       // token = token.Replace(@"""", string.Empty);
                         TimeSpan timeSpan1 = new TimeSpan(0, 0, 0, 10);
                         string _JourneykeyDataAA = HttpContext.Session.GetString("journeySellKey");
                         _JourneykeyDataAA = _JourneykeyDataAA.Replace(@"""", string.Empty);
@@ -3865,15 +3968,26 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     #region Meals AirAsia
                     if (_JourneykeyRTData.ToLower() == "airasia")
                     {
+                        //if (_journeySide == "0j")
+                        //{
+                        //    token = HttpContext.Session.GetString("AirasiaTokan");
+                        //}
+                        //else
+                        //{
+                        //    token = HttpContext.Session.GetString("AirasiaTokanR");
+                        //}
+                        //token = token.Replace(@"""", string.Empty);
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+
                         if (_journeySide == "0j")
                         {
-                            token = HttpContext.Session.GetString("AirasiaTokan");
+                            token = tokenData.Token;
                         }
                         else
                         {
-                            token = HttpContext.Session.GetString("AirasiaTokanR");
+                            token = tokenData.RToken;
                         }
-                        token = token.Replace(@"""", string.Empty);
+
                         string passengerdata = HttpContext.Session.GetString("keypassenger");
 
                         AirAsiaTripResponceModel passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdata, typeof(AirAsiaTripResponceModel));
@@ -4067,15 +4181,18 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     #region Meals AkasaAir
                     if (_JourneykeyRTData.ToLower() == "akasaair")
                     {
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
                         if (_journeySide == "0j")
                         {
-                            token = HttpContext.Session.GetString("AkasaTokan");
+                            token = tokenData.Token;
                         }
                         else
                         {
-                            token = HttpContext.Session.GetString("AkasaTokanR");
+                            token = tokenData.RToken;
                         }
-                        token = token.Replace(@"""", string.Empty);
+
+                      //  token = token.Replace(@"""", string.Empty);
                         string passengerdata = HttpContext.Session.GetString("keypassenger");
 
                         AirAsiaTripResponceModel passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdata, typeof(AirAsiaTripResponceModel));
@@ -4506,17 +4623,18 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     if (_JourneykeyRTData.ToLower() == "indigo")
                     {
                         Signature = string.Empty;
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
                         if (_journeySide == "0j")
                         {
-                            Signature = HttpContext.Session.GetString("IndigoSignature");
-
+                            Signature = tokenData.Token;
                         }
                         else
                         {
-                            Signature = HttpContext.Session.GetString("IndigoSignatureR");
+                            Signature = tokenData.RToken;
                         }
-                        if (Signature == null) { Signature = ""; }
-                        Signature = Signature.Replace(@"""", string.Empty);
+
+                        //if (Signature == null) { Signature = ""; }
+                        //Signature = Signature.Replace(@"""", string.Empty);
                         List<legSsrs> SSRAvailabiltyLegssrlist = new List<legSsrs>();
                         SSRAvailabiltyResponceModel SSRAvailabiltyResponceobj = null;
                         AirAsiaTripResponceModel passeengerlist = null;
@@ -4748,7 +4866,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             HttpContext.Session.SetString("Mainseatmapvm", JsonConvert.SerializeObject(MainSeatMapdata));
             HttpContext.Session.SetString("Mainmealvm", JsonConvert.SerializeObject(MainMealsdata));
 
-            return RedirectToAction("RoundAATripsellView", "RoundAATripsell");
+            return RedirectToAction("RoundAATripsellView", "RoundAATripsell", new { Guid = Guid });
         }
 
         PaxPriceType[] getPaxdetails(int adult_, int child_, int infant_)

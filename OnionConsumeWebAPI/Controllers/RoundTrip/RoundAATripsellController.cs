@@ -25,6 +25,8 @@ using Utility;
 using static DomainLayer.Model.PassengersModel;
 using static DomainLayer.Model.SeatMapResponceModel;
 using static OnionConsumeWebAPI.Controllers.IndigoTripsellController;
+using OnionConsumeWebAPI.Models;
+using System;
 
 namespace OnionConsumeWebAPI.Controllers.RoundTrip
 {
@@ -37,7 +39,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         string uniquekey = string.Empty;
         AirAsiaTripResponceModel passeengerlist = null;
         Logs logs = new Logs();
-        public IActionResult RoundAATripsellView()
+        private readonly IConfiguration _configuration;
+
+        public RoundAATripsellController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public IActionResult RoundAATripsellView(string Guid)
         {
 
             List<SelectListItem> Title = new()
@@ -233,8 +242,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             return View(vm);
         }
 
-        public async Task<IActionResult> PostReturnContactData(ContactModel contactobject, AddGSTInformation addGSTInformation)
+        public async Task<IActionResult> PostReturnContactData(ContactModel contactobject, AddGSTInformation addGSTInformation, string Guid)
         {
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+
             HttpContext.Session.SetString("GDSContactdetails", JsonConvert.SerializeObject(contactobject));
             string SelectedAirlinedata = HttpContext.Session.GetString("SelectedAirlineName");
             string[] dataArray = JsonConvert.DeserializeObject<string[]>(SelectedAirlinedata);
@@ -243,18 +259,27 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 if (dataArray[i] == null)  // Change for same Airline Roundtrip-26-09-2024
                     continue;
                 string tokenview = string.Empty;
+                //if (i == 0)
+                //{
+                //    tokenview = HttpContext.Session.GetString("AirasiaTokan");
+                //}
+                //else
+                //{
+                //    tokenview = HttpContext.Session.GetString("AirasiaTokanR");
+                //}
+
                 if (i == 0)
                 {
-                    tokenview = HttpContext.Session.GetString("AirasiaTokan");
+                    token = tokenData.Token;
                 }
                 else
                 {
-                    tokenview = HttpContext.Session.GetString("AirasiaTokanR");
+                    token = tokenData.RToken;
                 }
 
-                if (!string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "airasia")
+                if (!string.IsNullOrEmpty(token) && dataArray[i].ToLower() == "airasia")
                 {
-                    token = tokenview.Replace(@"""", string.Empty);
+                  
                     using (HttpClient client = new HttpClient())
                     {
                         ContactModel _ContactModel = new ContactModel();
@@ -648,8 +673,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             return RedirectToAction("RoundAATripsellView", "RoundAATripsell");
         }
         [HttpPost]
-        public async Task<IActionResult> PostReturnTravllerData(List<passkeytype> passengerdetails, List<Infanttype> infanttype)
+        public async Task<IActionResult> PostReturnTravllerData(List<passkeytype> passengerdetails, List<Infanttype> infanttype, string Guid)
         {
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+
             SSRAvailabiltyResponceModel Mealslist = null;
             SeatMapResponceModel Seatmaplist = null;
             ViewModel vm = new ViewModel();
@@ -657,7 +688,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             string[] dataArray = JsonConvert.DeserializeObject<string[]>(SelectedAirlinedata);
             for (int i1 = 0; i1 < dataArray.Length; i1++)
             {
-                string tokenview = HttpContext.Session.GetString("AirasiaTokan");
+                string tokenview = tokenData.Token;
 
                 if (dataArray[i1] == null) // Change for same Airline Roundtrip-26-09-2024
                     continue;
@@ -669,13 +700,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         tokenview = string.Empty;
                         if (i1 == 0)
                         {
-                            tokenview = HttpContext.Session.GetString("AirasiaTokan");
+                            tokenview = tokenData.Token;
                         }
                         else
                         {
-                            tokenview = HttpContext.Session.GetString("AirasiaTokanR");
+                            tokenview = tokenData.RToken;
                         }
-                        token = tokenview.Replace(@"""", string.Empty);
+                        token = tokenview;
                         PassengersModel _PassengersModel = new PassengersModel();
                         for (int i = 0; i < passengerdetails.Count; i++)
                         {
@@ -1184,11 +1215,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
             return PartialView("_ServiceRequestsPartialView", vm);
         }
-
+       
 
         //Post Unit Key
-        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey, List<string> FastfarwardAddon, List<string> PPBGAddon)
+        public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey, List<string> FastfarwardAddon, List<string> PPBGAddon, string Guid)
         {
+           
+
             List<string> _unitkey = new List<string>();
             for (int i = 0; i < unitKey.Count; i++)
             {
@@ -2154,15 +2187,22 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     bagid = 0;
                                     mealid = 0;
                                     string tokenview = string.Empty;
+                                    MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+                                    MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+                                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+
+                                    //token = tokenData.Token;
+
                                     if (string.IsNullOrEmpty(tokenview))
                                     {
                                         if (_a == 0)
                                         {
-                                            tokenview = HttpContext.Session.GetString("AirasiaTokan");//spelling 
+                                            tokenview = tokenData.Token;// HttpContext.Session.GetString("AirasiaTokan");//spelling 
                                         }
                                         else
                                         {
-                                            tokenview = HttpContext.Session.GetString("AirasiaTokanR");//spelling 
+                                            tokenview = tokenData.RToken; //HttpContext.Session.GetString("AirasiaTokanR");//spelling 
                                         }
                                         token = tokenview.Replace(@"""", string.Empty);
                                         if (token == "" || token == null)
@@ -2924,18 +2964,22 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     }
                                 }
 
-                                //*************AirAsia AssignSeat API*************
+                                //*************AirAsia AssignSeat API*************//
                                 else if (passeengerKeyList.journeys[0].Airlinename.ToLower() == "airasia")
                                 {
                                     //seatid = 0;
                                     string tokenview = string.Empty;
+                                    MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+                                    MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+                                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+
                                     if (p == 0)
                                     {
-                                        tokenview = HttpContext.Session.GetString("AirasiaTokan");//spelling 
+                                        tokenview = tokenData.Token; //HttpContext.Session.GetString("AirasiaTokan");//spelling 
                                     }
                                     else
                                     {
-                                        tokenview = HttpContext.Session.GetString("AirasiaTokanR");//spelling 
+                                        tokenview = tokenData.RToken; //HttpContext.Session.GetString("AirasiaTokanR");//spelling 
                                     }
                                     if (!string.IsNullOrEmpty(tokenview))
                                     {
@@ -3655,7 +3699,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
             #endregion
 
-            return RedirectToAction("RoundTripPaymentView", "RoundTripPaymentGateway");
+            return RedirectToAction("RoundTripPaymentView", "RoundTripPaymentGateway", new { Guid = Guid });
         }
         public class Paxes
         {

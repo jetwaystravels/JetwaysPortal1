@@ -98,6 +98,15 @@
 
     }
 
+    function GetParameterValues(param) {
+        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < url.length; i++) {
+            var urlparam = url[i].split('=');
+            if (urlparam[0] == param) {
+                return urlparam[1];
+            }
+        }
+    }
 
    
     function PostdataReturnTripsell() {
@@ -144,9 +153,9 @@
         if (sameairLine === "AirlineRT") { 
             alert(sameairLine);
         }
+      
 
-
-        fetch('/ReturnTripsell/ReturnTripsellView', {
+        fetch('/ReturnTripsell/ReturnTripsellView?Guid=' + GetParameterValues("Guid"), {
             method: 'POST',
             body: form
         })
@@ -156,7 +165,7 @@
                     fareKey = [];
                     journeyKey = [];
                     location.reload();
-                    window.location.href = '/RoundAATripsell/RoundAATripsellView';
+                    window.location.href = '/RoundAATripsell/RoundAATripsellView?Guid=' + GetParameterValues("Guid");
                 } else {
                     throw new Error('Data sending failed');
                 }

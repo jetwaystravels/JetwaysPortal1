@@ -21,6 +21,7 @@ using OnionArchitectureAPI.Services.Barcode;
 using OnionArchitectureAPI.Services.Travelport;
 using System.Text;
 using System.Text.RegularExpressions;
+using OnionConsumeWebAPI.Models;
 
 namespace OnionConsumeWebAPI.Controllers.RoundTrip
 {
@@ -42,21 +43,27 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         DateTime Journeydatetime = new DateTime();
         string bookingKey = string.Empty;
         ApiResponseModel responseModel;
-        //double totalAmount = 0;
-        //double totalAmountBaggage = 0;
-        //double totalAmounttax = 0;
-        //double totalAmounttaxSGST = 0;
-        //double totalAmounttaxBag = 0;
-        //double totalAmounttaxSGSTBag = 0;
+		private readonly IConfiguration _configuration;
+		//double totalAmount = 0;
+		//double totalAmountBaggage = 0;
+		//double totalAmounttax = 0;
+		//double totalAmounttaxSGST = 0;
+		//double totalAmounttaxBag = 0;
+		//double totalAmounttaxSGSTBag = 0;
 
 
-        //double totalMealTax = 0;
-        //double totalBaggageTax = 0;
-        //double taxMinusMeal = 0;
-        //double taxMinusBaggage = 0;
-        //double TotalAmountMeal = 0;
-        //double TotaAmountBaggage = 0;
-        public async Task<IActionResult> RoundTripBookingView()
+		//double totalMealTax = 0;
+		//double totalBaggageTax = 0;
+		//double taxMinusMeal = 0;
+		//double taxMinusBaggage = 0;
+		//double TotalAmountMeal = 0;
+		//double TotaAmountBaggage = 0;
+
+		public RoundTripCommitBooking(IConfiguration configuration)
+		{
+			_configuration = configuration;
+		}
+		public async Task<IActionResult> RoundTripBookingView(string Guid)
         {
 
 
@@ -72,15 +79,19 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
             using (HttpClient client = new HttpClient())
             {
+				MongoHelper objMongoHelper = new MongoHelper();
+				MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+				MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
+				tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
 
-                for (int k1 = 0; k1 < data.Airline.Count; k1++)
+				for (int k1 = 0; k1 < data.Airline.Count; k1++)
                 {
 
                     string tokenview = string.Empty;
                     //AirAsia
                     string token = string.Empty;
-                    tokenview = HttpContext.Session.GetString("AirasiaTokan");
+                    tokenview = tokenData.Token;// HttpContext.Session.GetString("AirasiaTokan");
 
 
                     if (!string.IsNullOrEmpty(tokenview) && flagAirAsia == true && data.Airline[k1].ToLower().Contains("airasia"))
@@ -99,19 +110,28 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         double TotaAmountBaggage = 0;
 
                         //flagAirAsia = false;
-                        if (k1 == 0)
-                        {
-                            tokenview = HttpContext.Session.GetString("AirasiaTokan");
-                        }
-                        else
-                        {
-                            tokenview = HttpContext.Session.GetString("AirasiaTokanR");
-                        }
-                        token = tokenview.Replace(@"""", string.Empty);
+                        //if (k1 == 0)
+                        //{
+                        //    tokenview = HttpContext.Session.GetString("AirasiaTokan");
+                        //}
+                        //else
+                        //{
+                        //    tokenview = HttpContext.Session.GetString("AirasiaTokanR");
+                        //}
+                        //token = tokenview.Replace(@"""", string.Empty);
+
+						if (k1 == 0)
+						{
+							token = tokenData.Token;
+						}
+						else
+						{
+							token = tokenData.RToken;
+						}
 
 
-                        //GetBokking From State and Payment API Call
-                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+						//GetBokking From State and Payment API Call
+						client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                         HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.AirasiaGetBoking);
                         if (responceGetBookingSate.IsSuccessStatusCode)

@@ -500,7 +500,7 @@
             debugger;
             var unitKey = $("#unitKey1").val();
             $.ajax({
-                url: "/AATripsell/PostUnitkey",
+                url: "/AATripsell/PostUnitkey?Guid=" + GetParameterValues("Guid"),
                 type: "POST",
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
                 data: { unitKey: unitKey },

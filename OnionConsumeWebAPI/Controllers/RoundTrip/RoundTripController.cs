@@ -12,78 +12,118 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using OnionConsumeWebAPI.Models;
 using NuGet.Common;
 using NuGet.Packaging.Signing;
 using static DomainLayer.Model.SeatMapResponceModel;
+using System;
 
 namespace OnionConsumeWebAPI.Controllers.RoundTrip
 {
     public class RoundTripController : Controller
     {
+		
+		private readonly IConfiguration _configuration;
 
-        int stopFilter = 0;
-        public IActionResult RTFlightView()
+		int stopFilter = 0;
+
+		public RoundTripController(IConfiguration configuration)
+		{
+			_configuration = configuration;
+		}
+		public IActionResult RTFlightView()
         {
 
 
-            var sameAirlineRT = TempData["RoundTripSameAirline"];
-            ViewData["SameAirlineRT"] = sameAirlineRT;
+            //var sameAirlineRT = TempData["RoundTripSameAirline"];
+            //ViewData["SameAirlineRT"] = sameAirlineRT;
             
-            var searchcount = TempData["count"];
-            ViewData["count"] = searchcount;
+            //var searchcount = TempData["count"];
+            //ViewData["count"] = searchcount;
 
-            var origindata = TempData["origin"];
-            ViewData["origin"] = origindata;
+            //var origindata = TempData["origin"];
+            //ViewData["origin"] = origindata;
 
-            var destinationdata = TempData["destination"];
-            ViewData["destination"] = destinationdata;
+            //var destinationdata = TempData["destination"];
+            //ViewData["destination"] = destinationdata;
 
-            var searchcountR = TempData["countR"];
-            ViewData["countR"] = searchcountR;
+            //var searchcountR = TempData["countR"];
+            //ViewData["countR"] = searchcountR;
 
-            var origindataR = TempData["originR"];
-            ViewData["originR"] = origindataR;
+            //var origindataR = TempData["originR"];
+            //ViewData["originR"] = origindataR;
 
-            var destinationdataR = TempData["destinationR"];
-            ViewData["destinationR"] = destinationdataR;
+            //var destinationdataR = TempData["destinationR"];
+            //ViewData["destinationR"] = destinationdataR;
 
-            ViewModel vmobj = new ViewModel();
-            string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
-            string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
 
-            List<SimpleAvailibilityaAddResponce> LeftdeserializedObjects = null;
-            List<SimpleAvailibilityaAddResponce> RightdeserializedObjects = null;
-            if (!string.IsNullOrEmpty(Leftshowpopupdata))
-            {
-                LeftdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Leftshowpopupdata);
-            }
+			string guid = HttpContext.Request.Query["Guid"].ToString();
 
-            if (!string.IsNullOrEmpty(Rightshowpopupdata))
-            {
-                RightdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Rightshowpopupdata);
-            }
+			MongoResponces srchDataALL = new MongoResponces();
+			MongoHelper objMongoHelper = new MongoHelper();
+			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
 
-            vmobj.SimpleAvailibilityaAddResponcelist = LeftdeserializedObjects;
-            vmobj.SimpleAvailibilityaAddResponcelistR = RightdeserializedObjects;
+			srchDataALL = _mongoDBHelper.GetALLFlightResulByGUIDRoundTrip(guid).Result;
 
-            string RTFlightEditData = HttpContext.Session.GetString("PassengerModelR");
-            SimpleAvailabilityRequestModel simpleAvailabilityRequestModel = null;
-            if (!string.IsNullOrEmpty(RTFlightEditData))
-            {
-                simpleAvailabilityRequestModel = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(RTFlightEditData);
-            }
-            vmobj.simpleAvailabilityRequestModelEdit = simpleAvailabilityRequestModel;
+			ViewModel vmobj = new ViewModel();
+			//string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
+			//string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
+
+			vmobj.SimpleAvailibilityaAddResponcelist = (List<SimpleAvailibilityaAddResponce>) objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.Response));
+			vmobj.SimpleAvailibilityaAddResponcelistR = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.RightResponse));
+
+			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(guid, "AirAsia").Result;
+
+            var jsonData = objMongoHelper.UnZip(tokenData.PassRequest);
+			vmobj.simpleAvailabilityRequestModelEdit  = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
+
+
+			//List<SimpleAvailibilityaAddResponce> LeftdeserializedObjects = null;
+			//         List<SimpleAvailibilityaAddResponce> RightdeserializedObjects = null;
+			//         if (!string.IsNullOrEmpty(Leftshowpopupdata))
+			//         {
+			//             LeftdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Leftshowpopupdata);
+			//         }
+
+			//         if (!string.IsNullOrEmpty(Rightshowpopupdata))
+			//         {
+			//             RightdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Rightshowpopupdata);
+			//         }
+
+			//         vmobj.SimpleAvailibilityaAddResponcelist = LeftdeserializedObjects;
+			//         vmobj.SimpleAvailibilityaAddResponcelistR = RightdeserializedObjects;
+
+			//string RTFlightEditData = HttpContext.Session.GetString("PassengerModelR");
+   //         SimpleAvailabilityRequestModel simpleAvailabilityRequestModel = null;
+   //         if (!string.IsNullOrEmpty(RTFlightEditData))
+   //         {
+   //             simpleAvailabilityRequestModel = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(RTFlightEditData);
+   //         }
+   //         vmobj.simpleAvailabilityRequestModelEdit = simpleAvailabilityRequestModel;
             // HttpContext.Session.SetString("FlightDetail", JsonConvert.SerializeObject(vmobj));
             return View(vmobj);
         }
-        public IActionResult PostReturnAATripsellView(int uniqueId, int uniqueIdR)
+        public IActionResult PostReturnAATripsellView(int uniqueId, int uniqueIdR, string Guid)
         {
-            string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
-            string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
-            List<SimpleAvailibilityaAddResponce> LeftdeserializedObjects = null;
-            List<SimpleAvailibilityaAddResponce> RightdeserializedObjects = null;
-            LeftdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Leftshowpopupdata);
-            RightdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Rightshowpopupdata);
+            //string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
+            //string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
+            //List<SimpleAvailibilityaAddResponce> LeftdeserializedObjects = null;
+            //List<SimpleAvailibilityaAddResponce> RightdeserializedObjects = null;
+            //LeftdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Leftshowpopupdata);
+            //RightdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Rightshowpopupdata);
+
+            MongoResponces srchDataALL = new MongoResponces();
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+
+            srchDataALL = _mongoDBHelper.GetALLFlightResulByGUIDRoundTrip(Guid).Result;
+
+            var LeftdeserializedObjects = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.Response));
+            var RightdeserializedObjects = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.RightResponse));
+
+
             var filteredDataLeft = LeftdeserializedObjects.Where(x => x.uniqueId == uniqueId).ToList();
             var filteredDataRight = RightdeserializedObjects.Where(m => m.uniqueId == uniqueIdR).ToList();
             ViewModel vmobject = new ViewModel();
@@ -93,24 +133,38 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
         }
         [HttpPost]
-        public IActionResult RTFlightView(string sortOrderName, string sortOrderNameR, List<int> selectedIds, List<int> selectedIdsRight, List<string> RTFilterIdAirLine, List<string> departure, List<string> arrival, List<string> departureRight, List<string> arrivalRight)
+        public IActionResult RTFlightView(string sortOrderName, string sortOrderNameR, List<int> selectedIds, List<int> selectedIdsRight, List<string> RTFilterIdAirLine, List<string> departure, List<string> arrival, List<string> departureRight, List<string> arrivalRight, string Guid)
         {
-            string LeftshowpopupdataStops = HttpContext.Session.GetString("LeftReturnViewFlightView");
-            string RightshowpopupdataStops = HttpContext.Session.GetString("RightReturnFlightView");
+            //string LeftshowpopupdataStops = HttpContext.Session.GetString("LeftReturnViewFlightView");
+            //string RightshowpopupdataStops = HttpContext.Session.GetString("RightReturnFlightView");
+
+
+            MongoResponces srchDataALL = new MongoResponces();
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+
+            srchDataALL = _mongoDBHelper.GetALLFlightResulByGUIDRoundTrip(Guid).Result;
+
+            //var LeftdeserializedObjects = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.Response));
+            //var RightdeserializedObjects = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.RightResponse));
+
 
             ViewModel vmobj = new ViewModel();
-            List<SimpleAvailibilityaAddResponce> RightdeserializedStops = null;
-            List<SimpleAvailibilityaAddResponce> LeftdeserializedStops = null;
+            //List<SimpleAvailibilityaAddResponce> RightdeserializedStops = null;
+            //List<SimpleAvailibilityaAddResponce> LeftdeserializedStops = null;
 
-            if (!string.IsNullOrEmpty(LeftshowpopupdataStops))
-            {
-                LeftdeserializedStops = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(LeftshowpopupdataStops);
-            }
+            //if (!string.IsNullOrEmpty(LeftshowpopupdataStops))
+            //{
+            //    LeftdeserializedStops = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(LeftshowpopupdataStops);
+            //}
 
-            if (!string.IsNullOrEmpty(RightshowpopupdataStops))
-            {
-                RightdeserializedStops = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(RightshowpopupdataStops);
-            }
+            //if (!string.IsNullOrEmpty(RightshowpopupdataStops))
+            //{
+            //    RightdeserializedStops = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(RightshowpopupdataStops);
+            //}
+
+            var LeftdeserializedStops = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.Response));
+            var RightdeserializedStops = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.RightResponse));
 
             if (departure.Count > 0)
             {
@@ -143,9 +197,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 }
             }
 
-            string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
-            string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
-            if (string.IsNullOrEmpty(Leftshowpopupdata))
+            //string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
+            //string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
+            //if (string.IsNullOrEmpty(Leftshowpopupdata))
+            //{
+            //    return View("Error");
+            //}
+
+            if (LeftdeserializedStops == null)
             {
                 return View("Error");
             }
