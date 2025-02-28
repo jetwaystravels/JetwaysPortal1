@@ -2971,10 +2971,7 @@
           "System.ServiceModel.Security": "4.10.3"
         },
         "runtime": {
-          "DomainLayer.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "DomainLayer.dll": {}
         }
       },
       "Indigo/1.0.0": {
@@ -2988,10 +2985,7 @@
           "Utility": "1.0.0"
         },
         "runtime": {
-          "Indigo.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Indigo.dll": {}
         }
       },
       "RepositoryLayer/1.0.0": {
@@ -3001,10 +2995,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3"
         },
         "runtime": {
-          "RepositoryLayer.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "RepositoryLayer.dll": {}
         }
       },
       "ServiceLayer/1.0.0": {
@@ -3012,10 +3003,7 @@
           "RepositoryLayer": "1.0.0"
         },
         "runtime": {
-          "ServiceLayer.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "ServiceLayer.dll": {}
         }
       },
       "Spicejet/1.0.0": {
@@ -3029,18 +3017,12 @@
           "Utility": "1.0.0"
         },
         "runtime": {
-          "Spicejet.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Spicejet.dll": {}
         }
       },
       "Utility/1.0.0": {
         "runtime": {
-          "Utility.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Utility.dll": {}
         }
       }
     }

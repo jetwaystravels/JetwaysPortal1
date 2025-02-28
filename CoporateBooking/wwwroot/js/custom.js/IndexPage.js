@@ -106,12 +106,16 @@ $(document).ready(function () {
         $('.autodropdown').hide();
         var chosenInput2 = document.querySelector('.autoarrival input');
         chosenInput2.focus();
-        chosenInput2.addEventListener("keydown", function (event) {
-            if (event.key === " ") {
-                event.preventDefault();
-                alert("Whitespace is not allowed");
-            }
-        });
+        //chosenInput2.addEventListener("keydown", function (event) {
+        //    if (event.key === " ") {
+        //        event.preventDefault();
+        //        alert("Whitespace is not allowed");
+        //    }
+        //});
+
+        if (!chosenInput2.hasAttribute("onkeyup")) {
+            chosenInput2.setAttribute("onkeyup", "filterCities(this.value)");
+        }
         chosenInput2.addEventListener("paste", function (event) {
             event.preventDefault();
         });
@@ -224,12 +228,16 @@ $(document).ready(function () {
         $('.autodropdown').show();
         var chosenInput = document.querySelector('.chosen-search input');
         chosenInput.focus();
-        chosenInput.addEventListener("keydown", function (event) {
-            if (event.key === " ") {
-                event.preventDefault(); 
-                alert("Whitespace is not allowed");
-            }
-        });
+        //chosenInput.addEventListener("keydown", function (event) {
+        //    if (event.key === " ") {    
+        //        event.preventDefault(); 
+        //        alert("Whitespace is not allowed");
+        //    }
+        //});
+
+        if (!chosenInput.hasAttribute("onkeyup")) {
+            chosenInput.setAttribute("onkeyup", "filterCities(this.value)");
+        }
         chosenInput.addEventListener("paste", function (event) {
             event.preventDefault();
         });
@@ -240,6 +248,46 @@ $(document).ready(function () {
         if (!$(event.target).closest('.chosen-drop').length && !$(event.target).is('#myInput')) {
             $('.chosen-drop').hide();
         }
+    });
+});
+
+
+
+let currentResults = [];
+
+function filterCities(query) {
+    if (query.length < 3) return;
+    fetch(`/FlightSearchIndex/GetFilteredCities?query=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            currentResults = data;
+            updateDropdown(currentResults, query);
+        });
+}
+
+
+function updateDropdown(data, query) {
+    const isArrivalDropdownVisible = $('#arrivalItemId').next('.chosen-container').find('.chosen-drop').is(':visible');
+    const dropdown = document.getElementById(isArrivalDropdownVisible ? "arrivalItemId" : "selectedItemId");
+    const inputField = document.querySelector(isArrivalDropdownVisible ? '.autoarrival input' : '.chosen-search input');
+    const currentInput = inputField.value;
+
+    dropdown.innerHTML = `<option value="" style="display: none;">Please select</option>
+        ${data.map(item => `<option value="${item.citycode}">${item.cityname} - ${item.citycode} - ${item.airportname}</option>`).join('')}`;
+
+    $(dropdown).trigger("chosen:updated");
+
+    if (currentInput === query) {
+        inputField.value = currentInput;
+    }
+    inputField.focus();
+}
+
+
+$(document).ready(function () {
+    const inputBox = document.getElementById("myInput");
+    inputBox.addEventListener("input", function () {
+        const currentValue = inputBox.value;
     });
 });
 

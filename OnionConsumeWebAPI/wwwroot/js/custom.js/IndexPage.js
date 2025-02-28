@@ -340,6 +340,7 @@ function handleSelection() {
     var cityName = cityDetails[0].trim();
     var cityCode = cityDetails[1].trim();
     var airportName = cityDetails[2].trim();
+    
 
     //alert("Selected City Name: " + cityName);
     //alert("Selected City Code: " + cityCode);

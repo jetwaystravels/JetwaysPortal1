@@ -83,7 +83,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 				MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
 				MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
-				tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+				
 
 				for (int k1 = 0; k1 < data.Airline.Count; k1++)
                 {
@@ -91,10 +91,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     string tokenview = string.Empty;
                     //AirAsia
                     string token = string.Empty;
-                    tokenview = tokenData.Token;// HttpContext.Session.GetString("AirasiaTokan");
+                   // HttpContext.Session.GetString("AirasiaTokan");
 
 
-                    if (!string.IsNullOrEmpty(tokenview) && flagAirAsia == true && data.Airline[k1].ToLower().Contains("airasia"))
+                    if (string.IsNullOrEmpty(tokenview) && flagAirAsia == true && data.Airline[k1].ToLower().Contains("airasia"))
                     {
                         double totalAmount = 0;
                         double totalAmountBaggage = 0;
@@ -108,7 +108,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         double taxMinusBaggage = 0;
                         double TotalAmountMeal = 0;
                         double TotaAmountBaggage = 0;
-
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+                        tokenview = tokenData.Token;
                         //flagAirAsia = false;
                         //if (k1 == 0)
                         //{
@@ -120,7 +121,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         //}
                         //token = tokenview.Replace(@"""", string.Empty);
 
-						if (k1 == 0)
+                        if (k1 == 0)
 						{
 							token = tokenData.Token;
 						}
@@ -394,7 +395,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             breakdown.passengerTotals = passengerTotals;
                             breakdown.baseTotalAmount = baseTotalAmount + infantReturnobj.total;
                             breakdown.ToatalBasePrice = ToatalBasePrice + infantReturnobj.taxes;
-                            breakdown.BaseTotalTax = BaseTotalTax+ infantReturnobj.taxes;
+                            breakdown.BaseTotalTax = BaseTotalTax + infantReturnobj.taxes;
                             //breakdown.totalAmountSum = totalAmountSum;
                             //breakdown.totaltax = totaltax;
                             //breakdown.totalplusAmountSumtax = totalplusAmountSumtax;
@@ -796,8 +797,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     tokenview = string.Empty;
 
                     token = string.Empty;
-                    tokenview = HttpContext.Session.GetString("AkasaTokan");
-                    if (!string.IsNullOrEmpty(tokenview) && flagAirAsia == true && data.Airline[k1].ToLower().Contains("akasaair"))
+                   // tokenview = HttpContext.Session.GetString("AkasaTokan");
+                    if (string.IsNullOrEmpty(tokenview) && flagAirAsia == true && data.Airline[k1].ToLower().Contains("akasaair"))
                     {
                         double totalAmount = 0;
                         double totalAmountBaggage = 0;
@@ -812,15 +813,17 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         double TotalAmountMeal = 0;
                         double TotaAmountBaggage = 0;
 
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
                         if (k1 == 0)
                         {
-                            tokenview = HttpContext.Session.GetString("AkasaTokan");
+                            tokenview = tokenData.Token; // HttpContext.Session.GetString("AkasaTokan");
                         }
                         else
                         {
-                            tokenview = HttpContext.Session.GetString("AkasaTokanR");
+                            tokenview = tokenData.RToken; // HttpContext.Session.GetString("AkasaTokanR");
                         }
-                        token = tokenview.Replace(@"""", string.Empty);
+                        token = tokenview;
                         #region Get Booking
 
                         //GetBOoking FRom State
@@ -1043,7 +1046,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     ReturnCharge returnChargeobj = new ReturnCharge();
                                     returnChargeobj.amount = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.charges[ch].amount;
                                     returnChargeobj.code = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.charges[ch].code;
-                                    if (returnChargeobj.code.StartsWith("V"))
+                                   
+                                    if (returnChargeobj.code.StartsWith("P"))
                                     {
                                         totalAmount += returnChargeobj.amount;
 
@@ -1052,7 +1056,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     {
                                         totalAmounttax += returnChargeobj.amount;
                                     }
-                                    if (returnChargeobj.code.StartsWith("S"))
+                                    
+                                    if (returnChargeobj.code.StartsWith("U"))
                                     {
                                         totalAmounttaxSGST += returnChargeobj.amount;
                                     }
@@ -1060,7 +1065,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     taxMinusMeal = totalAmount - totalMealTax;
                                     TotalAmountMeal = totalMealTax + taxMinusMeal;
 
-                                    if (returnChargeobj.code.StartsWith("P"))
+                                    if (returnChargeobj.code.StartsWith("X"))
                                     {
                                         totalAmountBaggage += returnChargeobj.amount;
 
@@ -1070,7 +1075,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         totalAmounttaxBag += returnChargeobj.amount;
                                     }
 
-                                    if (returnChargeobj.code.StartsWith("S"))
+                                    if (returnChargeobj.code.StartsWith("U"))
                                     {
                                         totalAmounttaxSGSTBag += returnChargeobj.amount;
                                     }
@@ -1259,7 +1264,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             SsrReturn ssrReturn = new SsrReturn();
                                             ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
-                                            if (ssrReturn.ssrCode.StartsWith("P"))
+                                            if (!ssrReturn.ssrCode.StartsWith("P"))
                                             {
                                                 continue;
                                             }
@@ -1270,7 +1275,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
 
                                                     htmealdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
-                                                }
+                                               }
                                                 returnSeats.SSRCode += ssrReturn.ssrCode + ",";
 
                                             }
@@ -1281,14 +1286,26 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         {
                                             SsrReturn ssrReturn = new SsrReturn();
                                             ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
-                                            if (ssrReturn.ssrCode.StartsWith("V"))
+                                            if (!ssrReturn.ssrCode.StartsWith("X"))
                                             {
                                                 continue;
                                             }
                                             else
                                             {
-                                                htBagdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+
+                                                if (!htBagdata.Contains(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination))
+                                                {
+                                                    htBagdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+
+                                                }
                                                 returnSeats.SSRCode += ssrReturn.ssrCode + ",";
+
+
+
+
+
+                                                //htBagdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+                                                //returnSeats.SSRCode += ssrReturn.ssrCode + ",";
                                             }
 
 
@@ -1493,13 +1510,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         #region Spicejet Commit
                         //Spicejet
                         token = string.Empty;
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "SpiceJet").Result;
+
                         if (k1 == 0)
                         {
-                            tokenview = HttpContext.Session.GetString("SpicejetSignature");
+                            tokenview = tokenData.Token;// HttpContext.Session.GetString("SpicejetSignature");
                         }
                         else
                         {
-                            tokenview = HttpContext.Session.GetString("SpicejetSignatureR");
+                            tokenview = tokenData.RToken;// HttpContext.Session.GetString("SpicejetSignatureR");
                         }
                         if (tokenview == null) { tokenview = ""; }
                         token = tokenview.Replace(@"""", string.Empty);
@@ -1834,7 +1853,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 }
                                                 foreach (var item in _getBookingResponse.Booking.Passengers)
                                                 {
-                                                    if (!htnameempty.Contains(item.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
+                                                    if (!htnameempty.Contains(item.PassengerNumber.ToString() + "_" + htname[item.PassengerNumber] + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
                                                     {
                                                         if (carriercode.Length < 3)
                                                             carriercode = carriercode.PadRight(3);
@@ -1858,7 +1877,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     barcodeImage = new List<string>();
                                                     try
                                                     {
-                                                        if (!htseatdata.Contains(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
+                                                        if (!htseatdata.Contains(item1.PassengerNumber.ToString() + "_" + htname[item1.PassengerNumber] + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
                                                         {
                                                             htseatdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.UnitDesignator);
                                                             returnSeats.unitDesignator += item1.PassengerNumber + "_" + item1.UnitDesignator + ",";
@@ -2177,13 +2196,16 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         #region Indigo Commit
                         //Spicejet
                         token = string.Empty;
+
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
+
                         if (k1 == 0)
                         {
-                            tokenview = HttpContext.Session.GetString("IndigoSignature");
+                            tokenview = tokenData.Token;//  HttpContext.Session.GetString("IndigoSignature");
                         }
                         else
                         {
-                            tokenview = HttpContext.Session.GetString("IndigoSignatureR");
+                            tokenview = tokenData.RToken;// HttpContext.Session.GetString("IndigoSignatureR");
                         }
                         if (!string.IsNullOrEmpty(tokenview))
                         {
@@ -3102,13 +3124,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         #region Indigo Commit
                         //Spicejet
                         token = string.Empty;
+
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
                         if (k1 == 0)
                         {
-                            tokenview = HttpContext.Session.GetString("GDSTraceid");
+                            tokenview = tokenData.Token; // HttpContext.Session.GetString("GDSTraceid");
                         }
                         else
                         {
-                            tokenview = HttpContext.Session.GetString("GDSTraceidR");
+                            tokenview = tokenData.RToken; // HttpContext.Session.GetString("GDSTraceidR");
                         }
                         if (!string.IsNullOrEmpty(tokenview))
                         {
@@ -3191,7 +3215,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     _SSRkey = JsonConvert.DeserializeObject<List<string>>(serializedSSRKey);
                                 }
 
-                                res = _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder,k1, _unitkey, _SSRkey, _pricesolution);
+                                res = _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, k1, _unitkey, _SSRkey, _pricesolution);
 
                                 //string RecordLocator = Regex.Match(res, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
                                 RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
@@ -3203,6 +3227,24 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 //GetAirTicket
 
                                 strAirTicket = _objAvail.GetTicketdata(_TicketRecordLocator, _testURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
+                                string strTicketno = string.Empty;
+                                Hashtable htTicketdata = new Hashtable();
+                                foreach (Match mitem in Regex.Matches(strAirTicket, @"BookingTraveler Key=""[\s\S]*?First=""(?<First>[\s\S]*?)""[\s\S]*?Last=""(?<Last>[\s\S]*?)""[\s\S]*?TicketNumber=""(?<TicketNum>[\s\S]*?)""[\s\S]*?Origin=""(?<Origin>[\s\S]*?)""[\s\S]*?Destination=""(?<destination>[\s\S]*?)""[\s\S]*?</air:Ticket>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                {
+                                    try
+                                    {
+                                        if (!htTicketdata.Contains(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + mitem.Groups["Origin"].Value.Trim() + "_" + mitem.Groups["destination"].Value.Trim()))
+                                        {
+                                            htTicketdata.Add(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + mitem.Groups["Origin"].Value.Trim() + "_" + mitem.Groups["destination"].Value.Trim(), mitem.Groups["TicketNum"].Value.Trim());
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+
+                                    }
+
+                                }
+
                                 //if (strAirTicket.Contains("Unable to ticket without pricing"))
                                 //continue;
 
@@ -3223,6 +3265,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     }
                                     if (pnrResDetail != null)
                                     {
+                                        Hashtable htname = new Hashtable();
+                                        Hashtable htnameempty = new Hashtable();
+                                        Hashtable htpax = new Hashtable();
 
                                         Hashtable htseatdata = new Hashtable();
                                         Hashtable htmealdata = new Hashtable();
@@ -3312,6 +3357,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                                 AASegmentDesignatorobj.origin = pnrResDetail.Bonds.Legs[j].Origin;
                                                 AASegmentDesignatorobj.destination = pnrResDetail.Bonds.Legs[j].Destination;
+                                                orides = AASegmentDesignatorobj.origin + AASegmentDesignatorobj.destination;
                                                 if (!string.IsNullOrEmpty(pnrResDetail.Bonds.Legs[j].DepartureTime))
                                                 {
                                                     AASegmentDesignatorobj.departure = Convert.ToDateTime(pnrResDetail.Bonds.Legs[j].DepartureTime);
@@ -3420,6 +3466,28 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                                 AASegmentobj.identifier = AAIdentifierobj;
 
+                                                //barCode
+                                                //julian date
+                                                Journeydatetime = DateTime.Parse(AASegmentDesignatorobj.departure.ToString());
+                                                carriercode = AAIdentifierobj.carrierCode;
+                                                flightnumber = AAIdentifierobj.identifier;
+                                                int year = Journeydatetime.Year;
+                                                int month = Journeydatetime.Month;
+                                                int day = Journeydatetime.Day;
+                                                // Calculate the number of days from January 1st to the given date
+                                                DateTime currentDate = new DateTime(year, month, day);
+                                                DateTime startOfYear = new DateTime(year, 1, 1);
+                                                int julianDate = (currentDate - startOfYear).Days + 1;
+                                                if (string.IsNullOrEmpty(sequencenumber))
+                                                {
+                                                    sequencenumber = "00000";
+                                                }
+                                                else
+                                                {
+                                                    sequencenumber = sequencenumber.PadRight(5, '0');
+                                                }
+
+
                                                 //var leg = _getBookingResponse.Booking.Journeys[i].Segments[j].Legs;
                                                 //          int legcount = _getBookingResponse.Booking.Journeys[i].Segments[j].Legs.Length;
                                                 List<LegReturn> AALeglist = new List<LegReturn>();
@@ -3449,6 +3517,106 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 AALeginfoobj.departureTime = Convert.ToDateTime(pnrResDetail.Bonds.Legs[j].DepartureDate);
                                                 AALeg.legInfo = AALeginfoobj;
                                                 AALeglist.Add(AALeg);
+
+                                                Hashtable htsegmentdetails = new Hashtable();
+                                                foreach (Match mitem in Regex.Matches(strResponse, @"AirSegment Key=""(?<segmentid>[\s\S]*?)""[\s\S]*?Origin=""(?<origin>[\s\S]*?)""\s*Destination=""(?<Destination>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                                {
+                                                    try
+                                                    {
+                                                        if (!htsegmentdetails.Contains(mitem.Groups["segmentid"].Value.Trim()))
+                                                        {
+                                                            htsegmentdetails.Add(mitem.Groups["segmentid"].Value.Trim(), mitem.Groups["origin"].Value.Trim() + "_" + mitem.Groups["Destination"].Value.Trim());
+                                                        }
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+
+                                                    }
+                                                }
+
+
+
+
+                                                //Seat
+                                                foreach (Match mitem in Regex.Matches(strResponse, @"common_v52_0:BookingTraveler Key=""(?<passengerKey>[\s\S]*?)""[\s\S]*?BookingTravelerName[\s\S]*?First=""(?<First>[\s\S]*?)""\s*Last=""(?<Last>[\s\S]*?)""(?<data>[\s\S]*?)</common_v52_0:BookingTraveler>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                                {
+                                                    foreach (Match item in Regex.Matches(mitem.Groups["data"].Value, @"AirSeatAssignment Key=""[\s\S]*?Seat=""(?<unitKey>[\s\S]*?)""\s*SegmentRef=""(?<segmentkey>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                                    {
+                                                        try
+                                                        {
+                                                            if (!htseatdata.Contains(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString()))
+                                                            {
+                                                                htseatdata.Add(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString(), item.Groups["unitKey"].Value.Trim());
+                                                                returnSeats.unitDesignator += mitem.Groups["passengerKey"].Value.Trim() + "_" + item.Groups["unitKey"].Value.Trim() + ",";
+                                                            }
+                                                            if (!htpax.Contains(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString()))
+                                                            {
+                                                                if (carriercode.Length < 3)
+                                                                    carriercode = carriercode.PadRight(3);
+                                                                if (flightnumber.Length < 5)
+                                                                {
+                                                                    flightnumber = flightnumber.PadRight(5);
+                                                                }
+                                                                if (sequencenumber.Length < 5)
+                                                                    sequencenumber = sequencenumber.PadRight(5, '0');
+                                                                seatnumber = htseatdata[mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString()].ToString();
+                                                                if (seatnumber.Length < 4)
+                                                                    seatnumber = seatnumber.PadLeft(4, '0');
+                                                                BarcodeString = "M" + "1" + mitem.Groups["Last"].Value.Trim() + "/" + mitem.Groups["First"].Value.Trim() + " " + BarcodePNR + "" + orides + carriercode + "" + flightnumber + "" + julianDate + "Y" + seatnumber + "" + sequencenumber + "1" + "00";
+                                                                htpax.Add(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString(), BarcodeString);
+                                                            }
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+
+                                                        }
+                                                        if (!htnameempty.Contains(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()]))
+                                                        {
+                                                            if (carriercode.Length < 3)
+                                                                carriercode = carriercode.PadRight(3);
+                                                            if (flightnumber.Length < 5)
+                                                            {
+                                                                flightnumber = flightnumber.PadRight(5);
+                                                            }
+                                                            if (sequencenumber.Length < 5)
+                                                                sequencenumber = sequencenumber.PadRight(5, '0');
+                                                            seatnumber = "0000";
+                                                            if (seatnumber.Length < 4)
+                                                                seatnumber = seatnumber.PadLeft(4, '0');
+                                                            BarcodeString = "M" + "1" + mitem.Groups["Last"].Value.Trim() + "/" + mitem.Groups["First"].Value.Trim() + " " + BarcodePNR + "" + orides + carriercode + "" + flightnumber + "" + julianDate + "Y" + seatnumber + "" + sequencenumber + "1" + "00";
+                                                            htnameempty.Add(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString(), BarcodeString);
+                                                        }
+
+                                                    }
+
+                                                }
+
+                                                //SSR
+                                                foreach (Match mitem in Regex.Matches(strResponse, @"common_v52_0:BookingTraveler Key=""(?<passengerKey>[\s\S]*?)""[\s\S]*?BookingTravelerName[\s\S]*?First=""(?<First>[\s\S]*?)""\s*Last=""(?<Last>[\s\S]*?)""(?<data>[\s\S]*?)</common_v52_0:BookingTraveler>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                                {
+                                                    foreach (Match item in Regex.Matches(mitem.Groups["data"].Value, @"SSR Key=""[\s\S]*?SegmentRef=""(?<segmentkey>[\s\S]*?)""[\s\S]*?Type=""(?<SsrCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                                    {
+                                                        try
+                                                        {
+                                                            if (!htmealdata.Contains(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString()))
+                                                            {
+                                                                if (item.Groups["SsrCode"].Value.Trim() != "INFT" && item.Groups["SsrCode"].Value.Trim() != "FFWD")
+                                                                {
+                                                                    htmealdata.Add(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString(), item.Groups["SsrCode"].Value.Trim());
+                                                                    returnSeats.SSRCode += item.Groups["SsrCode"].Value.Trim() + ",";
+                                                                }
+                                                            }
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+
+                                                        }
+
+                                                    }
+
+                                                }
+
+
 
                                                 //}
 
@@ -3748,6 +3916,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             returnTicketBooking.Seatdata = htseatdata;
                                             returnTicketBooking.Mealdata = htmealdata;
                                             returnTicketBooking.Bagdata = htbagdata;
+                                            returnTicketBooking.htTicketnumber = htTicketdata;
+                                            returnTicketBooking.htname = htname;
+                                            returnTicketBooking.htnameempty = htnameempty;
+                                            returnTicketBooking.htpax = htpax;
+                                            returnTicketBooking.TicketNumber = strTicketno;
                                             //returnTicketBooking.bookingdate = _getBookingResponse.Booking.BookingInfo.BookingDate;
                                             _AirLinePNRTicket.AirlinePNR.Add(returnTicketBooking);
 

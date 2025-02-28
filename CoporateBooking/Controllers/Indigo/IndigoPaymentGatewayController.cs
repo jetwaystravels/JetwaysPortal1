@@ -5,9 +5,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 {
     public class IndigoPaymentGatewayController : Controller
     {
-        public IActionResult IndigoPayment(string GUID)
+        public IActionResult IndigoPayment()
         {
-            ViewBag.Guid = GUID;
             return View();
         }
     }

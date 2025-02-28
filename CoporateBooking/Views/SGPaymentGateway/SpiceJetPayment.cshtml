@@ -252,15 +252,9 @@
 													<div class="d-flex justify-content-between">
 														<span class="text-20 lh-13 fw-700 pt-3">&#8377; <span class="text-20 lh-13 fw-700 pt-3" id="Totalpayment"></span></span>
 														@*<button class="btn btn-lg">Pay Now</button>*@
-														@* <form>
-														<input type="submit" asp-controller="SGCommitBooking" asp-action="booking" asp-route-Guid="@ViewBag.Guid" value="Pay Now" class="btn btn-lg">
-														</form> *@
-
-														<form asp-controller="SGCommitBooking" asp-action="booking" asp-route-Guid="@ViewBag.Guid">
-															<input type="submit" value="Pay Now" class="btn btn-lg">
-															<input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
+														<form>
+															<input type="submit" asp-controller="SGCommitBooking" asp-action="booking" value="Pay Now" class="btn btn-lg">
 														</form>
-
 													</div>
 													<p class="text">By clicking on Pay Now, you are agreeing to our Terms & Conditions , Privacy policy, User Agreement and Covid-19 Guidelines.</p>
 												</div>
@@ -911,7 +905,7 @@
 			document.getElementById("bag1").innerHTML = basebag;
 			document.getElementById("seattotal").innerHTML = seatFare;
 
-
+		
 			var conviniencefare = document.querySelector('#convinfare').value;
 			let Totalpaymnet = parseInt(seatFare) + parseInt(baseFare) + parseInt(basebag) + parseInt(basemeal) + parseInt(conviniencefare);
 			document.getElementById("totalpayment").innerHTML = Totalpaymnet;

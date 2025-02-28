@@ -252,9 +252,15 @@
 													<div class="d-flex justify-content-between">
 														<span class="text-20 lh-13 fw-700 pt-3">&#8377; <span class="text-20 lh-13 fw-700 pt-3" id="Totalpayment"></span></span>
 														
-														<form>
+														@* <form>
 															<input type="submit" asp-controller="AkasaAirCommitBooking" asp-action="AkasaAirBookingView" value="Pay Now" class="btn btn-lg">
+														</form> *@
+
+														<form asp-controller="AkasaAirCommitBooking" asp-action="AkasaAirBookingView" asp-route-Guid="@ViewBag.Guid">
+															<input type="submit" value="Pay Now" class="btn btn-lg">
+															<input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
 														</form>
+
 													</div>
 													<p class="text">By clicking on Pay Now, you are agreeing to our Terms & Conditions , Privacy policy, User Agreement and Covid-19 Guidelines.</p>
 												</div>

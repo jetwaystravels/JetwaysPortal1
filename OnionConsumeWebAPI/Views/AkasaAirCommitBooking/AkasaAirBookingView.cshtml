@@ -509,24 +509,23 @@
 
 
                                                 @{
-                                                    string hashdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
+                                                    string hashdataMeal = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
 
-                                                    if (htmeal != null && htmeal.ContainsKey(hashdata))
+                                                    if (hashdataMeal != null && htmeal.ContainsKey(hashdataMeal))
                                                     {
 
-                                                        var Mealcode = htmeal[hashdata].ToString();
+                                                        var Mealcode = htmeal[hashdataMeal].ToString();
 
+                                                        var MealName = MealImageList.GetAllmeal()
+                                                        .Where(x => Mealcode.Contains(x.MealCode))
+                                                        .Select(x => x.MealImage)
+                                                        .FirstOrDefault();
 
-                                                        var meal = MealImageList.GetAllmeal().Where(x => Mealcode.Contains(x.MealCode)).ToList();
-                                                        // var meal = MealImageList.GetAllmeal().Where(x => mealcode.Contains(x.MealCode)).ToList();
-                                                        if (meal != null)
+                                                        
+                                                        if (Mealcode != null)
                                                         {
-                                                            foreach (var item in meal)
-                                                            {
-                                                                <td>@item.MealCode</td>
 
-                                                            }
-
+                                                            <td>@Mealcode-@MealName</td>
 
                                                         }
 
@@ -544,20 +543,28 @@
                                                     if (htbag != null && htbag.ContainsKey(hashBagdata))
                                                     {
 
-                                                        var Baggabgename = htbag[hashBagdata].ToString();
-                                                        var Baggage = MealImageList.GetAllmeal().Where(x => Baggabgename.Contains(x.MealCode)).ToList();
-                                                        if (Baggage != null)
+                                                        var Baggabgecode = htbag[hashBagdata].ToString();
+                                                      //  var Baggage = MealImageList.GetAllmeal().Where(x => Baggabgename.Contains(x.MealCode)).ToList();
+
+                                                        // var singlebaggage = MealImageList.GetAllmeal()
+                                                        // .FirstOrDefault(x => Baggabgecode.Contains(x.MealImage));
+
+                                                        var BaggageName = MealImageList.GetAllmeal()
+                                                        .Where(x => Baggabgecode.Contains(x.MealCode))
+                                                        .Select(x => x.MealImage)
+                                                        .FirstOrDefault();
+
+                                                        if (Baggabgecode != null)
                                                         {
-                                                            foreach (var item in Baggage)
-                                                            {
-                                                                // <td>@item.MealImage</td>
-                                                                if (i3 == 0)
-                                                                {
+                                                          
+                                                                 if (i3 == 0)
+                                                                 {
 
-                                                                    <td>@item.MealImage</td>
-                                                                }
+                                                                <td>@BaggageName</td>
+                                                                 }
+                                                        
 
-                                                            }
+                                                            
                                                         }
                                                     }
                                                     else

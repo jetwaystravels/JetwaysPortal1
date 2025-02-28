@@ -529,19 +529,21 @@
 
                                                         var Mealcode = htmeal[hashdata].ToString();
 
-                                                       
-                                                            var meal = MealImageList.GetAllmeal().Where(x => Mealcode.Contains(x.MealCode)).ToList();
-                                                        // var meal = MealImageList.GetAllmeal().Where(x => mealcode.Contains(x.MealCode)).ToList();
-                                                        if (meal != null)
-                                                        {
-                                                            foreach (var item in meal)
-                                                            {
-                                                                <td>@item.MealCode</td>
-                                                                
-                                                            }
+                                                         var MealName = MealImageList.GetAllmeal()
+                                                        .Where(x => Mealcode.Contains(x.MealCode))
+                                                        .Select(x => x.MealImage)
+                                                        .FirstOrDefault();
 
-                                                           
+
+                                                        if (Mealcode != null)
+                                                        {
+
+                                                            <td>@Mealcode-@MealName</td>
+
                                                         }
+
+                                                                                                            
+                                                      
                                                        
                                                     }
                                                     else
@@ -557,21 +559,47 @@
                                                     if (htbag != null && htbag.ContainsKey(hashBagdata))
                                                     {
 
-                                                        var Baggabgename = htbag[hashBagdata].ToString();
-                                                        var Baggage = MealImageList.GetAllmeal().Where(x => Baggabgename.Contains(x.MealCode)).ToList();
-                                                        if (Baggage != null)
+                                                        var Baggabgecode = htbag[hashBagdata].ToString();
+                                                      
+                                                        var BaggageName = MealImageList.GetAllmeal()
+                                                        .Where(x => Baggabgecode.Contains(x.MealCode))
+                                                        .Select(x => x.MealImage)
+                                                        .FirstOrDefault();
+
+                                                        if (Baggabgecode != null)
                                                         {
-                                                            foreach (var item in Baggage)
-                                                            {
-                                                                // <td>@item.MealImage</td>
+                                                          
                                                                 if (i3 == 0)
                                                                 {
 
-                                                                    <td>@item.MealImage</td>
+                                                                <td>@BaggageName</td>
                                                                 }
-                                                               
-                                                            }
+
+                                                        
+
+                                                            
                                                         }
+
+
+
+
+
+
+                                                        // var Baggabgename = htbag[hashBagdata].ToString();
+                                                        // var Baggage = MealImageList.GetAllmeal().Where(x => Baggabgename.Contains(x.MealCode)).ToList();
+                                                        // if (Baggage != null)
+                                                        // {
+                                                        //     foreach (var item in Baggage)
+                                                        //     {
+                                                        //         // <td>@item.MealImage</td>
+                                                        //         if (i3 == 0)
+                                                        //         {
+
+                                                        //             <td>@item.MealImage</td>
+                                                        //         }
+                                                               
+                                                        //     }
+                                                        // }
                                                     }
                                                     else
                                                     {

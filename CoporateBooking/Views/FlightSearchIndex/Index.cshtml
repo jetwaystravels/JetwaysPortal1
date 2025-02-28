@@ -354,7 +354,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="row">
-                                            <div class="col-12 col-md-10 col-lg-3 space autocomplete">
+                                            @* <div class="col-12 col-md-10 col-lg-3 space autocomplete">
                                                 @{
                                                     string Serchhome = ViewBag.SearchHome;
                                                     if (!string.IsNullOrEmpty(Serchhome))
@@ -416,6 +416,73 @@
                                                 </span>
 
                                             </div>
+                                           
+                                             *@
+                                            <div class="col-12 col-md-10 col-lg-3 space autocomplete">
+                                                @{
+                                                    string Serchhome = ViewBag.SearchHome;
+                                                    if (!string.IsNullOrEmpty(Serchhome))
+                                                    {
+                                                        //object _simpleAvailabilityRequestModel = Newtonsoft.Json.JsonConvert.DeserializeObject<object>(Serchhome);
+
+
+                                                        model = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(Serchhome);
+
+
+                                                        origin = model.origin;
+                                                        startdate = model.beginDate;
+
+                                                    }
+
+                                                }
+                                                <label>Flying From</label>
+                                                <span class="input-group-text flightdepr" id="myInputbx">
+                                                    <input type="text" id="myInput" maxlength="40" asp-for="origin" class="form-control text-15 " value="@origin" placeholder="Enter AirportName" onclick="toggleDropdown()">
+                                                    <span id="airportName"></span>
+                                                </span>
+                                                <div id="errororigin" class="errorbox" style="display:none;">Enter Origin Name*</div>
+
+                                                <span class="autodropdown">
+                                                    <select id="selectedItemId" name="selectedItemId" onchange="handleSelection()">
+                                                        <option value="" style="display:none;">Please select</option>
+
+
+                                                        @foreach (var item in Citynamelist.GetCityData())
+                                                        {
+                                                            <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
+
+                                                        }
+
+                                                    </select>
+                                                </span>
+
+                                            </div>
+                                            <div class="rplc-btn">
+                                                <img src="~/img/direction-arrows.png" />
+                                            </div>
+                                            <div class="col-12 col-md-10 col-lg-3 space autocomplete">
+                                                <label>Flying To</label>
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <input type="text" maxlength="40" id="myInput1" asp-for="destination" class="form-control text-15 " value="" placeholder="Enter AirportName" onclick="toggleDropdownArrival()">
+                                                    <span id="airportArval"></span>
+                                                </span>
+                                                <div id="errordestinaton" class="errorbox" style="display:none;">Enter Destination Name*</div>
+                                                <span class="autoarrival">
+                                                    <select id="arrivalItemId" name="arrivalItemId" onchange="arrivalSelection()">
+                                                        <option value="" style="display:none;">Please select</option>
+
+                                                        @foreach (var item in Citynamelist.GetCityData())
+                                                        {
+                                                            <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
+
+                                                        }
+
+                                                    </select>
+                                                </span>
+
+                                            </div>
+
+
                                             <div class="col-12 col-md-10 col-lg-2 space">
                                                 <label>Departure</label>
                                                 <span class="input-group-text">

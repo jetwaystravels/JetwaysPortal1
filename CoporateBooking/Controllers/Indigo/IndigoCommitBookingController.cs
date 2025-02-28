@@ -26,7 +26,6 @@ using System.Collections;
 using static DomainLayer.Model.SeatMapResponceModel;
 using static DomainLayer.Model.ReturnAirLineTicketBooking;
 using Indigo;
-using OnionConsumeWebAPI.Models;
 
 namespace OnionConsumeWebAPI.Controllers.Indigo
 {
@@ -57,44 +56,21 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
         decimal Totatamountmb = 0;
         DateTime Journeydatetime = new DateTime();
         string bookingKey = string.Empty;
-        private readonly IConfiguration _configuration;
 
-        public IndigoCommitBookingController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        public async Task<IActionResult> booking(string Guid)
+        public async Task<IActionResult> booking()
         {
             AirLinePNRTicket _AirLinePNRTicket = new AirLinePNRTicket();
             _AirLinePNRTicket.AirlinePNR = new List<ReturnTicketBooking>();
-            //string tokenview = HttpContext.Session.GetString("IndigoSignature");
-            //if (tokenview == null) { tokenview = ""; }
-            //token = string.Empty;
-
-            MongoHelper objMongoHelper = new MongoHelper();
-            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-            SearchLog searchLog = new SearchLog();
-            searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
-
-            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
-
-            token = tokenData.Token;
-
-            if (!string.IsNullOrEmpty(token))
+            string tokenview = HttpContext.Session.GetString("IndigoSignature");
+            if (tokenview == null) { tokenview = ""; }
+            token = string.Empty;
+            if (!string.IsNullOrEmpty(tokenview))
             {
 
-                // token = tokenview.Replace(@"""", string.Empty);
-                //string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
-
-                string passengernamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
-
+                token = tokenview.Replace(@"""", string.Empty);
+                string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
                 List<passkeytype> passeengerlist = (List<passkeytype>)JsonConvert.DeserializeObject(passengernamedetails, typeof(List<passkeytype>));
-                //   string contactdata = HttpContext.Session.GetString("ContactDetails");
-
-                string contactdata = objMongoHelper.UnZip(tokenData.ContactRequest);
-
+                string contactdata = HttpContext.Session.GetString("ContactDetails");
                 IndigoBookingManager_.UpdateContactsRequest contactList = (IndigoBookingManager_.UpdateContactsRequest)JsonConvert.DeserializeObject(contactdata, typeof(IndigoBookingManager_.UpdateContactsRequest));
                 using (HttpClient client1 = new HttpClient())
                 {
@@ -102,7 +78,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                     _commit objcommit = new _commit();
                     #region GetState
                     _sell objsell = new _sell();
-                    IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(token, 0, "");
+                    IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(token,0, "");
 
                     string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
                     decimal Totalpayment = 0M;
@@ -113,10 +89,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                     #endregion
                     #region Addpayment Commneted For Api Payment deduction
                     IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment, "OneWay");
-                    if (_BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors[0].ErrorDescription.ToLower().Contains("not enough funds available"))
-                    {
-                        _AirLinePNRTicket.ErrorDesc = "Not enough funds available.";
-                    }
+
                     #endregion
 
                     #region Commit Booking
@@ -136,9 +109,9 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             Hashtable htmealdata = new Hashtable();
                             Hashtable htbagdata = new Hashtable();
                             Hashtable htFFWDdata = new Hashtable();
-                            int adultcount = searchLog.Adults;
-                            int childcount = searchLog.Children;
-                            int infantcount = searchLog.Infants;
+                            int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
+                            int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
+                            int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
                             int TotalCount = adultcount + childcount;
                             string _responceGetBooking = JsonConvert.SerializeObject(_getBookingResponse);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
@@ -359,7 +332,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                                 flightnumber = flightnumber.PadRight(5);
                                             }
                                             if (sequencenumber.Length < 5)
-                                                sequencenumber = sequencenumber.PadRight(5, '0');
+                                                sequencenumber = sequencenumber.PadRight(5,'0');
                                             seatnumber = "0000";
                                             if (seatnumber.Length < 4)
                                                 seatnumber = seatnumber.PadLeft(4, '0');
@@ -387,7 +360,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                                     flightnumber = flightnumber.PadRight(5);
                                                 }
                                                 if (sequencenumber.Length < 5)
-                                                    sequencenumber = sequencenumber.PadRight(5, '0');
+                                                    sequencenumber = sequencenumber.PadRight(5,'0');
                                                 seatnumber = htseatdata[item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation].ToString();
                                                 if (seatnumber.Length < 4)
                                                     seatnumber = seatnumber.PadLeft(4, '0');
@@ -409,7 +382,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                             {
                                                 //if (item1.SSRCode != "INFT" && item1.SSRCode != "FFWD" && !item1.SSRCode.StartsWith('X'))
                                                 //{
-                                                htmealdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
+                                                    htmealdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
                                                 //}
                                                 returnSeats.SSRCode += item1.SSRCode + ",";
                                             }
@@ -417,7 +390,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                             {
                                                 //if (item1.SSRCode != "INFT" && item1.SSRCode != "FFWD")
                                                 //{
-                                                htbagdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
+                                                    htbagdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
                                                 //}
                                                 returnSeats.SSRCode += item1.SSRCode + ",";
                                             }
@@ -456,7 +429,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                 passkeytypeobj.name = new Name();
                                 foreach (var item1 in item.PassengerFees)
                                 {
-                                    if (item1.FeeCode.Equals("SEAT") || item1.FeeType.ToString().ToLower().Contains("seat"))
+                                    if (item1.FeeCode.Equals("SEAT")|| item1.FeeType.ToString().ToLower().Contains("seat"))
                                     {
                                         flightreference = item1.FlightReference;
                                         string[] parts = flightreference.Split(' ');
@@ -517,7 +490,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                         foreach (var item2 in item1.ServiceCharges)
                                         {
 
-                                            if (item2.ChargeCode.Equals("SEAT") || item2.ChargeCode.Equals("SNXT"))
+                                            if (item2.ChargeCode.Equals("SEAT")|| item2.ChargeCode.Equals("SNXT"))
                                             {
                                                 returnSeats.total += Convert.ToInt32(item2.Amount);
                                                 //breakdown.passengerTotals.seats.total += Convert.ToInt32(item2.Amount);
@@ -831,10 +804,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                         _getapi objIndigo = new _getapi();
                         _logoutResponse = await objIndigo.Logout(_logoutRequestobj);
 
-                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay", "oneway");
-
-                        logs.WriteLogs(JsonConvert.SerializeObject(_logoutRequestobj), "15-LogoutReq", "IndigoOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(_logoutResponse), "15-LogoutRes", "IndigoOneWay", "oneway");
+                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay", "oneway");
 
                     }
                     #endregion

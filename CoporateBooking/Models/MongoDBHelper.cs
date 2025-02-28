@@ -7,8 +7,6 @@ using System.Xml.Serialization;
 using OnionConsumeWebAPI.ErrorHandling;
 using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
-using Microsoft.Extensions.Logging;
-using Amazon.Runtime.Internal.Util;
 
 namespace OnionConsumeWebAPI.Models
 {
@@ -23,7 +21,7 @@ namespace OnionConsumeWebAPI.Models
         //  private readonly IOptionsSnapshot<AppSettings> _balSettings;
         //IOptionsSnapshot<AppSettings> serviceSettings
 
-       // Logger logger = new Logger();
+        //Logger logger = new Logger();
 
         public MongoDBHelper(IConfiguration configuration)
         {
@@ -76,13 +74,13 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-               // logger.WriteLog(ex, "GetFlightSearchByKeyRef methhod", _connectionString);
+                //logger.WriteLog(ex, "GetFlightSearchByKeyRef methhod", _connectionString);
 
             }
             return guid;
         }
 
-        public async Task<string> GetALLFlightResulByGUID(string guid)
+        public async Task<MongoResponces> GetALLFlightResulByGUID(string guid)
         {
             MongoResponces srchDataALL = new MongoResponces();
             try
@@ -91,23 +89,9 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-               // logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
+                //logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
             }
-            return srchDataALL.Response;
-        }
-
-        public async Task<string> GetALLRightFlightResulByGUID(string guid)
-        {
-            MongoResponces srchDataALL = new MongoResponces();
-            try
-            {
-                srchDataALL = await mDB.GetCollection<MongoResponces>("Result").Find(Builders<MongoResponces>.Filter.Eq("Guid", guid)).Sort(Builders<MongoResponces>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-               // logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
-            }
-            return srchDataALL.RightResponse;
+            return srchDataALL;
         }
 
         public void SaveKeyRequest(string guid, string keyref)
@@ -127,110 +111,27 @@ namespace OnionConsumeWebAPI.Models
             }
         }
 
-        public void SaveFlightSearch(string Guid, string resp, string rightResponse)
+        public void SaveFlightSearch(MongoResponces srchData, List<SimpleAvailibilityaAddResponce> resp)
         {
             try
             {
-                MongoResponces srchData = new MongoResponces();
                 MongoHelper mongoHelper = new MongoHelper();
                 srchData.CreatedDate = DateTime.UtcNow.AddMinutes(Convert.ToInt16(20));
-                srchData.Guid = Guid;
-                srchData.Response = resp;
-                if(!string.IsNullOrEmpty(rightResponse))
+                using (StringWriter stringWriter = new StringWriter())
                 {
-                    srchData.RightResponse = rightResponse;
-                }
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<SimpleAvailibilityaAddResponce>));
+                    serializer.Serialize(stringWriter, resp);
+                    //  srchData.Response = mongoHelper.Zip(stringWriter.ToString());
+                    srchData.Response = mongoHelper.Zip(JsonConvert.SerializeObject(resp));
 
+
+                }
                 mDB.GetCollection<MongoResponces>("Result").InsertOneAsync(srchData);
             }
             catch (Exception ex)
             {
                 //logger.WriteLog(ex, "SaveFlightSearch methhod", _connectionString);
             }
-        }
-
-        public void SaveMongoFlightToken(MongoSuppFlightToken mongoSuppFlightToken)
-        {
-            try
-            {
-               
-                mongoSuppFlightToken.CreatedDate = DateTime.UtcNow.AddMinutes(Convert.ToInt16(20));
-
-
-                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").InsertOneAsync(mongoSuppFlightToken);
-            }
-            catch (Exception ex)
-            {
-               // logger.WriteLog(ex, "SaveMongoFlightToken methhod", _connectionString);
-            }
-        }
-
-
-        public async Task<MongoSuppFlightToken> GetSuppFlightTokenByGUID(string guid, string supp)
-        {
-            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-            try
-            {
-                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
-                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
-                tokenData = await mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").Find(filter).Sort(Builders<MongoSuppFlightToken>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                //logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
-            }
-            return tokenData;
-        }
-
-        public void UpdateFlightTokenJourney(string guid, string supp, string journeykey)
-        {
-            try
-            {
-                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
-                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
-                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.JourneyKey, journeykey);
-                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
-
-            }
-            catch (Exception ex)
-            {
-                //logger.WriteLog(ex, "UpdateFlightTokenJourney methhod", _connectionString);
-            }
-            
-        }
-
-        public void UpdateFlightTokenPassenger(string guid, string supp, string Passenger)
-        {
-            try
-            {
-                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
-                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
-                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, Passenger);
-                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
-
-            }
-            catch (Exception ex)
-            {
-                //logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
-            }
-
-        }
-
-        public void UpdateFlightTokenContact(string guid, string supp, string Contact)
-        {
-            try
-            {
-                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
-                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
-                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.ContactRequest, Contact);
-                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
-
-            }
-            catch (Exception ex)
-            {
-                //logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
-            }
-
         }
 
         public void SaveRequest(SimpleAvailabilityRequestModel sCriteria, string Guid)
@@ -299,21 +200,9 @@ namespace OnionConsumeWebAPI.Models
                 searchLog.TripType = requestModel.trip;
                 searchLog.Log_WSGUID = Guid;
                 searchLog.Log_SearchTypeID = 1;
-                if (requestModel.origin.Contains("-"))
-                {
-                    searchLog.OrgCode = requestModel.origin.Split("-")[1];
-                    searchLog.DestCode = requestModel.destination.Split("-")[1];
-                    searchLog.Origin = requestModel.origin.Split("-")[0];
-                    searchLog.Destination = requestModel.destination.Split("-")[0];
-                }
-                else
-                {
-					searchLog.OrgCode = requestModel.origin;
-					searchLog.DestCode = requestModel.destination;
-					searchLog.Origin = requestModel.origin;
-					searchLog.Destination = requestModel.destination;
-				}
-				searchLog.Log_RefNumber = mongoHelper.Get8Digits();
+                searchLog.Origin = requestModel.origin.Split("-")[1];
+                searchLog.Destination = requestModel.destination.Split("-")[1];
+                searchLog.Log_RefNumber = mongoHelper.Get8Digits();
                 searchLog.DepartDateTime = requestModel.beginDate;
                 searchLog.ArrivalDateTime = requestModel.endDate;
 
@@ -353,15 +242,12 @@ namespace OnionConsumeWebAPI.Models
 
                 //  srchData = await _mongoDbService.GetCollection<SearchLog>("LogSearchData").Find(Builders<SearchLog>.Filter.Eq("Log_WSGUID", Guid)).Sort(Builders<SearchLog>.Sort.Descending("Log_DateTime")).FirstOrDefaultAsync().ConfigureAwait(false);
                 srchData = await mDB.GetCollection<SearchLog>("LogSearchData").Find(Builders<SearchLog>.Filter.Eq("Log_WSGUID", Guid)).Sort(Builders<SearchLog>.Sort.Descending("Log_DateTime")).FirstOrDefaultAsync().ConfigureAwait(false);
-                srchData.OrgCode = srchData.OrgCode.Trim();
-                srchData.DestCode = srchData.DestCode.Trim();
-                srchData.Origin = srchData.Origin.Trim();
-                srchData.Destination = srchData.Destination.Trim();
+
 
             }
             catch (Exception ex)
             {
-               // logger.WriteLog(ex, "GetFlightSearchLog methhod", _connectionString);
+                //logger.WriteLog(ex, "GetFlightSearchLog methhod", _connectionString);
 
             }
 

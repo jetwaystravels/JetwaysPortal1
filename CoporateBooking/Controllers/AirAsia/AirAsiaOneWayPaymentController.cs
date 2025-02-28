@@ -4,9 +4,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 {
     public class AirAsiaOneWayPaymentController : Controller
     {
-        public IActionResult AirAsiaOneWayPaymentView(string GUID)
+        public IActionResult AirAsiaOneWayPaymentView()
         {
-            ViewBag.Guid = GUID;
             return View();
         }
     }

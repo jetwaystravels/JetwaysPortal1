@@ -6,8 +6,8 @@
 
 <style>
     .input-ammount {
-        border: none;
-        width: 62px;
+    border: none;
+    width: 62px;
     }
 </style>
 <div class="ml-20 lg:ml-40 md:ml-0">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="bgf p-0">
                     @{
-                       
+
                         int adtcount = 0;
                         int chdcount = 0;
                         int infcount = 0;
@@ -85,9 +85,10 @@
                     @{
                         if (@Model.AkpasseengerItanary != null)
                         {                            
-                            inftbasefare = Model.AkpasseengerItanary.inftbasefare;
+                            inftbasefare = Model.AkpasseengerItanary.inftbasefare ;
                         }
-                        toatlinftbasefare = infcount * inftbasefare;
+                       // toatlinftbasefare = infcount * inftbasefare;
+                         toatlinftbasefare =  inftbasefare;
                         basefare = (peradtamount * adtcount) + (perchdtamount * chdcount) + (toatlinftbasefare);
 
                     }
@@ -106,7 +107,8 @@
                         }
                         if (infcount >0)
                         {
-                            <div class="text-14">Infant ( @infcount X &#8377;@inftbasefare) </div>
+                            var inftbasefare1 = @inftbasefare / @infcount;
+                            <div class="text-14">Infant ( @infcount X &#8377;@inftbasefare1) </div>
                         }
 
                     }             

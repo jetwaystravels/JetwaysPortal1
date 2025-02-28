@@ -16,7 +16,6 @@ using System;
 using Bookingmanager_;
 using Utility;
 using Sessionmanager;
-using OnionConsumeWebAPI.Models;
 using OnionArchitectureAPI.Services.Barcode;
 using static DomainLayer.Model.ReturnTicketBooking;
 using IndigoBookingManager_;
@@ -53,95 +52,22 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
         decimal Totatamountmb = 0;
         DateTime Journeydatetime = new DateTime();
         string bookingKey = string.Empty;
-        private readonly IConfiguration _configuration;
 
-        public SGCommitBookingController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        public async Task<IActionResult> booking(string Guid)
+        public async Task<IActionResult> booking()
         {
             AirLinePNRTicket _AirLinePNRTicket = new AirLinePNRTicket();
             _AirLinePNRTicket.AirlinePNR = new List<ReturnTicketBooking>();
 
-            //  string tokenview = HttpContext.Session.GetString("SpicejetSignature");
+            string tokenview = HttpContext.Session.GetString("SpicejetSignature");
             token = string.Empty;
-
-            MongoHelper objMongoHelper = new MongoHelper();
-            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-            SearchLog searchLog = new SearchLog();
-            searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
-
-            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "SpiceJet").Result;
-
-            token = tokenData.Token;
-
-
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(tokenview))
             {
-                //if (tokenview == null) { tokenview = ""; }
-                //token = tokenview.Replace(@"""", string.Empty);
-                //   string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
-
-                string passengernamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
-
+                if (tokenview == null) { tokenview = ""; }
+                token = tokenview.Replace(@"""", string.Empty);
+                string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
                 List<passkeytype> passeengerlist = (List<passkeytype>)JsonConvert.DeserializeObject(passengernamedetails, typeof(List<passkeytype>));
-                // string contactdata = HttpContext.Session.GetString("ContactDetails");
-
-                string contactdata = objMongoHelper.UnZip(tokenData.ContactRequest);
-
+                string contactdata = HttpContext.Session.GetString("ContactDetails");
                 UpdateContactsRequest contactList = (UpdateContactsRequest)JsonConvert.DeserializeObject(contactdata, typeof(UpdateContactsRequest));
-
-                //Booking From State  and Add Payment
-                SpiceJetApiController objSpiceJet = new SpiceJetApiController();
-
-                //GetBookingFromState
-                #region GetState
-                GetBookingFromStateResponse _GetBookingFromStateRS1 = null;
-                GetBookingFromStateRequest _GetBookingFromStateRQ1 = null;
-                _GetBookingFromStateRQ1 = new GetBookingFromStateRequest();
-                _GetBookingFromStateRQ1.Signature = token;
-                _GetBookingFromStateRQ1.ContractVersion = 420;
-                _GetBookingFromStateRS1 = await objSpiceJet.GetBookingFromState(_GetBookingFromStateRQ1);
-
-                string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
-                decimal Totalpayment = 0M;
-                if (_GetBookingFromStateRS1 != null)
-                {
-                    Totalpayment = _GetBookingFromStateRS1.BookingData.BookingSum.TotalCost;
-                }
-
-                //ADD Payment
-                AddPaymentToBookingRequest _bookingpaymentRequest = new AddPaymentToBookingRequest();
-                AddPaymentToBookingResponse _BookingPaymentResponse = new AddPaymentToBookingResponse();
-                _bookingpaymentRequest.Signature = token;
-                _bookingpaymentRequest.ContractVersion = 420;
-                _bookingpaymentRequest.addPaymentToBookingReqData = new AddPaymentToBookingRequestData();
-                _bookingpaymentRequest.addPaymentToBookingReqData.MessageStateSpecified = true;
-                _bookingpaymentRequest.addPaymentToBookingReqData.MessageState = MessageState.New;
-                _bookingpaymentRequest.addPaymentToBookingReqData.WaiveFeeSpecified = true;
-                _bookingpaymentRequest.addPaymentToBookingReqData.WaiveFee = false;
-                _bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodTypeSpecified = true;
-                _bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodType = RequestPaymentMethodType.AgencyAccount;
-                _bookingpaymentRequest.addPaymentToBookingReqData.PaymentMethodCode = "AG";
-                _bookingpaymentRequest.addPaymentToBookingReqData.QuotedCurrencyCode = "INR";
-                _bookingpaymentRequest.addPaymentToBookingReqData.QuotedAmountSpecified = true;
-                _bookingpaymentRequest.addPaymentToBookingReqData.QuotedAmount = Totalpayment;
-                //_bookingpaymentRequest.addPaymentToBookingReqData.AccountNumber = "OTI122";
-                _bookingpaymentRequest.addPaymentToBookingReqData.InstallmentsSpecified = true;
-                _bookingpaymentRequest.addPaymentToBookingReqData.Installments = 1;
-                _bookingpaymentRequest.addPaymentToBookingReqData.ExpirationSpecified = true;
-                _bookingpaymentRequest.addPaymentToBookingReqData.Expiration = Convert.ToDateTime("0001-01-01T00:00:00");
-                _BookingPaymentResponse = await objSpiceJet.Addpayment(_bookingpaymentRequest);
-                string payment = JsonConvert.SerializeObject(_BookingPaymentResponse);
-                //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_bookingpaymentRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingPaymentResponse), "BookingPayment", "SpiceJetOneway");
-                logs.WriteLogs(JsonConvert.SerializeObject(_bookingpaymentRequest), "14-BookingPaymentRequest", "SpicejetOneWay", "oneway");
-                logs.WriteLogs(JsonConvert.SerializeObject(_BookingPaymentResponse), "14-BookingPaymentResponse", "SpicejetOneWay", "oneway");
-
-                #endregion
-
                 using (HttpClient client = new HttpClient())
                 {
 
@@ -172,13 +98,11 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].CultureCode = "en-GB";
                     _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].DistributionOption = DistributionOption.Email;
 
-                    objSpiceJet = new SpiceJetApiController();
+                    SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                     _BookingCommitResponse = await objSpiceJet.BookingCommit(_bookingCommitRequest);
 
-                    //string Str3 = JsonConvert.SerializeObject(_BookingCommitResponse);
-                    logs.WriteLogs(JsonConvert.SerializeObject(_bookingCommitRequest), "15-BookingCommitRequest", "SpicejetOneWay", "oneway");
-                    logs.WriteLogs(JsonConvert.SerializeObject(_BookingCommitResponse), "15-BookingCommitResponse", "SpicejetOneWay", "oneway");
-                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_bookingCommitRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingCommitResponse), "BookingCommit", "SpicejetOneWay", "oneway");
+                    string Str3 = JsonConvert.SerializeObject(_BookingCommitResponse);
+                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_bookingCommitRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingCommitResponse), "BookingCommit", "SpicejetOneWay", "oneway");
                     if (_BookingCommitResponse != null)
                     {
                         GetBookingRequest getBookingRequest = new GetBookingRequest();
@@ -192,10 +116,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                         _getBookingResponse = await objSpiceJet.GetBookingdetails(getBookingRequest);
                         string _responceGetBooking = JsonConvert.SerializeObject(_getBookingResponse);
-                        logs.WriteLogs(JsonConvert.SerializeObject(getBookingRequest), "16-GetBookingDetailsRequest", "SpicejetOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(_getBookingResponse), "16-GetBookingDetailsResponse", "SpicejetOneWay", "oneway");
 
-                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getBookingResponse) + "\n\n Response: " + JsonConvert.SerializeObject(_getBookingResponse), "GetBookingDetails", "SpicejetOneWay", "oneway");
+                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getBookingResponse) + "\n\n Response: " + JsonConvert.SerializeObject(_getBookingResponse), "GetBookingDetails", "SpicejetOneWay", "oneway");
                         if (_getBookingResponse != null)
                         {
                             Hashtable htname = new Hashtable();
@@ -206,11 +128,9 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             Hashtable htmealdata = new Hashtable();
                             Hashtable htbagdata = new Hashtable();
 
-                            int adultcount = searchLog.Adults;
-                            int childcount = searchLog.Children;
-                            int infantcount = searchLog.Infants;
-
-
+                            int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
+                            int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
+                            int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
                             int TotalCount = adultcount + childcount;
                             string _responceGetBooking1 = JsonConvert.SerializeObject(_getBookingResponse);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
@@ -914,10 +834,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             _logoutRequestobj.Signature = token;
                             objSpiceJet = new SpiceJetApiController();
                             _logoutResponse = await objSpiceJet.Logout(_logoutRequestobj);
-                            logs.WriteLogs(JsonConvert.SerializeObject(_logoutRequestobj), "17-LogoutRequest", "SpicejetOneWay", "oneway");
-                            logs.WriteLogs(JsonConvert.SerializeObject(_logoutResponse), "17-LogoutResponse", "SpicejetOneWay", "oneway");
 
-                            //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay", "oneway");
+                            logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay", "oneway");
                         }
                     }
                 }

@@ -333,7 +333,7 @@ namespace OnionConsumeWebAPI.Controllers
             int passengerscount = passeengerKeyList.passengerscount;
             using (HttpClient client = new HttpClient())
             {
-                if (ssrKey.Count > 0 || Boolfastforward == true || BaggageSSrkey.Count > 0)
+                if (ssrKey.Count > 0 || Boolfastforward==true || BaggageSSrkey.Count>0)
                 {
                     #region SellSSr
                     _SellSSR obj_ = new _SellSSR(httpContextAccessorInstance);
@@ -362,7 +362,7 @@ namespace OnionConsumeWebAPI.Controllers
                             var JsonObjSeatAssignment = _AssignseatRes;
                             #region GetBookingFromState
                             _sell objsell = new _sell();
-                            IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS = await objsell.GetBookingFromState(token, 0, "OneWay");
+                            IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS = await objsell.GetBookingFromState(token, 0,"OneWay");
 
                             string str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS);
 

@@ -156,13 +156,15 @@ namespace OnionConsumeWebAPI.Controllers
                   //    (d.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
                   //)).ToList();
 
-                  //change DATE 07-02-2025 HANDLE NULL VALUE.
+                //change DATE 07-02-2025 HANDLE NULL VALUE.
                   departure.Any(d =>
             (d != null && d.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
             (d != null && d.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
             (d != null && d.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
             (d != null && d.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
         )).ToList();
+
+
 
                 OnewaydeserializedObjects = filteredFlights.ToList();
                 viewModelobject.SimpleAvailibilityaAddResponcelist = OnewaydeserializedObjects;
@@ -308,7 +310,7 @@ namespace OnionConsumeWebAPI.Controllers
                 token = tokenview.Replace(@"""", string.Empty);
 
 
-                HttpContext.Session.SetString("journeyKey", JsonConvert.SerializeObject(journeyKey));
+               // HttpContext.Session.SetString("journeyKey", JsonConvert.SerializeObject(journeyKey));
 
                 _mongoDBHelper.UpdateFlightTokenJourney(Guid, "AirAsia", journeyKey);
 

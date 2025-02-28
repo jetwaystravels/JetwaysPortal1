@@ -203,7 +203,7 @@ namespace OnionConsumeWebAPI.Controllers
                     _ContactModel.updateContactsRequestData.BookingContactList[0].EmailAddress = obj.emailAddress;
                     _ContactModel.updateContactsRequestData.BookingContactList[0].TypeCode = "P";
                     _ContactModel.updateContactsRequestData.BookingContactList[0].CountryCode = "IN";
-                    _ContactModel.updateContactsRequestData.BookingContactList[0].HomePhone = obj.countrycode + obj.number;
+                    _ContactModel.updateContactsRequestData.BookingContactList[0].HomePhone = obj.countrycode+ obj.number;
                     BookingName[] Name = new BookingName[1];
                     Name[0] = new BookingName();
                     Name[0].FirstName = obj.first;
@@ -468,7 +468,7 @@ namespace OnionConsumeWebAPI.Controllers
             //string journeyKey = passeengerKeyList.journeys[0].journeyKey;
             using (HttpClient client = new HttpClient())
             {
-                if (ssrKey.Count > 0 || BaggageSSrkey.Count > 0)
+                if (ssrKey.Count > 0 || BaggageSSrkey.Count>0)
                 {
                     #region SellSSr
                     SellRequest sellSsrRequest = new SellRequest();
@@ -613,7 +613,7 @@ namespace OnionConsumeWebAPI.Controllers
                                         else
                                         {
                                             int idx = 0;
-                                            if (_obj.SSRcode0.Count > 0 || _obj.SSRbaggagecode0.Count > 0)//&& i1 + 1 <= ssrKey.Count
+                                            if (_obj.SSRcode0.Count > 0 || _obj.SSRbaggagecode0.Count>0)//&& i1 + 1 <= ssrKey.Count
                                             {
                                                 for (int i1 = 0; i1 < _obj.SSRcode0.Count; i1++)//Paxnum 1 adult,1 child,1 infant 2 meal
                                                 {
@@ -802,8 +802,8 @@ namespace OnionConsumeWebAPI.Controllers
                     logs.WriteLogs(JsonConvert.SerializeObject(sellSsrResponse), "12-SellSSRResponse", "SpicejetOneWay", "oneway");
                     //if (sellSsrResponse != null)
                     //{
-                    //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                    //var JsonObjSeatAssignment = sellSsrResponse;
+                        //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
+                        //var JsonObjSeatAssignment = sellSsrResponse;
                     //}
                     #endregion
 
@@ -1558,8 +1558,8 @@ namespace OnionConsumeWebAPI.Controllers
                             p1.Infant = new PassengerInfant();
                             p1.Infant.DOBSpecified = true;
                             p1.Infant.DOB = Convert.ToDateTime(_paxes.Infant_[cntAdt].dateOfBirth);
-
-
+                           
+                                                                             
                             if (_paxes.Infant_[cntAdt].title.ToUpper().Replace(".", "") == "MSTR")
                             {
                                 p1.Infant.Gender = Gender.Male;

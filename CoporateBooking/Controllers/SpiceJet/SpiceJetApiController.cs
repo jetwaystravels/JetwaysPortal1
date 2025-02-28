@@ -3,7 +3,6 @@ using Sessionmanager;
 using Bookingmanager_;
 using Newtonsoft.Json;
 using Utility;
-using IndigoBookingManager_;
 
 namespace OnionConsumeWebAPI.Controllers
 {
@@ -147,28 +146,6 @@ namespace OnionConsumeWebAPI.Controllers
         }
         #endregion
 
-        #region GetseatAvaialbility
-        public async Task<GetSeatAvailabilityResponse> GetseatAvaialbility(GetSeatAvailabilityRequest _getSeatAvaiulabilityRQ, int a, int i)
-        {
-            IBookingManager bookingManager = null;
-            GetSeatAvailabilityResponse getseatAvailabilityResponse = null;
-            bookingManager = new BookingManagerClient();
-            try
-            {
-                getseatAvailabilityResponse = await bookingManager.GetSeatAvailabilityAsync(_getSeatAvaiulabilityRQ);
-                OtherServiceInformation[] OtherServiceInfoList = new OtherServiceInformation[1];
-                OtherServiceInfoList[0] = new OtherServiceInformation();
-                OtherServiceInfoList[0].Text = a.ToString() + i.ToString();
-                getseatAvailabilityResponse.SeatAvailabilityResponse.OtherServiceInfoList = OtherServiceInfoList;
-                return getseatAvailabilityResponse;
-            }
-            catch (Exception ex)
-            {
-                //return Ok(session);
-            }
-            return getseatAvailabilityResponse;
-        }
-        #endregion
 
         #region GetseatAvaialbility
         public async Task<GetSeatAvailabilityResponse> GetseatAvaialbility(GetSeatAvailabilityRequest _getSeatAvaiulabilityRQ)
@@ -179,10 +156,6 @@ namespace OnionConsumeWebAPI.Controllers
             try
             {
                 getseatAvailabilityResponse = await bookingManager.GetSeatAvailabilityAsync(_getSeatAvaiulabilityRQ);
-                //OtherServiceInformation[] OtherServiceInfoList = new OtherServiceInformation[1];
-                //OtherServiceInfoList[0] = new OtherServiceInformation();
-                //OtherServiceInfoList[0].Text = a.ToString() + i.ToString();
-                //getseatAvailabilityResponse.SeatAvailabilityResponse.OtherServiceInfoList = OtherServiceInfoList;
                 return getseatAvailabilityResponse;
             }
             catch (Exception ex)
@@ -251,27 +224,6 @@ namespace OnionConsumeWebAPI.Controllers
         }
         #endregion
 
-        #region payment
-        public async Task<AddPaymentToBookingResponse> Addpayment(AddPaymentToBookingRequest _bookingPaymentRequest)
-        {
-            IBookingManager bookingManager = null;
-            AddPaymentToBookingResponse _bookingpaymentRes = null;
-            bookingManager = new BookingManagerClient();
-            try
-            {
-                _bookingpaymentRes = await bookingManager.AddPaymentToBookingAsync(_bookingPaymentRequest);
-                return _bookingpaymentRes;
-            }
-            catch (Exception ex)
-            {
-                //Logs logs = new Logs();
-                //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_bookingPaymentRequest) + "\n\n Response: " + ex.ToString(), "Bookingpayment", "SpiceJetRT");
-                //return Ok(session);
-            }
-            return _bookingpaymentRes;
-        }
-        #endregion
-
         #region BookingCommit
         public async Task<BookingCommitResponse> BookingCommit(BookingCommitRequest _getbookingCommitRQ)
         {
@@ -285,8 +237,8 @@ namespace OnionConsumeWebAPI.Controllers
             }
             catch (Exception ex)
             {
-                //Logs logs = new Logs();
-                //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getbookingCommitRQ) + "\n\n Response: " + ex.ToString(), "BookingCommit", "SpicejetOneWay");
+                Logs logs=new Logs ();
+                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getbookingCommitRQ) + "\n\n Response: " + ex.ToString(), "BookingCommit", "SpicejetOneWay", "oneway");
                 //return Ok(session);
             }
             return getBookiongCommitResponse;

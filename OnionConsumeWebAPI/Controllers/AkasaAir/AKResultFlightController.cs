@@ -16,6 +16,7 @@ using OnionConsumeWebAPI.Extensions;
 using Utility;
 using static DomainLayer.Model.GetItenaryModel;
 using static DomainLayer.Model.SeatMapResponceModel;
+using OnionConsumeWebAPI.Models;
 //using static DomainLayer.Model.testseat;
 
 namespace OnionConsumeWebAPI.Controllers.AkasaAir
@@ -25,26 +26,49 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
         string passengerkey12 = string.Empty;
         string infant = string.Empty;
         Logs logs = new Logs();
-        public async Task<IActionResult> AkasaAirTripsell(string journeyKey, string fareKey, string segmentKey)
+        private readonly IConfiguration _configuration;
+
+
+        public AKResultFlightController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public async Task<IActionResult> AkasaAirTripsell(string journeyKey, string fareKey, string segmentKey, string Guid)
         {
             string token = string.Empty;
             List<_credentials> credentialslist = new List<_credentials>();
             using (HttpClient client = new HttpClient())
             {
 
-                string tokenview = HttpContext.Session.GetString("AkasaTokan");
+                MongoHelper objMongoHelper = new MongoHelper();
+                MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+                MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
-                if (tokenview == "" || tokenview == null)
+                tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
+                token = tokenData.Token;
+			  //  string tokenview = HttpContext.Session.GetString("AkasaTokan");
+
+				if (token == "" || token == null)
                 {
                     return RedirectToAction("Index");
                 }
-                if (tokenview == null) { tokenview = ""; }
-                token = tokenview.Replace(@"""", string.Empty);
+                //if (tokenview == null) { tokenview = ""; }
+                //token = tokenview.Replace(@"""", string.Empty);
 
 
-                HttpContext.Session.SetString("journeyKey", JsonConvert.SerializeObject(journeyKey));
+                //HttpContext.Session.SetString("journeyKey", JsonConvert.SerializeObject(journeyKey));
+
+
+                _mongoDBHelper.UpdateFlightTokenJourney(Guid, "Akasa", journeyKey);
+
+
                 SimpleAvailabilityRequestModel _SimpleAvailabilityobj = new SimpleAvailabilityRequestModel();
-                var jsonData = HttpContext.Session.GetString("PassengerModel");
+                // var jsonData = HttpContext.Session.GetString("PassengerModel");
+
+                var jsonData = objMongoHelper.UnZip(tokenData.PassRequest);
+
                 _SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
                 var AdtType = "";
                 var AdtCount = 0;
@@ -141,7 +165,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                         AkasaJourneyobj.designator = AkasaDesignatorobj;
 
 
-                        int segmentscount = Akasajsondata.data.journeys[i].segments.Count;
+                       int segmentscount = Akasajsondata.data.journeys[i].segments.Count;
                         List<AASegment> AkasaSegmentlist = new List<AASegment>();
                         for (int j = 0; j < segmentscount; j++)
                         {
@@ -273,15 +297,16 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
                     HttpContext.Session.SetString("ResultFlightPassenger", JsonConvert.SerializeObject(AkasaAirTripResponceobj));
                 }
-               
-                #region Itenary 
-                if (infanttype != null)
-                {
+
+				#region Itenary 
+				//if (infanttype != null)
+				if (!string.IsNullOrEmpty(infanttype))
+				{
                     string passengerdatainfant = HttpContext.Session.GetString("ResultFlightPassenger");
                     AirAsiaTripResponceModel passeengerKeyListinfant = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdatainfant, typeof(AirAsiaTripResponceModel));
 
                     SimpleAvailabilityRequestModel _SimpleAvailabilityobject = new SimpleAvailabilityRequestModel();
-                    var jsonDataObject = HttpContext.Session.GetString("PassengerModel");
+                    var jsonDataObject = jsonData;// HttpContext.Session.GetString("PassengerModel");
                     _SimpleAvailabilityobject = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonDataObject.ToString());
 
                     GetItenaryModel itenaryInfant = new GetItenaryModel();
@@ -583,29 +608,45 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 #region Meals& Baggage
                 string Akpassengerdata = HttpContext.Session.GetString("ResultFlightPassenger");
                 AirAsiaTripResponceModel AKpasseengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(Akpassengerdata, typeof(AirAsiaTripResponceModel));
+           
                 int passengerscount = AKpasseengerKeyList.passengerscount;
-                string departuredate = string.Empty;
-                SSRAvailabiltyModel _AkasaSSRAvailabilty = new SSRAvailabiltyModel();
+                AkasaSSRavailRequest _AkasaSSRAvailabilty = new AkasaSSRavailRequest();
                 _AkasaSSRAvailabilty.passengerKeys = new string[passengerscount];
+
                 for (int i = 0; i < passengerscount; i++)
                 {
                     _AkasaSSRAvailabilty.passengerKeys[i] = AKpasseengerKeyList.passengers[i].passengerKey;
                 }
-                _AkasaSSRAvailabilty.currencyCode = _AkasaSSRAvailabilty.currencyCode;
 
-                List<Trip> AkasaTripslist = new List<Trip>();
-                Trip AkasaTripobj = new Trip();
-                AkasaTripobj.destination = AKpasseengerKeyList.journeys[0].designator.destination;
-                AkasaTripobj.origin = AKpasseengerKeyList.journeys[0].designator.origin;
-                List<TripIdentifier> AkasaTripIdentifierlist = new List<TripIdentifier>();
-                TripIdentifier AkasaTripIdentifierobj = new TripIdentifier();
-                AkasaTripIdentifierobj.carrierCode = AKpasseengerKeyList.journeys[0].segments[0].identifier.carrierCode;
-                AkasaTripIdentifierobj.identifier = AKpasseengerKeyList.journeys[0].segments[0].identifier.identifier;
-                AkasaTripIdentifierlist.Add(AkasaTripIdentifierobj);
-                AkasaTripobj.identifier = AkasaTripIdentifierlist;
-                AkasaTripslist.Add(AkasaTripobj);
+                _AkasaSSRAvailabilty.currencyCode = "INR"; // Ensure currency code is assigned properly
+
+                List<TripAA> AkasaTripslist = new List<TripAA>();
+
+                int segsmealBagcount = AKpasseengerKeyList.journeys[0].segments.Count;
+
+                for (int i = 0; i < segsmealBagcount; i++)
+                {
+                    TripAA AkasaTripobj = new TripAA();
+
+                    TripIdentifier AkasaTripIdentifierobj = new TripIdentifier
+                    {
+                        carrierCode = AKpasseengerKeyList.journeys[0].segments[i].identifier.carrierCode,
+                        identifier = AKpasseengerKeyList.journeys[0].segments[i].identifier.identifier
+                    };
+
+                    AkasaTripobj.origin = AKpasseengerKeyList.journeys[0].segments[i].designator.origin;
+                    AkasaTripobj.destination = AKpasseengerKeyList.journeys[0].segments[i].designator.destination;
+                    AkasaTripobj.departureDate = AKpasseengerKeyList.journeys[0].designator.departure.ToString("yyyy-MM-dd");
+                    AkasaTripobj.identifier = AkasaTripIdentifierobj; // ✅ Assign as an object, NOT a list
+
+                    AkasaTripslist.Add(AkasaTripobj);
+                }
+
                 _AkasaSSRAvailabilty.trips = AkasaTripslist;
+
                 var jsonAkasaSSRAvailabiltyRequest = JsonConvert.SerializeObject(_AkasaSSRAvailabilty, Formatting.Indented);
+
+
                 SSRAvailabiltyResponceModel AkasaSSRAvailabiltyResponceobj = new SSRAvailabiltyResponceModel();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -852,7 +893,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 //}
                 #endregion
             }
-            return RedirectToAction("AkTripsellView", "AKTripsell");
+            return RedirectToAction("AkTripsellView", "AKTripsell", new { Guid = Guid });
         }
     }
 }

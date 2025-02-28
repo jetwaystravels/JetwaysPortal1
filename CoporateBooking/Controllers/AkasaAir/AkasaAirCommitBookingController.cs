@@ -70,11 +70,65 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
             using (HttpClient client = new HttpClient())
             {
-                #region Commit Booking				
-                AkasaAirCommitBooking _Commit_BookingModel = new AkasaAirCommitBooking();
-                _Commit_BookingModel.restrictionOverride = false;
-                _Commit_BookingModel.notifyContacts = false;
 
+                //GetBOoking FRom State
+                // STRAT Get INFO
+
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.AkasaAirGetBooking);
+                if (responceGetBookingSate.IsSuccessStatusCode)
+                {
+                    string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
+                    var DataBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+                    decimal Totalpayment = 0M;
+                    if (_responceGetBooking != null)
+                    {
+                        Totalpayment = DataBooking.data.breakdown.totalAmount;
+                    }
+
+                    //Logs logs = new Logs();
+                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject("GetBookingStateRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBookingState", "AirAsiaOneWay");
+
+                    //ADD Payment
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    // Payment request payload
+                    PaymentRequest paymentRequest = new PaymentRequest();
+                    paymentRequest.PaymentMethodCode = "AG";
+                    paymentRequest.Amount = Totalpayment;
+                    paymentRequest.PaymentFields = new PaymentFields();
+                    paymentRequest.PaymentFields.ACCTNO = "QPDEL5019C";
+                    paymentRequest.PaymentFields.AMT = Totalpayment;
+                    paymentRequest.CurrencyCode = "INR";
+                    paymentRequest.Installments = 1;
+
+                    // Serializing the payload to JSON
+                    string jsonPayload = JsonConvert.SerializeObject(paymentRequest);
+                    HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                    // Sending the POST request
+                    string url = AppUrlConstant.AkasaAirPayment;
+
+                    HttpResponseMessage response = await client.PostAsync(url, content);
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var responseData = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(paymentRequest) + "\nUrl: " + url + "\nResponse: " + responseContent, "CommitPayment", "AirAsiaOneWay");
+                    logs.WriteLogs(jsonPayload, "14-AddpaymentRequest", "AkasaOneWay", "oneway");
+                    logs.WriteLogs(responseContent, "14-AddpaymentResponse", "AkasaOneWay", "oneway");
+                }
+
+
+                #region Commit Booking
+                string[] NotifyContacts = new string[1];
+                NotifyContacts[0] = "P";
+                Commit_BookingModel _Commit_BookingModel = new Commit_BookingModel();
+
+                _Commit_BookingModel.notifyContacts = true;
+                _Commit_BookingModel.contactTypesToNotify = NotifyContacts;
                 var jsonCommitBookingRequest = JsonConvert.SerializeObject(_Commit_BookingModel, Formatting.Indented);
                 ApiRequests apiRequests = new ApiRequests();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -84,8 +138,11 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 {
 
                     var _responceCommit_Booking = AkresponceCommit_Booking.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + (AppUrlConstant.AkasaAirCommitBooking) + "\n Response: " + JsonConvert.SerializeObject(_responceCommit_Booking), "Commit", "AkasaOneWay");
-                    var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
+                    logs.WriteLogs(jsonCommitBookingRequest, "15-CommitBookingRequest", "AkasaOneWay", "oneway");
+                    logs.WriteLogs(_responceCommit_Booking, "15-CommitBookingResponse", "AkasaOneWay", "oneway");
+
+                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + (AppUrlConstant.AkasaAirCommitBooking) + "\n Response: " + JsonConvert.SerializeObject(_responceCommit_Booking), "Commit", "AkasaOneWay", "oneway");
+                    //var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
                 }
                 #endregion
                 #region AKBooking GET
@@ -102,7 +159,10 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     Hashtable htmealdata = new Hashtable();
                     Hashtable htBagdata = new Hashtable();
                     var _responcePNRBooking = AKresponceGetBooking.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("") + "Url: " + (AppUrlConstant.AkasaAirGetBooking) + "\n Response: " + JsonConvert.SerializeObject(_responcePNRBooking), "GetBooking", "AkasaOneWay");
+                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject("") + "Url: " + (AppUrlConstant.AkasaAirGetBooking) + "\n Response: " + JsonConvert.SerializeObject(_responcePNRBooking), "GetBooking", "AkasaOneWay", "oneway");
+                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(AppUrlConstant.AkasaAirGetBooking), "16-GetBookingPnrRequest", "AkasaOneWay", "oneway");
+                    logs.WriteLogs(_responcePNRBooking, "16-GetBookingPnrResponse", "AkasaOneWay", "oneway");
+
                     var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                     ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
                     var PassengerData = HttpContext.Session.GetString("AKPassengerName");
@@ -113,7 +173,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     Info info = new Info();
                     info.bookedDate = JsonObjPNRBooking.data.info.bookedDate;
                     returnTicketBooking.info = info;
-                    if (BarcodePNR!=null && BarcodePNR.Length < 7)
+                    if (BarcodePNR != null && BarcodePNR.Length < 7)
                     {
                         BarcodePNR = BarcodePNR.PadRight(7);
                     }
@@ -121,6 +181,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     // var zxvx= JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                     Breakdown breakdown = new Breakdown();
                     breakdown.balanceDue = JsonObjPNRBooking.data.breakdown.balanceDue;
+                    breakdown.totalAmount = JsonObjPNRBooking.data.breakdown.totalAmount;
                     JourneyTotals journeyTotalsobj = new JourneyTotals();
                     journeyTotalsobj.totalAmount = JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                     journeyTotalsobj.totalTax = JsonObjPNRBooking.data.breakdown.journeyTotals.totalTax;
@@ -162,7 +223,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                             ReturnCharge returnChargeobj = new ReturnCharge();
                             returnChargeobj.amount = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.charges[ch].amount;
                             returnChargeobj.code = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.charges[ch].code;
-                            if (returnChargeobj.code.StartsWith("V"))
+                            if (returnChargeobj.code.StartsWith("P"))
                             {
                                 totalAmount += returnChargeobj.amount;
 
@@ -171,14 +232,14 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                             {
                                 totalAmounttax += returnChargeobj.amount;
                             }
-                            if (returnChargeobj.code.StartsWith("S"))
+                            if (returnChargeobj.code.StartsWith("U"))
                             {
                                 totalAmounttaxSGST += returnChargeobj.amount;
                             }
                             totalMealTax = totalAmounttax + totalAmounttaxSGST;
                             taxMinusMeal = totalAmount - totalMealTax;
                             TotalAmountMeal = totalMealTax + taxMinusMeal;
-                            if (returnChargeobj.code.StartsWith("P"))
+                            if (returnChargeobj.code.StartsWith("X"))
                             {
                                 totalAmountBaggage += returnChargeobj.amount;
 
@@ -188,7 +249,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 totalAmounttaxBag += returnChargeobj.amount;
                             }
 
-                            if (returnChargeobj.code.StartsWith("S"))
+                            if (returnChargeobj.code.StartsWith("U"))
                             {
                                 totalAmounttaxSGSTBag += returnChargeobj.amount;
                             }
@@ -346,7 +407,10 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                         seatnumber = seatnumber.PadRight(4, '0');
                                     }
                                     returnSeatsList.Add(returnSeatsObj);
-                                    htseatdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, returnSeatsObj.unitDesignator);
+                                    if (!htseatdata.Contains(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination))
+                                    {
+                                        htseatdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, returnSeatsObj.unitDesignator);
+                                    }
                                     returnSeats.unitDesignator += returnSeatsObj.unitDesignator + ",";
                                     if (!htpax.Contains(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination))
                                     {
@@ -370,14 +434,17 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 {
                                     SsrReturn ssrReturn = new SsrReturn();
                                     ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
-                                    if (ssrReturn.ssrCode.StartsWith("P"))
+                                    // if (ssrReturn.ssrCode.StartsWith("P") || ssrReturn.ssrCode.StartsWith("X"))
+                                    if (!ssrReturn.ssrCode.StartsWith("P"))
                                     {
                                         continue;
                                     }
                                     else
                                     {
-
-                                        htmealdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+                                        if (!htmealdata.Contains(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination))
+                                        {
+                                            htmealdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+                                        }
                                         returnSeats.SSRCode += ssrReturn.ssrCode + ",";
                                     }
 
@@ -387,13 +454,16 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 {
                                     SsrReturn ssrReturn = new SsrReturn();
                                     ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
-                                    if (ssrReturn.ssrCode.StartsWith("V"))
+                                    if (!ssrReturn.ssrCode.StartsWith("X"))
                                     {
                                         continue;
                                     }
                                     else
                                     {
-                                        htBagdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+                                        if (!htBagdata.Contains(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination))
+                                        {
+                                            htBagdata.Add(passengerSegmentobj.passengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.origin + "_" + JsonObjPNRBooking.data.journeys[i].segments[j].designator.destination, ssrReturn.ssrCode);
+                                        }
                                         returnSeats.SSRCode += ssrReturn.ssrCode + ",";
                                     }
 

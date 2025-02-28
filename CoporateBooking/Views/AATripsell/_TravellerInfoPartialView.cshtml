@@ -104,11 +104,11 @@
 
                         @if (Model.passeengerlist.passengers[i].passengerTypeCode == "ADT")
                         {
-                            <select name="passengerdetails[@i].Title" class="form-control text-center" style="border: 1px solid var(--color-border);">
+                            <select name="passengerdetails[@i].Title" class="form-control text-center"  style="border: 1px solid var(--color-border);">
                                 <option value="Mr">MR</option>
                                 <option value="Ms">MS</option>
                                 <option value="Mrs">Mrs.</option>
-
+                               
                             </select>
                         }
                         else if (Model.passeengerlist.passengers[i].passengerTypeCode == "CHD" || Model.passeengerlist.passengers[i].passengerTypeCode == "INFT")
@@ -127,14 +127,14 @@
                         @{
                             if (Model.passeengerlist.passengers[i].passengerKey == "0")
                             {
-                                <input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" required />
+                                        <input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" required />
                             }
                             else
                             {
-                                <input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" required />
+                                        <input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" required />
                             }
                         }
-
+                        
                         <input type="text" class="contactFname validate-field" data-validate="name" maxlength="16" oninput="validateInputT(event ,@i)" id="LeadPass1" placeholder="First & middle name" name="passengerdetails[@i].First" style='text-transform:uppercase' required />
 
                     </div>
@@ -153,11 +153,11 @@
                 @{
                     if (Model.passeengerlist.passengers[i].passengerTypeCode == "ADT" || Model.passeengerlist.passengers[i].passengerTypeCode == "CHD")
                     {
-                        <div class="col-md-3">
-                            <div class="form-input"><input type="text" data-validate="email" class="contactemail validate-field" maxlength="50" oninput="validateInputT(event,@i)" id="contactemailID" placeholder="email" name="" required /></div>
-                        </div>
-                        <p class="error-message error-emailname" style="display:none"></p>
-                        <p class="error-message-val " style="display:none"></p>
+                                <div class="col-md-3">
+                                    <div class="form-input"><input type="text" data-validate="email" class="contactemail validate-field" maxlength="30" oninput="validateInputT(event,@i)" id="contactemailID" placeholder="email" name="" required /></div>
+                                </div>
+                                <p class="error-message error-emailname" style="display:none"></p>
+                                <p class="error-message-val " style="display:none"></p>
                         <div class="col-md-1 phone-code">
                             <select name="passengerdetails[@i].countrycode" class="form-control form-control-lg">
                                 <option value="+91">+91 (India)</option>
@@ -167,16 +167,16 @@
                                 <option value="+81">+81 (Japan)</option>
                             </select>
                         </div>
-                        <div class="col-md-2 ">
-                            <div class="form-input"><input type="text" data-validate="phone" id="contactphoneID" maxlength="10" class="contactphone validate-field" oninput="validateInputT(event,@i)" placeholder="phone" name="passengerdetails[@i].mobile" required /></div>
-                        </div>
-                        <p class="error-message error-phoneN" style="display:none"></p>
-                        <p class="error-message-val" style="display:none"></p>
+                                <div class="col-md-2 ">
+                                    <div class="form-input"><input type="text" data-validate="phone" id="contactphoneID" maxlength="10" class="contactphone validate-field" oninput="validateInputT(event,@i)" placeholder="phone" name="passengerdetails[@i].mobile" required /></div>
+                                </div>
+                                <p class="error-message error-phoneN" style="display:none"></p>
+                                <p class="error-message-val" style="display:none"></p>
                     }
                     if (@Model.passeengerlist.passengers[i].passengerTypeCode == "INFT")
                     {
-                        <div class="col-md-4 infant-dob-input">
-                            <div class="form-input dobinput d-flex" id="InfDOBCount_@inafantIdx">
+                                <div class="col-md-4 infant-dob-input">
+                                    <div class="form-input dobinput d-flex" id="InfDOBCount_@inafantIdx">
                                 <div class="dob-picker">
                                     <select class="brd-none year-select" id="year_@inafantIdx" required>
                                         <option value="" disabled selected>Year</option>
@@ -235,9 +235,9 @@
                                         <option value="31">31</option>
                                     </select>
                                 </div>
-
-                            </div>
-                        </div>
+                                   
+                                        </div>
+                                </div>
                         inafantIdx++;
 
                     }
@@ -333,20 +333,20 @@
             //alert("Checked!!")
             var emaiLeadPass = document.querySelector('.contactemail').value;
             var phoneLeadPass = document.querySelector('.contactphone').value;
-
+          
             var emailInputsT = document.querySelectorAll(".contactemail");
             emailInputsT.forEach(function (input) {
                 input.value = emaiLeadPass;
-
+               
             });
             // Get all elements with class "contactphone" and set their value
             var phoneInputsT = document.querySelectorAll(".contactphone");
             phoneInputsT.forEach(function (input) {
                 input.value = phoneLeadPass;
-
+              
             });
         } else {
-            // alert("Checkbox is unchecked");
+           // alert("Checkbox is unchecked");
             debugger;
             // var emaiLeadPass = "";
             // var phoneLeadPass = "";
@@ -369,31 +369,31 @@
             var emailInputsT = document.querySelectorAll(".contactemail");
             emailInputsT.forEach(function (input, index) {
                 if (index === 0) {
-                    input.value = firstEmail;
+                    input.value = firstEmail; 
                 } else {
-                    input.value = "";
+                    input.value = ""; 
                 }
             });
             var phoneInputsT = document.querySelectorAll(".contactphone");
             phoneInputsT.forEach(function (input, index) {
                 if (index === 0) {
-                    input.value = firstPhone;
+                    input.value = firstPhone; 
                 } else {
-                    input.value = "";
+                    input.value = ""; 
                 }
             });
 
-            //var emaiLeadPassenger = localStorage.getItem('Leadpassenger3');
+           //var emaiLeadPassenger = localStorage.getItem('Leadpassenger3');
             //var phoneLeadPassenger = localStorage.getItem('Leadpassenger4');
             //document.querySelector("#contactemailID").value = emaiLeadPassenger;
-            //document.querySelector("#contactphoneID").value = phoneLeadPassenger;
+             //document.querySelector("#contactphoneID").value = phoneLeadPassenger;
         }
     });
 
-
-
-
-
+   
+   
+    
+    
 
 </script>
 <script type="text/javascript">
@@ -404,11 +404,11 @@
         $("#editData").click(function () {
             $("#dataPopup").hide();
         });
-        //
+      //
 
         $("#showReviewPopup").click(function (e) {
             e.preventDefault();
-
+            
             /*******Validation Start*********/
             const fieldsToValidate = [
                 { className: 'contactFname', errorMessage: 'First name is required', validationdata: /^[A-Za-z]{1,32}$/ },
@@ -445,9 +445,9 @@
                                 firstInvalidElement = element;
                             }
                         }
-                    }
-
-                    else if (element.value.trim().startsWith('0')) {
+                    } 
+                    
+                     else if (element.value.trim().startsWith('0')) {
                         showError(element, 'Phone number cannot start with 0');
                         if (!firstInvalidElement) {
                             firstInvalidElement = element;
@@ -489,7 +489,7 @@
                     }
                 });
             }
-
+               
 
             if (firstInvalidElement) {
                 firstInvalidElement.focus();
@@ -501,7 +501,7 @@
                         removeError(element);
                     });
                 });
-
+               
             }
 
             function removeError(element) {
@@ -540,36 +540,36 @@
                     }
                 }
 
-                else if (month === 4) {
-                    if (day > 30) {
-                        alert("Invalid date! April has only 30 days.");
-                        return false;
+                     else if (month === 4) {
+                        if (day > 30) {
+                            alert("Invalid date! April has only 30 days.");
+                            return false;
+                        }
                     }
-                }
 
-                else if (month === 6) {
-                    if (day > 30) {
-                        alert("Invalid date! June has only 30 days.");
-                        return false;
+                    else if (month === 6) {
+                        if (day > 30) {
+                            alert("Invalid date! June has only 30 days.");
+                            return false;
+                        }
                     }
-                }
 
-                else if (month === 9) {
-                    if (day > 30) {
-                        alert("Invalid date! September has only 30 days.");
-                        return false;
+                    else if (month === 9) {
+                        if (day > 30) {
+                            alert("Invalid date! September has only 30 days.");
+                            return false;
+                        }
                     }
-                }
 
-                else if (month === 11) {
-                    if (day > 30) {
-                        alert("Invalid date! November has only 30 days.");
-                        return false;
+                    else if (month === 11) {
+                        if (day > 30) {
+                            alert("Invalid date! November has only 30 days.");
+                            return false;
+                        }
                     }
-                }
 
                 /************************* */
-
+               
                 if (year == "") {
                     alert("Please select year for infant date-of-birth");
                     return false;
@@ -735,7 +735,7 @@
 
             formData.append("formattedDates", JSON.stringify(formattedDates));
             $.ajax({
-                url: "/AATripsell/TravllerDetails?GUID=" + GetParameterValues("Guid"),
+                url: "/AATripsell/TravllerDetails",
                 type: "POST",
                 data: formData,
                 processData: false,

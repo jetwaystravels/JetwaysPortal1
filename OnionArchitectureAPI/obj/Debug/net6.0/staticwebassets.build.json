@@ -1,12 +1,11 @@
 {
   "Version": 1,
-  "Hash": "SWkaSbaHwuQN2KB6HTw90SPI6CNxa3LDtrjrS4jDNfg=",
+  "Hash": "6GzdlFZkiN5edLVPAWTZBrbCNiOJUAARw/uoIPB3YQk=",
   "Source": "OnionArchitectureAPI",
   "BasePath": "_content/OnionArchitectureAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "Assets": []
 }

@@ -33,30 +33,6 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 		}
 		public IActionResult RTFlightView()
         {
-
-
-            //var sameAirlineRT = TempData["RoundTripSameAirline"];
-            //ViewData["SameAirlineRT"] = sameAirlineRT;
-            
-            //var searchcount = TempData["count"];
-            //ViewData["count"] = searchcount;
-
-            //var origindata = TempData["origin"];
-            //ViewData["origin"] = origindata;
-
-            //var destinationdata = TempData["destination"];
-            //ViewData["destination"] = destinationdata;
-
-            //var searchcountR = TempData["countR"];
-            //ViewData["countR"] = searchcountR;
-
-            //var origindataR = TempData["originR"];
-            //ViewData["originR"] = origindataR;
-
-            //var destinationdataR = TempData["destinationR"];
-            //ViewData["destinationR"] = destinationdataR;
-
-
 			string guid = HttpContext.Request.Query["Guid"].ToString();
 
 			MongoResponces srchDataALL = new MongoResponces();
@@ -215,10 +191,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             {
                 filteredFlightsReturn = filteredFlightsReturn.Where(flight =>
                     departure.Any(d =>
-                        (d.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-                        (d.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-                        (d.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-                        (d.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
+                        (d != null && d.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
+                        (d != null && d.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
+                        (d != null && d.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
+                        (d != null && d.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
                     )).ToList();
 
                 LeftdeserializedStops = filteredFlightsReturn.ToList();
@@ -228,10 +204,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             {
                 filteredFlightsReturn = filteredFlightsReturn.Where(flight =>
                     arrival.Any(a =>
-                        (a.ToLower() == "before_6am" && flight.designator.arrival.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-                        (a.ToLower() == "6am_to_12pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-                        (a.ToLower() == "12pm_to_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-                        (a.ToLower() == "after_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(18, 0, 0))
+                        (a != null && a.ToLower() == "before_6am" && flight.designator.arrival.TimeOfDay < new TimeSpan(6, 0, 0)) ||
+                        (a != null && a.ToLower() == "6am_to_12pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(12, 0, 0)) ||
+                        (a != null && a.ToLower() == "12pm_to_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(18, 0, 0)) ||
+                        (a != null && a.ToLower() == "after_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(18, 0, 0))
                     )).ToList();
 
                 LeftdeserializedStops = filteredFlightsReturn.ToList();
@@ -242,10 +218,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             {
                 filteredFlightsRight = filteredFlightsRight.Where(flight =>
                     departureRight.Any(a =>
-                        (a.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-                        (a.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-                        (a.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-                        (a.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
+                        (a != null && a.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
+                        (a != null && a.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
+                        (a != null && a.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
+                        (a != null && a.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
                     )).ToList();
                 RightdeserializedStops = filteredFlightsRight.ToList();
                 vmobj.SimpleAvailibilityaAddResponcelist = RightdeserializedStops;
@@ -254,10 +230,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             {
                 filteredFlightsRight = filteredFlightsRight.Where(flight =>
                     arrivalRight.Any(a =>
-                        (a.ToLower() == "before_6am" && flight.designator.arrival.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-                        (a.ToLower() == "6am_to_12pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-                        (a.ToLower() == "12pm_to_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-                        (a.ToLower() == "after_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(18, 0, 0))
+                        (a != null && a.ToLower() == "before_6am" && flight.designator.arrival.TimeOfDay < new TimeSpan(6, 0, 0)) ||
+                        (a != null && a.ToLower() == "6am_to_12pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(12, 0, 0)) ||
+                        (a != null && a.ToLower() == "12pm_to_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(18, 0, 0)) ||
+                        (a != null && a.ToLower() == "after_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(18, 0, 0))
                     )).ToList();
                 RightdeserializedStops = filteredFlightsRight.ToList();
                 vmobj.SimpleAvailibilityaAddResponcelist = RightdeserializedStops;
@@ -269,43 +245,20 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             ViewBag.arriveSortParam = sortOrderName == "arrive_desc" ? "arrive_asc" : "arrive_desc";
             ViewBag.durationSortParam = sortOrderName == "duration_desc" ? "duration_asc" : "duration_desc";
 
-            switch (sortOrderName)
+            LeftdeserializedStops = sortOrderName switch
             {
-                case "name_desc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderByDescending(f => f.Airline.ToString()).ToList();
-                    break;
-                case "name_asc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderBy(f => f.Airline.ToString()).ToList();
-                    break;
-                case "price_desc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderByDescending(p => p.fareTotalsum).ToList();
-                    break;
-                case "price_asc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderBy(p => p.fareTotalsum).ToList();
-                    break;
-                case "deprt_desc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderByDescending(d => d.designator.departure).ToList();
-                    break;
-                case "deprt_asc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderBy(d => d.designator.departure).ToList();
-                    break;
-                case "arrive_desc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderByDescending(d => d.designator.arrival).ToList();
-                    break;
-                case "arrive_asc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderBy(d => d.designator.arrival).ToList();
-                    break;
-                case "duration_desc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderByDescending(d => d.designator.formatTime).ToList();
-                    break;
-                case "duration_asc":
-                    LeftdeserializedStops = LeftdeserializedStops.OrderBy(d => d.designator.formatTime).ToList();
-                    break;
-                default:
-                    LeftdeserializedStops = LeftdeserializedStops.OrderBy(p => p.fareTotalsum).ToList();
-                    break;
-
-            }
+                "name_desc" => LeftdeserializedStops.OrderByDescending(f => f.Airline.ToString()).ToList(),
+                "name_asc" => LeftdeserializedStops.OrderBy(f => f.Airline.ToString()).ToList(),
+                "price_desc" => LeftdeserializedStops.OrderByDescending(p => p.fareTotalsum).ToList(),
+                "price_asc" => LeftdeserializedStops.OrderBy(p => p.fareTotalsum).ToList(),
+                "deprt_desc" => LeftdeserializedStops.OrderByDescending(d => d.designator.departure).ToList(),
+                "deprt_asc" => LeftdeserializedStops.OrderBy(d => d.designator.departure).ToList(),
+                "arrive_desc" => LeftdeserializedStops.OrderByDescending(d => d.designator.arrival).ToList(),
+                "arrive_asc" => LeftdeserializedStops.OrderBy(d => d.designator.arrival).ToList(),
+                "duration_desc" => LeftdeserializedStops.OrderByDescending(d => d.designator.formatTime).ToList(),
+                "duration_asc" => LeftdeserializedStops.OrderBy(d => d.designator.formatTime).ToList(),
+                _ => LeftdeserializedStops.OrderBy(p => p.fareTotalsum).ToList() // Default case
+            };
 
 
             ViewBag.NameSortParam = sortOrderNameR == "name_desc" ? "name_asc" : "name_desc";
@@ -314,43 +267,20 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             ViewBag.arriveSortParam = sortOrderNameR == "arrive_desc" ? "arrive_asc" : "arrive_desc";
             ViewBag.durationSortParam = sortOrderNameR == "duration_desc" ? "duration_asc" : "duration_desc";
 
-            switch (sortOrderNameR)
+            RightdeserializedStops = sortOrderNameR switch
             {
-                case "name_desc":
-                    RightdeserializedStops = RightdeserializedStops.OrderByDescending(f => f.Airline.ToString()).ToList();
-                    break;
-                case "name_asc":
-                    RightdeserializedStops = RightdeserializedStops.OrderBy(f => f.Airline.ToString()).ToList();
-                    break;
-                case "price_desc":
-                    RightdeserializedStops = RightdeserializedStops.OrderByDescending(p => p.fareTotalsum).ToList();
-                    break;
-                case "price_asc":
-                    RightdeserializedStops = RightdeserializedStops.OrderBy(p => p.fareTotalsum).ToList();
-                    break;
-                case "deprt_desc":
-                    RightdeserializedStops = RightdeserializedStops.OrderByDescending(d => d.designator.departure).ToList();
-                    break;
-                case "deprt_asc":
-                    RightdeserializedStops = RightdeserializedStops.OrderBy(d => d.designator.departure).ToList();
-                    break;
-                case "arrive_desc":
-                    RightdeserializedStops = RightdeserializedStops.OrderByDescending(d => d.designator.arrival).ToList();
-                    break;
-                case "arrive_asc":
-                    RightdeserializedStops = RightdeserializedStops.OrderBy(d => d.designator.arrival).ToList();
-                    break;
-                case "duration_desc":
-                    RightdeserializedStops = RightdeserializedStops.OrderByDescending(d => d.designator.formatTime).ToList();
-                    break;
-                case "duration_asc":
-                    RightdeserializedStops = RightdeserializedStops.OrderBy(d => d.designator.formatTime).ToList();
-                    break;
-                default:
-                    RightdeserializedStops = RightdeserializedStops.OrderBy(p => p.fareTotalsum).ToList();
-                    break;
-
-            }
+                "name_desc" => RightdeserializedStops.OrderByDescending(f => f.Airline.ToString()).ToList(),
+                "name_asc" => RightdeserializedStops.OrderBy(f => f.Airline.ToString()).ToList(),
+                "price_desc" => RightdeserializedStops.OrderByDescending(p => p.fareTotalsum).ToList(),
+                "price_asc" => RightdeserializedStops.OrderBy(p => p.fareTotalsum).ToList(),
+                "deprt_desc" => RightdeserializedStops.OrderByDescending(d => d.designator.departure).ToList(),
+                "deprt_asc" => RightdeserializedStops.OrderBy(d => d.designator.departure).ToList(),
+                "arrive_desc" => RightdeserializedStops.OrderByDescending(d => d.designator.arrival).ToList(),
+                "arrive_asc" => RightdeserializedStops.OrderBy(d => d.designator.arrival).ToList(),
+                "duration_desc" => RightdeserializedStops.OrderByDescending(d => d.designator.formatTime).ToList(),
+                "duration_asc" => RightdeserializedStops.OrderBy(d => d.designator.formatTime).ToList(),
+                _ => RightdeserializedStops.OrderBy(p => p.fareTotalsum).ToList() // Default case
+            };
 
 
             // vmobj.SimpleAvailibilityaAddResponcelist = filteredFlightsReturn;

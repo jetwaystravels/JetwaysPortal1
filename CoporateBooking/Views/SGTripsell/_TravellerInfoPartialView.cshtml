@@ -26,24 +26,7 @@
             <input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" />
             <div class="row" id="PassCount_@i">
                 <div class="col-md-1">
-                    @*   <select name="passengerdetails[@i].Title" class="form-control text-center" asp-items="@ViewBag.Title"></select> *@
-                    @if (Model.passeengerlist.passengers[i].passengerTypeCode == "ADT")
-                    {
-                        <select name="passengerdetails[@i].Title" class="form-control text-center" style="border: 1px solid var(--color-border);">
-                            <option value="Mr">MR</option>
-                            <option value="Ms">MS</option>
-                            <option value="Mrs">Mrs.</option>
-
-                        </select>
-                    }
-                    else if (Model.passeengerlist.passengers[i].passengerTypeCode == "CHD" || Model.passeengerlist.passengers[i].passengerTypeCode == "INFT")
-                    {
-                        <select name="passengerdetails[@i].Title" class="form-control text-center" style="border: 1px solid var(--color-border);">
-                            <option value="MSTR">Master</option>
-                            <option value="Miss">Miss</option>
-
-                        </select>
-                    }
+                    <select name="passengerdetails[@i].Title" class="form-control" asp-items="@ViewBag.Title" id="TitleCount_@i"></select>
                 </div>
                 <div class="col-md-3 inputFirstname">
                     <div class="form-input">
@@ -66,7 +49,7 @@
                     if (Model.passeengerlist.passengers[i].passengerTypeCode == "ADT" || Model.passeengerlist.passengers[i].passengerTypeCode == "CHD")
                     {
                         <div class="col-md-3">
-                            <div class="form-input"><input type="text" data-validate="email" class="contactemail validate-field" maxlength="30" oninput="validateInputS(event,@i)" id="contactemailID" placeholder="email" name="" required /></div>
+                            <div class="form-input"><input type="text" data-validate="email" class="contactemail validate-field" maxlength="50" oninput="validateInputS(event,@i)" id="contactemailID" placeholder="email" name="" required /></div>
                         </div>
                         <p class="error-message error-emailname" style="display:none"></p>
                         <p class="error-message-val " style="display:none"></p>
@@ -83,66 +66,18 @@
                             <div class="form-input dobinput d-flex" id="InfDOBCount_@inafantIdx">
                                 <div class="dob-picker">
                                     <select class="brd-none year-select" id="year_@inafantIdx" required>
-                                        <option value="" disabled selected>Year</option>
-                                        <option value="2025">2025</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2022">2022</option>
                                     </select>
                                     <select class="brd-none month-select" id="month_@inafantIdx" required>
-                                        <option value="" disabled selected>Month</option>
-                                        <option value="0">January</option>
-                                        <option value="1">February</option>
-                                        <option value="2">March</option>
-                                        <option value="3">April</option>
-                                        <option value="4">May</option>
-                                        <option value="5">June</option>
-                                        <option value="6">July</option>
-                                        <option value="7">August</option>
-                                        <option value="8">September</option>
-                                        <option value="9">October</option>
-                                        <option value="10">November</option>
-                                        <option value="11">December</option>
                                     </select>
                                     <select class="brd-none day-select" id="day_@inafantIdx" required>
                                         <option value="" disabled selected>Day</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
-                                        <option value="24">24</option>
-                                        <option value="25">25</option>
-                                        <option value="26">26</option>
-                                        <option value="27">27</option>
-                                        <option value="28">28</option>
-                                        <option value="29">29</option>
-                                        <option value="30">30</option>
-                                        <option value="31">31</option>
                                     </select>
                                 </div>
-                                <input type="hidden" name="passengerdetails[@i].dateOfBirth" id="dobHidden_@inafantIdx" />
                             </div>
                         </div>
                         inafantIdx++;
+
+
                     }
                 }
             </div>
@@ -280,7 +215,7 @@
         }
         if (buttonLead.checked) {
 
-            // alert("Checked!!")
+           // alert("Checked!!")
             var emaiLeadPass = document.querySelector('.contactemail').value;
             var phoneLeadPass = document.querySelector('.contactphone').value;
             //Get all elements with class "contactemail" and set their value
@@ -296,7 +231,7 @@
                 //validateInputS({ target: input });
             });
         } else {
-            //  alert("Checkbox is unchecked");
+          //  alert("Checkbox is unchecked");
 
             // var emaiLeadPass = "";
             // var phoneLeadPass = "";
@@ -315,7 +250,6 @@
             // var phoneLeadPassenger = localStorage.getItem('Leadpassenger4');
             // document.querySelector("#contactemailID").value = emaiLeadPassenger;
             // document.querySelector("#contactphoneID").value = phoneLeadPassenger;
-
             var firstEmail = document.querySelector(".contactemail").value;
             var firstPhone = document.querySelector(".contactphone").value;
             var emailInputsT = document.querySelectorAll(".contactemail");
@@ -334,12 +268,156 @@
                     input.value = "";
                 }
             });
+
+
         }
     });
 
+    // function validateInputS(event) {
+    //     debugger;
+    //     const element = event.target;
+    //     const value = element.value.trim();
+    //     const validateType = element.getAttribute('data-validate');
+    //     const validators = {
+    //         name: /^[A-Za-z.]{0,32}$/,
+    //         last: /^[A-Za-z.]{0,32}$/,
+    //         email: /^(?!.*\.\.)[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/,
+    //         phone: /^\d{10}$/
+    //     };
 
+    //     const messages = {
+    //         name: 'Enter First Name.',
+    //         last: 'Enter Last Name.',
+    //         email: 'Enter valid email address.',
+    //         phone: 'Enter valid phone number.',
+    //         duplicate: 'Duplicate names are not allowed.'
+    //     };
+    //     if (value === "") {
+    //         showErrorVal(element, messages[validateType]);
+    //         return false;
+    //     } else {
+    //         removeErrorVal(element);
+    //     }
+    //     if (validateType === 'name' || validateType === 'last') {
+    //         element.value = value.replace(/[^A-Za-z.]/g, '');
+    //     }
 
+    //     if (!validators[validateType].test(value)) {
+    //         showErrorVal(element, messages[validateType]);
+    //     } else {
+    //         removeErrorVal(element);
+    //     }
+    //     if (validateType === 'name') {
+    //         const allNames = document.querySelectorAll(`[data-validate="${validateType}"]`);
+    //         const duplicate = Array.from(allNames).filter((el) => el.value.trim() === value && el !== element);
+    //         if (duplicate.length > 0) {
+    //             showErrorVal(element, messages['duplicate']);
+    //             return false;
+    //         } else {
+    //             removeErrorVal(element);
+    //         }
+    //     }
+    // }
+   
 
+    document.addEventListener('DOMContentLoaded', function () {
+        const daySelects = document.querySelectorAll('.day-select');
+        const monthSelects = document.querySelectorAll('.month-select');
+        const yearSelects = document.querySelectorAll('.year-select');
+
+        const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+        function isLeapYear(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        }
+
+        function populateDayOptions(daySelect, month, year) {
+            daySelect.innerHTML = '<option value="" disabled selected>Day</option>'; // Clear previous options
+            let daysInMonth = monthDays[month];
+            if (month === 1 && isLeapYear(year)) { // February and leap year
+                daysInMonth = 29;
+            }
+            for (let i = 1; i <= daysInMonth; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+            daySelect.disabled = false;
+        }
+
+        function populateMonthOptions(monthSelect) {
+            monthSelect.innerHTML = '<option value="" disabled selected>Month</option>';
+            for (let i = 0; i < 12; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = new Date(0, i).toLocaleString('en-US', { month: 'long' });
+                monthSelect.appendChild(option);
+            }
+            monthSelect.disabled = false;
+        }
+
+        function populateYearOptions(yearSelect) {
+            const currentYear = new Date().getFullYear();
+            const maxInfantAge = 2;
+            for (let i = currentYear; i >= currentYear - maxInfantAge; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+        }
+
+        yearSelects.forEach(populateYearOptions);
+
+        function handleYearChange() {
+            const year = parseInt(this.value);
+            const parent = this.parentElement;
+            const monthSelect = parent.querySelector('.month-select');
+            populateMonthOptions(monthSelect);
+            const daySelect = parent.querySelector('.day-select');
+            daySelect.innerHTML = '<option value="" disabled selected>Day</option>';
+            daySelect.disabled = true;
+        }
+
+        function handleMonthChange() {
+            const parent = this.parentElement;
+            const year = parseInt(parent.querySelector('.year-select').value);
+            const month = parseInt(this.value);
+            const daySelect = parent.querySelector('.day-select');
+            populateDayOptions(daySelect, month, year);
+        }
+
+        yearSelects.forEach(select => select.addEventListener('change', handleYearChange));
+        monthSelects.forEach(select => select.addEventListener('change', handleMonthChange));
+
+        // Initialize the day options for each set of dropdowns
+        document.querySelectorAll('select').forEach(select => select.dispatchEvent(new Event('change')));
+    });
+
+    function getSelectedDayValue(index) {
+        const daySelects = document.querySelectorAll('.day-select');
+        if (index < 0 || index >= daySelects.length) {
+            throw new Error('Index out of bounds');
+        }
+        return daySelects[index].value;
+    }
+
+    function getSelectedMonthValue(index) {
+        const monthSelects = document.querySelectorAll('.month-select');
+        if (index < 0 || index >= monthSelects.length) {
+            throw new Error('Index out of bounds');
+        }
+        return monthSelects[index].value;
+    }
+
+    function getSelectedYearValue(index) {
+        const yearSelects = document.querySelectorAll('.year-select');
+        if (index < 0 || index >= yearSelects.length) {
+            throw new Error('Index out of bounds');
+        }
+        return yearSelects[index].value;
+    }
 </script>
 
 <script type="text/javascript">
@@ -357,8 +435,8 @@
             const fieldsToValidate = [
                 { className: 'contactFname', errorMessage: 'First name is required', validationdata: /^[A-Za-z]{1,32}$/ },
                 { className: 'contactLname', errorMessage: 'Last name is required', validationdata: /^[A-Za-z]{1,32}$/ },
-                { className: 'contactemail', errorMessage: 'Email is invalid', validationdata: /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
-                { className: 'contactphone', errorMessage: 'Phone number at least 10 digits', validationdata: /^[1-9][0-9]{9}$/ }
+                { className: 'contactemail', errorMessage: 'Email is invalid', validationdata: /^(?!.*\.\.)[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/ },
+                { className: 'contactphone', errorMessage: 'Phone number at least 10 digits', validationdata: /^\d{10,}$/ }
             ];
 
             let firstInvalidElement = null;
@@ -388,16 +466,7 @@
                                 firstInvalidElement = element;
                             }
                         }
-                    }
-
-                    else if (element.value.trim().startsWith('0')) {
-                        showError(element, 'Phone number cannot start with 0');
-                        if (!firstInvalidElement) {
-                            firstInvalidElement = element;
-                        }
-                    }
-
-                    else if (field.className === 'contactphone' && element.value.trim().length < 10) {
+                    } else if (field.className === 'contactphone' && element.value.trim().length < 10) {
                         // If the phone number has fewer than 10 digits, show an error message
                         showError(element, 'Phone number must be at least 10 digits');
                         if (!firstInvalidElement) {
@@ -475,47 +544,6 @@
                 var month = parseInt(document.getElementById("month_" + inafantIdx).value) + 1;
                 var day = document.getElementById("day_" + inafantIdx).value;
                 var dob = year + "-" + month + "-" + day;
-                /****************************/
-                if (month === 2) {
-                    if (!isValidFebruaryDay(year, day)) {
-                        alert("Invalid date! For February, the day must be 1-28 for a non-leap year or 1-29 for a leap year.");
-                        return false;
-                    }
-                }
-
-
-                else if (month === 4) {
-                    if (day > 30) {
-                        alert("Invalid date! April has only 30 days.");
-                        return false;
-                    }
-                }
-
-                else if (month === 6) {
-                    if (day > 30) {
-                        alert("Invalid date! June has only 30 days.");
-                        return false;
-                    }
-                }
-
-                else if (month === 9) {
-                    if (day > 30) {
-                        alert("Invalid date! September has only 30 days.");
-                        return false;
-                    }
-                }
-
-                else if (month === 11) {
-                    if (day > 30) {
-                        alert("Invalid date! November has only 30 days.");
-                        return false;
-                    }
-                }
-                /************************* */
-
-
-                document.getElementById(`dobHidden_${inafantIdx}`).value = dob; // Date of birth
-
                 if (year == "") {
                     alert("Please select year for infant date-of-birth");
                     return false;
@@ -529,7 +557,6 @@
                     return false;
                 }
                 var dobDate = new Date(dob);
-
                 var currentDate = new Date();
                 var timeDiff = currentDate.getTime() - dobDate.getTime();
                 var yearsDiff = timeDiff / (1000 * 3600 * 24 * 365.25);
@@ -564,11 +591,6 @@
                     return false; // Infant is too old
                 }
             }
-
-
-
-
-
 
             // Example usage:
             if ($("#InfDOBCount_0").is(":visible")) {
@@ -615,9 +637,9 @@
             /*******Validation End*********/
             var enteredData = "";
             for (var i = 0; i < @Model.passeengerlist.passengers.Count; i++) {
-                var firstName = $("input[name='passengerdetails[" + i + "].First']").val().toUpperCase();
-                var lastName = $("input[name='passengerdetails[" + i + "].Last']").val().toUpperCase();
-                var title = $("select[name='passengerdetails[" + i + "].Title']").val().toUpperCase();
+                var firstName = $("input[name='passengerdetails[" + i + "].First']").val();
+                var lastName = $("input[name='passengerdetails[" + i + "].Last']").val();
+                var title = $("select[name='passengerdetails[" + i + "].Title']").val();
                 var Passengertypecode = $("input[name='passengerdetails[" + i + "].passengertypecode']").val();
                 if (Passengertypecode == "ADT") { Passengertypecode = "Adult"; }
                 if (Passengertypecode == "CHD") { Passengertypecode = "Child"; }
@@ -630,24 +652,6 @@
             $('#dataPopup').modal('show');
 
         });
-
-        /************************************************************/
-        function isValidFebruaryDay(year, day) {
-            year = parseInt(year);
-            day = parseInt(day);
-
-            // Check for leap year
-            var isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-
-            // Valid days for February
-            if (isLeapYear) {
-                return day >= 1 && day <= 29;
-            } else {
-                return day >= 1 && day <= 28;
-            }
-        }
-        /************************************************************/
-
 
 
         $("#ContinueData").click(function () {
@@ -672,7 +676,7 @@
 
             var formData = new FormData($("#passengerForm")[0]);
             $.ajax({
-                url: "/SGTripsell/SGTravllerDetails?GUID=" + GetParameterValues("Guid"),
+                url: "/SGTripsell/SGTravllerDetails",
                 type: "POST",
                 data: formData,
                 processData: false,

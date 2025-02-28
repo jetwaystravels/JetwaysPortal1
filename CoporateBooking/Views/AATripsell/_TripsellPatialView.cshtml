@@ -271,7 +271,7 @@
                                         {
                                             // <div class="text-13 mt-1">Economy: @Faretype<b>Xpress Value</b></div>
                                             <span class="tooltipF">
-                                                Economy:  @Faretype<b>Xpress Value</b>
+                                                Faretype:  @Faretype<b>Xpress Value</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: CABIN BAG: 7 k.g</li>
@@ -289,7 +289,7 @@
                                         {
                                           
                                             <span class="tooltipF">
-                                                Economy:  @Faretype<b>Vista Flex</b>
+                                                Faretype:  @Faretype<b>Vista Flex</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: CABIN BAG: 7 k.g</li>
@@ -308,7 +308,7 @@
                                         {
                                            
                                             <span class="tooltipF">
-                                                Economy:  @Faretype<b>Xpress lite</b>
+                                                Faretype:  @Faretype<b>Xpress lite</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: CABIN BAG: 7 (kg)</li>
@@ -323,10 +323,9 @@
                                             </span>
                                         }
                                         else if (item.segments[i].fares[f].productClass.Equals("VV"))
-                                        {
-                                            //<div class="text-13 mt-1">Economy: @Faretype<b>Xpress Bizz</b></div>
-                                            <span class="tooltipF">
-                                                Economy:  @Faretype<b>Xpress Bizz</b>
+                                            {
+                                                <span class="tooltipF">
+                                                Faretype:  @Faretype<b>Xpress Bizz</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: CABIN BAG: 7 k.g</li>
@@ -340,11 +339,47 @@
                                             </span>
 
                                         }
+                                    else if (item.segments[i].fares[f].productClass.Equals("SM"))
+                                    {
+                                    <span class="tooltipF">
+                                        Faretype:  @Faretype<b>Corporate Value</b>
+                                        <span class="tooltiptext">
+                                            <ul>
+                                                <li>1: CABIN BAG: 7 k.g</li>
+                                                <li>2: CHECK-IN: 15 kg</li>
+                                                <li>3: CANCELLATION: 1500 (1 day before to departure)</li>
+                                                <li>4: DATE CHANGE: 500 (Upto 2 hrs before departure)</li>
+                                                <li>5: SEAT : Chargeable</li>
+                                                <li>6: MEAL : Chargeable</li>
+                                            </ul>
+                                        </span>
+                                    </span>
+
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("FS"))
+                                    {
+                                    <span class="tooltipF">
+                                        Faretype:  @Faretype<b>Corporate Flex</b>
+                                        <span class="tooltiptext">
+                                            <ul>
+                                                <li>1: CABIN BAG: 7 k.g</li>
+                                                <li>2: CHECK-IN: 15 kg</li>
+                                                <li>3: CANCELLATION: 500 (Upto 2 hrs before departure)</li>
+                                                <li>4: DATE CHANGE: Free</li>
+                                                <li>5: SEAT : Standard seats free</li>
+                                                <li>6: MEAL : Free</li>
+                                            </ul>
+                                        </span>
+                                    </span>
+
+                                    }
+
+
                                         else
                                         {
                                             //<div class="text-13 mt-1">Economy: @Faretype<b>Saver Fare</b></div>
                                             <span class="tooltipF">
-                                                Economy:  @Faretype<b>Saver Fare</b>
+                                                Faretype:  @Faretype<b>Saver Fare</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: CABIN BAG: </li>
@@ -480,6 +515,41 @@
                                         </table>
 
                                     }
+                                    else if (item.segments[i].fares[f].productClass.Equals("SM"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>1 day before to departure</td>
+                                                <td>Rs.1500</td>
+
+                                            </tr>
+
+                                        </table>
+
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("FS"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Upto 2 hrs before departure</td>
+                                                <td>Rs.500</td>
+
+                                            </tr>
+
+                                        </table>
+
+                                    }
+
                                     else
                                     {
                                         <table style="width:100%">
@@ -588,6 +658,37 @@
                                         </table>
 
                                     }
+                                    else if (item.segments[j].fares[k].productClass.Equals("SM"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Upto 2 hrs</td>
+                                                <td>Rs.500</td>
+
+                                            </tr>
+
+                                        </table>
+
+                                    }
+                                    else if (item.segments[j].fares[k].productClass.Equals("FS"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>Free</td>
+                                            </tr>
+                                        </table>
+                                    }
+
                                     else
                                     {
                                         <table style="width:100%">

@@ -5,9 +5,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 {
     public class SGPaymentGatewayController : Controller
     {
-        public IActionResult SpiceJetPayment(string Guid)
+        public IActionResult SpiceJetPayment()
         {
-            ViewBag.Guid = Guid;
             return View();
         }
     }

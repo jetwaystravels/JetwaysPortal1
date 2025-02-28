@@ -61,7 +61,23 @@
             new { MealCode = "NCOB", MealImage = "Cheddar & Chives Omelette" },
             new { MealCode = "NCCB", MealImage = "Chicken Ghee Roast with Siracha Fried Rice" },
             new { MealCode = "CFMR", MealImage = "BLACK COFFEE" },
+
+            //Akasa Meal
            
+            new { MealCode = "PVTT", MealImage = "Triple Treat Nutella Sandwich" },
+            new { MealCode = "PVPP", MealImage = "Peppy Paneer Sandwich" },
+            new { MealCode = "PVHB", MealImage = "Yu Hyderabadi Veg Biryani" },
+            new { MealCode = "PVFF", MealImage = "Fruit & Feta Fiesta Salad" },
+            new { MealCode = "PVCB", MealImage = "Chaat-buster Box" },
+            new { MealCode = "PONM", MealImage = "Navroz Special (Non-veg)" },
+            new { MealCode = "PNKW", MealImage = "Kosha Chicken Malabari Wrapper" },
+            new { MealCode = "PNKS", MealImage = "WOW! Khow Suey Chicken" },
+            new { MealCode = "PNKP", MealImage = "Kari Pan-tastic Chicken Pocket" },
+            new { MealCode = "PDCP", MealImage = "Chocolate Pistachio Verrine" },
+            new { MealCode = "PBBS", MealImage = "Borecha Basil Shikanji" },
+            new { MealCode = "PLUS", MealImage = "Snack + beverage choose on-board" },
+            
+
 
 
             //wheelchair

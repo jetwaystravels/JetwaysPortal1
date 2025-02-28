@@ -249,7 +249,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
-            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+           
 
             HttpContext.Session.SetString("GDSContactdetails", JsonConvert.SerializeObject(contactobject));
             string SelectedAirlinedata = HttpContext.Session.GetString("SelectedAirlineName");
@@ -268,18 +268,21 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 //    tokenview = HttpContext.Session.GetString("AirasiaTokanR");
                 //}
 
-                if (i == 0)
-                {
-                    token = tokenData.Token;
-                }
-                else
-                {
-                    token = tokenData.RToken;
-                }
+                
 
-                if (!string.IsNullOrEmpty(token) && dataArray[i].ToLower() == "airasia")
+                if (string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "airasia")
                 {
-                  
+                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+
+                    if (i == 0)
+                    {
+                        token = tokenData.Token;
+                    }
+                    else
+                    {
+                        token = tokenData.RToken;
+                    }
+
                     using (HttpClient client = new HttpClient())
                     {
                         ContactModel _ContactModel = new ContactModel();
@@ -346,17 +349,22 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                 // Akasa Air return Contact Api 
                 tokenview = string.Empty;
-                if (i == 0)
-                {
-                    tokenview = HttpContext.Session.GetString("AkasaTokan");
-                }
-                else
-                {
-                    tokenview = HttpContext.Session.GetString("AkasaTokanR");
-                }
+               
 
-                if (!string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "akasaair")
+                if (string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "akasaair")
                 {
+                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
+                    if (i == 0)
+                    {
+                        tokenview = tokenData.Token; // HttpContext.Session.GetString("AkasaTokan");
+                    }
+                    else
+                    {
+                        tokenview = tokenData.RToken; // HttpContext.Session.GetString("AkasaTokanR");
+                    }
+
+
                     if (tokenview == null) { tokenview = ""; }
                     token = tokenview.Replace(@"""", string.Empty);
                     using (HttpClient client = new HttpClient())
@@ -434,17 +442,21 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 //SPICE JEt Return Contact APi Request
                
                 string Signature = string.Empty;
-                if (i == 0)
-                {
-                    Signature = HttpContext.Session.GetString("SpicejetSignature");
-                }
-                else
-                {
-                    Signature = HttpContext.Session.GetString("SpicejetSignatureR");
-                }
+               
 
-                if (!string.IsNullOrEmpty(Signature) && dataArray[i].ToLower() == "spicejet")
+                if (string.IsNullOrEmpty(Signature) && dataArray[i].ToLower() == "spicejet")
                 {
+                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "SpiceJet").Result;
+
+                    if (i == 0)
+                    {
+                        Signature = tokenData.Token; // HttpContext.Session.GetString("SpicejetSignature");
+                    }
+                    else
+                    {
+                        Signature = tokenData.RToken; //HttpContext.Session.GetString("SpicejetSignatureR");
+                    }
+
                     if (Signature == null) { Signature = ""; }
                     Signature = Signature.Replace(@"""", string.Empty);
                     UpdateContactsRequest _ContactModelSG = new UpdateContactsRequest();
@@ -483,19 +495,24 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_ContactModelSG) + "\n\n Response: " + JsonConvert.SerializeObject(responseAddContactSG), "UpdateContact", "SpiceJetRT");
                 }
 
-                if (i == 0)
+                
+                if (string.IsNullOrEmpty(Signature) && dataArray[i].ToLower() == "indigo")
                 {
-                    Signature = HttpContext.Session.GetString("IndigoSignature");
 
-                }
-                else
-                {
-                    Signature = HttpContext.Session.GetString("IndigoSignatureR");
-                }
-                if (!string.IsNullOrEmpty(Signature) && dataArray[i].ToLower() == "indigo")
-                {
+                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
+
+                    if (i == 0)
+                    {
+                        Signature = tokenData.Token; // HttpContext.Session.GetString("IndigoSignature");
+
+                    }
+                    else
+                    {
+                        Signature = tokenData.RToken; // HttpContext.Session.GetString("IndigoSignatureR");
+                    }
+
                     if (Signature == null) { Signature = ""; }
-                    Signature = Signature.Replace(@"""", string.Empty);
+                   // Signature = Signature.Replace(@"""", string.Empty);
                     _updateContact obj = new _updateContact(httpContextAccessorInstance);
                     IndigoBookingManager_.UpdateContactsResponse _responseAddContact6E = await obj.GetUpdateContacts(Signature, contactobject.emailAddress, contactobject.emailAddressgst, contactobject.number, contactobject.companyName, contactobject.customerNumber, contactobject.countrycode, contactobject.title, contactobject.first, contactobject.last, "");
                     string Str1 = JsonConvert.SerializeObject(_responseAddContact6E);
@@ -679,7 +696,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
-            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+           
 
             SSRAvailabiltyResponceModel Mealslist = null;
             SeatMapResponceModel Seatmaplist = null;
@@ -688,16 +705,16 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             string[] dataArray = JsonConvert.DeserializeObject<string[]>(SelectedAirlinedata);
             for (int i1 = 0; i1 < dataArray.Length; i1++)
             {
-                string tokenview = tokenData.Token;
+                string tokenview = "";
 
                 if (dataArray[i1] == null) // Change for same Airline Roundtrip-26-09-2024
                     continue;
                 using (HttpClient client = new HttpClient())
                 {
-                    if (!string.IsNullOrEmpty(tokenview) && dataArray[i1].ToLower() == "airasia")
+                    if (string.IsNullOrEmpty(tokenview) && dataArray[i1].ToLower() == "airasia")
                     {
-
-                        tokenview = string.Empty;
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+                       
                         if (i1 == 0)
                         {
                             tokenview = tokenData.Token;
@@ -880,17 +897,17 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     }
 
                     // Akasa trevvel Details Request ********
-                    if (!string.IsNullOrEmpty(tokenview) && dataArray[i1].ToLower() == "akasaair")
+                    if (string.IsNullOrEmpty(tokenview) && dataArray[i1].ToLower() == "akasaair")
                     {
 
-                        tokenview = string.Empty;
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
                         if (i1 == 0)
                         {
-                            tokenview = HttpContext.Session.GetString("AkasaTokan");
+                            tokenview = tokenData.Token; // HttpContext.Session.GetString("AkasaTokan");
                         }
                         else
                         {
-                            tokenview = HttpContext.Session.GetString("AkasaTokanR");
+                            tokenview = tokenData.RToken; //HttpContext.Session.GetString("AkasaTokanR");
                         }
                         if (tokenview == null) { tokenview = ""; }
                         token = tokenview.Replace(@"""", string.Empty);
@@ -1072,18 +1089,23 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                     // Spice Jet **********
                     string Signature = string.Empty;
-                    if (i1 == 0)
+                   
+                    if (string.IsNullOrEmpty(Signature) && dataArray[i1].ToLower() == "spicejet")
                     {
-                        Signature = HttpContext.Session.GetString("SpicejetSignature");
-                    }
-                    else
-                    {
-                        Signature = HttpContext.Session.GetString("SpicejetSignatureR");
-                    }
-                    if (!string.IsNullOrEmpty(Signature) && dataArray[i1].ToLower() == "spicejet")
-                    {
+
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "SpiceJet").Result;
+
+                        if (i1 == 0)
+                        {
+                            Signature = tokenData.Token; // HttpContext.Session.GetString("SpicejetSignature");
+                        }
+                        else
+                        {
+                            Signature = tokenData.RToken; // HttpContext.Session.GetString("SpicejetSignatureR");
+                        }
+
                         if (Signature == null) { Signature = ""; }
-                        Signature = Signature.Replace(@"""", string.Empty);
+                      //  Signature = Signature.Replace(@"""", string.Empty);
                         UpdatePassengersResponse updatePaxResp = null;
                         UpdatePassengersRequest updatePaxReq = null;
 
@@ -1118,19 +1140,23 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
                     }
 
-                    if (i1 == 0)
+                    
+                    if (string.IsNullOrEmpty(Signature) && dataArray[i1].ToLower() == "indigo")
                     {
-                        Signature = HttpContext.Session.GetString("IndigoSignature");
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
 
-                    }
-                    else
-                    {
-                        Signature = HttpContext.Session.GetString("IndigoSignatureR");
-                    }
-                    if (!string.IsNullOrEmpty(Signature) && dataArray[i1].ToLower() == "indigo")
-                    {
+                        if (i1 == 0)
+                        {
+                            Signature = tokenData.Token; // HttpContext.Session.GetString("IndigoSignature");
+
+                        }
+                        else
+                        {
+                            Signature = tokenData.RToken; // HttpContext.Session.GetString("IndigoSignatureR");
+                        }
+
                         if (Signature == null) { Signature = ""; }
-                        Signature = Signature.Replace(@"""", string.Empty);
+                      //  Signature = Signature.Replace(@"""", string.Empty);
                         _updateContact obj = new _updateContact(httpContextAccessorInstance);
                         IndigoBookingManager_.UpdatePassengersResponse updatePaxResp = await obj.UpdatePassengers(Signature, passengerdetails);
                         string Str2 = JsonConvert.SerializeObject(updatePaxResp);
@@ -1220,7 +1246,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         //Post Unit Key
         public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey, List<string> FastfarwardAddon, List<string> PPBGAddon, string Guid)
         {
-           
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
 
             List<string> _unitkey = new List<string>();
             for (int i = 0; i < unitKey.Count; i++)
@@ -1359,17 +1388,23 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
                                 if (passeengerKeyList.journeys[0].Airlinename.ToLower() == "spicejet")
                                 {
+
+                                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "SpiceJet").Result;
+
                                     string tokenview = string.Empty;//spelling 
                                     if (_a == 0)
                                     {
-                                        tokenview = HttpContext.Session.GetString("SpicejetSignature");//spelling 
+                                        tokenview = tokenData.Token; // HttpContext.Session.GetString("SpicejetSignature");//spelling 
                                     }
                                     else
                                     {
-                                        tokenview = HttpContext.Session.GetString("SpicejetSignatureR");//spelling 
+                                        tokenview = tokenData.RToken; // HttpContext.Session.GetString("SpicejetSignatureR");//spelling 
                                     }
-                                    if (tokenview == null) { tokenview = ""; }
-                                    token = tokenview.Replace(@"""", string.Empty);
+                                    //if (tokenview == null) { tokenview = ""; }
+                                  //  token = tokenview.Replace(@"""", string.Empty);
+
+                                    token = tokenview;
+
                                     passengerscount = passeengerKeyList.passengerscount;
                                     Logs logs = new Logs();
                                     using (HttpClient client = new HttpClient())
@@ -2187,8 +2222,6 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     bagid = 0;
                                     mealid = 0;
                                     string tokenview = string.Empty;
-                                    MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-                                    MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
                                     tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
 
@@ -2449,16 +2482,19 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 {
                                     bagid = 0;
                                     mealid = 0;
+                                   
+                                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
                                     string tokenview = string.Empty;
                                     if (string.IsNullOrEmpty(tokenview))
                                     {
                                         if (_a == 0)
                                         {
-                                            tokenview = HttpContext.Session.GetString("AkasaTokan");//spelling 
+                                            tokenview = tokenData.Token; // HttpContext.Session.GetString("AkasaTokan");//spelling 
                                         }
                                         else
                                         {
-                                            tokenview = HttpContext.Session.GetString("AkasaTokanR");//spelling 
+                                            tokenview = tokenData.RToken; // HttpContext.Session.GetString("AkasaTokanR");//spelling 
                                         }
                                         if (tokenview == null) { tokenview = ""; }
                                         token = tokenview.Replace(@"""", string.Empty);
@@ -2476,6 +2512,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                         if (mealid < ssrKey.Count)
                                         {
+                                            ssrsubKey2 = null;
+                                            pas_ssrKey = string.Empty;
                                             if (ssrKey[mealid] == null)
                                             {
                                                 continue;
@@ -2496,9 +2534,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
                                                         _sellSSRModel.note = "PYOG";
-                                                        _sellSSRModel.forceWaveOnSell = false;
+                                                       // _sellSSRModel.forceWaveOnSell = false;
                                                         _sellSSRModel.currencyCode = "INR";
-                                                        _sellSSRModel.ssrSellMode = 2;
+                                                       // _sellSSRModel.ssrSellMode = 2;
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -2544,9 +2582,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
                                                         _sellSSRModel.note = "PYOG";
-                                                        _sellSSRModel.forceWaveOnSell = false;
+                                                        // _sellSSRModel.forceWaveOnSell = false;
                                                         _sellSSRModel.currencyCode = "INR";
-                                                        _sellSSRModel.ssrSellMode = 2;
+                                                        // _sellSSRModel.ssrSellMode = 2;
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -2613,9 +2651,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
                                                         _sellSSRModel.note = "PYOG";
-                                                        _sellSSRModel.forceWaveOnSell = false;
+                                                       // _sellSSRModel.forceWaveOnSell = false;
                                                         _sellSSRModel.currencyCode = "INR";
-                                                        _sellSSRModel.ssrSellMode = 2;
+                                                      //  _sellSSRModel.ssrSellMode = 1;
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -2660,9 +2698,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         SellSSRModel _sellSSRModel = new SellSSRModel();
                                                         _sellSSRModel.count = 1;
                                                         _sellSSRModel.note = "PYOG";
-                                                        _sellSSRModel.forceWaveOnSell = false;
+                                                       // _sellSSRModel.forceWaveOnSell = false;
                                                         _sellSSRModel.currencyCode = "INR";
-                                                        _sellSSRModel.ssrSellMode = 2;
+                                                       // _sellSSRModel.ssrSellMode = 2;
                                                         var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -2706,13 +2744,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 {
                                     bool Boolfastforward = false;
                                     string tokenview = string.Empty;
+
+                                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
                                     if (_a == 0)
                                     {
-                                        tokenview = HttpContext.Session.GetString("IndigoSignature");//spelling 
+                                        tokenview = tokenData.Token; // HttpContext.Session.GetString("IndigoSignature");//spelling 
                                     }
                                     else
                                     {
-                                        tokenview = HttpContext.Session.GetString("IndigoSignatureR");//spelling 
+                                        tokenview = tokenData.RToken; // HttpContext.Session.GetString("IndigoSignatureR");//spelling 
                                     }
                                     if (tokenview == null) { tokenview = ""; }
                                     token = tokenview.Replace(@"""", string.Empty);
@@ -2858,13 +2898,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     AssignSeatsResponse _AssignseatRes = new AssignSeatsResponse();
                                     AssignSeatsRequest _AssignSeatReq = new AssignSeatsRequest();
                                     string Signature = string.Empty;
+                                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "SpiceJet").Result;
+
                                     if (p == 0)
                                     {
-                                        Signature = HttpContext.Session.GetString("SpicejetSignature");
+                                        Signature = tokenData.Token; // HttpContext.Session.GetString("SpicejetSignature");
                                     }
                                     else
                                     {
-                                        Signature = HttpContext.Session.GetString("SpicejetSignatureR");
+                                        Signature = tokenData.RToken;
                                     }
                                     if (Signature == null) { Signature = ""; }
                                     Signature = Signature.Replace(@"""", string.Empty);
@@ -2969,8 +3011,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 {
                                     //seatid = 0;
                                     string tokenview = string.Empty;
-                                    MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-                                    MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+                                  
                                     tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
 
                                     if (p == 0)
@@ -3316,13 +3357,16 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 else if (passeengerKeyList.journeys[0].Airlinename.ToLower() == "akasaair")
                                 {
                                     string tokenview = string.Empty;
+
+                                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
                                     if (p == 0)
                                     {
-                                        tokenview = HttpContext.Session.GetString("AkasaTokan");//
+                                        tokenview = tokenData.Token;// HttpContext.Session.GetString("AkasaTokan");//
                                     }
                                     else
                                     {
-                                        tokenview = HttpContext.Session.GetString("AkasaTokanR");//
+                                        tokenview = tokenData.RToken; // HttpContext.Session.GetString("AkasaTokanR");//
                                     }
                                     if (!string.IsNullOrEmpty(tokenview))
                                     {
@@ -3663,13 +3707,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     string Signature = string.Empty;
                                     seatid = 0;
                                     _index = 0;
+                                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
+
                                     if (p == 0)
                                     {
-                                        Signature = HttpContext.Session.GetString("IndigoSignature");
+                                        Signature = tokenData.Token; // HttpContext.Session.GetString("IndigoSignature");
                                     }
                                     else
                                     {
-                                        Signature = HttpContext.Session.GetString("IndigoSignatureR");
+                                        Signature = tokenData.RToken; //HttpContext.Session.GetString("IndigoSignatureR");
                                     }
                                     if (Signature == null) { Signature = ""; }
                                     Signature = Signature.Replace(@"""", string.Empty);

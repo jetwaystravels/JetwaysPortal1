@@ -10,19 +10,11 @@ using Utility;
 using DomainLayer.ViewModel;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections;
-using OnionConsumeWebAPI.Models;
 
 namespace OnionConsumeWebAPI.Controllers
 {
     public class SpiceJetResultFlightViewController : Controller
     {
-        private readonly IConfiguration _configuration;
-
-        public SpiceJetResultFlightViewController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
         Logs logs = new Logs();
         PaxPriceType[] getPaxdetails(int adult_, int child_, int infant_)
         {
@@ -145,49 +137,28 @@ namespace OnionConsumeWebAPI.Controllers
 
 
         [HttpPost] // this APi is used to map trip data Amount
-        public async Task<ActionResult> SpicejetTripsell(string fareKey, string journeyKey, string taxes, string Guid)
+        public async Task<ActionResult> SpicejetTripsell(string fareKey, string journeyKey, string taxes)
         {
             AAIdentifier AAIdentifierobj = null;
-            //TempData["farekey"] = fareKey;
-            //TempData["journeyKey"] = journeyKey;
+            TempData["farekey"] = fareKey;
+            TempData["journeyKey"] = journeyKey;
 
             //List<_credentials> credentialslist = new List<_credentials>();
             using (HttpClient client = new HttpClient())
             {
-
-                MongoHelper objMongoHelper = new MongoHelper();
-                MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-                MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-                SearchLog searchLog = new SearchLog();
-                searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
-
-                tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "SpiceJet").Result;
-
-                //int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                //int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                //int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
-
-                int adultcount = searchLog.Adults;
-                int childcount = searchLog.Children;
-                int infantcount = searchLog.Infants;
-
+                int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
+                int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
+                int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
                 int TotalCount = adultcount + childcount;
                 string str3 = string.Empty;
-                //string tokenview = HttpContext.Session.GetString("SpicejetSignature");
-
-                string token = tokenData.Token;
-
-
-                //if (tokenview == null) { tokenview = ""; }
-                //string token = tokenview.Replace(@"""", string.Empty);
+                string tokenview = HttpContext.Session.GetString("SpicejetSignature");
+                if (tokenview == null) { tokenview = ""; }
+                string token = tokenview.Replace(@"""", string.Empty);
                 if (token == "" || token == null)
                 {
                     return RedirectToAction("Index");
                 }
-                //  var Signature = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(tokenview);
-
-                var Signature = token;
-
+                var Signature = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(tokenview);
                 string stravailibitilityrequest = HttpContext.Session.GetString("SpicejetAvailibilityRequest");
                 GetAvailabilityRequest availibiltyRQ = Newtonsoft.Json.JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
                 SellKeyList _getSellKeyList = new SellKeyList();
@@ -230,11 +201,10 @@ namespace OnionConsumeWebAPI.Controllers
                 SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                 _getSellRS = await objSpiceJet.GetSellAsync(_getSellRQ);
 
-                //string str = JsonConvert.SerializeObject(_getSellRS);
+                string str = JsonConvert.SerializeObject(_getSellRS);
 
-                //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getSellRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getSellRS), "SellRequest", "SpicejetOneWay", "oneway");
-                logs.WriteLogs(JsonConvert.SerializeObject(_getSellRQ), "3-TripsellRequest", "SpicejetOneWay", "oneway");
-                logs.WriteLogs(JsonConvert.SerializeObject(_getSellRS), "3-TripsellResponse", "SpicejetOneWay", "oneway");
+                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getSellRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getSellRS), "SellRequest", "SpicejetOneWay", "oneway");
+
 
                 #endregion
 
@@ -249,10 +219,9 @@ namespace OnionConsumeWebAPI.Controllers
                 objSpiceJet = new SpiceJetApiController();
                 _GetBookingFromStateRS1 = await objSpiceJet.GetBookingFromState(_GetBookingFromStateRQ1);
 
-                //str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
-                //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_GetBookingFromStateRQ1) + "\n\n Response: " + JsonConvert.SerializeObject(_GetBookingFromStateRS1), "GetBookingFromStateAftersellrequest", "SpicejetOneWay", "oneway");
-                logs.WriteLogs(JsonConvert.SerializeObject(_GetBookingFromStateRQ1), "4-GetBookingFromStateAftersellRequest", "SpicejetOneWay", "oneway");
-                logs.WriteLogs(JsonConvert.SerializeObject(_GetBookingFromStateRS1), "4-GetBookingFromStateAftersellResponse", "SpicejetOneWay", "oneway");
+                str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
+                logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_GetBookingFromStateRQ1) + "\n\n Response: " + JsonConvert.SerializeObject(_GetBookingFromStateRS1), "GetBookingFromStateAftersellrequest", "SpicejetOneWay", "oneway");
+
 
                 if (_GetBookingFromStateRS1 != null)
                 {
@@ -559,11 +528,10 @@ namespace OnionConsumeWebAPI.Controllers
                     objSpiceJet = new SpiceJetApiController();
                     _getPriceItineraryRS = await objSpiceJet.GetItineraryPriceAsync(_getPriceItineraryRQ);
 
-                    //str = JsonConvert.SerializeObject(_getPriceItineraryRS);
+                    str = JsonConvert.SerializeObject(_getPriceItineraryRS);
 
-                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getPriceItineraryRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getPriceItineraryRS), "PriceIteniry", "SpicejetOneWay", "oneway");
-                    logs.WriteLogs(JsonConvert.SerializeObject(_getPriceItineraryRQ), "5-PriceIteniryRequest", "SpicejetOneWay", "oneway");
-                    logs.WriteLogs(JsonConvert.SerializeObject(_getPriceItineraryRS), "5-PriceIteniryResponse", "SpicejetOneWay", "oneway");
+                    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getPriceItineraryRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getPriceItineraryRS), "PriceIteniry", "SpicejetOneWay", "oneway");
+
 
                     #endregion
                     ////GetBookingfrom state
@@ -583,21 +551,23 @@ namespace OnionConsumeWebAPI.Controllers
 
                     ////
 
-                    //  HttpContext.Session.SetString("journeySellKey", JsonConvert.SerializeObject(journeyKey));
+                    HttpContext.Session.SetString("journeySellKey", JsonConvert.SerializeObject(journeyKey));
+                    SimpleAvailabilityRequestModel _SimpleAvailabilityobj = new SimpleAvailabilityRequestModel();
 
-                    _mongoDBHelper.UpdateFlightTokenJourney(Guid, "SpiceJet", journeyKey);
-
-                    // SimpleAvailabilityRequestModel _SimpleAvailabilityobj = new SimpleAvailabilityRequestModel();
-
-                    //  var jsonData = HttpContext.Session.GetString("SpiceJetPassengerModel");
-
-                    //var jsonData = objMongoHelper.UnZip(tokenData.PassRequest);
-
-                    //_SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
+                    var jsonData = HttpContext.Session.GetString("SpiceJetPassengerModel");
+                    _SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
 
                     if (_getPriceItineraryRS != null)
                     {
                         var passanger = _getPriceItineraryRS.Booking.Passengers;
+
+
+                        //}
+
+
+
+
+
                         #region SellSSrInfant
                         SellRequest sellSsrRequest = new SellRequest();
                         SellRequestData sellreqd = new SellRequestData();
@@ -623,11 +593,11 @@ namespace OnionConsumeWebAPI.Controllers
                                 sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].FlightDesignator.CarrierCode = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].FlightDesignator.CarrierCode; ;
                                 sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].FlightDesignator.FlightNumber = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].FlightDesignator.FlightNumber;
                                 //GetPassenger(passengerdetails);
-                                int numinfant = infantcount;
-                                //if (infantcount )
-                                //{
-                                //    numinfant = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
-                                //}
+                                int numinfant = 0;
+                                if (!string.IsNullOrEmpty(HttpContext.Session.GetString("infantCount")))
+                                {
+                                    numinfant = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+                                }
                                 //Paxes PaxNum = (Paxes)JsonConvert.DeserializeObject(numinfant, typeof(Paxes));
                                 bool infant = false;
                                 sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs = new PaxSSR[numinfant];
@@ -665,16 +635,15 @@ namespace OnionConsumeWebAPI.Controllers
                         objSpiceJet = new SpiceJetApiController();
                         sellSsrResponse = await objSpiceJet.sellssR(sellSsrRequest);
 
-                        //str3 = JsonConvert.SerializeObject(sellSsrResponse);
-                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(sellSsrRequest) + "\n\n Response: " + JsonConvert.SerializeObject(sellSsrResponse), "SellSSR", "SpicejetOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(sellSsrRequest), "6-SellSSRInfantRequest", "SpicejetOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(sellSsrResponse), "6-SellSSRInfantResponse", "SpicejetOneWay", "oneway");
+                        str3 = JsonConvert.SerializeObject(sellSsrResponse);
+                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(sellSsrRequest) + "\n\n Response: " + JsonConvert.SerializeObject(sellSsrResponse), "SellSSR", "SpicejetOneWay", "oneway");
 
-                        //if (sellSsrResponse != null)
-                        //{
-                        //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                        //var JsonsellSsrResponse = sellSsrResponse;
-                        //}
+
+                        if (sellSsrResponse != null)
+                        {
+                            //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
+                            var JsonsellSsrResponse = sellSsrResponse;
+                        }
                         #endregion
 
                         #region GetState
@@ -688,10 +657,9 @@ namespace OnionConsumeWebAPI.Controllers
                         objSpiceJet = new SpiceJetApiController();
                         _GetBookingFromStateRS = await objSpiceJet.GetBookingFromState(_GetBookingFromStateRQ);
 
-                        //str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS);
-                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_GetBookingFromStateRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_GetBookingFromStateRS), "GetBookingFromState", "SpicejetOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(_GetBookingFromStateRQ), "7-GetBookingFromStateRequest", "SpicejetOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(_GetBookingFromStateRS), "7-GetBookingFromStateResponse", "SpicejetOneWay", "oneway");
+                        str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS);
+                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_GetBookingFromStateRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_GetBookingFromStateRS), "GetBookingFromState", "SpicejetOneWay", "oneway");
+
 
                         if (_GetBookingFromStateRS != null)
                         {
@@ -804,10 +772,9 @@ namespace OnionConsumeWebAPI.Controllers
                             objSpiceJet = new SpiceJetApiController();
                             _res = await objSpiceJet.GetSSRAvailabilityForBooking(_req);
 
-                            //string Str2 = JsonConvert.SerializeObject(_res);  //GetSSRAvailibility Response
-                            //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_req) + "\n\n Response: " + JsonConvert.SerializeObject(_res), "GetSSRAvailabilityForBooking", "SpicejetOneWay", "oneway");
-                            logs.WriteLogs(JsonConvert.SerializeObject(_req), "8-GetSSRAvailabilityForBookingRequest", "SpicejetOneWay", "oneway");
-                            logs.WriteLogs(JsonConvert.SerializeObject(_res), "8-GetSSRAvailabilityForBookingResponse", "SpicejetOneWay", "oneway");
+                            string Str2 = JsonConvert.SerializeObject(_res);  //GetSSRAvailibility Response
+                            logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_req) + "\n\n Response: " + JsonConvert.SerializeObject(_res), "GetSSRAvailabilityForBooking", "SpicejetOneWay", "oneway");
+
 
                             //******Vinay***********//
                             if (_res != null)
@@ -981,10 +948,9 @@ namespace OnionConsumeWebAPI.Controllers
                         }
 
 
-                        //str = JsonConvert.SerializeObject(SeatGroup);
-                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getseatAvailabilityRequest) + "\n\n Response: " + JsonConvert.SerializeObject(SeatGroup), "GetSeatAvailability", "SpicejetOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(_getseatAvailabilityRequest), "9-GetSeatAvailabilityRequest", "SpicejetOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(SeatGroup), "9-GetSeatAvailabilityResponse", "SpicejetOneWay", "oneway");
+                        str = JsonConvert.SerializeObject(SeatGroup);
+                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getseatAvailabilityRequest) + "\n\n Response: " + JsonConvert.SerializeObject(SeatGroup), "GetSeatAvailability", "SpicejetOneWay", "oneway");
+
 
 
                         // data[0].seatMap.decks['1'].compartments.Y.units[0].unitKey
@@ -1201,7 +1167,7 @@ namespace OnionConsumeWebAPI.Controllers
                                 {
                                     SeatMapResponceModel = new SeatMapResponceModel();
                                     SeatMapResponceModel.datalist = new List<data>();
-
+                                    
                                 }
                             }
                             string strseat = JsonConvert.SerializeObject(SeatMapResponceModel);
@@ -1220,7 +1186,7 @@ namespace OnionConsumeWebAPI.Controllers
                 }
                 #endregion
 
-                return RedirectToAction("SpiceJetSaverTripsell", "SGTripsell", new { Guid = Guid });
+                return RedirectToAction("SpiceJetSaverTripsell", "SGTripsell");
 
                 //return View();
             }

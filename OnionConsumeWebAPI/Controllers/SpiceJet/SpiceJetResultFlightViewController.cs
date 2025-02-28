@@ -672,8 +672,8 @@ namespace OnionConsumeWebAPI.Controllers
 
                         //if (sellSsrResponse != null)
                         //{
-                        //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                        //var JsonsellSsrResponse = sellSsrResponse;
+                            //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
+                            //var JsonsellSsrResponse = sellSsrResponse;
                         //}
                         #endregion
 
@@ -1201,7 +1201,7 @@ namespace OnionConsumeWebAPI.Controllers
                                 {
                                     SeatMapResponceModel = new SeatMapResponceModel();
                                     SeatMapResponceModel.datalist = new List<data>();
-
+                                    
                                 }
                             }
                             string strseat = JsonConvert.SerializeObject(SeatMapResponceModel);

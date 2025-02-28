@@ -6,6 +6,11 @@
 
         <div class="col-md-3">
             <div class="form-input ">
+                <select id="title" name="title" class="titleClass" style="border: 1px solid var(--color-border);">
+                    <option value="MR">Mr.</option>
+                    <option value="MRS">Mrs.</option>
+                    <option value="MS">Ms.</option>
+                </select>
                 <input type="text" name="first" maxlength="32" oninput="validateInput(event)" id="first" class="firstNClass" style='text-transform:uppercase' placeholder="First Name">
             </div>
             <p id="error-message1" class="error-message" style="display:none">Enter First name</p>
@@ -23,7 +28,7 @@
 
         <div class="col-md-3">
             <div class="form-input">
-                <input type="text" name="emailAddress" maxlength="266" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
+                <input type="text" name="emailAddress" maxlength="30" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID">
             </div>
             <span id="emailError" style="color: red;"></span>
             <p id="error-message7" class="error-message" style="display:none">Enter email ID</p>
@@ -31,8 +36,12 @@
         </div>
 
         <div class="col-md-1 phone-code">
-            <select class="form-control form-control-lg">
-                <option>+91</option>
+            <select name="countrycode" class="form-control form-control-lg">
+                <option value="+91">+91 (India)</option>
+                <option value="+1">+1 (USA)</option>
+                <option value="+44">+44 (UK)</option>
+                <option value="+61">+61 (Australia)</option>
+                <option value="+81">+81 (Japan)</option>
             </select>
         </div>
 
@@ -49,9 +58,9 @@
                 <div class="kk">
                     Same as lead passenger <button id="leadpassengerButton2" class="checkbox-button ms-2"></button>
                 </div>
-                <div class="ms-3">
-                    Do you have GST  <button id="GSTButton2" class="checkbox-button ms-2"></button>
-
+                <div class="ms-3 hidden">
+                    Do you have GST
+                    <input type="checkbox" id="GSTButton2" class="checkbox-button ms-2" checked>
                 </div>
             </div>
             <div><input type="submit" class="btn btn-primary pagelaodSg" value="Save" /></div>
@@ -65,14 +74,14 @@
         <div class="col-md-3">
             <div class="form-input">
 
-                <input type="text" id="gstname" maxlength="32" name="companyName" oninput="validateInputgst(event)" class="companyName hid-block hidden" placeholder="Company Name">
+                <input type="text" id="gstname" maxlength="32" name="companyName" oninput="validateInputgst(event)" class="companyName hid-block" placeholder="Company Name">
             </div>
             <p id="errorMessagegst" style="color: red;font-size:13px;"></p>
             <p id="error-message9" class="error-message" style="display:none">Enter Company Name</p>
         </div>
         <div class="col-md-3">
             <div class="form-input">
-                <input type="text" id="gstnumber" maxlength="15" name="customerNumber" oninput="validateGST(event)" class="companyName hid-block hidden" placeholder="GST Number">
+                <input type="text" id="gstnumber" maxlength="15" name="customerNumber" oninput="validateGST(event)" class="companyName hid-block " placeholder="GST Number">
             </div>
             <p id="gstErrorMessage" style="color: red;font-size:13px;"></p>
             <p id="error-message10" class="error-message" style="display:none">Enter GST Number</p>
@@ -81,9 +90,10 @@
 
         <div class="col-md-3">
             <div class="form-input">
-                <input type="text" name="emailAddressgst" maxlength="266" oninput="validateEmailGST(event)" class="gstemail hid-block hidden" id="emailAddressGST" placeholder="Email ID">
+                <input type="text" name="emailAddressgst" maxlength="30" oninput="validateEmailGST(event)" class="gstemail hid-block " id="emailAddressGST" placeholder="Email ID">
             </div>
             <p id="emailErrorMessageGST" style="color: red; font-size:13px;"></p>
+            <p id="error-1email" class="error-message" style="display:none">Enter email address</p>
         </div>
 
     </div>
@@ -159,6 +169,7 @@
     });
     //GST Checkbox Function
     var buttongst = document.getElementById('GSTButton2');
+
     buttongst.addEventListener('click', function (e) {
         e.preventDefault();
 
@@ -271,6 +282,16 @@
                 alert("Please enter a valid 10-digit mobile number.");
                 return false;
             }
+            const regexAK = /^[1-9][0-9]{9}$/;
+            if (!regexAK.test(phonefocus)) {
+                document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
+                let phoneToDisplay = document.getElementById("error-message8");
+                phoneToDisplay.style.display = "none";
+                return false;
+
+            } else {
+                document.getElementById('phoneNumberErrorMessage').innerText = "";
+            }
 
             //Gst
             var buttongst = document.getElementById('GSTButton2');
@@ -287,15 +308,19 @@
                     var gstToDisplay = document.getElementById("error-message9");
                     gstToDisplay.style.display = "none";
                 }
-                let gstnofocus = document.getElementById("gstnumber").value;
+                //var gstnofocus = document.getElementById("gstnumber").value;
+                let gstnofocus = document.getElementById("gstnumber").value.trim();
 
-                var regex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+
+                var regex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[A-Z0-9]{1}$/;
+
                 if (!regex.test(gstnofocus)) {
                     var gstnoToDisplay = document.getElementById("error-message10");
                     gstnoToDisplay.style.display = "none";
                     document.getElementById('gstErrorMessage').innerText = "Enter 15-digit GST number..";
                     return false;
-                } else {
+                }
+                else {
 
                     document.getElementById('gstErrorMessage').innerText = "";
                 }
@@ -312,16 +337,23 @@
                 // GST Email Validation
                 let gstemailfocus = document.getElementById("emailAddressGST").value;
 
-                //var emailRegex = /^(?!.*\.\.)[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
-                //var emailRegex = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
-                var emailRegex = /^[a-zA-Z0-9._%+-]+[^\.]@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+                var emailRegex = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                 if (gstemailfocus == "") {
-
-                } else if (!emailRegex.test(gstemailfocus)) {
+                    var gstemail = document.getElementById("error-1email");
+                    gstemail.style.display = "block";
+                    document.getElementById("emailAddressGST").focus();
+                    return false;
+                }
+                else {
+                    var gstemail = document.getElementById("error-1email");
+                    gstemail.style.display = "none";
+                }
+                if (!emailRegex.test(gstemailfocus)) {
                     //document.getElementById('gstEmailErrorMessage').innerText = "Enter a valid email address.";
                     document.getElementById('emailErrorMessageGST').innerText = "Enter a valid email address.";
                     return false;
-                } else {
+                }
+                else {
 
 
                 }
@@ -446,13 +478,17 @@
             errorMessage.innerText = "";
         }
 
-        // if (email.trim() === "") {
-        //     errorDisplay.style.display = "block";
-        //     document.getElementById("emailAddress").focus();
-        //     return false;
-        // } else {
-        //     errorDisplay.style.display = "none";
-        // }
+        var gstEmail = document.getElementById("emailAddressGST").value;
+        if (gstEmail == "") {
+            var gstToDisplay = document.getElementById("error-1email");
+            gstToDisplay.style.display = "block";
+            document.getElementById("emailAddressGST").focus();
+            return false;
+        }
+        else {
+            var gstToDisplay = document.getElementById("error-1email");
+            gstToDisplay.style.display = "none";
+        }
 
     }
 
@@ -492,8 +528,8 @@
     function validateInputgst(event) {
 
         const input = event.target.value;
-        var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
-        //var regex = /^[a-zA-Z]{1,100}$/;
+        //var regex = /^[a-zA-Z\s.,'-]{1,100}$/;
+        var regex = /^(?!\.)(?!.*\.\.\.)[a-zA-Z\s.,'-]{1,100}$/;
         if (!regex.test(input)) {
             document.getElementById('errorMessagegst').innerText = "";
             event.target.value = input.replace(/[^a-zA-Z]/g, '');
@@ -518,8 +554,8 @@
     function validateGST(event) {
 
         const gstNumber = event.target.value.toUpperCase();
-        //var regex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
-        var regex = /^[a-zA-Z0-9._%+-]+[^\.]@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+        var regex = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+        //var regex = /^[a-zA-Z0-9._%+-]+[^\.]@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
         if (gstNumber.trim() === "") {
 
             document.getElementById('gstErrorMessage').innerText = "";
@@ -543,15 +579,11 @@
         }
 
     }
+    window.addEventListener('load', function () {
+        document.querySelectorAll('#contactForm input').forEach(input => {
+            if (input.type === 'text') {
+                input.value = ''; // Clear only text inputs
+            }
+        });
+    });
 </script>
-
-
-
-
-
-
-
-
-
-
-

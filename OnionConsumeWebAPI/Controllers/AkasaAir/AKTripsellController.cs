@@ -38,7 +38,13 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
         string ssrKey = string.Empty;
         string journeyKey = string.Empty;
         Logs logs = new Logs();
-        public IActionResult AkTripsellView()
+		private readonly IConfiguration _configuration;
+
+		public AKTripsellController(IConfiguration configuration)
+		{
+			_configuration = configuration;
+		}
+		public IActionResult AkTripsellView()
         {
             List<SelectListItem> Title = new()
             {
@@ -112,12 +118,20 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
             vm.passkeytype = passkeytypesDetails;
             return View(vm);
         }
-        public async Task<IActionResult> AKContactDetails(ContactModel contactobject)
+        public async Task<IActionResult> AKContactDetails(ContactModel contactobject, string GUID)
         {
-            string tokenview = HttpContext.Session.GetString("AkasaTokan");
-            if (tokenview == null) { tokenview = ""; }
-            token = tokenview.Replace(@"""", string.Empty);
-            using (HttpClient client = new HttpClient())
+			//string tokenview = HttpContext.Session.GetString("AkasaTokan");
+			//if (tokenview == null) { tokenview = ""; }
+			//token = tokenview.Replace(@"""", string.Empty);
+
+			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Akasa").Result;
+
+			token = tokenData.Token;
+
+			using (HttpClient client = new HttpClient())
             {
                 ContactModel _AkContactModel = new ContactModel();
                 string countryCode = contactobject.countrycode;
@@ -228,17 +242,27 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
             return RedirectToAction("AkTripsellView", "AKTripsell");
         }
 
-        public async Task<IActionResult> AKTravellerInfo(List<passkeytype> passengerdetails, string formattedDates)
+        public async Task<IActionResult> AKTravellerInfo(List<passkeytype> passengerdetails, string formattedDates, string GUID)
         {
-            string tokenview = HttpContext.Session.GetString("AkasaTokan");
-            string[] dateStrings = JsonConvert.DeserializeObject<string[]>(formattedDates);
+			// string tokenview = HttpContext.Session.GetString("AkasaTokan");
+
+
+
+			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Akasa").Result;
+
+			string tokenview = tokenData.Token;
+
+			string[] dateStrings = JsonConvert.DeserializeObject<string[]>(formattedDates);
             using (HttpClient client = new HttpClient())
             {
                 if (!string.IsNullOrEmpty(tokenview))
                 {
                     if (tokenview == null) { tokenview = ""; }
-                    token = tokenview.Replace(@"""", string.Empty);
-                    PassengersModel _AkPassengersModel = new PassengersModel();
+                    token = tokenData.Token;
+					PassengersModel _AkPassengersModel = new PassengersModel();
                     string CountryCode = TempData["CountryCodeAK"].ToString();
                     for (int i = 0; i < passengerdetails.Count; i++)
                     {
@@ -387,7 +411,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
             }
 
         }
-        public async Task<IActionResult> PostSeatmapMealdata(List<string> unitKey, List<string> mealssrKey, List<string> BaggageSSrkey)
+        public async Task<IActionResult> PostSeatmapMealdata(List<string> unitKey, List<string> mealssrKey, List<string> BaggageSSrkey, string Guid)
         {
             List<string> _unitkey = new List<string>();
             for (int i = 0; i < unitKey.Count; i++)
@@ -423,10 +447,18 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
             }
 
 
-            string tokenview = HttpContext.Session.GetString("AkasaTokan");
-            if (tokenview == null) { tokenview = ""; }
-            token = tokenview.Replace(@"""", string.Empty);
-            if (token == "" || token == null)
+			//string tokenview = HttpContext.Session.GetString("AkasaTokan");
+			//if (tokenview == null) { tokenview = ""; }
+			//token = tokenview.Replace(@"""", string.Empty);
+
+			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
+            token = tokenData.Token;
+
+			if (token == "" || token == null)
             {
                 return RedirectToAction("Index");
             }
@@ -645,7 +677,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                                HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealBaggage + pas_BaggageSsrKey, _sellSSRModel);
+                                HttpResponseMessage responseSellSSR = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirMealBaggagePost + pas_BaggageSsrKey, _sellSSRModel);
                                 if (responseSellSSR.IsSuccessStatusCode)
                                 {
                                     var _responseresponseSellSSR = responseSellSSR.Content.ReadAsStringAsync().Result;

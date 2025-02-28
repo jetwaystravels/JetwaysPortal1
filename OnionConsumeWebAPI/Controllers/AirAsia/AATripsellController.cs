@@ -926,8 +926,6 @@ namespace OnionConsumeWebAPI.Controllers
             }
 
             return RedirectToAction("AirAsiaOneWayPaymentView", "AirAsiaOneWayPayment");
-
-
         }
 
     }

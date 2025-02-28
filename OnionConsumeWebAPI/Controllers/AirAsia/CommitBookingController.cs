@@ -171,6 +171,7 @@ namespace OnionConsumeWebAPI.Controllers
 
                     //var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
                 }
+                var _responceCommit_Booking1 = responceCommit_Booking.Content.ReadAsStringAsync().Result;
                 #endregion
                 #region Booking GET
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));

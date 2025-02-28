@@ -12,20 +12,14 @@ using DomainLayer.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Caching.Distributed;
-using MongoDB.Driver;
-using Nancy.Session;
 
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NuGet.Common;
 using NuGet.Packaging.Signing;
-using OnionConsumeWebAPI.ApiService;
 using OnionConsumeWebAPI.Extensions;
-using OnionConsumeWebAPI.Models;
 using Utility;
-using ZXing;
 using static DomainLayer.Model.GetItenaryModel;
 using static DomainLayer.Model.SeatMapResponceModel;
 //using static DomainLayer.Model.testseat;
@@ -34,89 +28,40 @@ namespace OnionConsumeWebAPI.Controllers
 {
     public class ResultFlightViewController : Controller
     {
-        private readonly IConfiguration _configuration;
         string passengerkey12 = string.Empty;
         string infant = string.Empty;
         Logs logs = new Logs();
-        // Mongo DB
-        // private readonly MongoDbService _mongoDbService;
-
-        // public readonly IDistributedCache _distributedCache;
-        public ResultFlightViewController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
-        //public ResultFlightViewController(MongoDbService mongoDbService)
-        //{
-        //    _mongoDbService = mongoDbService;
-        //}
-
-
         public IActionResult FlightView()
         {
-
-            //  string Guid = Request.Query["Guid"] ?? string.Empty;
-
-            string guid = HttpContext.Request.Query["Guid"].ToString();
-
-            //MongoDBHelper _mongoDBHelper = new MongoDBHelper(_mongoDbService);
-            //Task<SearchLog> searchLog = _mongoDBHelper.GetFlightSearchLog(guid);
-            // searchLog = _mongoDBHelper.GetFlightSearchLog(Guid);
-
-
-            MongoHelper objMongoHelper = new MongoHelper();
-            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-
-            string Response = _mongoDBHelper.GetALLFlightResulByGUID(guid).Result;
-
-            var ListResponse = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(Response));
-
             var searchcount = TempData["count"];
             ViewData["count"] = searchcount;
             ViewModel viewModelobject = new ViewModel();
-
-            ViewBag.Guid = guid;
-
-            //string OnewayFlightData = HttpContext.Session.GetString("OneWayFlightView");
-            //List<SimpleAvailibilityaAddResponce> OnewaydeserializedObjects = null;
-            //OnewaydeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(OnewayFlightData);
-            //viewModelobject.SimpleAvailibilityaAddResponcelist = OnewaydeserializedObjects;
-
-            viewModelobject.SimpleAvailibilityaAddResponcelist = ListResponse;
-
-            //string OneWayFlightEditData = HttpContext.Session.GetString("OneWayPassengerModel");
-            // SimpleAvailabilityRequestModel simpleAvailabilityRequestModel = null;
-            // if (!string.IsNullOrEmpty(OneWayFlightEditData))
-            // {
-            //     simpleAvailabilityRequestModel = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(OneWayFlightEditData);
-            // }
-            // viewModelobject.simpleAvailabilityRequestModelEdit = simpleAvailabilityRequestModel;
+            string OnewayFlightData = HttpContext.Session.GetString("OneWayFlightView");
+            List<SimpleAvailibilityaAddResponce> OnewaydeserializedObjects = null;
+            OnewaydeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(OnewayFlightData);
+            viewModelobject.SimpleAvailibilityaAddResponcelist = OnewaydeserializedObjects;
+            string OneWayFlightEditData = HttpContext.Session.GetString("OneWayPassengerModel");
+            SimpleAvailabilityRequestModel simpleAvailabilityRequestModel = null;
+            if (!string.IsNullOrEmpty(OneWayFlightEditData))
+            {
+                simpleAvailabilityRequestModel = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(OneWayFlightEditData);
+            }
+            viewModelobject.simpleAvailabilityRequestModelEdit = simpleAvailabilityRequestModel;
 
             return View(viewModelobject);
         }
 
         [HttpPost]
         // Nonstop:: FilterId - Airline Filetr -
-        public IActionResult GetFilteredFlights(string sortOrderName, List<string> FilterIdAirLine, List<int> FilterId, List<string> departure, List<string> arrival, string Guid = "")
+        public IActionResult GetFilteredFlights(string sortOrderName, List<string> FilterIdAirLine, List<int> FilterId, List<string> departure, List<string> arrival)
         {
-
+            
             ViewModel viewModelobject = new ViewModel();
-            //string OnewayFlightData = HttpContext.Session.GetString("OneWayFlightView");
+            string OnewayFlightData = HttpContext.Session.GetString("OneWayFlightView");
             List<SimpleAvailibilityaAddResponce> OnewaydeserializedObjects = null;
-            //OnewaydeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(OnewayFlightData);
+            OnewaydeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(OnewayFlightData);
 
-
-            // string guid = HttpContext.Request.Query["Guid"].ToString();
-            MongoHelper objMongoHelper = new MongoHelper();
-            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-
-            string Response = _mongoDBHelper.GetALLFlightResulByGUID(Guid).Result;
-
-            ViewBag.Guid = Guid;
-
-            OnewaydeserializedObjects = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(Response));
-
+          
             if (departure.Count > 0)
             {
                 if (departure[0] == null)
@@ -135,30 +80,22 @@ namespace OnionConsumeWebAPI.Controllers
             }
 
 
-            //if (string.IsNullOrEmpty(OnewayFlightData))
-            //{
-            //    return View("Error");
-            //}
+            if (string.IsNullOrEmpty(OnewayFlightData))
+            {
+                return View("Error");
+            }
             List<SimpleAvailibilityaAddResponce> filteredFlights = OnewaydeserializedObjects;
             if (departure != null && departure.Count > 0)
             {
                 filteredFlights = filteredFlights.Where(flight =>
-                  //departure.Any(d =>
-                  //    (d.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-                  //    (d.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-                  //    (d.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-                  //    (d.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
-                  //)).ToList();
+                    departure.Any(d =>
+                        (d.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
+                        (d.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
+                        (d.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
+                        (d.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
+                    )).ToList();
 
-                  //change DATE 07-02-2025 HANDLE NULL VALUE.
-                  departure.Any(d =>
-            (d != null && d.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-            (d != null && d.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-            (d != null && d.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-            (d != null && d.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
-        )).ToList();
-
-                OnewaydeserializedObjects = filteredFlights.ToList();
+                 OnewaydeserializedObjects = filteredFlights.ToList();
                 viewModelobject.SimpleAvailibilityaAddResponcelist = OnewaydeserializedObjects;
 
 
@@ -167,15 +104,15 @@ namespace OnionConsumeWebAPI.Controllers
             {
                 filteredFlights = filteredFlights.Where(flight =>
                     arrival.Any(a =>
-                        (a != null && a.ToLower() == "before_6am" && flight.designator.arrival.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-                        (a != null && a.ToLower() == "6am_to_12pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-                        (a != null && a.ToLower() == "12pm_to_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-                        (a != null && a.ToLower() == "after_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(18, 0, 0))
+                        (a.ToLower() == "before_6am" && flight.designator.arrival.TimeOfDay < new TimeSpan(6, 0, 0)) ||
+                        (a.ToLower() == "6am_to_12pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(12, 0, 0)) ||
+                        (a.ToLower() == "12pm_to_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(18, 0, 0)) ||
+                        (a.ToLower() == "after_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(18, 0, 0))
                     )).ToList();
-                OnewaydeserializedObjects = filteredFlights.ToList();
+                 OnewaydeserializedObjects = filteredFlights.ToList();
                 viewModelobject.SimpleAvailibilityaAddResponcelist = OnewaydeserializedObjects;
             }
-
+          
             ViewBag.NameSortParam = sortOrderName == "name_desc" ? "name_asc" : "name_desc";
             ViewBag.PriceSortParam = sortOrderName == "price_desc" ? "price_asc" : "price_desc";
             ViewBag.DepartSortParam = sortOrderName == "deprt_desc" ? "deprt_asc" : "deprt_desc";
@@ -203,10 +140,10 @@ namespace OnionConsumeWebAPI.Controllers
                     OnewaydeserializedObjects = OnewaydeserializedObjects.OrderBy(d => d.designator.departure).ToList();
                     break;
                 case "arrive_desc":
-                    OnewaydeserializedObjects = OnewaydeserializedObjects.OrderByDescending(d => d.designator.arrival.TimeOfDay).ToList();
+                    OnewaydeserializedObjects = OnewaydeserializedObjects.OrderByDescending(d => d.designator.arrival).ToList();
                     break;
                 case "arrive_asc":
-                    OnewaydeserializedObjects = OnewaydeserializedObjects.OrderBy(d => d.designator.arrival.TimeOfDay).ToList();
+                    OnewaydeserializedObjects = OnewaydeserializedObjects.OrderBy(d => d.designator.arrival).ToList();
                     break;
                 case "duration_desc":
                     OnewaydeserializedObjects = OnewaydeserializedObjects.OrderByDescending(d => d.designator.formatTime).ToList();
@@ -246,16 +183,16 @@ namespace OnionConsumeWebAPI.Controllers
 
             }
 
-
+          
             if (FilterIdAirLine.Count > 0 && FilterIdAirLine.Count >= 0)
             {
-                OnewaydeserializedObjects = OnewaydeserializedObjects.Where(x => FilterIdAirLine.Contains(x.Airline.ToString())).ToList();
+                 OnewaydeserializedObjects = OnewaydeserializedObjects.Where(x => FilterIdAirLine.Contains(x.Airline.ToString())).ToList();
                 viewModelobject.SimpleAvailibilityaAddResponcelist = OnewaydeserializedObjects;
-
+                
             }
 
 
-
+           
 
 
             if (FilterId.Count > 0 && FilterId.Count >= 0)
@@ -266,34 +203,24 @@ namespace OnionConsumeWebAPI.Controllers
             }
 
 
-
+          
             viewModelobject.SimpleAvailibilityaAddResponcelist = OnewaydeserializedObjects;
             //return PartialView("_FlightResultsSortingPartialView", viewModelobject);
             return PartialView("_FlightResultsSortingPartialView", viewModelobject);
         }
 
-
+       
 
         [HttpPost]
-        public async Task<ActionResult> Tripsell(string fareKey, string journeyKey, string Guid)
+        public async Task<ActionResult> Tripsell(string fareKey, string journeyKey)
         {
 
             string token = string.Empty;
             List<_credentials> credentialslist = new List<_credentials>();
-            //  IMongoCollection<SearchLog> coll = _mongoDbService.GetCollection<SearchLog>("SearchLogdata");
             using (HttpClient client = new HttpClient())
             {
 
-                MongoHelper objMongoHelper = new MongoHelper();
-                MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-                MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-
-                tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
-
-
-                //string tokenview1 = HttpContext.Session.GetString("AirasiaTokan");
-
-                string tokenview = tokenData.Token;
+                string tokenview = HttpContext.Session.GetString("AirasiaTokan");
 
                 if (tokenview == "" || tokenview == null)
                 {
@@ -303,15 +230,9 @@ namespace OnionConsumeWebAPI.Controllers
 
 
                 HttpContext.Session.SetString("journeyKey", JsonConvert.SerializeObject(journeyKey));
-
-                _mongoDBHelper.UpdateFlightTokenJourney(Guid, "AirAsia", journeyKey);
-
                 SimpleAvailabilityRequestModel _SimpleAvailabilityobj = new SimpleAvailabilityRequestModel();
                 //var jsonData = TempData["PassengerModel"];
-                //var jsonData = HttpContext.Session.GetString("PassengerModel");
-
-                var jsonData = objMongoHelper.UnZip(tokenData.PassRequest);
-
+                var jsonData = HttpContext.Session.GetString("PassengerModel");
                 _SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
                 var AdtType = "";
                 var AdtCount = 0;
@@ -384,27 +305,7 @@ namespace OnionConsumeWebAPI.Controllers
                 {
                     AirAsiaTripResponceModel AirAsiaTripResponceobj = new AirAsiaTripResponceModel();
                     var resultsTripsell = responseTripsell.Content.ReadAsStringAsync().Result;
-                    //string OnewayOnward= HttpContext.Session.GetString("OneWayPassengerModel");
-                    //List<SimpleAvailibilityaAddResponce> OnewaydeserializedData = null;
-                    //OnewaydeserializedData = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(OnewayOnward);
-                    //var searchData = new SearchLog
-                    //{
-                    //    //searchData = new SearchLog();
-                    //    TripType = 0,
-                    //    TripName = "OneWay",
-                    //    ApiName = "Tripsell",
-                    //    SupplierName = "AirIndiaExpress",
-                    //    Origin_Departure = OnewaydeserializedData., //_GetfligthModel.origin + "_" + _GetfligthModel.destination,
-                    //    //Key = KeyName,
-                    //    Request = JsonConvert.SerializeObject(AirAsiaTripSellRequestobj),
-                    //    Response = JsonConvert.SerializeObject(resultsTripsell),
-                    //    InsertedOn = DateTime.Now
-                    //};
-                    //coll.InsertOne(searchData);
-
-                    logs.WriteLogs(AirasiaTripSellRequest, "3-TripsellRequest", "AirAsiaOneWay", "oneway");
-                    logs.WriteLogs(resultsTripsell, "3-TripsellResponse", "AirAsiaOneWay", "oneway");
-                    //logs.WriteLogs("Url: " + AppUrlConstant.AirasiaTripsell + "Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "\n Response: " + resultsTripsell, "Tripsell", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs("Url: " + AppUrlConstant.AirasiaTripsell + "Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "\n Response: " + resultsTripsell, "Tripsell", "AirAsiaOneWay", "oneway");
                     var JsonObjTripsell = JsonConvert.DeserializeObject<dynamic>(resultsTripsell);
                     var totalAmount = JsonObjTripsell.data.breakdown.journeys[journeyKey].totalAmount;
                     var totalTax = JsonObjTripsell.data.breakdown.journeys[journeyKey].totalTax;
@@ -566,14 +467,14 @@ namespace OnionConsumeWebAPI.Controllers
                     HttpContext.Session.SetString("keypassenger", JsonConvert.SerializeObject(AirAsiaTripResponceobj));
                 }
                 #region Itenary 
-                if (!string.IsNullOrEmpty(infanttype))
+                if (infanttype != null)
                 {
 
                     string passengerdatainfant = HttpContext.Session.GetString("keypassenger");
                     AirAsiaTripResponceModel passeengerKeyListinfant = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdatainfant, typeof(AirAsiaTripResponceModel));
 
                     SimpleAvailabilityRequestModel _SimpleAvailabilityobject = new SimpleAvailabilityRequestModel();
-                    var jsonDataObject = objMongoHelper.UnZip(tokenData.PassRequest); //HttpContext.Session.GetString("PassengerModel");
+                    var jsonDataObject = HttpContext.Session.GetString("PassengerModel");
                     _SimpleAvailabilityobject = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonDataObject.ToString());
                     //var jsonDataObject = TempData["PassengerModel"];
                     //_SimpleAvailabilityobject = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonDataObject.ToString());
@@ -687,9 +588,7 @@ namespace OnionConsumeWebAPI.Controllers
                         {
                             AirAsiaTripResponceModel AirAasiaobjectInfantdata = new AirAsiaTripResponceModel();
                             var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
-                            //logs.WriteLogs("Url: " + AppUrlConstant.Airasiainfantquote + "Request: " + JsonConvert.SerializeObject(itenaryInfant) + "\n Response: " + _responsePassengers, "itenaryInfant", "AirAsiaOneWay", "oneway");
-                            logs.WriteLogs(jsonPassengers, "4-itenaryInfantRequest", "AirAsiaOneWay", "oneway");
-                            logs.WriteLogs(_responsePassengers, "4-itenaryInfantResponse", "AirAsiaOneWay", "oneway");
+                            logs.WriteLogs("Url: " + AppUrlConstant.Airasiainfantquote + "Request: " + JsonConvert.SerializeObject(itenaryInfant) + "\n Response: " + _responsePassengers, "itenaryInfant", "AirAsiaOneWay", "oneway");
                             var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
                             var TotalAmount = JsonObjPassengers.data.breakdown.journeys[journeyKey].totalAmount;
                             var TotalTax = JsonObjPassengers.data.breakdown.journeys[journeyKey].totalTax;
@@ -697,7 +596,7 @@ namespace OnionConsumeWebAPI.Controllers
                             int Inftcount = 0;
                             int Inftbasefare = 0;
 
-                            List<AAJourney> AAJourneyList = new List<AAJourney>();
+                            List<AAJourney> AAJourneyList = new List<AAJourney>();  
                             for (int i = 0; i < Journeyscount; i++)
                             {
                                 AAJourney AAJourneyobject = new AAJourney();
@@ -824,7 +723,7 @@ namespace OnionConsumeWebAPI.Controllers
                             foreach (var items in JsonObjPassengers.data.passengers)
                             {
                                 AAPassengers passkeytypeobject = new AAPassengers();
-
+                                
                                 passkeytypeobject.passengerKey = items.Value.passengerKey;
                                 passkeytypeobject.passengerTypeCode = items.Value.passengerTypeCode;
                                 passkeyList.Add(passkeytypeobject);
@@ -832,53 +731,53 @@ namespace OnionConsumeWebAPI.Controllers
                                 //infant
 
 
-                                // if (passkeytypeobject.passengerTypeCode != "CHD")
-                                //  {
+                               // if (passkeytypeobject.passengerTypeCode != "CHD")
+                              //  {
 
-                                if (JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant != null)
-                                {
-                                    int Feecount = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees.Count;
-                                    Inftcount += Feecount;
-                                    Inftbasefare = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges[0].amount;
-                                    var ServiceInft = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges;
-                                    int ServiceInftcount = ((Newtonsoft.Json.Linq.JContainer)ServiceInft).Count;
+                                    if (JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant != null)
+                                    {
+                                        int Feecount = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees.Count;
+                                        Inftcount += Feecount;
+                                        Inftbasefare = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges[0].amount;
+                                        var ServiceInft = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges;
+                                        int ServiceInftcount = ((Newtonsoft.Json.Linq.JContainer)ServiceInft).Count;
 
-                                    for (int inf = 1; inf < ServiceInftcount; inf++)
-                                    {
-                                        ServiceInfttax = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges[inf].amount;
-                                        ServiceInfttax += ServiceInfttax;
+                                        for (int inf = 1; inf < ServiceInftcount; inf++)
+                                        {
+                                            ServiceInfttax = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[0].serviceCharges[inf].amount;
+                                            ServiceInfttax += ServiceInfttax;
+                                        }
+                                        Inftbasefare = Inftbasefare - ServiceInfttax;
+                                        List<Fee> feeList = new List<Fee>();
+                                        for (int i = 0; i < Feecount; i++)
+                                        {
+                                            infantobject = new Infant();
+                                            feeobject = new Fee();
+                                            feeobject.isConfirmed = false;
+                                            feeobject.isConfirming = false;
+                                            feeobject.isConfirmingExternal = false;
+                                            feeobject.code = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[i].code;
+                                            feeobject._override = false;
+                                            feeobject.note = "";
+                                            feeobject.isProtected = false;
+                                            infantobject.nationality = "";
+                                            infantobject.dateOfBirth = "";
+                                            infantobject.travelDocuments = "";
+                                            infantobject.residentCountry = "";
+                                            infantobject.gender = 1;
+                                            infantobject.name = "";
+                                            infantobject.type = "";
+                                            feeList.Add(feeobject);
+                                            infantobject.fees = feeList;
+                                            passkeytypeobject.infant = infantobject;
+                                            ServicechargeInfant servicechargeInfantobj = new ServicechargeInfant();
+                                            var serviceChargesCount = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[i].serviceCharges.Count;
+                                            servicechargeInfantobj.amount = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[i].serviceCharges[0].amount;
+                                            feeobject.ServicechargeInfant = servicechargeInfantobj;
+                                            //feeobject.ServicechargeInfant = servicechargeInfantList;
+                                        }
                                     }
-                                    Inftbasefare = Inftbasefare - ServiceInfttax;
-                                    List<Fee> feeList = new List<Fee>();
-                                    for (int i = 0; i < Feecount; i++)
-                                    {
-                                        infantobject = new Infant();
-                                        feeobject = new Fee();
-                                        feeobject.isConfirmed = false;
-                                        feeobject.isConfirming = false;
-                                        feeobject.isConfirmingExternal = false;
-                                        feeobject.code = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[i].code;
-                                        feeobject._override = false;
-                                        feeobject.note = "";
-                                        feeobject.isProtected = false;
-                                        infantobject.nationality = "";
-                                        infantobject.dateOfBirth = "";
-                                        infantobject.travelDocuments = "";
-                                        infantobject.residentCountry = "";
-                                        infantobject.gender = 1;
-                                        infantobject.name = "";
-                                        infantobject.type = "";
-                                        feeList.Add(feeobject);
-                                        infantobject.fees = feeList;
-                                        passkeytypeobject.infant = infantobject;
-                                        ServicechargeInfant servicechargeInfantobj = new ServicechargeInfant();
-                                        var serviceChargesCount = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[i].serviceCharges.Count;
-                                        servicechargeInfantobj.amount = JsonObjPassengers.data.passengers[passkeytypeobject.passengerKey].infant.fees[i].serviceCharges[0].amount;
-                                        feeobject.ServicechargeInfant = servicechargeInfantobj;
-                                        //feeobject.ServicechargeInfant = servicechargeInfantList;
-                                    }
-                                }
-                                // }
+                               // }
 
                                 AirAasiaobjectInfantdata.inftcount = Inftcount;
                                 AirAasiaobjectInfantdata.inftbasefare = Inftbasefare;
@@ -907,9 +806,7 @@ namespace OnionConsumeWebAPI.Controllers
                     string columncount0 = string.Empty;
                     Logs logs = new Logs();
                     var _responseSeatmap = responseSeatmap.Content.ReadAsStringAsync().Result;
-                    //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.Airasiaseatmap + journeyKey + "?IncludePropertyLookup=true") + "\n\n Response: " + JsonConvert.SerializeObject(_responseSeatmap), "SeatMap", "AirAsiaOneWay", "oneway");
-                    logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.Airasiaseatmap + journeyKey + "?IncludePropertyLookup=true"), "5-SeatMapRequest", "AirAsiaOneWay", "oneway");
-                    logs.WriteLogs(_responseSeatmap, "5-SeatMapResponse", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.Airasiaseatmap + journeyKey + "?IncludePropertyLookup=true") + "\n\n Response: " + JsonConvert.SerializeObject(_responseSeatmap), "SeatMap", "AirAsiaOneWay", "oneway");
                     var JsonObjSeatmap = JsonConvert.DeserializeObject<dynamic>(_responseSeatmap);
                     //var uniquekey1 = JsonObjSeatmap.data[0].seatMap.decks["1"].compartments.Y.units[0].unitKey;
                     var data = JsonObjSeatmap.data.Count;
@@ -937,7 +834,7 @@ namespace OnionConsumeWebAPI.Controllers
                         Seatmapobj.decksindigo = new List<Decks>();
                         Decks Decksobj = null;
                         //string strnewText = Regex.Match(_responseSeatmap, @"data""[\s\S]*?fees[\s\S]*?groups""(?<data>[\s\S]*?)ssrLookup""[\s\S]*?}]}\s",
-                        //RegexOptions.IgnoreCase | RegexOptions.Multiline).Value.ToString();
+                            //RegexOptions.IgnoreCase | RegexOptions.Multiline).Value.ToString();
                         string compartmenttext = Regex.Match(mitem.Value, "compartments\":(?<data>[\\s\\S]*?),\"seatmapReference", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["data"].Value.ToString();
                         foreach (Match itemn in Regex.Matches(compartmenttext, @"availableunits[\s\S]*?""designator"":""(?<t>[^\""""]+)""[\s\S]*?]}]", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                         {
@@ -1072,9 +969,7 @@ namespace OnionConsumeWebAPI.Controllers
                 if (responseSSRAvailabilty.IsSuccessStatusCode)
                 {
                     var _responseSSRAvailabilty = responseSSRAvailabilty.Content.ReadAsStringAsync().Result;
-                    //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.Airasiassravailability) + "Request: " + jsonSSRAvailabiltyRequest+ "\n\n Response: " + JsonConvert.SerializeObject(_responseSSRAvailabilty), "SSrAvailability", "AirAsiaOneWay", "oneway");
-                    logs.WriteLogs(jsonSSRAvailabiltyRequest, "6-SSrAvailabilityRequest", "AirAsiaOneWay", "oneway");
-                    logs.WriteLogs(_responseSSRAvailabilty, "6-SSrAvailabilityResponse", "AirAsiaOneWay", "oneway");
+                    logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.Airasiassravailability) + "Request: " + jsonSSRAvailabiltyRequest+ "\n\n Response: " + JsonConvert.SerializeObject(_responseSSRAvailabilty), "SSrAvailability", "AirAsiaOneWay", "oneway");
                     var JsonObjresponseSSRAvailabilty = JsonConvert.DeserializeObject<dynamic>(_responseSSRAvailabilty);
                     var journeyKey1 = JsonObjresponseSSRAvailabilty.data.journeySsrs[0].journeyKey;
                     journeyKey = ((Newtonsoft.Json.Linq.JValue)journeyKey1).Value.ToString();
@@ -1235,7 +1130,7 @@ namespace OnionConsumeWebAPI.Controllers
                 }
                 #endregion
             }
-            return RedirectToAction("Tripsell", "AATripsell", new { Guid = Guid });
+            return RedirectToAction("Tripsell", "AATripsell");
         }
 
     }

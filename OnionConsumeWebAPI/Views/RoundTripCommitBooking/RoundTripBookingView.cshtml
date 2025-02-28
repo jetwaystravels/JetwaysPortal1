@@ -160,6 +160,7 @@
                         Hashtable htpax = Model.AirlinePNR[a].htpax;
                         Hashtable htnameempty = Model.AirlinePNR[a].htnameempty;
                         Hashtable htname = Model.AirlinePNR[a].htname;
+                        Hashtable htTkt = Model.AirlinePNR[a].htTicketnumber;
                         <div class="container">
                             <div class="flight-tckt-main">
                                 <div class="d-flex justify-content-end ticketdwn" type="button" onclick="downloadPDF()">
@@ -228,7 +229,7 @@
                                                         <div class="airline-N">
                                                             @{
                                                                 string AirlineName = "";
-                                                                if(@Model.AirlinePNR[a].airLines.ToString()=="AirAsia")
+                                                                if (@Model.AirlinePNR[a].airLines.ToString() == "AirAsia")
                                                                 {
                                                                     AirlineName = "Air India Exp..";
                                                                 }
@@ -533,20 +534,26 @@
                                                                 if (htmeal != null && htmeal.ContainsKey(hashdata))
                                                                 {
 
-                                                                    var Mealname = htmeal[hashdata].ToString();
-                                                                    var meal = MealImageList.GetAllmeal().Where(x => Mealname.Contains(x.MealCode)).ToList();
-                                                                    if (meal != null)
+                                                                    var Mealcode = htmeal[hashdata].ToString();
+                                                                    var MealName = MealImageList.GetAllmeal()
+                                                                    .Where(x => Mealcode.Contains(x.MealCode))
+                                                                    .Select(x => x.MealImage)
+                                                                    .FirstOrDefault();
+                                                                    if (Mealcode != null)
                                                                     {
-                                                                        foreach (var item in meal)
-                                                                        {
-                                                                            <td>@item.MealCode</td>
-                                                                        }
+
+                                                                        <td>@Mealcode-@MealName</td>
+                                                                      
                                                                     }
-                                                                    // <td>@htmeal[hashdata]</td>
+
+                                                                  
+
+
+
                                                                 }
                                                                 else
                                                                 {
-                                                                    <td></td>
+                                                                    <td>NA</td>
                                                                 }
                                                                 // string hashBagdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
                                                                 // if (htbag != null)
@@ -569,14 +576,14 @@
                                                                             }
                                                                             else
                                                                             {
-                                                                                <td></td>
+                                                                                <td>NA</td>
                                                                             }
                                                                         }
                                                                     }
                                                                 }
                                                                 else
                                                                 {
-                                                                    <td></td>
+                                                                    <td>NA</td>
                                                                 }
 
                                                             }
@@ -730,15 +737,15 @@
                                                         // }
 
 
-                                                        if (@Model.AirlinePNR[a].breakdown.passengerTotals.seats.total > 0)
+                                                        if (@Model.AirlinePNR[a].breakdown.passengerTotals.seats.totalSeatAmount > 0)
                                                         {
                                                             <tr>
                                                                 <td>Seat Amount:</td>
-                                                                <td>Rs. @Model.AirlinePNR[a].breakdown.passengerTotals.seats.total</td>
+                                                                <td>Rs. @Model.AirlinePNR[a].breakdown.passengerTotals.seats.totalSeatAmount</td>
                                                             </tr>
                                                         }
 
-                                                        if (@Model.AirlinePNR[a].breakdown.passengerTotals.seats.total == 0)
+                                                        if (@Model.AirlinePNR[a].breakdown.passengerTotals.seats.totalSeatAmount == 0)
                                                         {
                                                             if (@Model.AirlinePNR[a].Seatdata.Count == 0)
                                                             {
@@ -953,7 +960,6 @@
                                                     <th rowspan="2" class="align-middle">Passenger</th>
                                                     <th colspan="2" class="text-center">Fllight Detail</th>
                                                     <th rowspan="2" class="align-middle">Meal Type</th>
-
                                                     <th rowspan="2" class="align-middle">Extra Bag(KD)</th>
                                                     <th rowspan="2" class="align-middle">Insurance Status</th>
 
@@ -990,71 +996,72 @@
                                                             <td>@Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin - @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination </td>
                                                             <td>@Model.AirlinePNR[a].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[a].journeys[0].segments[i3].identifier.identifier</td>
                                                             @{
-                                                                string hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
 
-                                                                if (htmeal != null && htmeal.ContainsKey(hashdata))
+
+                                                               string hashdataMeal = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+
+                                                                if (hashdataMeal != null && htmeal.ContainsKey(hashdataMeal))
                                                                 {
 
-                                                                    var Mealname = htmeal[hashdata].ToString();
-                                                                    var meal = MealImageList.GetAllmeal().Where(x => Mealname.Contains(x.MealCode)).ToList();
-                                                                    if (meal != null)
+                                                                    var Mealcode = htmeal[hashdataMeal].ToString();
+
+                                                                    var MealName = MealImageList.GetAllmeal()
+                                                                    .Where(x => Mealcode.Contains(x.MealCode))
+                                                                    .Select(x => x.MealImage)
+                                                                    .FirstOrDefault();
+
+
+                                                                    if (Mealcode != null)
                                                                     {
-                                                                        foreach (var item in meal)
-                                                                        {
-                                                                            <td>@item.MealImage</td>
-                                                                        }
+
+                                                                        <td>@Mealcode-@MealName</td>
+
                                                                     }
-                                                                    // <td>@htmeal[hashdata]</td>
+
                                                                 }
                                                                 else
                                                                 {
-                                                                    <td></td>
+                                                                    <td>NA</td>
                                                                 }
+
+
+                                                                string hashBagdata = Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                if (htbag != null && htbag.ContainsKey(hashBagdata) && i3 == 0)
+                                                                {
+
+                                                                    var Baggagecode = htbag[hashBagdata].ToString();
+
+                                                                    var Baggagename = MealImageList.GetAllmeal()
+                                                                    .Where(x => Baggagecode.Contains(x.MealCode))
+                                                                    .Select(x => x.MealImage)
+                                                                    .FirstOrDefault();
+                                                                   
+                                                                     if (Baggagecode != null )
+                                                                     {
+                                                                       
+                                                                       <td>@Baggagename</td>
+                                                                       
+                                                                     }
+                                                                    
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>NA</td>
+                                                                }
+
+                                                                
+
+
                                                                 // string hashBagdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
                                                                 // if (htbag != null)
                                                                 // {
                                                                 //     <td>@htbag[hashBagdata]</td>
                                                                 // }
-                                                                string hashBagdata = Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-                                                                if (htbag != null && htbag.ContainsKey(hashBagdata))
-                                                                {
-
-                                                                    var Baggabgename = htbag[hashBagdata].ToString();
-                                                                    var Baggage = MealImageList.GetAllmeal().Where(x => Baggabgename.Contains(x.MealCode)).ToList();
-                                                                    if (Baggage != null)
-                                                                    {
-                                                                        foreach (var item in Baggage)
-                                                                        {
-                                                                            <td>@item.MealImage</td>
-                                                                        }
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    <td></td>
-                                                                }
+                                                               
 
                                                             }
-                                                            @{
-                                                                // string hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-
-                                                                // if (htmeal != null)
-                                                                // {
-                                                                //     <td>@htmeal[hashdata]</td>
-                                                                // }
-
-                                                                // if (htbag != null)
-                                                                // {
-                                                                //     Hashtable htSSr = new Hashtable();
-                                                                //     SpicejetMealImageList.GetAllmeal(htSSr);
-                                                                //     if (!htbag.Contains(hashdata))
-                                                                //         continue;
-                                                                //     var weight = htSSr[htbag[hashdata]];
-                                                                //     <td>@htbag[hashdata] - @weight</td>
-                                                                // }
-
-
-                                                            }
+                                                            
                                                             <td>Confirm</td>
                                                         </tr>
                                                     }
@@ -1115,12 +1122,23 @@
                                                                 <td>Rs.@Model.AirlinePNR[a].TotalAmountMeal</td>
                                                             </tr>
                                                         }
-                                                        else
+
+                                                        if (@Model.AirlinePNR[a].TotalAmountMeal == 0)
                                                         {
-                                                            <tr>
-                                                                <td>Addon Meal Amount:</td>
-                                                                <td>Free</td>
-                                                            </tr>
+                                                            if (@Model.AirlinePNR[a].Mealdata.Count == 0)
+                                                            {
+                                                                <tr style="display: none;">
+                                                                    <td>Addon Meal Amount:</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                <tr>
+                                                                    <td>Addon Meal Amount:</td>
+                                                                    <td>Free</td>
+                                                                </tr>
+                                                            }
                                                         }
                                                         if (@Model.AirlinePNR[a].TotaAmountBaggage > 0)
                                                         {
@@ -1130,12 +1148,22 @@
                                                             </tr>
 
                                                         }
-                                                        else
+                                                        if (@Model.AirlinePNR[a].TotaAmountBaggage == 0)
                                                         {
-                                                            <tr>
-                                                                <td>Addon Bagg Amount:</td>
-                                                                <td>Free</td>
-                                                            </tr>
+                                                            if (@Model.AirlinePNR[a].TotaAmountBaggage == 0)
+                                                            {
+                                                                <tr style="display: none;">
+                                                                    <td>Addon Bag Amount:</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                <tr>
+                                                                    <td>Addon Bag Amount:</td>
+                                                                    <td>Free</td>
+                                                                </tr>
+                                                            }
                                                         }
                                                         if (@Model.AirlinePNR[a].breakdown.passengerTotals.seats.totalSeatAmount > 0)
                                                         {
@@ -1144,12 +1172,25 @@
                                                                 <td>Rs. @Model.AirlinePNR[a].breakdown.passengerTotals.seats.totalSeatAmount</td>
                                                             </tr>
                                                         }
-                                                        else
+
+                                                        if (@Model.AirlinePNR[a].breakdown.passengerTotals.seats.totalSeatAmount == 0)
                                                         {
-                                                            <tr>
-                                                                <td>Seat Amount:</td>
-                                                                <td>Free</td>
-                                                            </tr>
+                                                            if (@Model.AirlinePNR[a].Seatdata.Count == 0)
+                                                            {
+                                                                <tr style="display: none;">
+                                                                    <td>Seat Amount:</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                <tr>
+                                                                    <td>Seat Amount:</td>
+                                                                    <td>Free</td>
+                                                                </tr>
+                                                            }
+
+
                                                         }
 
                                                     }
@@ -1238,25 +1279,51 @@
                                                             @{
                                                                 string barcodeimageUrl = string.Empty;
                                                                 BarcodeUtility BarcodeUtility = new BarcodeUtility();
-                                                                if (htpax!=null && htpax.Contains(@Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination))
+                                                                if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia"))
                                                                 {
-                                                                    string _data = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-                                                                    if (htpax.Contains(_data))
+                                                                    if (htpax.Contains(@Model.AirlinePNR[a].passengers[i2].name.first.Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination))
                                                                     {
-                                                                        barcodeimageUrl = htpax[_data].ToString();
-                                                                        barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
-                                                                    }
+                                                                        string _data = @Model.AirlinePNR[a].passengers[i2].name.first.Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                        if (htpax.Contains(_data))
+                                                                        {
+                                                                            barcodeimageUrl = htpax[_data].ToString();
+                                                                            barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
+                                                                        }
 
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        string _data = @Model.AirlinePNR[a].passengers[i2].name.first.Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                        if (htnameempty.Contains(_data))
+                                                                        {
+                                                                            barcodeimageUrl = htnameempty[_data].ToString();
+                                                                            barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
+                                                                        }
+
+                                                                    }
                                                                 }
                                                                 else
                                                                 {
-                                                                    string _data = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-                                                                    if (htnameempty != null && htnameempty.Contains(_data))
+                                                                    if (htpax != null && htpax.Contains(@Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination))
                                                                     {
-                                                                        barcodeimageUrl = htnameempty[_data].ToString();
-                                                                        barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
-                                                                    }
+                                                                        string _data = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                        if (htpax.Contains(_data))
+                                                                        {
+                                                                            barcodeimageUrl = htpax[_data].ToString();
+                                                                            barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
+                                                                        }
 
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        string _data = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].passengers[i2].name.last + "/" + @Model.AirlinePNR[a].passengers[i2].name.first + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                        if (htnameempty != null && htnameempty.Contains(_data))
+                                                                        {
+                                                                            barcodeimageUrl = htnameempty[_data].ToString();
+                                                                            barcodeimageUrl = BarcodeUtility.BarcodereadUtility(barcodeimageUrl).Trim();
+                                                                        }
+
+                                                                    }
                                                                 }
                                                                 if (i3 == 0)
                                                                 {
@@ -1271,17 +1338,26 @@
                                                                         <td rowspan="2" style="vertical-align:middle;">@Model.AirlinePNR[a].passengers[i2].name.first (@Model.AirlinePNR[a].passengers[i2].passengerTypeCode)</td>
                                                                     }
                                                                 }
+
                                                             }
                                                             <td>@Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin - @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination </td>
                                                             <td>@Model.AirlinePNR[a].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[a].journeys[0].segments[i3].identifier.identifier</td>
                                                             @{
-
-                                                                string hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-
+                                                                string hashdata = string.Empty;
+                                                                if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia"))
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].name.first.ToString().Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                }
+                                                                else
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                }
                                                                 if (htseat != null)
                                                                 {
                                                                     <td>@htseat[hashdata]</td>
                                                                 }
+
+
                                                             }
                                                             @if (i3 == 1)
                                                             {
@@ -1291,7 +1367,18 @@
                                                             {
                                                                 <td>@Model.AirlinePNR[a].passengers[i2].MobNumber</td>
                                                             }
-                                                            <td>@Model.AirlinePNR[a].recordLocator</td>
+                                                            @{
+                                                                if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia"))
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].name.first.ToString().Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                    <td>@htTkt[hashdata]</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@Model.AirlinePNR[a].recordLocator</td>
+                                                                }
+                                                            }
+
                                                             <td>Confirm</td>
                                                             @if (i3 == 1)
                                                             {
@@ -1395,8 +1482,15 @@
                                                             <td>@Model.AirlinePNR[a].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[a].journeys[0].segments[i3].identifier.identifier</td>
 
                                                             @{
-                                                                string hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
-
+                                                                string hashdata = string.Empty;
+                                                                if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia"))
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].name.first.ToString().Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                }
+                                                                else
+                                                                {
+                                                                    hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
+                                                                }
                                                                 if (htmeal != null)
                                                                 {
                                                                     <td>@htmeal[hashdata]</td>

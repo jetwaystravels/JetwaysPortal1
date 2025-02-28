@@ -15,6 +15,7 @@ namespace DomainLayer.Model
         public string bookingKey { get; set; }
         public DateTime bookingdate { get; set; }
         public string recordLocator { get; set; }
+        public string TicketNumber { get; set; }
         public string currencyCode { get; set; }
         public object systemCode { get; set; }
         public object groupName { get; set; }
@@ -53,10 +54,7 @@ namespace DomainLayer.Model
         public Hashtable htpax { get; set; }
         public Hashtable htname { get; set; }
         public Hashtable htnameempty { get; set; }
-
-
-
-
+        public Hashtable htTicketnumber { get; set; }
         public Hashtable TicketSeat { get; set; }
         public Hashtable TicketCarryBag { get; set; }
         public Hashtable TicketMeal { get; set; }

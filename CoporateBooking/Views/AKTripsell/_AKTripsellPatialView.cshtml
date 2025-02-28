@@ -63,7 +63,7 @@
                     // else
                     // {
                     //     formatTime = $"{(int)time.TotalHours} h : {(int)time.Minutes} m";
-                        // }
+                    // }
                     <div class="py-15 px-20 rounded-4 text-15  bg-blue-2 flex-center">
                         Change planes at <span class="fw-600"><div></div>  (@item.segments[i].designator.origin),</span> Connecting Time: <span class="fw-600">@formatTime</span>
                     </div>
@@ -104,7 +104,7 @@
                                     <div class="py-10 px-20 rounded-4 text-15 bg-blue-2 flex-center m-3">
                                         Technical Support   <span class="fw-600 px-2">@formatTime</span> Layover in <span class="fw-600 px-2"> @item.segments[i].legs[j].designator.origin</span>
                                     </div>
-                               
+
                                 }
                                 <div class="d-flex items-center mb-15">
                                     <div class="w-28 d-flex justify-center mr-15">
@@ -153,11 +153,11 @@
                                             <div class="col-auto">
                                                 @{
                                                     var allCityData = Citynamelist.GetAllCityData();
-                                                    string QueryOriginAirportName = item.segments[i].legs[j].designator.origin;
-                                                    string QueryDestinationAirportName = item.segments[i].legs[j].designator.destination;
+                                                    string QueryOriginAirportName = QueryOrigin;//item.segments[i].legs[j].designator.origin;
+                                                    string QueryDestinationAirportName = QueryDestination;// item.segments[i].legs[j].designator.destination;
 
-                                                    var originCity = allCityData.SingleOrDefault(x => x.cityname == QueryOriginAirportName);
-                                                    var destinationCity = allCityData.SingleOrDefault(x => x.cityname == QueryDestinationAirportName);
+                                                    var originCity = allCityData.SingleOrDefault(x => x.citycode == QueryOriginAirportName);
+                                                    var destinationCity = allCityData.SingleOrDefault(x => x.citycode == QueryDestinationAirportName);
 
                                                     if (originCity != null)
                                                     {
@@ -170,7 +170,7 @@
                                                 }
 
                                                 <div class="lh-14 fw-500">
-                                                    @QueryOriginAirportName
+                                                    @originCity.cityname
                                                     <span class="text-13 ml-2 fw-600">
                                                         (@FormatTeddepartureDate
                                                         <span class="text-13 text-light-1 ml-2">@originCity?.airportname</span>
@@ -220,7 +220,7 @@
 
 
                                                 <div class="lh-14 fw-500">
-                                                    @QueryDestinationAirportName
+                                                    @destinationCity.cityname
                                                     <span class="text-13 ml-2 fw-600">
                                                         (@formattedarrivalDate
                                                         <span class="text-13 text-light-1 ml-2">@destinationCity?.airportname</span>
@@ -254,7 +254,7 @@
                                         {
                                         
                                             <span class="tooltipF">
-                                                Economy:  @Faretype<b>Saver</b>
+                                                Faretype:  @Faretype<b>Saver</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: Cabin Bag: 7 k.g</li>
@@ -272,7 +272,7 @@
                                         {
                                            
                                             <span class="tooltipF">
-                                                Economy:  @Faretype<b>Flexi</b>
+                                                Faretype:  @Faretype<b>Flexi</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: Cabin Bag: 7 k.g</li>
@@ -287,11 +287,31 @@
                                             </span>
 
                                         }
+                                        else if (item.segments[i].fares[f].productClass.Equals("CP"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Faretype:  @Faretype<b>Corporate </b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: -</li>
+                                                        <li>2: Check-in: -</li>
+                                                        <li>3: Cancellation:-</li>
+                                                        <li>4: Date Change: -</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
+
                                        else
                                         {
                                           
                                             <span class="tooltipF">
-                                                Economy:  @Faretype<b>Saver Fare</b>
+                                                Faretype:  @Faretype<b>Saver Fare</b>
                                                 <span class="tooltiptext">
                                                     <ul>
                                                         <li>1: CABIN BAG: </li>
@@ -394,6 +414,22 @@
 
                                         </table>
                                     }
+                                    else if (item.segments[i].fares[f].productClass.Equals("CP"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>-</td>
+
+                                            </tr>
+
+                                        </table>
+                                    }
                                     
                                     else
                                     {
@@ -465,6 +501,22 @@
                                             <tr>
                                                 <td>4 days & above</td>
                                                 <td>Rs. 299</td>
+
+                                            </tr>
+
+                                        </table>
+                                    }
+                                    else if (item.segments[j].fares[k].productClass.Equals("CP"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>-</td>
 
                                             </tr>
 

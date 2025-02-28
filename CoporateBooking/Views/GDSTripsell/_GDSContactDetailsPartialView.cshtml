@@ -371,20 +371,12 @@
 
             }
 
-            function GetParameterValues(param) {
-                var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-                for (var i = 0; i < url.length; i++) {
-                    var urlparam = url[i].split('=');
-                    if (urlparam[0] == param) {
-                        return urlparam[1];
-                    }
-                }
-            }
+
 
             var contactFormDataIndigo = new FormData($("#contactFormIndigo")[0]);
             //alert("form data:"+ contactFormData);
             $.ajax({
-                url: "/GDSTripsell/GDSContactDetails?GUID=" + GetParameterValues("Guid"),
+                url: "/GDSTripsell/GDSContactDetails",
                 type: "POST",
                 data: contactFormDataIndigo,
                 processData: false,
@@ -499,8 +491,8 @@
             document.getElementById('phoneNumberErrorMessage').innerText = "Invalid Phone Number";
             let phoneToDisplay = document.getElementById("error-message8");
             phoneToDisplay.style.display = "none";
-
-
+           
+            
         } else {
             document.getElementById('phoneNumberErrorMessage').innerText = "";
         }
@@ -583,28 +575,28 @@
 </script>
 @* <script type="text/javascript">
     document.getElementById('number').addEventListener('keypress', function (event) {
-	const input = event.target;
-	const value = input.value;
-	let phonefocus = document.getElementById("number").value;
-	if (phonefocus == "") {
+        const input = event.target;
+        const value = input.value;
+        let phonefocus = document.getElementById("number").value;
+        if (phonefocus == "") {
 
-	    let phoneToDisplay = document.getElementById("error-message8");
-	    phoneToDisplay.style.display = "block";
-	    document.getElementById('phoneNumberErrorMessage').innerText = "";
-	    document.getElementById("number").focus();
-	    return false;
-	}
+            let phoneToDisplay = document.getElementById("error-message8");
+            phoneToDisplay.style.display = "block";
+            document.getElementById('phoneNumberErrorMessage').innerText = "";
+            document.getElementById("number").focus();
+            return false;
+        }
 
-	// Allow input only if it matches the criteria (1-9 followed by 0-9 up to 9 digits)
-	//const regex = /^(?!0)\d{0,9}$/;
-	const regex = /^[1-9]\d{0,9}$/;
+        // Allow input only if it matches the criteria (1-9 followed by 0-9 up to 9 digits)
+        //const regex = /^(?!0)\d{0,9}$/;
+        const regex = /^[1-9]\d{0,9}$/;
 
-	// Get the current value after appending the pressed key
-	const nextValue = value.slice(0, input.selectionStart) + event.key + value.slice(input.selectionEnd);
+        // Get the current value after appending the pressed key
+        const nextValue = value.slice(0, input.selectionStart) + event.key + value.slice(input.selectionEnd);
 
-	if (!regex.test(nextValue)) {
-	    event.preventDefault(); // Prevent the keypress event
-	}
+        if (!regex.test(nextValue)) {
+            event.preventDefault(); // Prevent the keypress event
+        }
     });
 </script> *@
 

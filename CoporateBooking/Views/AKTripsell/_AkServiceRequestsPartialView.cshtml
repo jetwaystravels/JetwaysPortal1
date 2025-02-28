@@ -12,169 +12,183 @@
 <script>
 
     $(document).ready(function () {
-        $('.servc-bordr').change(function () {
-            debugger;
-            var selectedMeals = [];
-            var totalPrice = 0;
+    $('.servc-bordr').change(function () {
+    debugger;
+    var selectedMeals = [];
+    var totalPrice = 0;
 
-            $('.servc-bordr').each(function () {
-                debugger;
-                var selectedValue = $(this).val();
-                if (selectedValue) {
-                    debugger;
-                    var price_value = selectedValue.split('_');
-                    var mealPrice = parseFloat(price_value[1]);
+    $('.servc-bordr').each(function () {
+    debugger;
+    var selectedValue = $(this).val();
+    if (selectedValue) {
+    debugger;
+    var price_value = selectedValue.split('_');
+    var mealPrice = parseFloat(price_value[1]);
 
-                    selectedMeals.push(selectedValue);
-                    totalPrice += mealPrice;
+    selectedMeals.push(selectedValue);
+    totalPrice += mealPrice;
 
-                }
+    }
 
-            });
-            localStorage.setItem("selectedMeals", JSON.stringify(selectedMeals));
-            $('#AddMeal').text(totalPrice.toFixed(2));
-            updateCombinedTotal();
-
-
-        });
-        $('.select-option2 .servc-bordrCon').change((e) => {
-            debugger;
-            var selectedMealsCon = [];
-            var totalPrice = 0;
-
-            $('.servc-bordrCon').each(function () {
-                debugger;
-                var selectedValue = $(this).val();
-                if (selectedValue) {
-                    debugger;
-                    var price_value = selectedValue.split('_');
-                    var mealPrice = parseFloat(price_value[1]);
-
-                    selectedMealsCon.push(selectedValue);
-                    totalPrice += mealPrice;
-                }
-                localStorage.setItem("selectedMealsCon", JSON.stringify(selectedMealsCon));
-
-            });
-
-            $('#AddMeal2').text(totalPrice.toFixed(2));
-            updateCombinedTotal();
-
-        });
-
-        //End :MealKey post
-        $('.select-baggage .servc-bordrbaggage').change((e) => {
-            debugger;
-            var selectedBaggage = [];
-            var baggagePrice = 0;
-
-            $('.servc-bordrbaggage').each(function () {
-                debugger;
-                var selectedValueBaggage = $(this).val();
-                if (selectedValueBaggage) {
-                    debugger;
-                    var price_value = selectedValueBaggage.split('_');
-                    var BagPrice = parseFloat(price_value[1]);
-
-                    selectedBaggage.push(selectedValueBaggage);
-                    baggagePrice += BagPrice;
-                }
-                localStorage.setItem("BagssrKeyCount", JSON.stringify(selectedBaggage));
-
-            });
-
-            $('#AddBaggage').text(baggagePrice.toFixed(2));
-            updateCombinedTotal();
-
-        });
-
-        $("#AkContinuebtn").click(function () {
-            debugger;
-            var seatdata = JSON.parse(localStorage.getItem("selectedIds"));
-            var unitKey1 = JSON.parse(localStorage.getItem("selectedIds1"));
-            var unitKey2 = JSON.parse(localStorage.getItem("selectedIds2"));
-            var unitKey;
-            if (unitKey2 && unitKey2.length > 0) {
-                unitKey = unitKey1.concat(unitKey2);
-            } else {
-                unitKey = unitKey1;
-            }
-
-            let BaggageSSrkey = JSON.parse(localStorage.getItem("BagssrKeyCount"));
-            let mealcode1 = JSON.parse(localStorage.getItem("selectedMeals"));
-            let mealcode2 = JSON.parse(localStorage.getItem("selectedMealsCon"));
-            var mealssrKey;
-            if (mealcode2 && mealcode2.length > 0) {
-                mealssrKey = mealcode1.concat(mealcode2);
-            } else {
-                mealssrKey = mealcode1;
-            }
+    });
+    localStorage.setItem("selectedMeals", JSON.stringify(selectedMeals));
+    $('#AddMeal').text(totalPrice.toFixed(2));
+    updateCombinedTotal();
 
 
-            $.ajax({
-                url: "/AKTripsell/PostSeatmapMealdata",
-                type: "POST",
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                data: { unitKey: unitKey, mealssrKey: mealssrKey, BaggageSSrkey: BaggageSSrkey },
-                success: function (data) {
-                    window.location.href = '/AkasaAirPayment/AkasaAirPaymentView';
-                },
-                error: function (err) {
-                    console.error(err);
-                }
-            });
-        });
+    });
+    $('.select-option2 .servc-bordrCon').change((e) => {
+    debugger;
+    var selectedMealsCon = [];
+    var totalPrice = 0;
 
-        $(".exampleModalSeatdata").click(function (e) {
+    $('.servc-bordrCon').each(function () {
+    debugger;
+    var selectedValue = $(this).val();
+    if (selectedValue) {
+    debugger;
+    var price_value = selectedValue.split('_');
+    var mealPrice = parseFloat(price_value[1]);
 
-            e.preventDefault();
-            $.ajax({
-                url: '@Url.Action("AkPostSeatMapdataView", "AKTripsell")',
-                type: "GET",
-                success: function (data) {
-                    //console.log('POST request successful');
-                    $('#AKtexampleModal .modal-bodyy').html(data);
-                    $('#AKtexampleModal').modal('show');
+    selectedMealsCon.push(selectedValue);
+    totalPrice += mealPrice;
+    }
+    localStorage.setItem("selectedMealsCon", JSON.stringify(selectedMealsCon));
 
-                },
-                error: function (error) {
-                    console.log("Error fetching data:", error);
-                }
-            });
-        });
-        // $("#seattab1").addClass('active');
-        $("#tabshow2").hide();
-        $("#tabnew2").hide();
-        $("#popbtnB").hide();
-        $("#popbtnA").show();
-        $("#seatTab1").click(function () {
-            $("#tabshow1").show();
-            $("#tabnew1").show();
-            $("#tabnew2").hide();
-            $("#popbtnB").hide();
-            $("#popbtnA").show();
-            $("#tabshow2").hide();
-            $("#seatTab1").addClass('active');
-            $("#seatTab2").removeClass('active');
+    });
 
-        });
+    $('#AddMeal2').text(totalPrice.toFixed(2));
+    updateCombinedTotal();
 
-        $("#seatTab2").click(function () {
-            $("#tabshow2").css("display", "block");
-            $("#seatTab2").addClass('active');
-            $("#seatTab1").removeClass('active');
-            $("#popbtnA").hide();
-            $("#tabshow1").hide();
-            $("#tabnew1").hide();
-            $("#tabnew2").show();
-            $("#popbtnB").show();
+    });
 
-        });
+    //End :MealKey post
+    $('.select-baggage .servc-bordrbaggage').change((e) => {
+    debugger;
+    var selectedBaggage = [];
+    var baggagePrice = 0;
 
-        $("#btnfocus").click(function () {
-            alert("Do you want select connect seat");
-            $("#seattab2").click();
-        });
+    $('.servc-bordrbaggage').each(function () {
+    debugger;
+    var selectedValueBaggage = $(this).val();
+    if (selectedValueBaggage) {
+    debugger;
+    var price_value = selectedValueBaggage.split('_');
+    var BagPrice = parseFloat(price_value[1]);
+
+    selectedBaggage.push(selectedValueBaggage);
+    baggagePrice += BagPrice;
+    }
+    localStorage.setItem("BagssrKeyCount", JSON.stringify(selectedBaggage));
+
+    });
+
+    $('#AddBaggage').text(baggagePrice.toFixed(2));
+    updateCombinedTotal();
+
+    });
+
+    $("#AkContinuebtn").click(function () {
+    debugger;
+    var seatdata = JSON.parse(localStorage.getItem("selectedIds"));
+    var unitKey1 = JSON.parse(localStorage.getItem("selectedIds1"));
+    var unitKey2 = JSON.parse(localStorage.getItem("selectedIds2"));
+    var unitKey;
+    if (unitKey2 && unitKey2.length > 0) {
+    unitKey = unitKey1.concat(unitKey2);
+    } else {
+    unitKey = unitKey1;
+    }
+
+    let BaggageSSrkey = JSON.parse(localStorage.getItem("BagssrKeyCount"));
+    let mealcode1 = JSON.parse(localStorage.getItem("selectedMeals"));
+    let mealcode2 = JSON.parse(localStorage.getItem("selectedMealsCon"));
+    var mealssrKey;
+    if (mealcode2 && mealcode2.length > 0) {
+    mealssrKey = mealcode1.concat(mealcode2);
+    } else {
+    mealssrKey = mealcode1;
+    }
+
+
+    $.ajax({
+    url: "/AKTripsell/PostSeatmapMealdata",
+    type: "POST",
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: { unitKey: unitKey, mealssrKey: mealssrKey, BaggageSSrkey: BaggageSSrkey },
+    success: function (data) {
+    window.location.href = '/AkasaAirPayment/AkasaAirPaymentView';
+    },
+    error: function (err) {
+    console.error(err);
+    }
+    });
+    });
+
+    $(".exampleModalSeatdata").click(function (e) {
+
+    e.preventDefault();
+    $.ajax({
+    url: '@Url.Action("AkPostSeatMapdataView", "AKTripsell")',
+    type: "GET",
+    success: function (data) {
+    //console.log('POST request successful');
+    $('#AKtexampleModal .modal-bodyy').html(data);
+    $('#AKtexampleModal').modal('show');
+
+    },
+    error: function (error) {
+    console.log("Error fetching data:", error);
+    }
+    });
+    });
+    // $("#seattab1").addClass('active');
+    $("#tabshow2").hide();
+    $("#tabnew2").hide();
+    $("#popbtnB").hide();
+    $("#popbtnA").show();
+    $("#seatTab1").click(function () {
+    $("#tabshow1").show();
+    $("#tabnew1").show();
+    $("#tabnew2").hide();
+    $("#popbtnB").hide();
+    $("#popbtnA").show();
+    $("#tabshow2").hide();
+    $("#seatTab1").addClass('active');
+    $("#seatTab2").removeClass('active');
+
+    });
+
+    $("#seatTab2").click(function () {
+    $("#tabshow2").css("display", "block");
+    $("#seatTab2").addClass('active');
+    $("#seatTab1").removeClass('active');
+    $("#popbtnA").hide();
+    $("#tabshow1").hide();
+    $("#tabnew1").hide();
+    $("#tabnew2").show();
+    $("#popbtnB").show();
+
+    });
+
+    // $("#btnfocus").click(function () {
+    //     alert("Do you want select connect seat");
+    //     $("#seattab2").click();
+    // });
+
+    $("#btnfocus").click(function () {
+    var confirmation = confirm("Do you want to select a connecting seat?");
+    if (confirmation == true) {
+    if ($("#seattab2").is(":visible")) {
+    $("#seattab2").click();
+    }
+    }
+    else {
+
+    return false;
+    }
+    });
+
 
     });
 
@@ -184,178 +198,178 @@
 
 <style>
     .chkbox {
-        background: #b1abab;
-        text-align: center;
-        cursor: not-allowed;
-        padding: 3px 0;
+    background: #b1abab;
+    text-align: center;
+    cursor: not-allowed;
+    padding: 3px 0;
     }
 
     .border-service {
-        border: 1px solid #a5a2a2;
-        border-radius: 2px;
+    border: 1px solid #a5a2a2;
+    border-radius: 2px;
     }
 
     .bg-servc {
-        background-color: #f4f5f7;
+    background-color: #f4f5f7;
     }
 
     .servc-bordr {
-        max-width: 150px;
-        border-bottom: 1px solid #000;
-        border-top: none;
-        border-left: none;
-        border-right: none;
+    max-width: 150px;
+    border-bottom: 1px solid #000;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     }
 
     .servc-bordr, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-        /*  -webkit-appearance: none; */
-        margin: 0;
+    /*  -webkit-appearance: none; */
+    margin: 0;
     }
 
     .servc-bordr, textarea:focus, input:focus {
-        outline: none;
+    outline: none;
     }
     /*baggage*/
     .servc-bordrbaggage {
-        max-width: 150px;
-        border-bottom: 1px solid #000;
-        border-top: none;
-        border-left: none;
-        border-right: none;
+    max-width: 150px;
+    border-bottom: 1px solid #000;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     }
 
     .servc-bordrbaggage, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-        margin: 0;
+    margin: 0;
     }
 
     .servc-bordrbaggage, textarea:focus, input:focus {
-        outline: none;
+    outline: none;
     }
     /*  end; */
     /*otherService*/
     .servc-bordrwheel {
-        max-width: 150px;
-        border-bottom: 1px solid #000;
-        border-top: none;
-        border-left: none;
-        border-right: none;
+    max-width: 150px;
+    border-bottom: 1px solid #000;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     }
 
     .servc-bordrwheel, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-        margin: 0;
+    margin: 0;
     }
 
     .servc-bordrwheel, textarea:focus, input:focus {
-        outline: none;
+    outline: none;
     }
     /*End other service*/
     /*Connected Meal*/
     .servc-bordrCon {
-        max-width: 150px;
-        border-bottom: 1px solid #000;
-        border-top: none;
-        border-left: none;
-        border-right: none;
+    max-width: 150px;
+    border-bottom: 1px solid #000;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     }
 
     .servc-bordrCon, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-        margin: 0;
+    margin: 0;
     }
 
     .servc-bordrCon, textarea:focus, input:focus {
-        outline: none;
+    outline: none;
     }
     /*End connected Meal*/
     /*wheel Connected*/
     .servc-bordrwheelCon {
-        max-width: 150px;
-        border-bottom: 1px solid #000;
-        border-top: none;
-        border-left: none;
-        border-right: none;
+    max-width: 150px;
+    border-bottom: 1px solid #000;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     }
 
     .servc-bordrwheelCon, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-        margin: 0;
+    margin: 0;
     }
 
     .servc-bordrwheelCon, textarea:focus, input:focus {
-        outline: none;
+    outline: none;
     }
     /*wheelconnected End*/
 
     .seatmap-btn {
-        border: none;
-        padding: 4px 7px;
-        border-radius: 4px;
-        background: #b5cbe7;
+    border: none;
+    padding: 4px 7px;
+    border-radius: 4px;
+    background: #b5cbe7;
     }
 
     .MWidth {
-        width: 1024px;
-        margin-left: -50%;
+    width: 1024px;
+    margin-left: -50%;
     }
 
     .select-width {
-        max-width: 120px;
+    max-width: 120px;
     }
 
     .select-option {
-        max-width: 120px;
+    max-width: 120px;
     }
 
-        .select-option .servc-bordr {
-            max-width: 150px;
-        }
+    .select-option .servc-bordr {
+    max-width: 150px;
+    }
 
     .width-90 {
-        width: 60px;
+    width: 60px;
     }
 
     .select-option2 {
-        max-width: 120px;
+    max-width: 120px;
     }
 
-        .select-option2 .servc-bordr {
-            max-width: 150px;
-        }
+    .select-option2 .servc-bordr {
+    max-width: 150px;
+    }
 
     .wdth-100 {
-        width: 100px;
+    width: 100px;
     }
 
     .btngry {
-        background-color: #808080 !important;
+    background-color: #808080 !important;
     }
 
     .checkout .bg-white.service-section input {
-        max-width: 150px !important;
-        font-size: 0.9rem;
-        padding: 3px;
+    max-width: 150px !important;
+    font-size: 0.9rem;
+    padding: 3px;
     }
 
     .checkout .bg-white.service-section {
-        font-size: 0.9rem;
+    font-size: 0.9rem;
     }
 
-        .checkout .bg-white.service-section .seat {
-            display: inline-flex;
-        }
+    .checkout .bg-white.service-section .seat {
+    display: inline-flex;
+    }
 
-        .checkout .bg-white.service-section .output-div-input {
-            margin: 3px;
-            font-weight: 600;
-            color: #085AC0;
-            width: 26px;
-        }
+    .checkout .bg-white.service-section .output-div-input {
+    margin: 3px;
+    font-weight: 600;
+    color: #085AC0;
+    width: 26px;
+    }
 
-        .checkout .bg-white.service-section .servc-content span {
-            font-weight: 600;
-            text-transform: capitalize;
-        }
+    .checkout .bg-white.service-section .servc-content span {
+    font-weight: 600;
+    text-transform: capitalize;
+    }
 
     .servc-bordrm1 option {
-        font-size: 12px;
+    font-size: 12px;
     }
 </style>
 <section id="myContainer1">
@@ -555,25 +569,29 @@
                                                     @{
 
                                                         List<SelectListItem> mealOptions = new List<SelectListItem>();
-                                                        for (int s = 0; s < Model.AkMealslist.legSsrs[0].legssrs.Count; s++)
+                                                        string Mealname = string.Empty;
+                                                        if (Model.AkMealslist.legSsrs.Count > 0)
                                                         {
-                                                            string ssrprice = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
-                                                            string Mealcode = Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
-                                                            string Mealname = Model.AkMealslist.legSsrs[0].legssrs[s].name + " ₹" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price + "_" + Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
-                                                            ssrkey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].ssrKey + "_" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
-                                                            string passengerKey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].passengerKey;
-
-                                                            ssrAvailable = Model.AkMealslist.legSsrs[0].legssrs[s].available.ToString();
-                                                            ssrType = Model.AkMealslist.legSsrs[0].legssrs[s].ssrType;
-                                                            if (ssrkey != null)
+                                                            for (int s = 0; s < Model.AkMealslist.legSsrs[0].legssrs.Count; s++)
                                                             {
-                                                                mealOptions.Add(new SelectListItem { Text = Mealname, Value = ssrkey });
-                                                            }
+                                                                string ssrprice = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
+                                                                string Mealcode = Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
+                                                                Mealname = Mealcode + "-" + Model.AkMealslist.legSsrs[0].legssrs[s].name + " ₹" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price + "_" + Model.AkMealslist.legSsrs[0].legssrs[s].ssrCode;
+                                                                ssrkey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].ssrKey + "_" + @Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[0].price;
+                                                                string passengerKey = Model.AkMealslist.legSsrs[0].legssrs[s].legpassengers[pa].passengerKey;
 
+                                                                //ssrAvailable = Model.AkMealslist.legSsrs[0].legssrs[s].available.ToString();
+                                                                ssrType = Model.AkMealslist.legSsrs[0].legssrs[s].ssrType;
+                                                                if (ssrkey != null)
+                                                                {
+                                                                    mealOptions.Add(new SelectListItem { Text = Mealname, Value = ssrkey });
+                                                                }
+
+                                                            }
                                                         }
                                                         <div class="d-flex">
 
-                                                            @if (string.IsNullOrEmpty(ssrAvailable))
+                                                            @if (string.IsNullOrEmpty(Mealname))
 
                                                             {
 
@@ -630,17 +648,17 @@
                                                         if (bagcode != "False")
                                                         {
                                                             baggageOptions.Add(new SelectListItem { Text = bagname, Value = bagkey });
-                                                           
+
                                                         }
-                                                       
+
                                                     }
                                                     <div class="d-flex">
                                                         <select id="ddlbagOptions" class="servc-bordrbaggage">
                                                             <option value=""><b>Please select Baggage</b></option>
-                                                           @{ var sortedBaggageOptions = baggageOptions
-                                                            .OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
-                                                            .ToList();
-                                                           }
+                                                            @{ var sortedBaggageOptions = baggageOptions
+                                                                                                                           .OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
+                                                                                                                           .ToList();
+                                                            }
 
                                                             @foreach (var option in sortedBaggageOptions)
                                                             {
@@ -735,13 +753,15 @@
                                                         if (Model.AkMealslist.legSsrs.Count == 2)
                                                         {
                                                             List<SelectListItem> mealOptions = new List<SelectListItem>();
+                                                            string Mealname = string.Empty;
+
                                                             for (int s = 0; s < Model.AkMealslist.legSsrs[1].legssrs.Count; s++)
                                                             {
                                                                 try
                                                                 {
                                                                     string ssrprice = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     string Mealcode = Model.AkMealslist.legSsrs[1].legssrs[s].ssrCode;
-                                                                    string Mealname = Model.AkMealslist.legSsrs[1].legssrs[s].name + " @" + @Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
+                                                                    Mealname = Mealcode + "-" + Model.AkMealslist.legSsrs[1].legssrs[s].name + " @" + @Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     ssrkey = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
                                                                     string passengerKey = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[pas].passengerKey;
                                                                     ssrAvailable = Model.AkMealslist.legSsrs[1].legssrs[s].available.ToString();
@@ -759,7 +779,7 @@
 
                                                                             }
                                                             <div class="d-flex">
-                                                                @if (string.IsNullOrEmpty(ssrAvailable))
+                                                                @if (string.IsNullOrEmpty(Mealname))
                                                                 {
                                                                     <select style="background:#f0f0f0" id="ddlMealOptions" class="servc-bordr servc-bordrm1" disabled>
                                                                         <option selected="selected" value="">Meal Unavailable</option>
