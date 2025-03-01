@@ -975,7 +975,10 @@
           "System.ServiceModel.Security": "4.10.3"
         },
         "runtime": {
-          "DomainLayer.dll": {}
+          "DomainLayer.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "RepositoryLayer/1.0.0": {
@@ -985,7 +988,10 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3"
         },
         "runtime": {
-          "RepositoryLayer.dll": {}
+          "RepositoryLayer.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

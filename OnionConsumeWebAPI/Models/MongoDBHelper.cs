@@ -323,18 +323,29 @@ namespace OnionConsumeWebAPI.Models
                 if (requestModel.origin.Contains("-"))
                 {
                     searchLog.OrgCode = requestModel.origin.Split("-")[1];
-                    searchLog.DestCode = requestModel.destination.Split("-")[1];
                     searchLog.Origin = requestModel.origin.Split("-")[0];
+
+                }
+                else
+                {
+
+                    searchLog.OrgCode = requestModel.origin;
+                    searchLog.Origin = requestModel.origin;
+                }
+
+
+                if (requestModel.destination.Contains("-"))
+                {
+                    searchLog.DestCode = requestModel.destination.Split("-")[1];
                     searchLog.Destination = requestModel.destination.Split("-")[0];
                 }
                 else
                 {
-					searchLog.OrgCode = requestModel.origin;
-					searchLog.DestCode = requestModel.destination;
-					searchLog.Origin = requestModel.origin;
-					searchLog.Destination = requestModel.destination;
-				}
-				searchLog.Log_RefNumber = mongoHelper.Get8Digits();
+                    searchLog.DestCode = requestModel.destination;
+                    searchLog.Destination = requestModel.destination;
+                }
+
+                searchLog.Log_RefNumber = mongoHelper.Get8Digits();
                 searchLog.DepartDateTime = requestModel.beginDate;
                 searchLog.ArrivalDateTime = requestModel.endDate;
 
@@ -374,10 +385,14 @@ namespace OnionConsumeWebAPI.Models
 
                 //  srchData = await _mongoDbService.GetCollection<SearchLog>("LogSearchData").Find(Builders<SearchLog>.Filter.Eq("Log_WSGUID", Guid)).Sort(Builders<SearchLog>.Sort.Descending("Log_DateTime")).FirstOrDefaultAsync().ConfigureAwait(false);
                 srchData = await mDB.GetCollection<SearchLog>("LogSearchData").Find(Builders<SearchLog>.Filter.Eq("Log_WSGUID", Guid)).Sort(Builders<SearchLog>.Sort.Descending("Log_DateTime")).FirstOrDefaultAsync().ConfigureAwait(false);
-                srchData.OrgCode = srchData.OrgCode.Trim();
-                srchData.DestCode = srchData.DestCode.Trim();
-                srchData.Origin = srchData.Origin.Trim();
-                srchData.Destination = srchData.Destination.Trim();
+
+                if (srchData != null)
+                {
+                    srchData.OrgCode = srchData.OrgCode.Trim();
+                    srchData.DestCode = srchData.DestCode.Trim();
+                    srchData.Origin = srchData.Origin.Trim();
+                    srchData.Destination = srchData.Destination.Trim();
+                }
 
             }
             catch (Exception ex)

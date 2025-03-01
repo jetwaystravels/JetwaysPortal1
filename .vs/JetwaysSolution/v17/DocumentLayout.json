@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\models\\mongodbhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\models\\mongodbhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\models\\mongohelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\models\\mongohelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24025012-1E28-41BF-8E0A-3290BD775A25}|DomainLayer\\DomainLayer.csproj|d:\\jetwaysportal\\domainlayer\\model\\mealimagelist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24025012-1E28-41BF-8E0A-3290BD775A25}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\model\\mealimagelist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MongoHelper.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Models\\MongoHelper.cs",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Models\\MongoHelper.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Models\\MongoHelper.cs",
+              "RelativeToolTip": "OnionConsumeWebAPI\\Models\\MongoHelper.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAwC8AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T12:24:40.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MongoDBHelper.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Models\\MongoDBHelper.cs",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Models\\MongoDBHelper.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Models\\MongoDBHelper.cs",
+              "RelativeToolTip": "OnionConsumeWebAPI\\Models\\MongoDBHelper.cs",
+              "ViewState": "AgIAAEABAAAAAAAAAAAAwFwBAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T12:24:26.919Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MealImageList.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\DomainLayer\\Model\\MealImageList.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\Model\\MealImageList.cs",
+              "ToolTip": "D:\\JetwaysPortal\\DomainLayer\\Model\\MealImageList.cs",
+              "RelativeToolTip": "DomainLayer\\Model\\MealImageList.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAwwEIAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-01T10:05:14.902Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

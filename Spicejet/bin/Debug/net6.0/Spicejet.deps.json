@@ -493,7 +493,10 @@
       },
       "Utility/1.0.0": {
         "runtime": {
-          "Utility.dll": {}
+          "Utility.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

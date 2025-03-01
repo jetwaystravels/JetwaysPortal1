@@ -133,7 +133,7 @@
 						    </div>
 
 						    <span class="input-group-text">
-							<input id="myInput" name="origin" type="text" value="@Model.simpleAvailabilityRequestModelEdit.origin" class="form-control" onclick="RTDropdown()">
+							<input id="myInput" name="origin" type="text" value="" class="form-control" onclick="RTDropdown()">
 
 						    </span>
 						    <span class="autodropdownRT">
@@ -159,7 +159,7 @@
 						    <label class=""></label>
 
 						    <span class="input-group-text" id="basic-addon1">
-							<input type="text" id="myInput1" name="destination" class="form-control" value="@Model.simpleAvailabilityRequestModelEdit.destination" onclick="toggleArrivalRT()">
+														<input type="text" id="myInput1" name="destination" class="form-control" value="" onclick="toggleArrivalOneway()">
 							@* <span id="airportArval"></span> *@
 						    </span>
 						    <div id="errordestinaton" class="errorbox" style="display:none;">Enter Destination Name*</div>
@@ -204,7 +204,11 @@
 							}
 						    }
 
-						  
+							document.getElementById("myInput").value = GetParameterValues("Origin").replace("%20", " ") + " - " + GetParameterValues("OriginCode");
+						    document.getElementById("myInput1").value = GetParameterValues("Destination").replace("%20", " ") + " - " + GetParameterValues("DestinationCode");
+
+
+						  					  
      
 						    document.getElementById("Rway-date").value = GetParameterValues("BeginDate");
 

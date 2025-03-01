@@ -3373,7 +3373,10 @@
           "System.ServiceModel.Security": "4.10.3"
         },
         "runtime": {
-          "DomainLayer.dll": {}
+          "DomainLayer.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Indigo/1.0.0": {
@@ -3387,7 +3390,10 @@
           "Utility": "1.0.0"
         },
         "runtime": {
-          "Indigo.dll": {}
+          "Indigo.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "OnionArchitectureAPI/1.0.0": {
@@ -3404,7 +3410,10 @@
           "ZXing.Net.Bindings.Windows.Compatibility": "0.16.12"
         },
         "runtime": {
-          "OnionArchitectureAPI.dll": {}
+          "OnionArchitectureAPI.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "RepositoryLayer/1.0.0": {
@@ -3414,7 +3423,10 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3"
         },
         "runtime": {
-          "RepositoryLayer.dll": {}
+          "RepositoryLayer.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "ServiceLayer/1.0.0": {
@@ -3422,7 +3434,10 @@
           "RepositoryLayer": "1.0.0"
         },
         "runtime": {
-          "ServiceLayer.dll": {}
+          "ServiceLayer.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Spicejet/1.0.0": {
@@ -3436,12 +3451,18 @@
           "Utility": "1.0.0"
         },
         "runtime": {
-          "Spicejet.dll": {}
+          "Spicejet.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Utility/1.0.0": {
         "runtime": {
-          "Utility.dll": {}
+          "Utility.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

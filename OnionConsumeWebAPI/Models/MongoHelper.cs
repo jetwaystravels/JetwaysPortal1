@@ -48,13 +48,25 @@ namespace OnionConsumeWebAPI.Models
             if (FlightSCriteria.origin.Contains("-"))
             {
                 key.Append(FlightSCriteria.origin.ToString().Split("-")[1].Trim());
-                key.Append(FlightSCriteria.destination.ToString().Split("-")[1].Trim());
+               
             }
             else
             {
 				key.Append(FlightSCriteria.origin);
-				key.Append(FlightSCriteria.destination);
+				
 			}
+
+            if (FlightSCriteria.destination.Contains("-"))
+            {
+
+                key.Append(FlightSCriteria.destination.ToString().Split("-")[1].Trim());
+            }
+            else
+            {
+
+                key.Append(FlightSCriteria.destination);
+            }
+
             // key.Append(FlightSCriteria.DirectFlights.ToString());
             //    if (!string.IsNullOrEmpty(FlightSCriteria.Carrier))
             //        key.Append(FlightSCriteria.Carrier.ToString());

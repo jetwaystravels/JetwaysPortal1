@@ -39,6 +39,7 @@ using OnionConsumeWebAPI.Comman;
 using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 using System.Diagnostics;
 using static DomainLayer.Model.SeatMapResponceModel;
+using Spicejet;
 
 namespace OnionConsumeWebAPI.Controllers.AirAsia
 {
@@ -251,18 +252,83 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
 
             // _credentials credentialsobj = new _credentials();
+            _credentials _credentialsAirasia = null;
+            _credentials _CredentialsAkasha = null;
+            _credentials _CredentialsGDS = null;
+            _credentials _CredentialsSpiceJet = null;
+            _credentials _CredentialsIndigo = null;
+
+            SpicejetSessionManager_.LogonRequest _logonRequestobj = null;
+            SpicejetSessionManager_.LogonRequestData  LogonRequestDataobj = null;
+
+            //IndigoSessionmanager_.LogonRequest _logonRequestIndigoobj = null;
+            //IndigoSessionmanager_.LogonRequestData LogonRequestDataIndigoobj = null;
+
             using (HttpClient client = new HttpClient())
             {
                 //client.BaseAddress = new Uri("http://localhost:5225/");
                 client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
                 HttpResponseMessage response = await client.GetAsync("api/Login/getotacredairasia");
                 //Air Asia login
-                var _credentialsAirasia = new _credentials();
+             
+
+
                 if (response.IsSuccessStatusCode)
                 {
-                    await _credentialService.PopulateCredentialsAsync(response, _credentialsAirasia, 1);
+                    var results = await response.Content.ReadAsStringAsync();
+                    var jsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
+
+                   // await _credentialService.PopulateCredentialsAsync(response, _credentialsAirasia, 1);
+                    Parallel.Invoke(
+                     () =>
+                     {
+                         // Airasia
+                         _credentialsAirasia = new _credentials();
+                         _credentialsAirasia = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 1);
+
+                     },  // close first Action
+
+                     () =>
+                     {
+                         // Akasa
+                         _CredentialsAkasha = new _credentials();
+                         _CredentialsAkasha = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 2);
+                     },
+                     () =>
+                     {
+                         // GDS
+                         _CredentialsGDS = new _credentials();
+                         _CredentialsGDS = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 5);
+                    },
+                     () =>
+                     {
+                         // Spicejet
+
+                         _logonRequestobj = new SpicejetSessionManager_.LogonRequest();
+                         _logonRequestobj.ContractVersion = 420;
+                         LogonRequestDataobj = new SpicejetSessionManager_.LogonRequestData();
+
+                         _CredentialsSpiceJet = new _credentials();
+                         _CredentialsSpiceJet = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 3);
+                     },
+                     () =>
+                     {
+                         // Indigo
+
+                         //_logonRequestIndigoobj = new IndigoSessionmanager_.LogonRequest();
+                         //_logonRequestIndigoobj.ContractVersion = 452;
+                         //LogonRequestDataIndigoobj = new IndigoSessionmanager_.LogonRequestData();
+
+                         //_CredentialsIndigo = new _credentials();
+                         //_CredentialsIndigo = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 4);
+                     }
+
+                 );
 
                 }
+
+
+                
 
                 airlineLogin login = new airlineLogin();
                 login.credentials = _credentialsAirasia;
@@ -606,14 +672,14 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 {
                     #region Akasha
                     //Akasa login
-                    _credentials _CredentialsAkasha = new _credentials();
-                    if (response.IsSuccessStatusCode)
-                    {
+                    //_credentials _CredentialsAkasha = new _credentials();
+                    //if (response.IsSuccessStatusCode)
+                    //{
 
-                        await _credentialService.PopulateCredentialsAsync(response, _CredentialsAkasha, 2);
+                    //    await _credentialService.PopulateCredentialsAsync(response, _CredentialsAkasha, 2);
 
 
-                    }
+                    //}
 
                     airlineLogin loginobject = new airlineLogin();
                     loginobject.credentials = _CredentialsAkasha;
@@ -942,8 +1008,20 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     List<SimpleAvailibilityaAddResponce> SpiceJetAvailibilityaAddResponcelist = new List<SimpleAvailibilityaAddResponce>();
                     //Logon 
                     #region Logon
-                    Spicejet._login objSpicejet_ = new Spicejet._login();
-                    SpicejetSessionManager_.LogonResponse _SpicejetlogonResponseobj = await objSpicejet_.Login(SameAirlineRT, "SpicejetOneWay", AppUrlConstant.BaseURL);
+                    //Spicejet._login objSpicejet_ = new Spicejet._login();
+                    //SpicejetSessionManager_.LogonResponse _SpicejetlogonResponseobj = await objSpicejet_.Login(SameAirlineRT, "SpicejetOneWay", AppUrlConstant.BaseURL);
+
+                  
+
+                    LogonRequestDataobj.AgentName = _CredentialsSpiceJet.username;
+                    LogonRequestDataobj.Password = _CredentialsSpiceJet.password;
+                    LogonRequestDataobj.DomainCode = _CredentialsSpiceJet.domain;
+                    _logonRequestobj.logonRequestData = LogonRequestDataobj;
+
+                    _getapi objSpicejet = new _getapi();
+                    SpicejetSessionManager_.LogonResponse _SpicejetlogonResponseobj = await objSpicejet.Signature(_logonRequestobj);
+
+
                     mongoSpiceToken.Token = _SpicejetlogonResponseobj.Signature;
                     #endregion
                     //GetAvailability
@@ -1235,7 +1313,19 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 #region Logon
                 _login obj_ = new _login();
                 IndigoSessionmanager_.LogonResponse _IndigologonResponseobj = await obj_.Login(SameAirlineRT, "IndigooneWay", AppUrlConstant.BaseURL);
-                mongoIndigoToken.Token = _IndigologonResponseobj.Signature;
+
+
+                //LogonRequestDataIndigoobj.AgentName = _CredentialsIndigo.username;
+                //LogonRequestDataIndigoobj.Password = _CredentialsIndigo.password;
+                //LogonRequestDataIndigoobj.DomainCode = _CredentialsIndigo.domain;
+                //_logonRequestIndigoobj.logonRequestData = LogonRequestDataIndigoobj;
+
+                //Indigo._getapi objIndigo = new Indigo._getapi();
+                //IndigoSessionmanager_.LogonResponse _IndigologonResponseobj = await objIndigo.Signature(_logonRequestIndigoobj);
+
+                
+
+               mongoIndigoToken.Token = _IndigologonResponseobj.Signature;
                 #endregion
                 //.GetAvailability
                 #region GetAvailability
@@ -1494,14 +1584,14 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 string res = string.Empty;
                 StringBuilder sbReq = null;
                 //GDS Login
-                _credentials _CredentialsGDS = new _credentials();
-                if (response.IsSuccessStatusCode)
-                {
-                    //var results = response.Content.ReadAsStringAsync().Result;
-                    //var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
-                    await _credentialService.PopulateCredentialsAsync(response, _CredentialsGDS, 5);
+                //_credentials _CredentialsGDS = new _credentials();
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    //var results = response.Content.ReadAsStringAsync().Result;
+                //    //var JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
+                //    await _credentialService.PopulateCredentialsAsync(response, _CredentialsGDS, 5);
 
-                }
+                //}
 
                 sbReq = new StringBuilder();
                 Guid newGuid = Guid.NewGuid();
@@ -1984,10 +2074,10 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                     //AirAsia round login
 
-                    await _credentialService.PopulateCredentialsAsync(response, _credentialsAirasiaR, 1);
+                   // await _credentialService.PopulateCredentialsAsync(response, _credentialsAirasiaR, 1);
 
                     login = new airlineLogin();
-                    login.credentials = _credentialsAirasiaR;
+                    login.credentials = _credentialsAirasia;
 
                     //till here
                     TempData["AirAsiaLogin"] = login.credentials.Image;
@@ -2217,14 +2307,14 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                         airlineLogin loginAkasaR = new airlineLogin();
 
-                        result1s = response.Content.ReadAsStringAsync().Result;
-                        JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(result1s);
+                        //result1s = response.Content.ReadAsStringAsync().Result;
+                        //JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(result1s);
                         //Akasa Round login
 
-                        var _CredentialsAkashaR = new _credentials();
-                        await _credentialService.PopulateCredentialsAsync(response, _CredentialsAkashaR, 2);
+                        //var _CredentialsAkashaR = new _credentials();
+                        //await _credentialService.PopulateCredentialsAsync(response, _CredentialsAkashaR, 2);
 
-                        loginAkasaR.credentials = _CredentialsAkashaR;
+                        loginAkasaR.credentials = _CredentialsAkasha;
                         //TempData["AkasaLogin"] = login.credentials.Image;
                         //AkasaTokan AkasaTokan = new AkasaTokan();
                         AirasiaTokan AkasaTokanR = new AirasiaTokan();
@@ -3159,12 +3249,12 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                     //GDS login
 
-                    _CredentialsGDS = new _credentials();
+                    //_CredentialsGDS = new _credentials();
                     if (response.IsSuccessStatusCode)
                     {
-                        var results = response.Content.ReadAsStringAsync().Result;
-                        JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
-                        await _credentialService.PopulateCredentialsAsync(response, _CredentialsGDS, 5);
+                        //var results = response.Content.ReadAsStringAsync().Result;
+                        //JsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
+                        //await _credentialService.PopulateCredentialsAsync(response, _CredentialsGDS, 5);
                         //if (JsonObject[4].FlightCode == 5)
                         //{
                         //    _CredentialsGDS.username = JsonObject[4].username;
