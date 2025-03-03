@@ -253,8 +253,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 "price_asc" => LeftdeserializedStops.OrderBy(p => p.fareTotalsum).ToList(),
                 "deprt_desc" => LeftdeserializedStops.OrderByDescending(d => d.designator.departure).ToList(),
                 "deprt_asc" => LeftdeserializedStops.OrderBy(d => d.designator.departure).ToList(),
-                "arrive_desc" => LeftdeserializedStops.OrderByDescending(d => d.designator.arrival).ToList(),
-                "arrive_asc" => LeftdeserializedStops.OrderBy(d => d.designator.arrival).ToList(),
+                "arrive_desc" => LeftdeserializedStops.OrderByDescending(d => d.designator.arrival.TimeOfDay).ToList(),
+                "arrive_asc" => LeftdeserializedStops.OrderBy(d => d.designator.arrival.TimeOfDay).ToList(),
                 "duration_desc" => LeftdeserializedStops.OrderByDescending(d => d.designator.formatTime).ToList(),
                 "duration_asc" => LeftdeserializedStops.OrderBy(d => d.designator.formatTime).ToList(),
                 _ => LeftdeserializedStops.OrderBy(p => p.fareTotalsum).ToList() // Default case
@@ -275,8 +275,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 "price_asc" => RightdeserializedStops.OrderBy(p => p.fareTotalsum).ToList(),
                 "deprt_desc" => RightdeserializedStops.OrderByDescending(d => d.designator.departure).ToList(),
                 "deprt_asc" => RightdeserializedStops.OrderBy(d => d.designator.departure).ToList(),
-                "arrive_desc" => RightdeserializedStops.OrderByDescending(d => d.designator.arrival).ToList(),
-                "arrive_asc" => RightdeserializedStops.OrderBy(d => d.designator.arrival).ToList(),
+                "arrive_desc" => RightdeserializedStops.OrderByDescending(d => d.designator.arrival.TimeOfDay).ToList(),
+                "arrive_asc" => RightdeserializedStops.OrderBy(d => d.designator.arrival.TimeOfDay).ToList(),
                 "duration_desc" => RightdeserializedStops.OrderByDescending(d => d.designator.formatTime).ToList(),
                 "duration_asc" => RightdeserializedStops.OrderBy(d => d.designator.formatTime).ToList(),
                 _ => RightdeserializedStops.OrderBy(p => p.fareTotalsum).ToList() // Default case

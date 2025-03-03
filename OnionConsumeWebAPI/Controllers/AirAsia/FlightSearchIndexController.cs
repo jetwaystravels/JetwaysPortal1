@@ -1763,6 +1763,19 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 Designatorobj.destination = journeyR.designator.destination;
                                 Designatorobj.departure = journeyR.designator.departure;
                                 Designatorobj.arrival = journeyR.designator.arrival;
+                                //-----------Start------------
+                                Designatorobj.Arrival = journeyR.designator.arrival;
+                                DateTime arrivalDateTime = DateTime.ParseExact(Designatorobj.Arrival, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                                Designatorobj.ArrivalDate = arrivalDateTime.ToString("yyyy-MM-dd");
+                                Designatorobj.ArrivalTime = arrivalDateTime.ToString("HH:mm:ss");
+                                TimeSpan travelTimeDiff = Designatorobj.arrival - Designatorobj.departure;
+                                TimeSpan timeSpan = TimeSpan.Parse(travelTimeDiff.ToString());
+                                if ((int)timeSpan.Minutes == 0)
+                                    formatTime = $"{(int)timeSpan.TotalHours} h";
+                                else
+                                    formatTime = $"{(int)timeSpan.TotalHours} h {(int)timeSpan.Minutes} m";
+                                Designatorobj.formatTime = timeSpan;
+                                //---------End
                                 string queryorigin = journeyR.designator.origin;
                                 origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
                                 Designatorobj.origin = origin;
@@ -1998,7 +2011,19 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                         Designatorobj.destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.destination;
                                         Designatorobj.departure = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.departure;
                                         Designatorobj.arrival = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].designator.arrival;
-
+                                        //-----------Start------------
+                                        Designatorobj.Arrival = journeyR.designator.arrival;
+                                        DateTime arrivalDateTime = DateTime.ParseExact(Designatorobj.Arrival, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                                        Designatorobj.ArrivalDate = arrivalDateTime.ToString("yyyy-MM-dd");
+                                        Designatorobj.ArrivalTime = arrivalDateTime.ToString("HH:mm:ss");
+                                        TimeSpan travelTimeDiff = Designatorobj.arrival - Designatorobj.departure;
+                                        TimeSpan timeSpan = TimeSpan.Parse(travelTimeDiff.ToString());
+                                        if ((int)timeSpan.Minutes == 0)
+                                            formatTime = $"{(int)timeSpan.TotalHours} h";
+                                        else
+                                            formatTime = $"{(int)timeSpan.TotalHours} h {(int)timeSpan.Minutes} m";
+                                        Designatorobj.formatTime = timeSpan;
+                                        //---------End
 
                                         string queryorigin = journeyR.designator.origin;
                                         origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
@@ -2183,9 +2208,23 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 string journeykey = _getAvailabilityVer2ReturnResponse.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].JourneySellKey.ToString();
                                 string departureTime = Regex.Match(journeykey, @Designatorobj.origin + @"[\s\S]*?~(?<STD>[\s\S]*?)~").Groups["STD"].Value.Trim();
                                 string arrivalTime = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
-                                Designatorobj.departure = DateTime.ParseExact(departureTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
-                                Designatorobj.arrival = DateTime.ParseExact(arrivalTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
-
+                                //Designatorobj.departure = DateTime.ParseExact(departureTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
+                                //Designatorobj.arrival = DateTime.ParseExact(arrivalTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
+                                //-Vinay TimeFormat-Start--------
+                                Designatorobj.Arrival = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
+                                Designatorobj.departure = DateTime.ParseExact(departureTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);// Convert.ToDateTime(departureTime);
+                                Designatorobj.arrival = DateTime.ParseExact(arrivalTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);// Convert.ToDateTime(arrivalTime);
+                                DateTime SarrivalDateTime = DateTime.ParseExact(Designatorobj.Arrival, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
+                                Designatorobj.ArrivalDate = SarrivalDateTime.ToString("yyyy-MM-dd");
+                                Designatorobj.ArrivalTime = SarrivalDateTime.ToString("HH:mm:ss");
+                                TimeSpan TimeDiff = Designatorobj.arrival - Designatorobj.departure;
+                                TimeSpan timeSpan = TimeSpan.Parse(TimeDiff.ToString());
+                                if ((int)timeSpan.Minutes == 0)
+                                    formatTime = $"{(int)timeSpan.TotalHours} h";
+                                else
+                                    formatTime = $"{(int)timeSpan.TotalHours} h {(int)timeSpan.Minutes} m";
+                                Designatorobj.formatTime = timeSpan;
+                                //-End--------------
                                 string queryorigin = _getAvailabilityVer2ReturnResponse.GetTripAvailabilityVer2Response.Schedules[0][0].DepartureStation;
 
                                 string querydestination = _getAvailabilityVer2ReturnResponse.GetTripAvailabilityVer2Response.Schedules[0][0].ArrivalStation;
@@ -2442,7 +2481,19 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         string arrivalTime = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
                         Designatorobj.departure = DateTime.ParseExact(departureTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture); //Convert.ToDateTime(departureTime);
                         Designatorobj.arrival = DateTime.ParseExact(arrivalTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture); //Convert.ToDateTime(arrivalTime);
-
+                        //--Vinay-TimeFormate-Start--------
+                        Designatorobj.Arrival = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
+                        DateTime SarrivalDateTime = DateTime.ParseExact(Designatorobj.Arrival, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture);
+                        Designatorobj.ArrivalDate = SarrivalDateTime.ToString("yyyy-MM-dd");
+                        Designatorobj.ArrivalTime = SarrivalDateTime.ToString("HH:mm:ss");
+                        TimeSpan TimeDiff = Designatorobj.arrival - Designatorobj.departure;
+                        TimeSpan timeSpan = TimeSpan.Parse(TimeDiff.ToString());
+                        if ((int)timeSpan.Minutes == 0)
+                            formatTime = $"{(int)timeSpan.TotalHours} h";
+                        else
+                            formatTime = $"{(int)timeSpan.TotalHours} h {(int)timeSpan.Minutes} m";
+                        Designatorobj.formatTime = timeSpan;
+                        //-End--------------
                         string queryorigin = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].DepartureStation;
 
                         string querydestination = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].ArrivalStation;

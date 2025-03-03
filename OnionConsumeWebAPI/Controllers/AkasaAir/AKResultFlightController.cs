@@ -821,6 +821,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                             for (int i1 = 0; i1 < JsonAkasaObjSeatmap.data[x].seatMap.decks["1"].compartments[_compartmentblock]["units"].Count; i1++)
                             {
                                 Unit Akcompartmentsunitobj = new Unit();
+                                Akcompartmentsunitobj.Airline = Airlines.AkasaAir;
                                 Akcompartmentsunitobj.unitKey = JsonAkasaObjSeatmap.data[x].seatMap.decks["1"].compartments.Y.units[i1].unitKey;
                                 Akcompartmentsunitobj.assignable = JsonAkasaObjSeatmap.data[x].seatMap.decks["1"].compartments.Y.units[i1].assignable;
                                 Akcompartmentsunitobj.availability = JsonAkasaObjSeatmap.data[x].seatMap.decks["1"].compartments.Y.units[i1].availability;

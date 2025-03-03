@@ -38,13 +38,13 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
         string ssrKey = string.Empty;
         string journeyKey = string.Empty;
         Logs logs = new Logs();
-		private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
-		public AKTripsellController(IConfiguration configuration)
-		{
-			_configuration = configuration;
-		}
-		public IActionResult AkTripsellView()
+        public AKTripsellController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        public IActionResult AkTripsellView()
         {
             List<SelectListItem> Title = new()
             {
@@ -120,18 +120,18 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
         }
         public async Task<IActionResult> AKContactDetails(ContactModel contactobject, string GUID)
         {
-			//string tokenview = HttpContext.Session.GetString("AkasaTokan");
-			//if (tokenview == null) { tokenview = ""; }
-			//token = tokenview.Replace(@"""", string.Empty);
+            //string tokenview = HttpContext.Session.GetString("AkasaTokan");
+            //if (tokenview == null) { tokenview = ""; }
+            //token = tokenview.Replace(@"""", string.Empty);
 
-			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
-			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Akasa").Result;
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Akasa").Result;
 
-			token = tokenData.Token;
+            token = tokenData.Token;
 
-			using (HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient())
             {
                 ContactModel _AkContactModel = new ContactModel();
                 string countryCode = contactobject.countrycode;
@@ -140,11 +140,11 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 _Phonenumber AkPhonenumber = new _Phonenumber();
                 List<_Phonenumber> AkPhonenumberlist = new List<_Phonenumber>();
                 AkPhonenumber.type = "Home";
-                AkPhonenumber.number = countryCode+ contactobject.number;
+                AkPhonenumber.number = countryCode + contactobject.number;
                 AkPhonenumberlist.Add(AkPhonenumber);
                 _Phonenumber AkPhonenumber1 = new _Phonenumber();
                 AkPhonenumber1.type = "Other";
-                AkPhonenumber1.number = countryCode+ contactobject.number;
+                AkPhonenumber1.number = countryCode + contactobject.number;
                 AkPhonenumberlist.Add(AkPhonenumber1);
                 foreach (var item in AkPhonenumberlist)
                 {
@@ -194,7 +194,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 GSTPhonenumber Phonenumber = new GSTPhonenumber();
                 List<GSTPhonenumber> Phonenumberlist = new List<GSTPhonenumber>();
                 Phonenumber.type = "Other";
-                Phonenumber.number = countryCode+contactobject.number;
+                Phonenumber.number = countryCode + contactobject.number;
                 Phonenumberlist.Add(Phonenumber);
 
                 foreach (var item in Phonenumberlist)
@@ -244,25 +244,25 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
         public async Task<IActionResult> AKTravellerInfo(List<passkeytype> passengerdetails, string formattedDates, string GUID)
         {
-			// string tokenview = HttpContext.Session.GetString("AkasaTokan");
+            // string tokenview = HttpContext.Session.GetString("AkasaTokan");
 
 
 
-			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
-			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Akasa").Result;
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Akasa").Result;
 
-			string tokenview = tokenData.Token;
+            string tokenview = tokenData.Token;
 
-			string[] dateStrings = JsonConvert.DeserializeObject<string[]>(formattedDates);
+            string[] dateStrings = JsonConvert.DeserializeObject<string[]>(formattedDates);
             using (HttpClient client = new HttpClient())
             {
                 if (!string.IsNullOrEmpty(tokenview))
                 {
                     if (tokenview == null) { tokenview = ""; }
                     token = tokenData.Token;
-					PassengersModel _AkPassengersModel = new PassengersModel();
+                    PassengersModel _AkPassengersModel = new PassengersModel();
                     string CountryCode = TempData["CountryCodeAK"].ToString();
                     for (int i = 0; i < passengerdetails.Count; i++)
                     {
@@ -447,18 +447,18 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
             }
 
 
-			//string tokenview = HttpContext.Session.GetString("AkasaTokan");
-			//if (tokenview == null) { tokenview = ""; }
-			//token = tokenview.Replace(@"""", string.Empty);
+            //string tokenview = HttpContext.Session.GetString("AkasaTokan");
+            //if (tokenview == null) { tokenview = ""; }
+            //token = tokenview.Replace(@"""", string.Empty);
 
-			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
-			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
 
             token = tokenData.Token;
 
-			if (token == "" || token == null)
+            if (token == "" || token == null)
             {
                 return RedirectToAction("Index");
             }
@@ -469,15 +469,26 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 var Akbaggage = HttpContext.Session.GetString("AKBaggageDetails");
                 var AkSeatMap = HttpContext.Session.GetString("AKSeatmap");
                 var AkpassengerDetails = HttpContext.Session.GetString("AKPassengerName");
-
-                AirAsiaTripResponceModel AkPassenger = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(AKpassenger, typeof(AirAsiaTripResponceModel));
-
-                SSRAvailabiltyResponceModel AkMealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(AkMeals, typeof(SSRAvailabiltyResponceModel));
-
-                SSRAvailabiltyResponceModel AkBaggageDetails = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Akbaggage, typeof(SSRAvailabiltyResponceModel));
-
-                SeatMapResponceModel AkSeatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(AkSeatMap, typeof(SeatMapResponceModel));
-
+                AirAsiaTripResponceModel AkPassenger = null;
+                SSRAvailabiltyResponceModel AkBaggageDetails = null;
+                SeatMapResponceModel AkSeatmaplist = null;
+                SSRAvailabiltyResponceModel AkMealslist = null;
+                if (AKpassenger != null)
+                {
+                    AkPassenger = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(AKpassenger, typeof(AirAsiaTripResponceModel));
+                }
+                if (AkMeals != null)
+                {
+                    AkMealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(AkMeals, typeof(SSRAvailabiltyResponceModel));
+                }
+                if (Akbaggage != null)
+                {
+                    AkBaggageDetails = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Akbaggage, typeof(SSRAvailabiltyResponceModel));
+                }
+                if (AkSeatMap != null)
+                {
+                    AkSeatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(AkSeatMap, typeof(SeatMapResponceModel));
+                }
                 int passengerscount = AkPassenger.passengerscount;
                 var data = AkSeatmaplist.datalist.Count;
                 string legkey = AkPassenger.journeys[0].segments[0].legs[0].legKey;
@@ -527,9 +538,9 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                     SellSSRModel _sellSSRModel = new SellSSRModel();
                                     _sellSSRModel.count = 1;
                                     _sellSSRModel.note = "PYOG";
-                                   // _sellSSRModel.forceWaveOnSell = false;
+                                    // _sellSSRModel.forceWaveOnSell = false;
                                     _sellSSRModel.currencyCode = "INR";
-                                   // _sellSSRModel.ssrSellMode = 2;
+                                    // _sellSSRModel.ssrSellMode = 2;
 
                                     var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -652,7 +663,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 #region Baggage
                 //var baggagecount = BaggageSSrkey.Count;
                 //int baggageSsr = BaggageDetails.journeySsrsBaggage.Count;
-                int baggageSsr= BaggageSSrkey.Count;
+                int baggageSsr = BaggageSSrkey.Count;
                 if (baggageSsr > 0)
                 {
                     int baggageid = 0;
@@ -672,7 +683,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 SellSSRModel _sellSSRModel = new SellSSRModel();
                                 _sellSSRModel.count = 1;
                                 _sellSSRModel.note = "PYOG";
-                               // _sellSSRModel.forceWaveOnSell = false;
+                                // _sellSSRModel.forceWaveOnSell = false;
                                 _sellSSRModel.currencyCode = "INR";
                                 var jsonSellSSR = JsonConvert.SerializeObject(_sellSSRModel, Formatting.Indented);
                                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
