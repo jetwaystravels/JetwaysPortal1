@@ -801,7 +801,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                         IndigoSessionmanager_.LogoutResponse _logoutResponse = new IndigoSessionmanager_.LogoutResponse();
                         _logoutRequestobj.ContractVersion = 456;
                         _logoutRequestobj.Signature = token;
-                        _getapi objIndigo = new _getapi();
+                        _getapiIndigo objIndigo = new _getapiIndigo();
                         _logoutResponse = await objIndigo.Logout(_logoutRequestobj);
 
                         logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay", "oneway");

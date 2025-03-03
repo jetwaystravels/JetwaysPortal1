@@ -97,7 +97,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             _getAvailabilityReturnRQ.TripAvailabilityRequest.AvailabilityRequests[0].IncludeTaxesAndFeesSpecified = true;
             SetSessionValue("IndigoAvailibilityRequest", JsonConvert.SerializeObject(_getAvailabilityReturnRQ));
             SetSessionValue("IndigoPassengerModel", JsonConvert.SerializeObject(_getAvailabilityReturnRQ));
-            _getapi objIndigo = new _getapi();
+            _getapiIndigo objIndigo = new _getapiIndigo();
             GetAvailabilityVer2Response _getAvailabilityVer2ReturnResponse = await objIndigo.GetTripAvailability(_getAvailabilityReturnRQ);
             if (_AirlineWay.ToLower() == "indigooneway")
             {
@@ -206,7 +206,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             //HttpContext.Session.SetString("IndigoAvailibilityRequest", JsonConvert.SerializeObject(_getAvailabilityReturnRQ));
             //HttpContext.Session.SetString("IndigoPassengerModel", JsonConvert.SerializeObject(_getAvailabilityReturnRQ));
 
-            _getapi objIndigo = new _getapi();
+            _getapiIndigo objIndigo = new _getapiIndigo();
             GetAvailabilityVer2Response _getAvailabilityVer2ReturnResponse = await objIndigo.GetTripAvailability(_getAvailabilityReturnRQ);
             if (_AirlineWay.ToLower() == "indigooneway")
             {
@@ -319,7 +319,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             SetSessionValue("IndigoAvailibilityRequest", JsonConvert.SerializeObject(_getAvailabilityReturnRQ));
             SetSessionValue("IndigoPassengerModel", JsonConvert.SerializeObject(_getAvailabilityReturnRQ));
 
-            _getapi objIndigo = new _getapi();
+            _getapiIndigo objIndigo = new _getapiIndigo();;
             GetAvailabilityVer2Response _getAvailabilityVer2ReturnResponse = await objIndigo.GetTripAvailability(_getAvailabilityReturnRQ);
             if (_AirlineWay.ToLower() == "indigooneway")
             {

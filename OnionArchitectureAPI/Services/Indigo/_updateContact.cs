@@ -52,7 +52,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                 _ContactModel6E.updateContactsRequestData.BookingContactList[0].EmailAddress = emailAddress;
             }
             _ContactModel6E.updateContactsRequestData.BookingContactList[0].HomePhone = contactnumber;
-            _getapi objIndigo = new _getapi();
+            _getapiIndigo objIndigo = new _getapiIndigo();
             UpdateContactsResponse responseAddContact6E = await objIndigo.GetUpdateContacts(_ContactModel6E);
             SetSessionValue("ContactDetails", JsonConvert.SerializeObject(_ContactModel6E));
             string Str1 = JsonConvert.SerializeObject(responseAddContact6E);
@@ -97,7 +97,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                 _ContactModel6E.updateContactsRequestData.BookingContactList[0].EmailAddress = emailAddress;
             }
             _ContactModel6E.updateContactsRequestData.BookingContactList[0].HomePhone = countrycode + contactnumber;
-            _getapi  objIndigo = new _getapi();
+            _getapiIndigo objIndigo = new _getapiIndigo();
             UpdateContactsResponse responseAddContact6E = await objIndigo.GetUpdateContacts(_ContactModel6E);
             SetSessionValue("ContactDetails", JsonConvert.SerializeObject(_ContactModel6E));
             //string Str1 = JsonConvert.SerializeObject(responseAddContact6E);
@@ -133,7 +133,7 @@ namespace OnionArchitectureAPI.Services.Indigo
 
                 try
                 {
-                    _getapi objIndigo = new _getapi();
+                    _getapiIndigo objIndigo = new _getapiIndigo();
                     updatePaxResp = await objIndigo.UpdatePassengers(updatePaxReq);
 
                     string Str2 = JsonConvert.SerializeObject(updatePaxResp);

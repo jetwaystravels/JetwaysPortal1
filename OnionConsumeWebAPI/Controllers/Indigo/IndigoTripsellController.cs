@@ -208,7 +208,7 @@ namespace OnionConsumeWebAPI.Controllers
                     _ContactModel6E.updateContactsRequestData.BookingContactList[0].EmailAddress = contactobject.emailAddress;
                 }
                 _ContactModel6E.updateContactsRequestData.BookingContactList[0].HomePhone = contactobject.countrycode + contactobject.number;
-                _getapi objIndigo = new _getapi();
+                _getapiIndigo objIndigo = new _getapiIndigo();
                 UpdateContactsResponse responseAddContact6E = await objIndigo.GetUpdateContacts(_ContactModel6E);
                 //SetSessionValue("ContactDetails", JsonConvert.SerializeObject(_ContactModel6E));
 

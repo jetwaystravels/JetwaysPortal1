@@ -10,7 +10,7 @@ using Utility;
 
 namespace Indigo
 {
-    public class _getapi
+    public class _getapiIndigo
     {
         Logs logs = new Logs();
         #region Signature

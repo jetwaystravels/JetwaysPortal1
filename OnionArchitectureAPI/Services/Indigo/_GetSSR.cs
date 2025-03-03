@@ -39,7 +39,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                     _seatRequest.CarrierCode = AirAsiaTripResponceobj.journeys[0].segments[i].identifier.carrierCode;
                     _seatRequest.EnforceSeatGroupRestrictions = false;
                     _getseatAvailabilityRequest.SeatAvailabilityRequest = _seatRequest;
-                    _getapi _obj = new _getapi();
+                    _getapiIndigo _obj = new _getapiIndigo();
                     _getSeatAvailabilityResponse = await _obj.GetseatAvailability(_getseatAvailabilityRequest);
                     SeatGroup.Add(_getSeatAvailabilityResponse);
 
@@ -102,7 +102,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                         _seatRequest.CarrierCode = AirAsiaTripResponceobj.journeys[a].segments[i].identifier.carrierCode;
                         _seatRequest.EnforceSeatGroupRestrictions = false;
                         _getseatAvailabilityRequest.SeatAvailabilityRequest = _seatRequest;
-                        _getapi _obj = new _getapi();
+                        _getapiIndigo _obj = new _getapiIndigo();
                         _getSeatAvailabilityResponse = await _obj.GetseatAvailability(_getseatAvailabilityRequest, a, i);
                         SeatGroup.Add(_getSeatAvailabilityResponse);
 
@@ -177,7 +177,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                     _SSRAvailabilityForBookingRequest.SSRAvailabilityMode = IndigoBookingManager_.SSRAvailabilityMode.NonBundledSSRs;
                     _SSRAvailabilityForBookingRequest.SSRAvailabilityModeSpecified = true;
                     _req.SSRAvailabilityForBookingRequest = _SSRAvailabilityForBookingRequest;
-                    _getapi _obj = new _getapi();
+                    _getapiIndigo _obj = new _getapiIndigo();
                     _res = await _obj.GetMealAvailabilityForBooking(_req);
                     SSRGroup.Add(_res);
                     string Str2 = JsonConvert.SerializeObject(SSRGroup);
@@ -254,7 +254,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                 _SSRAvailabilityForBookingRequest.SSRAvailabilityMode = SSRAvailabilityMode.NonBundledSSRs;
                 _SSRAvailabilityForBookingRequest.SSRAvailabilityModeSpecified = true;
                 _req.SSRAvailabilityForBookingRequest = _SSRAvailabilityForBookingRequest;
-                _getapi _obj = new _getapi();
+                _getapiIndigo _obj = new _getapiIndigo();
                 _res = await _obj.GetMealAvailabilityForBooking(_req);
 
                 //string Str2 = JsonConvert.SerializeObject(_res);

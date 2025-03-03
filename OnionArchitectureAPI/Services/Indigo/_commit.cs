@@ -10,7 +10,7 @@ namespace OnionArchitectureAPI.Services.Indigo
     {
 
         Logs logs = new Logs();
-        _getapi _obj = new _getapi();
+        _getapiIndigo _obj = new _getapiIndigo();
         public async Task<BookingCommitResponse> commit(string Signature, UpdateContactsRequest contactList, List<passkeytype> passeengerlist,string _Airlineway="")
         {
             BookingCommitRequest _bookingCommitRequest = new BookingCommitRequest();

@@ -23,7 +23,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             return _httpContextAccessor.HttpContext.Session.GetString(key);
         }
         Logs logs = new Logs();
-        _getapi _obj = new _getapi();
+        _getapiIndigo _obj = new _getapiIndigo();
         int passengerscount = 0;
         int journeyscount = 0;
         public async Task<IndigoBookingManager_.SellResponse> sellssr(string Signature, AirAsiaTripResponceModel passeengerKeyList, List<string> ssrKey, List<string> BaggageSSrkey, List<string> FastfarwardAddon, List<string> PPBGAddon, bool Boolfastforward, int _a, string _Airline = "")
@@ -860,7 +860,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                     sellreqd.SellSSR.SSRRequest.SellSSRMode = SellSSRMode.NonBundle;
                     sellreqd.SellSSR.SSRRequest.SellSSRModeSpecified = true;
 
-                    _getapi _objIndigo = new _getapi();
+                    _getapiIndigo _objIndigo = new _getapiIndigo();
                     sellSsrResponse = await _objIndigo._sellssR(sellSsrRequest);
 
                     string Str3 = JsonConvert.SerializeObject(sellSsrResponse);
@@ -1008,7 +1008,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                 _AssignSeatReq.SellSeatRequest.IncludeSeatData = true;
                 _AssignSeatReq.SellSeatRequest.IncludeSeatDataSpecified = true;
 
-                _getapi _obj = new _getapi();
+                _getapiIndigo _obj = new _getapiIndigo();
                 _AssignseatRes = await _obj._Assignseat(_AssignSeatReq);
 
                 string Str2 = JsonConvert.SerializeObject(_AssignseatRes);
@@ -1890,7 +1890,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                     sellreqd.SellSSR.SSRRequest.SellSSRMode = SellSSRMode.NonBundle;
                     sellreqd.SellSSR.SSRRequest.SellSSRModeSpecified = true;
 
-                    _getapi _objIndigo = new _getapi();
+                    _getapiIndigo _objIndigo = new _getapiIndigo();
                     sellSsrResponse = await _objIndigo._sellssR(sellSsrRequest);
 
                     string Str3 = JsonConvert.SerializeObject(sellSsrResponse);
@@ -2138,7 +2138,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                 _AssignSeatReq.SellSeatRequest.IncludeSeatData = true;
                 _AssignSeatReq.SellSeatRequest.IncludeSeatDataSpecified = true;
 
-                _getapi _obj = new _getapi();
+                _getapiIndigo _obj = new _getapiIndigo();
                 _AssignseatRes = await _obj._Assignseat(_AssignSeatReq);
 
                 string Str2 = JsonConvert.SerializeObject(_AssignseatRes);

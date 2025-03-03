@@ -37,7 +37,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                     }
                 }
             }
-            _getapi objIndigo = new _getapi();
+            _getapiIndigo objIndigo = new _getapiIndigo();
             LogonResponse _logonResponseobj = await objIndigo.Signature(_logonRequestobj);
             if (_Airline.ToLower() == "indigooneway")
             {
@@ -87,7 +87,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
 
 
 
-            _getapi objIndigo = new _getapi();
+            _getapiIndigo objIndigo = new _getapiIndigo();;
             LogonResponse _logonResponseobj = await objIndigo.Signature(_logonRequestobj);
             if (_Airline.ToLower() == "indigooneway")
             {

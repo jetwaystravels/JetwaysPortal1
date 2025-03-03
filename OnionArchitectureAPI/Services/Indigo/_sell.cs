@@ -11,7 +11,7 @@ namespace OnionArchitectureAPI.Services.Indigo
     public class _sell
     {
         Logs logs = new Logs();
-        _getapi _obj = new _getapi();
+        _getapiIndigo _obj = new _getapiIndigo();
 
         public async Task<SellResponse> Sell(string Signature, List<string> _JourneykeyData, List<string> _FareKeyData, string _Jparts, string fareKey, int TotalCount, int adultcount, int childcount, int infantcount, string _AirlineWay = "")
         {
@@ -505,7 +505,7 @@ namespace OnionArchitectureAPI.Services.Indigo
 
                     }
                     sellSsrRequest.SellRequestData = sellreqd;
-                    _getapi _objIndigo = new _getapi();
+                    _getapiIndigo _objIndigo = new _getapiIndigo();
                     sellSsrResponse = await _objIndigo._sellssR(sellSsrRequest);
                     str3 += JsonConvert.SerializeObject(sellSsrResponse);
                 }
@@ -598,7 +598,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                         }
                         sellSsrRequest.SellRequestData = sellreqd;
                     }
-                    _getapi _objIndigo = new _getapi();
+                    _getapiIndigo _objIndigo = new _getapiIndigo();
                     sellSsrResponse = await _objIndigo._sellssR(sellSsrRequest);
 
 
@@ -714,7 +714,7 @@ namespace OnionArchitectureAPI.Services.Indigo
 
                 }
                 sellSsrRequest.SellRequestData = sellreqd;
-                _getapi _objIndigo = new _getapi();
+                _getapiIndigo _objIndigo = new _getapiIndigo();
                 sellSsrResponse = await _objIndigo._sellssR(sellSsrRequest);
                 str3 += JsonConvert.SerializeObject(sellSsrResponse);
                 #endregion
