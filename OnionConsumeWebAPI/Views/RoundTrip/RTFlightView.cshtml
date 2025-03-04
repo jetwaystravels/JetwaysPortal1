@@ -23,8 +23,6 @@
 
     <link href="~/css/roundviewpage.css" rel="stylesheet" />
     <link href="~/css/indexvny.css" rel="stylesheet" />
-    <script src="~/js/custom.js/indexpage.js"></script>
-
 </head>
 
 <body>
@@ -159,10 +157,10 @@
 						    <label class=""></label>
 
 						    <span class="input-group-text" id="basic-addon1">
-														<input type="text" id="myInput1" name="destination" class="form-control" value="" onclick="toggleArrivalOneway()">
+							<input type="text" id="myInput1" name="destination" class="form-control" value="" onclick="toggleArrivalOneway()">
 							@* <span id="airportArval"></span> *@
 						    </span>
-						    <div id="errordestinaton" class="errorbox" style="display:none;">Enter Destination Name*</div>
+						    @* <div id="errordestinaton" class="errorbox" style="display:none;">Enter Destination Name*</div> *@
 
 						    <span class="autoarrivalRT">
 							<select id="arrivalItemRTId" name="arrivalItemRTId" onchange="arrivalRT()">
@@ -616,9 +614,9 @@
 				    @{
 					if (Model.SimpleAvailibilityaAddResponcelist.Count > 0)
 					{
-					    <div class="fontSize16 d-flex justify-content-between"><div class="fw-600">@originL → @destinationL</div>  <div>@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate</div></div>
+							<div class="fontSize16 d-flex justify-content-between"><div class="fw-600">@originL → @destinationL</div>  <div>@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate</div></div>
 
-					    <input type="hidden" id="leftdate" value="@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate" />
+							<input type="hidden" id="leftdate" value="@Model.SimpleAvailibilityaAddResponcelist[0].bookingdate" />
 					}
 				    }
 				    <div class="d-flex justify-between shorting-tab">
@@ -688,9 +686,9 @@
 				    @{
 					if (Model.SimpleAvailibilityaAddResponcelistR.Count > 0)
 					{
-					    <div class="fontSize1 d-flex justify-content-between"><div class="fw-600">@destinationR → @originR</div>  <div>@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate</div></div>
+							<div class="fontSize1 d-flex justify-content-between"><div class="fw-600">@destinationR → @originR</div>  <div>@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate</div></div>
 
-					    <input type="hidden" id="rightdate" value="@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate" />
+							<input type="hidden" id="rightdate" value="@Model.SimpleAvailibilityaAddResponcelistR[0].bookingdate" />
 					}
 				    }
 				    <div class="d-flex justify-between shorting-tab">
@@ -839,18 +837,13 @@
 				    <div class="modal-body mbody-padding">
 				    </div>
 				    <div class="modal-footer fbody-padding">
-					@*  <button type="submit" id="flighticon" onclick="PostdataReturnTripsell()" class="btn btn-primary">Continue</button> *@
 					<div class="btm-price-bx d-flex align-items-center">
 					    <div class="book-price me-3"><label class="mr-1 fw-600">₹</label><span id="popuptatalfare">0</span></div>
 					    <button type="submit" id="flighticon" onclick="PostdataReturnTripsell()" class="btn btncnt btn-lg" data-x-click="flight-item-1">Continue</button>
 					</div>
 				    </div>
-
-
 				</div>
 			    </div>
-
-
 			</div>
 
 		    </div>
@@ -1398,7 +1391,6 @@
 
 			    <div class="row y-gap-10 items-center justify-between">
 				<div class="col-auto">
-
 				    <div class="d-flex items-center">
 					<div class="form-checkbox ">
 					    <input type="checkbox" name="name">
@@ -2710,76 +2702,58 @@
 	});
 
 	// TextBox Validation
-	function validateInputs(event) {
-	    const origin = document.getElementById('myInput').value;
-	    const destination = document.getElementById('myInput1').value;
-	    const beginDate = document.getElementById('Rway-date').value;
-	    const endDateInput = document.getElementById('Rway-endDate');
-	    const endDate = endDateInput.value;
-	  
-	    if (origin == "") {
-		//alert("Enter Origin Name");
-		var originToDisplay = document.getElementById("errororigin");
-		originToDisplay.style.display = "block";
-		document.getElementById("myInput").focus();
-		return false;
-		event.preventDefault(); // Stop the form submission
-	    }
-	 
-	    if (destination == "") {
-		//alert("Enter Origin Name");
-		var originToDisplay = document.getElementById("errordestinaton");
-		originToDisplay.style.display = "block";
-		document.getElementById("myInput1").focus();
-		return false;
-	    }
+		function validateInputs(event) {
+			const origin = document.getElementById('myInput').value;
+			const destination = document.getElementById('myInput1').value;
+			if (origin == destination) {
+				alert("Departure and Arrival Airport are same please change it..");
+				return false;
+				event.preventDefault();
+				
+			}
+			if (!origin) {
+				alert('Please enter the origin.');
+				return false;
+			}
+			if (!destination) {
+				alert('Please enter the destination.');
+				return false;
+			}
 
-	    if (origin == destination) {
-		alert("Departure and Arrival Airport are same please change it..")
-		return false;
-		event.preventDefault(); // Stop the form submission
+			const beginDate = document.getElementById('Rway-date').value;
+			const endDateInput = document.getElementById('Rway-endDate');
+			const endDate = endDateInput.value;
+			if (!beginDate) {
+				alert('Please select a start date.');
+				return false;
+			}
+			if (!endDateInput.disabled && !endDate) {
+				alert('Please select an end date.');
+				return false;
+			}
 
-	    }
+			var adultCount = parseInt(document.getElementById('field_adult').value);
+			var childCount = parseInt(document.getElementById('field_child').value);
+			var infantCount = parseInt(document.getElementById('field_infant').value);
+			var totalCount = adultCount + childCount;
+			if (totalCount > 9) {
+				alert("The combined total of adults and children must be 9 or less.");
+				return false;
+				event.preventDefault();
+			}
 
+			var adulttravelcount = $('#field_adult').val();
+			var infanttravelcount = $('#field_infant').val();
+			if (infanttravelcount > adulttravelcount || infanttravelcount > 6) {
+				alert("Number of infants cannot be more than adults or exceed 6.");
+				return false;
+				event.preventDefault();
 
-
-
-	    if (!origin) {
-		alert('Please enter the origin.');
-		return false;
-	    }
-	    if (!destination) {
-		alert('Please enter the destination.');
-		return false;
-	    }
-	    if (!beginDate) {
-		alert('Please select a start date.');
-		return false;
-	    }
-	    if (!endDateInput.disabled && !endDate) {
-		alert('Please select an end date.');
-		return false;
-	    }
-
-	    var adultCount = parseInt(document.getElementById('field_adult').value);
-	    var childCount = parseInt(document.getElementById('field_child').value);
-	    //var infantCount = parseInt(document.getElementById('field_infant').value);
-	    var totalCount = adultCount + childCount;
-	    if (totalCount > 9) {
-		alert("The combined total of adults and children must be 9 or less.");
-		return false;
-		event.preventDefault();
-	    }
-
-	    return true;
-	}
+			}
+			return true;
+		}
 
 
-       
-
-	   
-
-	///Bussines Class Validation radio button
 	function toggleRadio(event, radioId, selectedClass) {
 	    event.preventDefault();
 	    document.querySelectorAll('.form-radio-input').forEach(radio => {
@@ -2799,17 +2773,12 @@
 	    }
 	});
 
-
-	/////////*************************//////////////
-
 	$(document).ready(function () {
 	    $('.classtoggle').on('click', function () {
-		$('.bcon').toggle(); // Toggle visibility of .bcon
-		$(this).find('.icon').toggleClass('fa-angle-down fa-angle-up'); // Change the icon
+		$('.bcon').toggle(); 
+		$(this).find('.icon').toggleClass('fa-angle-down fa-angle-up'); 
 	    });
 	});
-
-
 
 	var sortOrderName;
 	var sortOrderNameR;
@@ -2826,7 +2795,6 @@
 
        
 	sortLinks.forEach(sortLink => {
-
 	    sortLink.addEventListener('click', function (e) {
 		e.preventDefault();
 		const sortType = this.dataset.sort.split('_')[0];
@@ -2841,7 +2809,6 @@
 
       
 	sortLinksR.forEach(sortLinkR => {
-
 	    sortLinkR.addEventListener('click', function (e) {
 		e.preventDefault();
 		const sortTypeR = this.dataset.sort.split('_')[0];
@@ -2862,11 +2829,7 @@
 	function performSortingR(sortOrderR) {
 	    sortOrderNameR = sortOrderR;
 	    updateFilter();
-	}
-
-
-
-      
+	}   
      var selectedDepartureTimesR = [];
 	var selectedArrivalTimesR = [];
 	$('.flt-Tm-new').click(function () {
@@ -2915,15 +2878,7 @@
 	    updateFilter();
 
 	});
-
-
-
-
-
-
-
 	function combinedFilterFunction() {
-	    // Set up event listeners for both sets of checkboxes
 	    $('.selectionCheckbox').on('change', function () {
 		updateFilter();
 	    });
@@ -2936,13 +2891,10 @@
 	    });
 
 	    function restoreCheckboxState(selectedIds, selectedIdsRight, RTFilterIdAirLine) {
-		// Restore the state of the checkboxes for the first set
 		$('.selectionCheckbox').each(function () {
 		    var checkboxValue = $(this).val();
 		    $(this).prop('checked', selectedIds.includes(checkboxValue));
 		});
-
-		// Restore the state of the checkboxes for the second set
 		$('.selectionCheckboxRight').each(function () {
 		    var checkboxValue = $(this).val();
 		    $(this).prop('checked', selectedIdsRight.includes(checkboxValue));
@@ -3007,14 +2959,7 @@
 	    });
 	}
 
-	///////*******************************///////////
 
-
-
-
-
-
-	///////////*******************************/////////
 	document.querySelector('[data-x-dd-click="searchMenu-guests"]').addEventListener('click', function () {
 	    const target = document.querySelector('[data-x-dd="searchMenu-guests"]');
 	    target.classList.toggle('-is-active');
@@ -3287,70 +3232,47 @@
 	    });
 
 
-	    $('.rplc-btn').on('click', function () {
-		var flyingFromValue = $('#myInput').val();
-		var flyingToValue = $('#myInput1').val();
-		$('#myInput').val(flyingToValue);
-		$('#myInput1').val(flyingFromValue);
-		if (flyingFromValue == flyingToValue) {
-		    alert("Departure and Arrival Airport are the same. Please change it.");
-		    return false;
-		    event.preventDefault();
-		}
-	    });
-
-	    ///END Ready
-
+			$('.rplc-btn').on('click', function (event) {
+				var flyingFromValue = $('#myInput').val();
+				var flyingToValue = $('#myInput1').val();
+				$('#myInput').val(flyingToValue);
+				$('#myInput1').val(flyingFromValue);
+				if (flyingFromValue == flyingToValue) {
+					alert("Departure and Arrival Airport are the same. Please change it.");
+					return false;
+					event.preventDefault();
+				}
+			});
 	});
-
-
     </script>
 
     <script type="text/javascript">
-
-	//js Code for increment and decrement button
 	document.addEventListener('DOMContentLoaded', function () {
-	    // Select the input fields for adults, children, and infants
 	    const adultInputField = document.getElementById('field_adult');
 	    const childInputField = document.getElementById('field_child');
 	    const infantInputField = document.getElementById('field_infant');
-
-	    // Select the elements to update the selected values
 	    const adultCountElement = document.getElementById('count_adult');
 	    const childCountElement = document.getElementById('count_child');
 	    const infantCountElement = document.getElementById('count_infant');
-
-	    // Add event listener for adult increment button
 	    document.querySelector('.increment.add.btn_sub').addEventListener('click', function () {
 		incrementValue(adultInputField, adultCountElement);
 	    });
-
-	    // Add event listener for adult decrement button
 	    document.querySelector('.decrement.sub.btn_sub').addEventListener('click', function () {
 		decrementValue(adultInputField, adultCountElement);
 	    });
-
-	    // Add event listener for child increment button
 	    document.querySelector('.increment1.add.btn_sub').addEventListener('click', function () {
 		incrementValue(childInputField, childCountElement);
 	    });
-
-	    // Add event listener for child decrement button
 	    document.querySelector('.decrement1.sub.btn_sub').addEventListener('click', function () {
 		decrementValue(childInputField, childCountElement);
 	    });
-
-	    // Add event listener for infant increment button
 	    document.querySelector('.increment2.add.btn_sub').addEventListener('click', function () {
 		incrementValue(infantInputField, infantCountElement);
 	    });
-
-	    // Add event listener for infant decrement button
 	    document.querySelector('.decrement2.sub.btn_sub').addEventListener('click', function () {
 		decrementValue(infantInputField, infantCountElement);
 	    });
 
-	    // Function to increment the input value and update the count element
 	    function incrementValue(inputField, countElement) {
 		const currentValue = parseInt(inputField.value);
 		if (currentValue < parseInt(inputField.max)) {
@@ -3359,7 +3281,6 @@
 		}
 	    }
 
-	    // Function to decrement the input value and update the count element
 	    function decrementValue(inputField, countElement) {
 		const currentValue = parseInt(inputField.value);
 		if (currentValue > parseInt(inputField.min)) {
@@ -3369,23 +3290,13 @@
 	    }
 	});
 
-
-
-	/////////Pop ID
 	var uniqueId, uniqueIdR;
-	// Function to handle radio button change and display data
-
 	function RenderData(uniqueId) {
 	    uniqueIdR = localStorage.getItem('IDRIGHT');
 	    handleRadioChange(uniqueId, uniqueIdR);
 	}
-
-
 	function handleRadioChange(uniqueId, uniqueIdR) {
-	    
-	     //uniqueId = $('input[type=radio][name=dynamicRadio]:checked').val();
 	    localStorage.setItem('IDLEFT', uniqueId);
-	    // Retrieve values from hidden input fields
 	    var departureTime = $('.departuretime').eq(uniqueId).val();
 	    var origin = $('.origin').eq(uniqueId).val();
 	    var destination = $('.destination').eq(uniqueId).val();
@@ -3396,8 +3307,6 @@
 	    var carrierCodeL = $('.carrierCode').eq(uniqueId).val();
 	    var identifierL = $('.identifier').eq(uniqueId).val();
 	    var arrivaldateL = $('.arrivaldate').eq(uniqueId).val();
-
-	    // Display the retrieved values
 	    $('#departureData').text(departureTime);
 	    $('#originData').text(origin);
 	    $('#diffData').text(diffL);
@@ -3436,39 +3345,24 @@
 		imageSrc = '../img/flight-logo-icon/hahnair.png';
 
 	    }
-
-
 	    else {
-		// If none of the above conditions match, you can set a default image source here
-		imageSrc = ''; // Set a default image source or leave it blank if you don't want to show any image
+		
+		imageSrc = ''; 
 	    }
-
-	    // Now, use the image source to set the src attribute of the image
 	    $('.size-L').attr('src', imageSrc);
-	    // Store in session Total Fare Left
 	    localStorage.setItem('TotalfareL', fareTotalsumL);
-	   // handleReturnRadioChange();
 	    RenderDataR(uniqueIdR);
 	}
-
-	// Trigger change event on radio button selection
-
 	$('input[type=radio][name=dynamicRadio]').change(RenderData(0));
-	// Auto-select the first radio button and trigger its change event
 	$('input[type=radio][name=dynamicRadio]').first().prop('checked', true).trigger('change');
-
-
 	function RenderDataR(uniqueIdR) {
 	    handleReturnRadioChange(uniqueIdR);
 	}
 
 
-	// Function to handle return radio button change and display data
+	
 	function handleReturnRadioChange(uniqueIdR) {
-	    //alert("Right Id " + uniqueIdR);
-	    //var uniqueIdR = $('input[type=radio][name=dynamicRadioR]:checked').val();
 	     localStorage.setItem('IDRIGHT', uniqueIdR);
-	    // Retrieve values from hidden input fields for return radio buttons
 	    var departureTimeR = $('.departurereturn').eq(uniqueIdR).val();
 	    var originR = $('.originreturn').eq(uniqueIdR).val();
 	    var diffR = $('.diffreturn').eq(uniqueIdR).val();
@@ -3479,8 +3373,6 @@
 	    var fareTotalsumR = $('.faretotalsumreturn').eq(uniqueIdR).val();
 	    var carrierCodeR = $('.carrierCodeR').eq(uniqueIdR).val();
 	    var identifierR = $('.identifierR').eq(uniqueIdR).val();
-
-	    // Display the retrieved values for return radio buttons
 	    $('#departurereturndata').text(departureTimeR);
 	    $('#originreturndata').text(originR);
 	    $('#diffreturndata').text(diffR);
@@ -3523,36 +3415,21 @@
 	       
 		imageSrc = ''; 
 	    }
-
-	    // Now, use the image source to set the src attribute of the image
 	    $('.size-R').attr('src', imageSrc);
-
-	    // Sum Of Total fare left and right in footer
-
 	    var totalL = localStorage.getItem('TotalfareL');
-
 	    if (totalL == null) {
 		var fareTotalsumL = $('.fareTotalsum').val();
 		totalL = fareTotalsumL;
-
 		var TotalfareLR = parseInt(totalL) + parseInt(fareTotalsumR, 10);
 		$('#totalfaretotalround').text(TotalfareLR);
 	    }
 	    else {
-		var TotalfareLR = parseInt(totalL) + parseInt(fareTotalsumR, 10);
-	       
+		var TotalfareLR = parseInt(totalL) + parseInt(fareTotalsumR, 10);   
 		$('#totalfaretotalround').text(TotalfareLR);
 	    }
-
-
 	}
-
-	// Trigger change event on return radio button selection
 	$('input[type=radio][name=dynamicRadioR]').change(handleReturnRadioChange(0));
-
-	// Auto-select the first return radio button and trigger its change event
 	$('input[type=radio][name=dynamicRadioR]').first().prop('checked', true).trigger('change');
-
 	function GetParameterValues(param) {
 	    var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
 	    for (var i = 0; i < url.length; i++) {
@@ -3562,7 +3439,6 @@
 		}
 	    }
 	}
-
 	$('#ReturnButtonId').click(function () {
 	    var sameairLine = $('.sameairLine').val();
 	    if (sameairLine === "AirlineRT") 
@@ -3572,10 +3448,8 @@
 		if (bottomLeft !== bottomRight) {
 		    alert("Please select both sides with the same airline.");
 		    return false;
-		}
-	       
+		}  
 	    }
-	    
 	    var arrivalTime = $('#arrivalData').text();
 	    var returnFlightTime = $('#departurereturndata').text();
 	    var Leftdate = $('#leftdate').val();
@@ -3583,37 +3457,20 @@
 	    var LeftdateL = $('#arrivalDatadate').text();
 	    var rightdateR = $('#arrivalreturndataR').text();
 	     if (Leftdate == rightdate) {
-		//alert("SameDate");
 		var arrivalMinutes = convertToMinutes(arrivalTime);
 		var returnFlightMinutes = convertToMinutes(returnFlightTime);
-
-
 		var minimumReturnTime = arrivalMinutes + 30;
-
-
 		if (returnFlightMinutes < minimumReturnTime) {
-
 		    alert('Return flight time must be at least 30 minutes after arrival time.');
-
 		    return false;
 		}
-
 		else if (LeftdateL !== rightdateR) {
-
 		    alert('The selected flight timings are not compatible.');
-
 		    return false;
 		}
-
-
 	    }
-
-
-
-	   uniqueId = $('input[type=radio][name=dynamicRadio]:checked').val(); //localStorage.getItem('IDLEFT');
-	   uniqueIdR = $('input[type=radio][name=dynamicRadioR]:checked').val(); //localStorage.getItem('IDRIGHT');
-
-	    //alert("hello");
+	   uniqueId = $('input[type=radio][name=dynamicRadio]:checked').val(); 
+	   uniqueIdR = $('input[type=radio][name=dynamicRadioR]:checked').val();
 	    debugger;
 	    $.ajax({
 		type: 'POST',
@@ -3632,10 +3489,8 @@
 		    console.error('Error occurred:', error);
 		}
 	    });
-	    //debugger;
 	    localStorage.removeItem('LEFTFARE');
 	    localStorage.removeItem('RIGHTFARE');
-	    //faretotalPopup();
 	    document.getElementById("popuptatalfare").innerHTML = 0;
 
 	});
@@ -3644,14 +3499,6 @@
 	    var parts = time.split(':');
 	    return parseInt(parts[0]) * 60 + parseInt(parts[1]);
 	}
-
-
-
-
-    
-
-	//**********Chosen Departure Code Start ****************//
-	//*****************************************************//
 	$(document).ready(function () {
 	    $('#autodropdownRTId').chosen();
 	    $('.chosen-drop').hide();
@@ -3667,20 +3514,13 @@
 		chosenInput.focus();
 		chosenInput.style.border = 'none';
 	    });
-
-
 	    $(document.body).on('click', function (event) {
 		if (!$(event.target).closest('.chosen-drop').length && !$(event.target).is('#myInput')) {
 		    $('.chosen-drop').hide();
 		}
 	    });
 	});
-
-
-
-
 	function RTDropdown() {
-	    //$('.chosen-drop').toggle();
 	    var chosenInput = document.querySelector('.chosen-search input');
 	    chosenInput.focus();
 	    chosenInput.style.border = 'none';
@@ -3689,10 +3529,8 @@
 		$('.chosen-drop').show();
 	    }
 	}
-
 	function RTSelection() {
 	    $('.chosen-search input').focus();
-	    //alert("Hello Test");
 	    var dropdown = document.getElementById("autodropdownRTId");
 	    var selectedValue = dropdown.value;
 	    var selectedOption = dropdown.options[dropdown.selectedIndex];
@@ -3700,19 +3538,11 @@
 	    var cityName = cityDetails[0].trim();
 	    var cityCode = cityDetails[1].trim();
 	    var airportName = cityDetails[2].trim();
-
-	    //alert("Selected City Name: " + cityName);
-	    //alert("Selected City Code: " + cityCode);
-	    //alert("Selected Airport Name: " + airportName);
-	    document.getElementById("myInput").value = cityCode;
-	    //document.getElementById("airportName").innerHTML = airportName;
+	    document.getElementById("myInput").value = cityName +"-"+ cityCode;
 	    $('.chosen-drop').hide();
-	    //$('.autodropdownOneWay').hide();
 	    dropdown.selectedIndex = -1;
 	}
 
-
-	// *********Arrival Dropdown Js Code Strat*********////
 	$(document).ready(function () {
 	    $('#arrivalItemRTId').chosen();
 	    $('.chosen-drop').hide();
@@ -3737,7 +3567,6 @@
 	});
 
 	function toggleArrivalRT() {
-	    //$('.chosen-drop').toggle();
 	    var chosenInput4 = document.querySelector('.autoarrivalRT input');
 	    chosenInput4.focus();
 	    chosenInput4.style.border = 'none';
@@ -3749,7 +3578,6 @@
 
 	function arrivalRT() {
 	    $('.chosen-search input').focus();
-	    //alert("Hello Test");
 	    var dropdown = document.getElementById("arrivalItemRTId");
 	    var selectedValue = dropdown.value;
 	    var selectedOption = dropdown.options[dropdown.selectedIndex];
@@ -3757,21 +3585,13 @@
 	    var cityName = cityDetails[0].trim();
 	    var cityCode = cityDetails[1].trim();
 	    var airportName = cityDetails[2].trim();
-
-	    //alert("Selected City Name: " + cityName);
-	    //alert("Selected City Code: " + cityCode);
-	    //alert("Selected Airport Name: " + airportName);
-	    document.getElementById("myInput1").value = cityCode;
-	    //document.getElementById("airportName").innerHTML = airportName;
+			document.getElementById("myInput1").value = cityName + "-" + cityCode;
 	    $('.chosen-drop').hide();
-	    //$('.autodropdownOneWay').hide();
 	    dropdown.selectedIndex = -1;
 	}
 	function preback() { window.history.forward(); }
 	setTimeout("preback()", 0);
 	window.onupload = function () { null };
-
-	//For pop fare total ammount
 	window.onload = function () {
 	    localStorage.clear();
 	};

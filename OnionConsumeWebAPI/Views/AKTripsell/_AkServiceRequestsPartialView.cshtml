@@ -758,7 +758,7 @@
 										<div class="d-flex justify-content-between py-3">
 
 											<div class="servc-content">
-												@Model.passkeytype[pas].first
+												@Model.passkeytype[pas].first 
 											</div>
 											<div class="servc-content select-option2">
 
@@ -817,6 +817,12 @@
 
 																<input type="hidden" id="hiddenSsrKey2" name="ssrKey" value="" />
 															</div>
+														}
+														else
+														{
+															<select style="background:#f0f0f0" id="ddlMealOptions" class="servc-bordr servc-bordrm1" disabled>
+																<option selected="selected" value="">Meal Unavailable</option>
+															</select>
 														}
 													}
 													else

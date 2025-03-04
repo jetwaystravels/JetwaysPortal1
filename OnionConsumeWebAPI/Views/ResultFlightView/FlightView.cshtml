@@ -2254,14 +2254,11 @@
 	function validateInputs(event) {
 	    const origin = document.getElementById('myInput').value;
 	    const destination = document.getElementById('myInput1').value;
-	    const beginDate = document.getElementById('Oneway-date').value;
-	    const endDateInput = document.getElementById('Oneway-endDate');
-	    const endDate = endDateInput.value;
+	   
 	    if (origin == destination) {
 		alert("Departure and Arrival Airport are same please change it..")
 		return false;
 		event.preventDefault(); // Stop the form submission
-
 	    }
 
 	    if (!origin) {
@@ -2272,6 +2269,9 @@
 		alert('Please enter the destination.');
 		return false;
 	    }
+		const beginDate = document.getElementById('Oneway-date').value;
+	    const endDateInput = document.getElementById('Oneway-endDate');
+	    const endDate = endDateInput.value;
 	    if (!beginDate) {
 		alert('Please select a start date.');
 		return false;
@@ -2619,25 +2619,30 @@
 	    }
 
 	    // Function to decrement the input value and update the count element
-	    function decrementValue(inputField, countElement) {
-		const currentValue = parseInt(inputField.value);
-		if (currentValue > parseInt(inputField.min)) {
-		    inputField.value = currentValue - 1;
-		    countElement.textContent = currentValue - 1;
-		}
+	    function decrementValue(inputField, countElement) 
+		{
+			const currentValue = parseInt(inputField.value);
+			if (currentValue > parseInt(inputField.min)) {
+				inputField.value = currentValue - 1;
+				countElement.textContent = currentValue - 1;
+			}
 	    }
+			$('.rplc-btn').on('click', function (event) {
+				var flyingFromValue = $('#myInput').val();
+				var flyingToValue = $('#myInput1').val();
+				if (flyingFromValue === flyingToValue) {
+					alert("Departure and Arrival Airport are the same. Please change it.");
+					event.preventDefault();
+					return false;
+
+				}
+				$('#myInput').val(flyingToValue);
+				$('#myInput1').val(flyingFromValue);
+			});
+
+
 	});
-	$('.rplc-btn').on('click', function () {
-	    var flyingFromValue = $('#myInput').val();
-	    var flyingToValue = $('#myInput1').val();
-	    $('#myInput').val(flyingToValue);
-	    $('#myInput1').val(flyingFromValue);
-	    if (flyingFromValue == flyingToValue) {
-		alert("Departure and Arrival Airport are the same. Please change it.");
-		return false;
-		event.preventDefault();
-	    }
-	});
+	
 	//**********Chosen Departure Code Start ****************//
 	//*****************************************************//
 

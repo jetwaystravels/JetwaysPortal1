@@ -42,9 +42,6 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 			srchDataALL = _mongoDBHelper.GetALLFlightResulByGUIDRoundTrip(guid).Result;
 
 			ViewModel vmobj = new ViewModel();
-			//string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
-			//string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
-
 			vmobj.SimpleAvailibilityaAddResponcelist = (List<SimpleAvailibilityaAddResponce>) objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.Response));
 			vmobj.SimpleAvailibilityaAddResponcelistR = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.RightResponse));
 
@@ -54,42 +51,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
             var jsonData = objMongoHelper.UnZip(tokenData.PassRequest);
 			vmobj.simpleAvailabilityRequestModelEdit  = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
-
-
-			//List<SimpleAvailibilityaAddResponce> LeftdeserializedObjects = null;
-			//         List<SimpleAvailibilityaAddResponce> RightdeserializedObjects = null;
-			//         if (!string.IsNullOrEmpty(Leftshowpopupdata))
-			//         {
-			//             LeftdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Leftshowpopupdata);
-			//         }
-
-			//         if (!string.IsNullOrEmpty(Rightshowpopupdata))
-			//         {
-			//             RightdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Rightshowpopupdata);
-			//         }
-
-			//         vmobj.SimpleAvailibilityaAddResponcelist = LeftdeserializedObjects;
-			//         vmobj.SimpleAvailibilityaAddResponcelistR = RightdeserializedObjects;
-
-			//string RTFlightEditData = HttpContext.Session.GetString("PassengerModelR");
-   //         SimpleAvailabilityRequestModel simpleAvailabilityRequestModel = null;
-   //         if (!string.IsNullOrEmpty(RTFlightEditData))
-   //         {
-   //             simpleAvailabilityRequestModel = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(RTFlightEditData);
-   //         }
-   //         vmobj.simpleAvailabilityRequestModelEdit = simpleAvailabilityRequestModel;
-            // HttpContext.Session.SetString("FlightDetail", JsonConvert.SerializeObject(vmobj));
             return View(vmobj);
         }
         public IActionResult PostReturnAATripsellView(int uniqueId, int uniqueIdR, string Guid)
         {
-            //string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
-            //string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
-            //List<SimpleAvailibilityaAddResponce> LeftdeserializedObjects = null;
-            //List<SimpleAvailibilityaAddResponce> RightdeserializedObjects = null;
-            //LeftdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Leftshowpopupdata);
-            //RightdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Rightshowpopupdata);
-
             MongoResponces srchDataALL = new MongoResponces();
             MongoHelper objMongoHelper = new MongoHelper();
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
@@ -111,34 +76,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         [HttpPost]
         public IActionResult RTFlightView(string sortOrderName, string sortOrderNameR, List<int> selectedIds, List<int> selectedIdsRight, List<string> RTFilterIdAirLine, List<string> departure, List<string> arrival, List<string> departureRight, List<string> arrivalRight, string Guid)
         {
-            //string LeftshowpopupdataStops = HttpContext.Session.GetString("LeftReturnViewFlightView");
-            //string RightshowpopupdataStops = HttpContext.Session.GetString("RightReturnFlightView");
-
-
             MongoResponces srchDataALL = new MongoResponces();
             MongoHelper objMongoHelper = new MongoHelper();
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
 
             srchDataALL = _mongoDBHelper.GetALLFlightResulByGUIDRoundTrip(Guid).Result;
-
-            //var LeftdeserializedObjects = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.Response));
-            //var RightdeserializedObjects = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.RightResponse));
-
-
             ViewModel vmobj = new ViewModel();
-            //List<SimpleAvailibilityaAddResponce> RightdeserializedStops = null;
-            //List<SimpleAvailibilityaAddResponce> LeftdeserializedStops = null;
-
-            //if (!string.IsNullOrEmpty(LeftshowpopupdataStops))
-            //{
-            //    LeftdeserializedStops = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(LeftshowpopupdataStops);
-            //}
-
-            //if (!string.IsNullOrEmpty(RightshowpopupdataStops))
-            //{
-            //    RightdeserializedStops = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(RightshowpopupdataStops);
-            //}
-
             var LeftdeserializedStops = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.Response));
             var RightdeserializedStops = (List<SimpleAvailibilityaAddResponce>)objMongoHelper.deserializecommonobject(objMongoHelper.UnZip(srchDataALL.RightResponse));
 
@@ -147,14 +90,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 if (departure[0] == null)
                 {
                     departure = departure.Where(d => d != null).ToList();
-                    //departure = new List<string>();
                 }
             }
             if (arrival.Count > 0)
             {
                 if (arrival[0] == null)
                 {
-                    //arrival = new List<string>();
                     arrival = arrival.Where(d => d != null).ToList();
                 }
             }
@@ -172,14 +113,6 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     arrivalRight = arrivalRight.Where(d => d != null).ToList();
                 }
             }
-
-            //string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
-            //string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
-            //if (string.IsNullOrEmpty(Leftshowpopupdata))
-            //{
-            //    return View("Error");
-            //}
-
             if (LeftdeserializedStops == null)
             {
                 return View("Error");
@@ -282,11 +215,6 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 _ => RightdeserializedStops.OrderBy(p => p.fareTotalsum).ToList() // Default case
             };
 
-
-            // vmobj.SimpleAvailibilityaAddResponcelist = filteredFlightsReturn;
-            // vmobj.SimpleAvailibilityaAddResponcelistR = filteredFlightsRight;
-            //return PartialView("_RTFlightResultsSortingPartialView", viewModelobject);
-
             List<SimpleAvailibilityaAddResponce> FilterStopData = LeftdeserializedStops;
             List<SimpleAvailibilityaAddResponce> FilterStopDataRight = RightdeserializedStops;
             //Onward Stops
@@ -357,133 +285,6 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             return PartialView("_RTFlightResultsSortingPartialView", vmobj);
 
         }
-        //public IActionResult ReturnFlightViewFilter(List<string> departure, List<string> arrival, List<string> departureRight, List<string> arrivalRight)
-        //{
-        //    if (departure.Count > 0)
-        //    {
-        //        if (departure[0] == null)
-        //        {
-        //            departure = departure.Where(d => d != null).ToList();
-        //            //departure = new List<string>();
-        //        }
-        //    }
-        //    if (arrival.Count > 0)
-        //    {
-        //        if (arrival[0] == null)
-        //        {
-        //            //arrival = new List<string>();
-        //            arrival = arrival.Where(d => d != null).ToList();
-        //        }
-        //    }
-        //    if (departureRight.Count > 0)
-        //    {
-        //        if (departureRight[0] == null)
-        //        {
-        //            departureRight = departureRight.Where(d => d != null).ToList();
-        //        }
-        //    }
-        //    if (arrivalRight.Count > 0)
-        //    {
-        //        if (arrivalRight[0] == null)
-        //        {
-        //            arrivalRight = arrivalRight.Where(d => d != null).ToList();
-        //        }
-        //    }
-
-        //    string Leftshowpopupdata = HttpContext.Session.GetString("LeftReturnViewFlightView");
-        //    string Rightshowpopupdata = HttpContext.Session.GetString("RightReturnFlightView");
-        //    if (string.IsNullOrEmpty(Leftshowpopupdata))
-        //    {
-        //        return View("Error");
-        //    }
-        //    List<SimpleAvailibilityaAddResponce> LeftdeserializedObjects = null;
-        //    List<SimpleAvailibilityaAddResponce> RightdeserializedObjects = null;
-
-        //    ViewModel viewModelobject = new ViewModel();
-        //    if (!string.IsNullOrEmpty(Leftshowpopupdata))
-        //    {
-        //        LeftdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Leftshowpopupdata);
-        //    }
-
-        //    if (!string.IsNullOrEmpty(Rightshowpopupdata))
-        //    {
-        //        RightdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Rightshowpopupdata);
-        //    }
-        //    List<SimpleAvailibilityaAddResponce> filteredFlightsReturn = LeftdeserializedObjects;
-        //    List<SimpleAvailibilityaAddResponce> filteredFlightsRight = RightdeserializedObjects;
-        //    if (departure != null && departure.Count > 0)
-        //    {
-        //        filteredFlightsReturn = filteredFlightsReturn.Where(flight =>
-        //            departure.Any(d =>
-        //                (d.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-        //                (d.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-        //                (d.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-        //                (d.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
-        //            )).ToList();
-        //    }
-        //    else if (arrival != null && arrival.Count > 0)
-        //    {
-        //        filteredFlightsReturn = filteredFlightsReturn.Where(flight =>
-        //            arrival.Any(a =>
-        //                (a.ToLower() == "before_6am" && flight.designator.arrival.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-        //                (a.ToLower() == "6am_to_12pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-        //                (a.ToLower() == "12pm_to_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-        //                (a.ToLower() == "after_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(18, 0, 0))
-        //            )).ToList();
-        //    }
-        //    else if (departureRight != null && departureRight.Count > 0)
-        //    {
-        //        filteredFlightsRight = filteredFlightsRight.Where(flight =>
-        //            departureRight.Any(a =>
-        //                (a.ToLower() == "before_6am" && flight.designator.departure.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-        //                (a.ToLower() == "6am_to_12pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-        //                (a.ToLower() == "12pm_to_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.departure.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-        //                (a.ToLower() == "after_6pm" && flight.designator.departure.TimeOfDay >= new TimeSpan(18, 0, 0))
-        //            )).ToList();
-        //    }
-        //    else if (arrivalRight != null && arrivalRight.Count > 0)
-        //    {
-        //        filteredFlightsRight = filteredFlightsRight.Where(flight =>
-        //            arrivalRight.Any(a =>
-        //                (a.ToLower() == "before_6am" && flight.designator.arrival.TimeOfDay < new TimeSpan(6, 0, 0)) ||
-        //                (a.ToLower() == "6am_to_12pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(6, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(12, 0, 0)) ||
-        //                (a.ToLower() == "12pm_to_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(12, 0, 0) && flight.designator.arrival.TimeOfDay < new TimeSpan(18, 0, 0)) ||
-        //                (a.ToLower() == "after_6pm" && flight.designator.arrival.TimeOfDay >= new TimeSpan(18, 0, 0))
-        //            )).ToList();
-        //    }
-        //    else
-        //    {
-
-        //        if (!string.IsNullOrEmpty(Leftshowpopupdata))
-        //        {
-        //            LeftdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Leftshowpopupdata);
-        //        }
-
-        //        if (!string.IsNullOrEmpty(Rightshowpopupdata))
-        //        {
-        //            RightdeserializedObjects = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(Rightshowpopupdata);
-        //        }
-
-        //        viewModelobject.SimpleAvailibilityaAddResponcelist = LeftdeserializedObjects;
-        //        viewModelobject.SimpleAvailibilityaAddResponcelistR = RightdeserializedObjects;
-
-        //        string RTFlightEditData = HttpContext.Session.GetString("PassengerModelR");
-        //        SimpleAvailabilityRequestModel simpleAvailabilityRequestModel = null;
-        //        if (!string.IsNullOrEmpty(RTFlightEditData))
-        //        {
-        //            simpleAvailabilityRequestModel = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(RTFlightEditData);
-        //        }
-        //        viewModelobject.simpleAvailabilityRequestModelEdit = simpleAvailabilityRequestModel;
-        //        return PartialView("_RTFlightResultsSortingPartialView", viewModelobject);
-        //    }
-
-        //    viewModelobject.SimpleAvailibilityaAddResponcelist = filteredFlightsReturn;
-        //    viewModelobject.SimpleAvailibilityaAddResponcelistR = filteredFlightsRight;
-
-        //    return PartialView("_RTFlightResultsSortingPartialView", viewModelobject);
-        //}
-
-
-
+        
     }
 }

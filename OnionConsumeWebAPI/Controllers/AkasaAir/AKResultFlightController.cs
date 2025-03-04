@@ -132,6 +132,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 //AirAsiaTripSellRequestobj.preventOverlap = true;
                 AirAsiaTripSellRequestobj.suppressPassengerAgeValidation = true;
                 var AirasiaTripSellRequest = JsonConvert.SerializeObject(AirAsiaTripSellRequestobj, Formatting.Indented);
+                logs.WriteLogs(AirasiaTripSellRequest, "3-TripsellRequest", "AkasaOneWay", "oneway");
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage responseTripsellAK = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirTripsell, AirAsiaTripSellRequestobj);
@@ -139,7 +140,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 {
                     AirAsiaTripResponceModel AkasaAirTripResponceobj = new AirAsiaTripResponceModel();
                     var AKjsondata = responseTripsellAK.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogs(AirasiaTripSellRequest, "3-TripsellRequest", "AkasaOneWay", "oneway");
+                    
                     logs.WriteLogs(AKjsondata, "3-TripsellResponse", "AkasaOneWay", "oneway");
                     //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(AirAsiaTripSellRequestobj) + "\n Response: " + AKjsondata, "Tripsell", "AkasaOneWay", "oneway");
                     var Akasajsondata = JsonConvert.DeserializeObject<dynamic>(AKjsondata);
@@ -297,6 +298,13 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
                     HttpContext.Session.SetString("ResultFlightPassenger", JsonConvert.SerializeObject(AkasaAirTripResponceobj));
                 }
+                else
+                {
+                    var AKjsondataexception = responseTripsellAK.Content.ReadAsStringAsync().Result;
+
+                    logs.WriteLogs(AKjsondataexception, "3-TripsellResponse", "AkasaOneWay", "oneway");
+
+                }
 
 				#region Itenary 
 				//if (infanttype != null)
@@ -408,15 +416,17 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     if (infant == "INFT")
                     {
                         var jsonPassengers = JsonConvert.SerializeObject(itenaryInfant, Formatting.Indented);
+                        logs.WriteLogs(jsonPassengers, "4-itenaryInfantRequest", "AkasaOneWay", "oneway");
                         client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                         //HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirInfantDetails, itenaryInfant);
                         HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.Akasainfant, itenaryInfant);
+
                         if (responsePassengers.IsSuccessStatusCode)
                         {
                             AirAsiaTripResponceModel AirAsiaTripResponceobject = new AirAsiaTripResponceModel();
                             var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
-                            logs.WriteLogs(jsonPassengers, "4-itenaryInfantRequest", "AkasaOneWay", "oneway");
+                           
                             logs.WriteLogs(_responsePassengers, "4-itenaryInfantResponse", "AkasaOneWay", "oneway");
                             //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(itenaryInfant) + "Url: " + "\n\n Response: " + JsonConvert.SerializeObject(_responsePassengers), "", "AkasaOneWay");
                             var JsonObjPassengers = JsonConvert.DeserializeObject<dynamic>(_responsePassengers);
@@ -601,6 +611,12 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
 
                         }
+                        else
+                        {
+                            var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
+
+                            logs.WriteLogs(_responsePassengers, "4-itenaryInfantResponse", "AkasaOneWay", "oneway");
+                        }
                     }
                 }
                 #endregion
@@ -645,6 +661,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 _AkasaSSRAvailabilty.trips = AkasaTripslist;
 
                 var jsonAkasaSSRAvailabiltyRequest = JsonConvert.SerializeObject(_AkasaSSRAvailabilty, Formatting.Indented);
+                logs.WriteLogs(jsonAkasaSSRAvailabiltyRequest, "5-MealRequest", "AkasaOneWay", "oneway");
 
 
                 SSRAvailabiltyResponceModel AkasaSSRAvailabiltyResponceobj = new SSRAvailabiltyResponceModel();
@@ -654,7 +671,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 if (responseAkasaSSRAvailabilty.IsSuccessStatusCode)
                 {
                     var _AkasaResponseSSRAvailabilty = responseAkasaSSRAvailabilty.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogs(jsonAkasaSSRAvailabiltyRequest, "5-MealRequest", "AkasaOneWay", "oneway");
+                    
                     logs.WriteLogs(_AkasaResponseSSRAvailabilty, "5-mealResponse", "AkasaOneWay", "oneway");
 
                     var JsonAkasaSSRAvailabilty = JsonConvert.DeserializeObject<dynamic>(_AkasaResponseSSRAvailabilty);
@@ -762,8 +779,16 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     HttpContext.Session.SetString("AKMealsBaggage", JsonConvert.SerializeObject(AkasaSSRAvailabiltyResponceobj));
 
                 }
+                else
+                {
+                    var _AkasaResponseSSRAvailabiltyexception = responseAkasaSSRAvailabilty.Content.ReadAsStringAsync().Result;
+
+                    logs.WriteLogs(_AkasaResponseSSRAvailabiltyexception, "5-mealResponse", "AkasaOneWay", "oneway");
+                }
                 #endregion
                 #region SeatMap
+
+                logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AkasaAirSeatMap + journeyKey) + "?IncludePropertyLookup=true", "6-SeatMapRequest", "AkasaOneWay", "oneway");
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage AkresponseSeatmap = await client.GetAsync(AppUrlConstant.AkasaAirSeatMap + journeyKey + "?IncludePropertyLookup=true");
@@ -774,7 +799,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     //Logs logs = new Logs();
                     string columncount0 = string.Empty;
                     var _AkresponseSeatmap = AkresponseSeatmap.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AkasaAirSeatMap + journeyKey) + "?IncludePropertyLookup=true", "6-SeatMapRequest", "AkasaOneWay", "oneway");
+                 
                     logs.WriteLogs(_AkresponseSeatmap, "6-SeatMapResponse", "AkasaOneWay", "oneway");
                    // logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AkasaAirSeatMap + journeyKey + "?IncludePropertyLookup=true") + "\n\n Response: " + JsonConvert.SerializeObject(_AkresponseSeatmap), "SeatMap", "AkasaOneWay", "oneway");
                     var JsonAkasaObjSeatmap = JsonConvert.DeserializeObject<dynamic>(_AkresponseSeatmap);
@@ -890,6 +915,12 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                         x++;
                     }
                     HttpContext.Session.SetString("AKSeatmap", JsonConvert.SerializeObject(AkSeatMapResponceModel));
+                }
+                else
+                {
+                    var _AkresponseSeatmapexception = AkresponseSeatmap.Content.ReadAsStringAsync().Result;
+
+                    logs.WriteLogs(_AkresponseSeatmapexception, "6-SeatMapResponse", "AkasaOneWay", "oneway");
                 }
                 //}
                 #endregion
