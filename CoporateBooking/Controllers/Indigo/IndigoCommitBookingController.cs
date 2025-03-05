@@ -26,6 +26,7 @@ using System.Collections;
 using static DomainLayer.Model.SeatMapResponceModel;
 using static DomainLayer.Model.ReturnAirLineTicketBooking;
 using Indigo;
+using OnionConsumeWebAPI.Models;
 
 namespace OnionConsumeWebAPI.Controllers.Indigo
 {
@@ -56,21 +57,44 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
         decimal Totatamountmb = 0;
         DateTime Journeydatetime = new DateTime();
         string bookingKey = string.Empty;
+        private readonly IConfiguration _configuration;
 
-        public async Task<IActionResult> booking()
+        public IndigoCommitBookingController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public async Task<IActionResult> booking(string Guid)
         {
             AirLinePNRTicket _AirLinePNRTicket = new AirLinePNRTicket();
             _AirLinePNRTicket.AirlinePNR = new List<ReturnTicketBooking>();
-            string tokenview = HttpContext.Session.GetString("IndigoSignature");
-            if (tokenview == null) { tokenview = ""; }
-            token = string.Empty;
-            if (!string.IsNullOrEmpty(tokenview))
+            //string tokenview = HttpContext.Session.GetString("IndigoSignature");
+            //if (tokenview == null) { tokenview = ""; }
+            //token = string.Empty;
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            SearchLog searchLog = new SearchLog();
+            searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
+
+            token = tokenData.Token;
+
+            if (!string.IsNullOrEmpty(token))
             {
 
-                token = tokenview.Replace(@"""", string.Empty);
-                string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+                // token = tokenview.Replace(@"""", string.Empty);
+                //string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+
+                string passengernamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+
                 List<passkeytype> passeengerlist = (List<passkeytype>)JsonConvert.DeserializeObject(passengernamedetails, typeof(List<passkeytype>));
-                string contactdata = HttpContext.Session.GetString("ContactDetails");
+                //   string contactdata = HttpContext.Session.GetString("ContactDetails");
+
+                string contactdata = objMongoHelper.UnZip(tokenData.ContactRequest);
+
                 IndigoBookingManager_.UpdateContactsRequest contactList = (IndigoBookingManager_.UpdateContactsRequest)JsonConvert.DeserializeObject(contactdata, typeof(IndigoBookingManager_.UpdateContactsRequest));
                 using (HttpClient client1 = new HttpClient())
                 {
@@ -78,7 +102,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                     _commit objcommit = new _commit();
                     #region GetState
                     _sell objsell = new _sell();
-                    IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(token,0, "");
+                    IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(token, 0, "");
 
                     string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
                     decimal Totalpayment = 0M;
@@ -89,16 +113,19 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                     #endregion
                     #region Addpayment Commneted For Api Payment deduction
                     IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment, "OneWay");
-
+                    if (_BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors[0].ErrorDescription.ToLower().Contains("not enough funds available"))
+                    {
+                        _AirLinePNRTicket.ErrorDesc = "Not enough funds available.";
+                    }
                     #endregion
 
                     #region Commit Booking
 
                     IndigoBookingManager_.BookingCommitResponse _BookingCommitResponse = await objcommit.commit(token, contactList, passeengerlist, "OneWay");
 
-                    if (_BookingCommitResponse != null && _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator != null)
-                    {
-                        IndigoBookingManager_.GetBookingResponse _getBookingResponse = await objcommit.GetBookingdetails(token, _BookingCommitResponse, "OneWay");
+                        if (_BookingCommitResponse != null && _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator != null)
+                        {
+                            IndigoBookingManager_.GetBookingResponse _getBookingResponse = await objcommit.GetBookingdetails(token, _BookingCommitResponse, "OneWay");
 
                         if (_getBookingResponse != null)
                         {
@@ -109,9 +136,9 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             Hashtable htmealdata = new Hashtable();
                             Hashtable htbagdata = new Hashtable();
                             Hashtable htFFWDdata = new Hashtable();
-                            int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                            int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                            int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+                            int adultcount = searchLog.Adults;
+                            int childcount = searchLog.Children;
+                            int infantcount = searchLog.Infants;
                             int TotalCount = adultcount + childcount;
                             string _responceGetBooking = JsonConvert.SerializeObject(_getBookingResponse);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
@@ -123,13 +150,13 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             if (_getBookingResponse.Booking.Journeys[0].Segments[0].PaxSeats.Length > 0)
                                 _unitdesinator.unitDesignatorPax = _getBookingResponse.Booking.Journeys[0].Segments[0].PaxSeats[0].UnitDesignator;
 
-                            //GST Number
-                            if (_getBookingResponse.Booking.BookingContacts[0].TypeCode == "I")
-                            {
-                                returnTicketBooking.customerNumber = _getBookingResponse.Booking.BookingContacts[0].CustomerNumber;
-                                returnTicketBooking.companyName = _getBookingResponse.Booking.BookingContacts[0].CompanyName;
-                                returnTicketBooking.emailAddressgst = _getBookingResponse.Booking.BookingContacts[0].EmailAddress;
-                            }
+                                //GST Number
+                                if (_getBookingResponse.Booking.BookingContacts[0].TypeCode == "I")
+                                {
+                                    returnTicketBooking.customerNumber = _getBookingResponse.Booking.BookingContacts[0].CustomerNumber;
+                                    returnTicketBooking.companyName = _getBookingResponse.Booking.BookingContacts[0].CompanyName;
+                                    returnTicketBooking.emailAddressgst = _getBookingResponse.Booking.BookingContacts[0].EmailAddress;
+                                }
 
                             Contacts _contact = new Contacts();
                             _contact.phoneNumbers = _getBookingResponse.Booking.BookingContacts[0].HomePhone.ToString();
@@ -801,10 +828,13 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                         IndigoSessionmanager_.LogoutResponse _logoutResponse = new IndigoSessionmanager_.LogoutResponse();
                         _logoutRequestobj.ContractVersion = 456;
                         _logoutRequestobj.Signature = token;
-                        _getapiIndigo objIndigo = new _getapiIndigo();
+                        _getapiIndigo objIndigo = new _getapiIndigo();;
                         _logoutResponse = await objIndigo.Logout(_logoutRequestobj);
 
-                        logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay", "oneway");
+                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay", "oneway");
+
+                        logs.WriteLogs(JsonConvert.SerializeObject(_logoutRequestobj), "15-LogoutReq", "IndigoOneWay", "oneway");
+                        logs.WriteLogs(JsonConvert.SerializeObject(_logoutResponse), "15-LogoutRes", "IndigoOneWay", "oneway");
 
                     }
                     #endregion

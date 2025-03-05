@@ -1060,6 +1060,36 @@
 
                                 }
 
+                                else if (Model.SimpleAvailibilityaAddResponcelist[j].Airline == Airlines.AkasaAir && Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "CP")
+                                {
+                                    <td>7 Kg</td>
+                                    <td><strong>15 kg</strong></td>
+                                    <td>
+
+                                        <div>
+                                            Free (Upto 3 hours from departure)
+                                        </div>
+                                    </td>
+                                    <td>
+
+                                        <div>
+                                            99 (Upto 3 hours from departure)
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            -
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                           -
+                                        </div>
+                                    </td>
+
+                                }
+
 
 
                                 else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass == "AV")
@@ -1616,7 +1646,7 @@
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="taxes" name="taxes" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].taxamount" />
-
+	<input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" value="Book Now" class="button small-btn">
                                             </form>
                                         }
@@ -1625,7 +1655,7 @@
                                             <form asp-action="IndigoTripsell" asp-controller="IndigoResultFlightView">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
-
+<input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" value="Book Now" class="button small-btn">
                                             </form>
                                         }
@@ -1634,7 +1664,7 @@
                                             <form asp-action="AkasaAirTripsell" asp-controller="AKResultFlight">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
-
+<input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" value="Book Now" class="button small-btn">
                                             </form>
                                         }
@@ -1657,7 +1687,7 @@
                                             <form asp-action="GDSTripsell" asp-controller="GDSResultFlightView">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@data" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
-
+<input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" value="Book Now" class="button small-btn">
                                             </form>
                                         }
@@ -1666,7 +1696,7 @@
                                             <form asp-controller="FlightSearchIndex" asp-action="Tripsell">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
-
+<input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn">
                                             </form>
                                         }
@@ -2343,5 +2373,3 @@
     </div>
 
 }
-
-

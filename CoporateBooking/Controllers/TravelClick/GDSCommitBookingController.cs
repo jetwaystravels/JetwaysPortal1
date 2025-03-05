@@ -29,6 +29,7 @@ using Indigo;
 using OnionArchitectureAPI.Services.Travelport;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
+using OnionConsumeWebAPI.Models;
 using SpicejetBookingManager_;
 
 namespace OnionConsumeWebAPI.Controllers.TravelClick
@@ -59,28 +60,51 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
         decimal Totatamountmb = 0;
         DateTime Journeydatetime = new DateTime();
         string bookingKey = string.Empty;
+        private readonly IConfiguration _configuration;
 
-        public async Task<IActionResult> booking()
+        public GDSCommitBookingController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public async Task<IActionResult> booking(string Guid)
         {
             AirLinePNRTicket _AirLinePNRTicket = new AirLinePNRTicket();
             _AirLinePNRTicket.AirlinePNR = new List<ReturnTicketBooking>();
-            string tokenview = HttpContext.Session.GetString("GDSTraceid");
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+            SearchLog searchLog = new SearchLog();
+            searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
+
+
+
+            //string tokenview = HttpContext.Session.GetString("GDSTraceid");
             string _pricesolution = string.Empty;
             _pricesolution = HttpContext.Session.GetString("PricingSolutionValue_0");
-            if (tokenview == null) { tokenview = ""; }
-            token = string.Empty;
-            string newGuid = tokenview.Replace(@"""", string.Empty);
+            //if (tokenview == null) { tokenview = ""; }
+            //token = string.Empty;
+            string newGuid = tokenData.Token;
             if (newGuid == "" || newGuid == null)
             {
                 return RedirectToAction("Index");
             }
-            if (!string.IsNullOrEmpty(tokenview))
+            if (!string.IsNullOrEmpty(newGuid))
             {
 
-                token = tokenview.Replace(@"""", string.Empty);
-                string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+                // token = tokenview.Replace(@"""", string.Empty);
+                // string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+
+                string passengernamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+
                 List<passkeytype> passeengerlist = (List<passkeytype>)JsonConvert.DeserializeObject(passengernamedetails, typeof(List<passkeytype>));
-                string contactdata = HttpContext.Session.GetString("GDSContactdetails");
+                // string contactdata = HttpContext.Session.GetString("GDSContactdetails");
+
+                string contactdata = objMongoHelper.UnZip(tokenData.ContactRequest);
+
                 ContactModel contactList = (ContactModel)JsonConvert.DeserializeObject(contactdata, typeof(ContactModel));
                 using (HttpClient client1 = new HttpClient())
                 {
@@ -116,7 +140,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     _userName = "Universal API/uAPI5098257106-beb65aec";
                     _password = "Q!f5-d7A3D";
                     StringBuilder createPNRReq = new StringBuilder();
-                    string AdultTraveller = HttpContext.Session.GetString("PassengerNameDetails");
+                    string AdultTraveller = passengernamedetails;
                     string _data = HttpContext.Session.GetString("SGkeypassenger");
                     string _Total = HttpContext.Session.GetString("Total");
 
@@ -196,9 +220,12 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                             Hashtable htseatdata = new Hashtable();
                             Hashtable htmealdata = new Hashtable();
                             Hashtable htbagdata = new Hashtable();
-                            int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                            int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                            int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+                            //int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
+                            //int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
+                            //int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+							int adultcount = searchLog.Adults;
+							int childcount = searchLog.Children;
+							int infantcount = searchLog.Infants;
                             int TotalCount = adultcount + childcount;
                             //string _responceGetBooking = JsonConvert.SerializeObject(_getBookingResponse);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();

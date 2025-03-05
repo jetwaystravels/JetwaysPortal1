@@ -60,13 +60,27 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
         double TotalAmountMeal = 0;
         double TotaAmountBaggage = 0;
         Logs logs = new Logs();
-        public async Task<IActionResult> AkasaAirBookingView()
+		private readonly IConfiguration _configuration;
+
+		public AkasaAirCommitBookingController(IConfiguration configuration)
+		{
+			_configuration = configuration;
+		}
+		public async Task<IActionResult> AkasaAirBookingView(string Guid)
         {
             AirLinePNRTicket _AirLinePNRTicket = new AirLinePNRTicket();
             _AirLinePNRTicket.AirlinePNR = new List<ReturnTicketBooking>();
-            string tokenview = HttpContext.Session.GetString("AkasaTokan");
-            if (tokenview == null) { tokenview = ""; }
-            token = tokenview.Replace(@"""", string.Empty);
+			//string tokenview = HttpContext.Session.GetString("AkasaTokan");
+			//if (tokenview == null) { tokenview = ""; }
+			//token = tokenview.Replace(@"""", string.Empty);
+
+
+			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+
+			token = tokenData.Token;
 
             using (HttpClient client = new HttpClient())
             {

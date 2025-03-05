@@ -4,9 +4,10 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 {
     public class AkasaAirPaymentController : Controller
     {
-        public IActionResult AkasaAirPaymentView()
+        public IActionResult AkasaAirPaymentView(string GUID)
         {
-            return View();
+			ViewBag.Guid = GUID;
+			return View();
         }
     }
 }

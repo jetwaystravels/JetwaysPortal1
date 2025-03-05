@@ -773,8 +773,7 @@
 
 															for (int s = 0; s < Model.AkMealslist.legSsrs[1].legssrs.Count; s++)
 															{
-																try
-																{
+																
 																	MealDisplay = Model.AkMealslist.legSsrs[1].legssrs[s].name;
 																	string ssrprice = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[0].price;
 																	string Mealcode = Model.AkMealslist.legSsrs[1].legssrs[s].ssrCode;
@@ -783,15 +782,11 @@
 																	string passengerKey = Model.AkMealslist.legSsrs[1].legssrs[s].legpassengers[pas].passengerKey;
 																	ssrAvailable = Model.AkMealslist.legSsrs[1].legssrs[s].available.ToString();
 																	ssrType = Model.AkMealslist.legSsrs[1].legssrs[s].ssrType;
-																	if (ssrkey != null)
+																 if (MealDisplay != null)
 																	{
 																		mealOptions.Add(new SelectListItem { Text = Mealname, Value = ssrkey });
 																	}
-																}
-																catch (Exception ex)
-																{
-
-																}
+																
 
 
 															}

@@ -5,8 +5,9 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 {
     public class GDSPaymentGatewayController : Controller
     {
-        public IActionResult GDSPayment()
+        public IActionResult GDSPayment(string Guid)
         {
+            ViewBag.Guid = Guid;
             return View();
         }
     }

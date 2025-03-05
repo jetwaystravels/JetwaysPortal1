@@ -15,12 +15,19 @@ using OnionArchitectureAPI.Services.Travelport;
 using OnionConsumeWebAPI.Extensions;
 using System.Text;
 using static DomainLayer.Model.GDSResModel;
+using OnionConsumeWebAPI.Models;
 
 namespace OnionConsumeWebAPI.Controllers.TravelClick
 {
     public class GDSResultFlightViewController : Controller
     {
         Logs logs = new Logs();
+        private readonly IConfiguration _configuration;
+
+        public GDSResultFlightViewController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         PaxPriceType[] getPaxdetails(int adult_, int child_, int infant_)
         {
             PaxPriceType[] paxPriceTypes = null;
@@ -83,14 +90,14 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
         }
 
         [HttpPost] // this APi is used to map trip data Amount
-        public async Task<ActionResult> GDSTripsell(string fareKey, string journeyKey)
+        public async Task<ActionResult> GDSTripsell(string fareKey, string journeyKey, string Guid)
         {
             AAIdentifier AAIdentifierobj = null;
             string _targetBranch = string.Empty;
             string _userName = string.Empty;
             string _password = string.Empty;
-            TempData["farekey"] = fareKey;
-            TempData["journeyKey"] = journeyKey;
+            //TempData["farekey"] = fareKey;
+            //TempData["journeyKey"] = journeyKey;
             dynamic Airfaredata = null;
             if (!string.IsNullOrEmpty(fareKey))
             {
@@ -99,14 +106,23 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             //List<_credentials> credentialslist = new List<_credentials>();
             using (HttpClient client = new HttpClient())
             {
-                int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
-                int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
-                int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+
+                MongoHelper objMongoHelper = new MongoHelper();
+                MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+                MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+                SearchLog searchLog = new SearchLog();
+                searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
+
+                tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
+
+                int adultcount = searchLog.Adults;
+                int childcount = searchLog.Children;
+                int infantcount = searchLog.Infants;
                 int TotalCount = adultcount + childcount;
                 string str3 = string.Empty;
-                string tokenview = HttpContext.Session.GetString("GDSTraceid");
-                if (tokenview == null) { tokenview = ""; }
-                string newGuid = tokenview.Replace(@"""", string.Empty);
+                //string tokenview = HttpContext.Session.GetString("GDSTraceid");
+                //if (tokenview == null) { tokenview = ""; }
+                string newGuid = tokenData.Token;
                 if (newGuid == "" || newGuid == null)
                 {
                     return RedirectToAction("Index");
@@ -971,7 +987,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     }
                     #endregion
                 }
-                return RedirectToAction("GDSSaverTripsell", "GDSTripsell");
+                return RedirectToAction("GDSSaverTripsell", "GDSTripsell", new { Guid = Guid });
             }
         }
 

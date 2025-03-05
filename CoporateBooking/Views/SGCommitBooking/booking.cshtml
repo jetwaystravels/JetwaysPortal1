@@ -566,6 +566,26 @@
                                                     </tr>
                                                 }
 
+                                                if (@Model.AirlinePNR[a].breakdown.passengerTotals.specialServices.total == 0)
+                                                {
+                                                    if (@Model.AirlinePNR[a].Mealdata.Count == 0)
+                                                    {
+                                                        <tr style="display: none;">
+                                                            <td>Addon Meal Amount:</td>
+                                                            <td>-</td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td>Addon Meal Amount:</td>
+                                                            <td>Free</td>
+                                                        </tr>
+                                                    }
+
+
+                                                }
+
                                                 if (@Model.AirlinePNR[a].breakdown.passengerTotals.baggage.total > 0)
                                                 {
 
@@ -575,12 +595,54 @@
                                                     </tr>
                                                 }
 
+                                                if (@Model.AirlinePNR[a].breakdown.passengerTotals.baggage.total == 0)
+                                                {
+                                                    if (@Model.AirlinePNR[a].Bagdata.Count == 0)
+                                                    {
+                                                        <tr style="display: none;">
+                                                            <td>Addon Bagg Amount:</td>
+                                                            <td>-</td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td>Addon Bagg Amount:</td>
+                                                            <td>Free</td>
+                                                        </tr>
+
+                                                    }
+
+
+                                                }
+
+
                                                 if (@Model.AirlinePNR[a].breakdown.passengerTotals.seats.total > 0)
                                                 {
                                                     <tr>
                                                         <td>Seat Amount:</td>
                                                         <td>Rs. @Model.AirlinePNR[a].breakdown.passengerTotals.seats.total</td>
                                                     </tr>
+                                                }
+
+                                                if (@Model.AirlinePNR[a].breakdown.passengerTotals.seats.total == 0)
+                                                {
+                                                    if (@Model.AirlinePNR[a].Seatdata.Count == 0)
+                                                    {
+                                                        <tr style="display: none;">
+                                                            <td>Seat Amount:</td>
+                                                            <td>-</td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr>
+                                                            <td>Seat Amount:</td>
+                                                            <td>Free</td>
+                                                        </tr>
+                                                    }
+
+
                                                 }
                                             }
                                             <tr style="background:#FCE1E1;">
