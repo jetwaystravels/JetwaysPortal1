@@ -971,7 +971,12 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                     }
                                                     else
                                                     {
-                                                        continue;
+                                                        passengertype = "";
+                                                        fareAmount = 0.0M;
+                                                        fareTotalsum = 0.0M;
+                                                        servicecharge = 0;
+
+                                                        //continue;
                                                     }
 
                                                     discountamount = 0M;// JsonObj.data.faresAvailable[fareAvailabilityKey].fares[0].passengerFares[0].discountedFare;
@@ -2321,7 +2326,11 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                         }
                                                         else
                                                         {
-                                                            continue;
+                                                            passengertype = "";
+                                                            fareAmount = 0.0M;
+                                                            fareTotalsum = 0.0M;
+                                                            servicecharge = 0;
+                                                            //continue;
                                                         }
 
                                                         finalamount = 0;

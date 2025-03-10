@@ -1692,10 +1692,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].FlightDesignator.CarrierCode = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].FlightDesignator.CarrierCode; ;
                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].FlightDesignator.FlightNumber = _getPriceItineraryRS.Booking.Journeys[i].Segments[j].FlightDesignator.FlightNumber;
                                             int numinfant = 0;
-                                            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("infantCount")))
-                                            {
-                                                numinfant = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
-                                            }
+                                            numinfant = infantcount;
+                                            //if (!string.IsNullOrEmpty(HttpContext.Session.GetString("infantCount")))
+                                            //{
+                                            //numinfant = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
+                                            //}
+
                                             bool infant = false;
                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs = new PaxSSR[numinfant];
 
