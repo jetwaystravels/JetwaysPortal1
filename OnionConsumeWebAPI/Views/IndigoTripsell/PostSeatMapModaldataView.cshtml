@@ -782,16 +782,17 @@
             updatetotal();
             localStorage.setItem("selectedIds1", JSON.stringify(checkedValues));
             localStorage.setItem("selectedIds2", JSON.stringify(checkedValues2));
-
             updateCombinedTotal();
-
-
         });
-
-
-
     });
 
+    window.addEventListener("beforeunload", function () {
+        localStorage.removeItem("checkedValues");
+        localStorage.removeItem("checkedValues2");
+        localStorage.removeItem("selectedIds");
+        localStorage.removeItem("selectedIds1");
+        localStorage.removeItem("selectedIds2");
+    });
 
 
 </script>

@@ -1030,10 +1030,11 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 {
                                     for (int i2 = 0; i2 < fareIndividualsconnectedList.Count; i2++)
                                     {
-                                        if (fareIndividualsconnectedList[i2].procuctclass.Equals(fareIndividualsList[i1].procuctclass))
+                                        if (fareIndividualsconnectedList[i2].procuctclass.Equals(fareIndividualsList[i1].procuctclass) && i2 == i1)
                                         {
                                             fareIndividualsList[i1].fareKey += "^" + fareIndividualsconnectedList[i2].fareKey;
                                             fareIndividualsList[i1].faretotal += fareIndividualsconnectedList[i2].faretotal;
+                                            break;
                                         }
 
                                     }
@@ -2385,6 +2386,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                             {
                                                 fareIndividualsList[i1].fareKey += "^" + fareIndividualsconnectedList[i2].fareKey;
                                                 fareIndividualsList[i1].faretotal += fareIndividualsconnectedList[i2].faretotal;
+                                                break;
                                             }
                                             else
                                                 continue;

@@ -593,27 +593,15 @@
 														}
 														<div class="d-flex">
 
-															@if (string.IsNullOrEmpty(Mealname))
-
-															{
-
-																<select style="background:#f0f0f0" id="ddlMealOptions" class="servc-bordr servc-bordrm1" disabled>
-																	<option selected="selected" value="">Meal Unavailable</option>
-																</select>
-															}
-															else
-															{
-																<select id="ddlMealOptions" class="servc-bordr">
-																	<option value=""><b>Please select Meal</b></option>
-																	@foreach (var option in mealOptions)
-																	{
-
-																		<option value="@option.Value">
-																			@option.Text
-																		</option>
-																	}
-																</select>
-															}
+															<select id="ddlMealOptions" class="servc-bordr" @(mealOptions.Count == 0 ? "readonly" : "")>
+																<option value=""><b>Please select Meal</b></option>
+																@foreach (var option in mealOptions)
+																{
+																	<option value="@option.Value">
+																		@option.Text
+																	</option>
+																}
+															</select>
 
 															<input type="hidden" id="hiddenSsrKey" name="ssrKey" value="" />
 
@@ -791,24 +779,15 @@
 
 															}
 															<div class="d-flex">
-																@if (string.IsNullOrEmpty(MealDisplay))
-																{
-																	<select style="background:#f0f0f0" id="ddlMealOptions" class="servc-bordr servc-bordrm1" disabled>
-																		<option selected="selected" value="">Meal Unavailable</option>
-																	</select>
-																}
-																else
-																{
-																	<select id="ddlMealOptions" class="servc-bordrCon">
-																		<option value=""><b>Please select Meal</b></option>
-																		@foreach (var option in mealOptions)
-																		{
-																			<option value="@option.Value">
-																				@option.Text
-																			</option>
-																		}
-																	</select>
-																}
+																<select id="ddlMealOptions" class="servc-bordrCon" @(mealOptions.Count == 0 ? "readonly" : "")>
+																<option value=""><b>Please select Meal</b></option>
+																	@foreach (var option in mealOptions)
+																	{
+																		<option value="@option.Value">
+																			@option.Text
+																		</option>
+																	}
+																</select>
 
 																<input type="hidden" id="hiddenSsrKey2" name="ssrKey" value="" />
 															</div>
