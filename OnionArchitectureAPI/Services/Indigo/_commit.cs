@@ -16,7 +16,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             BookingCommitRequest _bookingCommitRequest = new BookingCommitRequest();
             BookingCommitResponse _BookingCommitResponse = new BookingCommitResponse();
             _bookingCommitRequest.Signature = Signature;
-            _bookingCommitRequest.ContractVersion = 456;
+            _bookingCommitRequest.ContractVersion = 452;
             _bookingCommitRequest.BookingCommitRequestData = new BookingCommitRequestData();
             _bookingCommitRequest.BookingCommitRequestData.SourcePOS = GetPointOfSale();
             _bookingCommitRequest.BookingCommitRequestData.CurrencyCode = "INR";
@@ -36,9 +36,13 @@ namespace OnionArchitectureAPI.Services.Indigo
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].AddressLine1 = "A";
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].AddressLine2 = "B";
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].City = "Delhi";
+            _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].ProvinceState = "DL";
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].CountryCode = "IN";
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].CultureCode = "en-GB";
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].DistributionOption = DistributionOption.Email;
+            _bookingCommitRequest.BookingCommitRequestData.DistributeToContactsSpecified = true;
+            _bookingCommitRequest.BookingCommitRequestData.DistributeToContacts = true;
+
 
             _BookingCommitResponse = await _obj.BookingCommit(_bookingCommitRequest);
 
@@ -70,7 +74,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             AddPaymentToBookingRequest _bookingpaymentRequest = new AddPaymentToBookingRequest();
             AddPaymentToBookingResponse _BookingPaymentResponse = new AddPaymentToBookingResponse();
             _bookingpaymentRequest.Signature = Signature;
-            _bookingpaymentRequest.ContractVersion = 456;
+            _bookingpaymentRequest.ContractVersion = 452;
             _bookingpaymentRequest.addPaymentToBookingReqData = new AddPaymentToBookingRequestData();
             _bookingpaymentRequest.addPaymentToBookingReqData.MessageStateSpecified = true;
             _bookingpaymentRequest.addPaymentToBookingReqData.MessageState = MessageState.New;

@@ -24,7 +24,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             _getSellRQ.SellRequestData.SellBy = SellBy.JourneyBySellKey;
             _getSellRQ.SellRequestData.SellJourneyByKeyRequest = new SellJourneyByKeyRequest();
             _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData = new SellJourneyByKeyRequestData();
-            _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.ActionStatusCode = "NN";
+            _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.ActionStatusCode = "NU";
             _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.CurrencyCode = "INR";
             _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.JourneySellKeys = new SellKeyList[2];
             for (int i = 0; i < _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.JourneySellKeys.Length; i++)
@@ -73,7 +73,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             _getSellRQ = new SellRequest();
             _getSellRQ.SellRequestData = new SellRequestData(); ;
             _getSellRQ.Signature = Signature;
-            _getSellRQ.ContractVersion = 456;
+            _getSellRQ.ContractVersion = 452;
             _getSellRQ.SellRequestData.SellBy = SellBy.JourneyBySellKey;
             if (!string.IsNullOrEmpty(_Jparts))
             {
@@ -88,7 +88,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             }
             _getSellRQ.SellRequestData.SellJourneyByKeyRequest = new SellJourneyByKeyRequest();
             _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData = new SellJourneyByKeyRequestData();
-            _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.ActionStatusCode = "NN";
+            _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.ActionStatusCode = "NU";
             _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.CurrencyCode = "INR";
             _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.JourneySellKeys = new SellKeyList[1];
             _getSellRQ.SellRequestData.SellJourneyByKeyRequest.SellJourneyByKeyRequestData.JourneySellKeys[0] = new SellKeyList();
@@ -268,11 +268,12 @@ namespace OnionArchitectureAPI.Services.Indigo
             _getPriceItineraryRQ = new PriceItineraryRequest();
             _getPriceItineraryRQ.ItineraryPriceRequest = new ItineraryPriceRequest();
             _getPriceItineraryRQ.Signature = Signature;
-            _getPriceItineraryRQ.ContractVersion = 456;
+            _getPriceItineraryRQ.ContractVersion = 452;
             _getPriceItineraryRQ.ItineraryPriceRequest.PriceItineraryBy = PriceItineraryBy.JourneyBySellKey;
 
             _getPriceItineraryRQ.ItineraryPriceRequest.BookingStatus = default;
             _getPriceItineraryRQ.ItineraryPriceRequest.SellByKeyRequest = new SellJourneyByKeyRequestData();
+            _getPriceItineraryRQ.ItineraryPriceRequest.SellByKeyRequest.ActionStatusCode = "NU";
             SellKeyList _getSellKeyList = new SellKeyList();
             _getSellKeyList.JourneySellKey = _JourneykeyData;
             _getSellKeyList.FareSellKey = _FareKeyData;
@@ -370,7 +371,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             {
                 SourcePOS = new PointOfSale();
                 SourcePOS.State = MessageState.New;
-                SourcePOS.OrganizationCode = "";
+                SourcePOS.OrganizationCode = "OTI122";
                 SourcePOS.AgentCode = "AG";
                 SourcePOS.LocationCode = "";
                 SourcePOS.DomainCode = "WWW";

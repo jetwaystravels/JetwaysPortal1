@@ -61,6 +61,49 @@
             new { MealCode = "NCOB", MealImage = "Cheddar & Chives Omelette" },
             new { MealCode = "NCCB", MealImage = "Chicken Ghee Roast with Siracha Fried Rice" },
             new { MealCode = "CFMR", MealImage = "BLACK COFFEE" },
+            
+            //Spicejet Meal
+            new { MealCode = "VIGB", MealImage = "Dry Fruits Gujiya" },
+            new { MealCode = "VGSW", MealImage = "Cucumber, tomato cheese in multigrain bread" },
+            new { MealCode = "VGML", MealImage = "Masala Dosa with Tomato onion uttapam and kanjivaram mini idli in sambar along with Coconut Chutney" },
+            new { MealCode = "VCC6", MealImage = "Vegetable Daliya" },
+            new { MealCode = "VCC5", MealImage = "Vegetable Pasta in Neapolitan sauce" },
+            new { MealCode = "VCC2", MealImage = "Vegetable in Red Thai Curry with Steamed Rice" },
+            new { MealCode = "NVSW", MealImage = "Non Veg Sandwich" },
+            new { MealCode = "NVML", MealImage = "Murg lababdar on bed of palak pulao Dal panchrattni" },
+            new { MealCode = "NCC6", MealImage = "Chicken schezwan on bed of fried rice" },
+            new { MealCode = "NCC5", MealImage = "Tawa Fish masala on bed of Steamed rice with tadka masoor dal" },
+            new { MealCode = "NCC4", MealImage = "Tandoori Chicken tangri with chicken haryali tikka & vegetable shami kebab" },
+            new { MealCode = "NCC1", MealImage = "Grilled Chicken Breast with Mushroom Sauce, Yellow Rice, Sautéed Carrots Beans Baton" },
+            new { MealCode = "LCVS", MealImage = "Low cal salad Vegetarian" },
+            new { MealCode = "LCNS", MealImage = "Low cal salad Non - Vegetarian" },
+            new { MealCode = "JNSW", MealImage = "Jain Cold Sandwich (current Cucumber and Tomato sandwich)" },
+            new { MealCode = "JNML", MealImage = "Jain Hot Meal" },
+            new { MealCode = "GFVG", MealImage = "Vegetarian Gluten-free Hot Meal" },
+            new { MealCode = "GFNV", MealImage = "Non - Vegetarian Gluten-free Hot Meal" },
+            new { MealCode = "GFCM", MealImage = "Vegetarian Gluten-free Cold Meal (Dhokla)" },
+            new { MealCode = "FPML", MealImage = "Fruit Platter"},
+            new { MealCode = "DNVL", MealImage = "Non - Vegetarian Diabetic Hot Meal"},
+            new { MealCode = "DBML", MealImage = "Vegetarian Diabetic Hot Meal"},
+            new { MealCode = "NCC2", MealImage = "Chicken in Red Thai Curry with Steamed Rice"},
+            new { MealCode = "CHML", MealImage = "Kid's meal"},
+
+            //Indigo Meal..
+            new { MealCode = "VLML", MealImage = "Veg Lactose Meal / Paneer Bhatti" },
+            new { MealCode = "VGAN", MealImage = "Vegan Meal / 2 Dips with Baked Pita" },
+            new { MealCode = "TCSW", MealImage = "Tomato Cucumber Cheese Lettuce Sandwich" },
+            new { MealCode = "LCVG", MealImage = "Low Calorie Veg / Paneer Bhatti" },
+            new { MealCode = "JNML", MealImage = "Jain Meal / Tomato Cucumber" },
+            new { MealCode = "GFNV", MealImage = "Gluten Free / Chicken Supreme Salad" },
+            new { MealCode = "DBVG", MealImage = "Diabetic Veg Meal / Paneer Bhatti" },
+            new { MealCode = "DBNV", MealImage = "Diabetic Non-Veg / Chicken Supreme Salad" },
+            new { MealCode = "CNWT", MealImage = "Cashew (Salted)" },
+            new { MealCode = "CJSW", MealImage = "Chicken Junglee Sandwich" },
+            new { MealCode = "CHVM", MealImage = "Kiddie Delight - Veg" },
+            new { MealCode = "CHNM", MealImage = "Kiddie Delight - Non-Veg" },
+            new { MealCode = "CHBR", MealImage = "Chicken Biryani" },
+
+          
 
             //Akasa Meal
            

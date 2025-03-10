@@ -31,7 +31,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             //  _ContactModel.emailAddress = passengerdetails.Email;
             _ContactModel6E.updateContactsRequestData = new UpdateContactsRequestData();
             _ContactModel6E.Signature = Signature;
-            _ContactModel6E.ContractVersion = 456;
+            _ContactModel6E.ContractVersion = 452;
             _ContactModel6E.updateContactsRequestData.BookingContactList = new BookingContact[1];
             _ContactModel6E.updateContactsRequestData.BookingContactList[0] = new BookingContact();
             _ContactModel6E.updateContactsRequestData.BookingContactList[0].Names = new BookingName[1];
@@ -75,7 +75,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             //  _ContactModel.emailAddress = passengerdetails.Email;
             _ContactModel6E.updateContactsRequestData = new UpdateContactsRequestData();
             _ContactModel6E.Signature = Signature;
-            _ContactModel6E.ContractVersion = 456;
+            _ContactModel6E.ContractVersion = 452;
             _ContactModel6E.updateContactsRequestData.BookingContactList = new BookingContact[1];
             _ContactModel6E.updateContactsRequestData.BookingContactList[0] = new BookingContact();
             _ContactModel6E.updateContactsRequestData.BookingContactList[0].Names=new BookingName[1];
@@ -127,7 +127,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             {
                 updatePaxReq = new UpdatePassengersRequest(); //Assign Signature generated from Session
                 updatePaxReq.Signature = Signature;
-                updatePaxReq.ContractVersion = 456;
+                updatePaxReq.ContractVersion = 452;
                 updatePaxReq.updatePassengersRequestData = new UpdatePassengersRequestData();
                 updatePaxReq.updatePassengersRequestData.Passengers = GetPassenger(passengerdetails);
 
@@ -325,12 +325,12 @@ namespace OnionArchitectureAPI.Services.Indigo
                         if (_paxes.Childs_[cntChd].title.ToUpper().Replace(".", "") == "MSTR")
                         {
                             p1.PassengerInfo.Gender = Gender.Male;
-                            p1.PassengerInfo.WeightCategory = WeightCategory.Male;
+                            p1.PassengerInfo.WeightCategory = WeightCategory.Child;
                         }
                         else
                         {
                             p1.PassengerInfo.Gender = Gender.Female;
-                            p1.PassengerInfo.WeightCategory = WeightCategory.Female;
+                            p1.PassengerInfo.WeightCategory = WeightCategory.Child;
                         }
                         p1.PassengerTypeInfos = new PassengerTypeInfo[1];
                         p1.PassengerTypeInfos[0] = new PassengerTypeInfo();
