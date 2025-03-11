@@ -406,6 +406,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         for (int i = 0; i < JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes].Count; i++)
                         {
                             var journeyData = JsonObj.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                            int stops = journeyData.stops;
                             string journeyKey = journeyData.journeyKey;
                             var uniqueJourney = journeyData;
                             Designator Designatorobj = new Designator();
@@ -568,7 +569,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 _SimpleAvailibilityaAddResponceobj.faresIndividual = fareIndividualsList;
                                 _SimpleAvailibilityaAddResponceobj.Airline = Airlines.Airasia;
                                 _SimpleAvailibilityaAddResponceobj.uniqueId = uniqueidx;
-                                if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0)
+                                if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0 || stops>=2)
                                     continue;
                                 uniqueidx++;
                                 SimpleAvailibilityaAddResponcelist.Add(_SimpleAvailibilityaAddResponceobj);
@@ -659,6 +660,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     for (int i = 0; i < JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes].Count; i++)
                                     {
                                         var journey = JsonAkasaAir.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                        int stops = journey.stops;
+                                       
                                         string journeyKey = journey.journeyKey;
                                         var uniqueJourney = journey;
 
@@ -817,7 +820,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                             _SimpleAvailibilityaAddResponceobj.faresIndividual = AkasafareIndividualsList;
                                             _SimpleAvailibilityaAddResponceobj.Airline = Airlines.AkasaAir;
                                             _SimpleAvailibilityaAddResponceobj.uniqueId = uniqueidx;
-                                            if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0)
+                                            if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0 || stops>=2)
                                                 continue;
                                             uniqueidx++;
                                             SimpleAvailibilityaAddResponcelist.Add(_SimpleAvailibilityaAddResponceobj);
@@ -1762,6 +1765,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             for (int i = 0; i < JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes].Count; i++)
                             {
                                 var journeyR = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                var stopsR = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].stops;
                                 string journeyKey = journeyR.journeyKey;
                                 var destination = journeyR;
                                 Designator Designatorobj = new Designator();
@@ -1902,7 +1906,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     _SimpleAvailibilityaAddResponceobjR.faresIndividual = fareIndividualsList;
                                     _SimpleAvailibilityaAddResponceobjR.uniqueId = uniqueidx;
                                     _SimpleAvailibilityaAddResponceobjR.Airline = Airlines.Airasia;
-                                    if (_SimpleAvailibilityaAddResponceobjR.fareTotalsum <= 0)
+                                    if (_SimpleAvailibilityaAddResponceobjR.fareTotalsum <= 0 || stopsR >=2)
                                         continue;
                                     uniqueidx++;
                                     SimpleAvailibilityaAddResponcelistR.Add(_SimpleAvailibilityaAddResponceobjR);
@@ -2010,6 +2014,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     for (int i = 0; i < count; i++)
                                     {
                                         var journeyR = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
+                                        var stopsR = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i].stops;
                                         string journeyKey = journeyR.journeyKey;
                                         var destination = JsonObjR.data.results[0].trips[0].journeysAvailableByMarket[oriDes][i];
                                         Designator Designatorobj = new Designator();
@@ -2157,7 +2162,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                             _SimpleAvailibilityaAddResponceobjR.uniqueId = i;
                                             _SimpleAvailibilityaAddResponceobjR.Airline = Airlines.AkasaAir;
                                             _SimpleAvailibilityaAddResponceobjR.uniqueId = uniqueidx;
-                                            if (_SimpleAvailibilityaAddResponceobjR.fareTotalsum <= 0)
+                                            if (_SimpleAvailibilityaAddResponceobjR.fareTotalsum <= 0 || stopsR>=2)
                                                 continue;
                                             uniqueidx++;
                                             SimpleAvailibilityaAddResponcelistR.Add(_SimpleAvailibilityaAddResponceobjR);

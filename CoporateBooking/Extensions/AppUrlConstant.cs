@@ -63,5 +63,10 @@
         public static string AkasaAirPNRBooking = URLAkasaAir + "/api/nsk/v1/booking/retrieve/byRecordLocator/";
         #endregion
 
+        #region GST URLs
+
+        public static string CPGST = BaseURL + "api/CP_GST/GetGstDetail";
+        #endregion
+
     }
 }

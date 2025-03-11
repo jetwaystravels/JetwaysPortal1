@@ -17,6 +17,7 @@ builder.Services.AddScoped<ITicketBooking, TicketBookingServices>();
 builder.Services.AddScoped<Itb_Booking, tb_BookingServices>();
 builder.Services.AddScoped<IGSTDetails, GSTDetailsServices>();
 builder.Services.AddScoped<IAdmin, AdminService>();
+builder.Services.AddScoped<ICP_GstDetail<CP_GSTModel>, CP_GSTService>();
 builder.Services.BuildServiceProvider();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

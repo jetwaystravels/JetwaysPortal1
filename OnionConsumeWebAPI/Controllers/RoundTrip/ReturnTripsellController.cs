@@ -1600,20 +1600,6 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             AirAsiaTripResponceobj.journeys = AAJourneyList;
                             AirAsiaTripResponceobj.passengers = passkeylist;
                             AirAsiaTripResponceobj.passengerscount = passengercount;
-
-                            Passengerdata = new List<string>();
-                            Passengerdata.Add("<Start>" + JsonConvert.SerializeObject(AirAsiaTripResponceobj) + "<End>");
-                            HttpContext.Session.SetString("SGkeypassengerRT", JsonConvert.SerializeObject(AirAsiaTripResponceobj));
-                            HttpContext.Session.SetString("keypassengerdata", JsonConvert.SerializeObject(Passengerdata));
-
-                            if (!string.IsNullOrEmpty(JsonConvert.SerializeObject(Passengerdata)))
-                            {
-                                if (Passengerdata.Count == 2)
-                                {
-                                    MainPassengerdata = new List<string>();
-                                }
-                                MainPassengerdata.Add(JsonConvert.SerializeObject(Passengerdata));
-                            }
                             #endregion
 
                             #region SpiceJet ItenaryRequest
@@ -1798,6 +1784,20 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             }
                             AirAsiaTripResponceobj.basefaretax += AirAsiaTripResponceobj.infttax;
                             #endregion
+
+                            Passengerdata = new List<string>();
+                            Passengerdata.Add("<Start>" + JsonConvert.SerializeObject(AirAsiaTripResponceobj) + "<End>");
+                            HttpContext.Session.SetString("SGkeypassengerRT", JsonConvert.SerializeObject(AirAsiaTripResponceobj));
+                            HttpContext.Session.SetString("keypassengerdata", JsonConvert.SerializeObject(Passengerdata));
+
+                            if (!string.IsNullOrEmpty(JsonConvert.SerializeObject(Passengerdata)))
+                            {
+                                if (Passengerdata.Count == 2)
+                                {
+                                    MainPassengerdata = new List<string>();
+                                }
+                                MainPassengerdata.Add(JsonConvert.SerializeObject(Passengerdata));
+                            }
                             HttpContext.Session.SetString("keypassengerItanary", JsonConvert.SerializeObject(AirAsiaTripResponceobj));
                         }
                     }

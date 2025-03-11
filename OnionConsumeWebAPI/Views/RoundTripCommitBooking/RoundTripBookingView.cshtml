@@ -862,7 +862,7 @@
                                                             }
 
                                                             <td>@Model.AirlinePNR[a].passengers[i2].MobNumber</td>
-                                                            <td>@Model.AirlinePNR[0].recordLocator</td>
+                                                            <td>@Model.AirlinePNR[a].recordLocator</td>
                                                             <td>Confirm</td>
                                                             @if (i3 == 0)
                                                             {
@@ -1491,9 +1491,31 @@
                                                                 {
                                                                     hashdata = @Model.AirlinePNR[a].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
                                                                 }
-                                                                if (htmeal != null)
+                                                                // if (htmeal != null)
+                                                                // {
+                                                                //     <td>@htmeal[hashdata]</td>
+                                                                // }
+
+                                                                if (htmeal != null && htmeal.ContainsKey(hashdata))
                                                                 {
-                                                                    <td>@htmeal[hashdata]</td>
+
+                                                                    var Mealcode = htmeal[hashdata].ToString();
+                                                                    var MealName = MealImageList.GetAllmeal()
+                                                                    .Where(x => Mealcode.Contains(x.MealCode))
+                                                                    .Select(x => x.MealImage)
+                                                                    .FirstOrDefault();
+                                                                    if (Mealcode != null)
+                                                                    {
+
+                                                                        <td>@Mealcode-@MealName</td>
+
+                                                                    }
+
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>NA</td>
                                                                 }
 
                                                                 // if (htbag != null)

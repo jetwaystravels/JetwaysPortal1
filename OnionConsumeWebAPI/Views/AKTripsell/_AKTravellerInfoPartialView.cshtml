@@ -577,7 +577,13 @@
 
 	});
 
+		$('#dataPopup').on('show.bs.modal', function () {
+			$('body').css('overflow', 'hidden');
+		});
 
+		$('#dataPopup').on('hidden.bs.modal', function () {
+			$('body').css('overflow', 'auto');
+		});
 	/************************************************************/
 	function isValidFebruaryDay(year, day) {
 	    year = parseInt(year);

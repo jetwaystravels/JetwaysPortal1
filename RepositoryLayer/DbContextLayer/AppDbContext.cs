@@ -39,6 +39,7 @@ namespace RepositoryLayer.DbContextLayer
         public DbSet<ContactDetail> ContactDetail { get; set; }
 
         public DbSet<Admin> tb_admin { get; set; }
+        public DbSet<CP_GSTModel> tb_CP_GstDetails { get; set; }
 
 
     }
