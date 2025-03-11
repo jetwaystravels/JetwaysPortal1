@@ -429,6 +429,18 @@
     });
 
     });
+
+	window.addEventListener("beforeunload", function () {
+		  localStorage.removeItem("MealssrKeyCount");
+		  localStorage.removeItem("MealssrKeyCount2");
+		  localStorage.removeItem("MealssrKeyCountRT");
+		  localStorage.removeItem("MealssrKeyCount2RT");
+		  localStorage.removeItem("BagssrKeyCount");
+		  localStorage.removeItem("BagssrKeyCountRT");
+	});
+
+
+
 </script>
 
 

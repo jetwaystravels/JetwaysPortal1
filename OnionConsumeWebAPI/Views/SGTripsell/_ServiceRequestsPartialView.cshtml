@@ -241,6 +241,11 @@
 
 	});
 
+	window.addEventListener("beforeunload", function () {
+		  localStorage.removeItem("BagssrKeyCount");
+		  localStorage.removeItem("MealssrKeyCount");
+		  localStorage.removeItem("MealssrKeyCount2");
+	});
 
 
 </script>

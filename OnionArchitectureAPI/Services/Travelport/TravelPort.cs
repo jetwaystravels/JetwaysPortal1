@@ -255,7 +255,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.passengercount.infantcount; i++)
                     {
-                        sbReq.Append("<com:SearchPassenger Code=\"INF\" BookingTravelerRef=\"" + pax + "\" PricePTCOnly=\"true\" Age=\"1\"/>");
+                        //PricePTCOnly =\"True\" this is in certification log,2,2,2 cases flight is not showing in this case
+                        sbReq.Append("<com:SearchPassenger Code=\"INF\" BookingTravelerRef=\"" + pax + "\" PricePTCOnly=\"false\" Age=\"1\"/>");
                         pax++;
                     }
                 }

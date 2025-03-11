@@ -417,6 +417,12 @@
     });
 
 
+	window.addEventListener("beforeunload", function () {
+		  localStorage.removeItem("BagssrKeyCount");
+		  localStorage.removeItem("selectedMeals");
+		  localStorage.removeItem("selectedMealsCon");
+	});
+
 
 </script>
 
