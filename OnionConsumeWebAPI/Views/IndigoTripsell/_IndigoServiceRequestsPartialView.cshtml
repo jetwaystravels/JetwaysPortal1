@@ -826,11 +826,11 @@
 						@{
 						    List<SelectListItem> mealOptions = new List<SelectListItem>();
 
-						    for (int s = 0; s < Model.Meals.legSsrs[1].legssrs.Count; s++)
+						    for (int s = 0; s < Model.Meals.legSsrs[0].legssrs.Count; s++)
 						    {
-							string ssrprice = Model.Meals.legSsrs[1].legssrs[s].legpassengers[0].price;
-							string Mealcode = Model.Meals.legSsrs[1].legssrs[s].ssrCode + "_" + Model.Meals.legSsrs[1].legssrs[s].legpassengers[0].price + "_OneWay1";
-							string Mealname = Model.Meals.legSsrs[1].legssrs[s].ssrCode + "-" + Model.Meals.legSsrs[1].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[1].legssrs[s].legpassengers[0].price;
+							string ssrprice = Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
+							string Mealcode = Model.Meals.legSsrs[0].legssrs[s].ssrCode + "_" + Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price + "_OneWay1";
+							string Mealname = Model.Meals.legSsrs[0].legssrs[s].ssrCode + "-" + Model.Meals.legSsrs[0].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
 
 							string Mcode = (Mealcode.StartsWith("E", StringComparison.OrdinalIgnoreCase) ||
 							Mealcode.StartsWith("INFT", StringComparison.OrdinalIgnoreCase) ||
