@@ -5,10 +5,20 @@
 }
 
 <div class="py-15 px-20 rounded-4 text-15 bg-blue-1-05 mb-10">
-    <div class="d-flex justify-content-end" style="margin-bottom:-15px;">
-	<span style="margin-right:15px;"><b>Same Lead Passengers Contact Details</b></span>
-	<button id="checkboxLead" class="checkbox-button2" onclick="toggleCheckbox()"></button>
-    </div>
+	@{
+		int pascount = Model.passeengerlist.passengers.Count;
+		if (pascount == 1)
+		{
+
+		}
+		else
+		{
+			<div class="d-flex justify-content-end" style="margin-bottom:-15px;">
+				<span style="margin-right:15px;"><b>Same Lead Passengers Contact Details</b></span>
+				<button id="checkboxLead" class="checkbox-button2" onclick="toggleCheckbox()"></button>
+			</div>
+		}
+	}
     <form asp-action="SGTravllerDetails" asp-controller="SGTripsell" method="post" id="passengerForm">
 	@{
 	    int inafantIdx = 0;
@@ -21,7 +31,7 @@
 	    <input type="hidden" name="passengers[@i].identifier" value="@Model.passeengerlist.journeys[0].segments[0].identifier.identifier" />
 	    <input type="hidden" name="passengers[@i].carrierCode" value="@Model.passeengerlist.journeys[0].segments[0].identifier.carrierCode" />
 
-	    <div><label class="text-16 fw-600">@Model.passeengerlist.passengers[i].passengerTypeCode</label></div>
+		<div class="mt-10"><label class="text-16 fw-600">@Model.passeengerlist.passengers[i].passengerTypeCode</label></div>
 	    <input type="hidden" name="passengerdetails[@i].passengertypecode" value="@Model.passeengerlist.passengers[i].passengerTypeCode" />
 	    <input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" />
 	    <div class="row" id="PassCount_@i">

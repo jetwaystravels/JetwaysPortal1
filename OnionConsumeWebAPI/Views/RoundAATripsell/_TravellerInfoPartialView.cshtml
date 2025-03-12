@@ -4,10 +4,20 @@
     var data = Model;
 }
 <div class="py-15 px-20 rounded-4 text-15 bg-blue-1-05 mb-10">
-    <div class="d-flex justify-content-end" style="margin-bottom:-15px;">
-	<span style="margin-right:15px;"><b>Same Lead Passengers Contact Details</b></span>
-	<button id="checkboxLead" class="checkbox-button2" onclick="toggleCheckbox()"></button>
-    </div>
+	@{
+		int pascount = @Model.passeengerlistRT[0].passengers.Count;
+		if (pascount == 1)
+		{
+
+		}
+		else
+		{
+			<div class="d-flex justify-content-end" style="margin-bottom:-15px;">
+				<span style="margin-right:15px;"><b>Same Lead Passengers Contact Details</b></span>
+				<button id="checkboxLead" class="checkbox-button2" onclick="toggleCheckbox()"></button>
+			</div>
+		}
+	}
     <form id="passengerFormRT">
 	@{
 	    int inafantIdx = 0;
@@ -31,7 +41,7 @@
 	    <input type="hidden" name="passengers[@i].identifier" value="@Model.passeengerlistRT[0].journeys[0].segments[0].identifier.identifier" />
 	    <input type="hidden" name="passengers[@i].carrierCode" value="@Model.passeengerlistRT[0].journeys[0].segments[0].identifier.carrierCode" />
 
-	    <div><label class="text-16 fw-600">@Model.passeengerlistRT[0].passengers[i].passengerTypeCode</label></div>
+		<div class="mt-10"><label class="text-16 fw-600">@Model.passeengerlistRT[0].passengers[i].passengerTypeCode</label></div>
 	    <input type="hidden" name="passengerdetails[@i].passengertypecode" value="@Model.passeengerlistRT[0].passengers[i].passengerTypeCode" />
 	    <input type="hidden" name="passengerdetails[@i].passengerkey" value="@combinedkey" />
 	    <div class="row">
