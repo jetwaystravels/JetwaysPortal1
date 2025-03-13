@@ -1525,7 +1525,7 @@
 
                                                                 // }
 
-                                                                if (htbag != null)
+                                                                if (htbag != null && !Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia"))
                                                                 {
                                                                     Hashtable htSSr = new Hashtable();
                                                                     SpicejetMealImageList.GetAllmeal(htSSr);
@@ -1533,6 +1533,20 @@
                                                                         continue;
                                                                     var weight = htSSr[htbag[hashdata]];
                                                                     <td>@htbag[hashdata] - @weight</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "INF")
+                                                                    {
+                                                                        <td>NA</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "CHD")
+                                                                            Model.AirlinePNR[a].passengers[i2].passengerTypeCode = "CNN";
+                                                                        var weight = htbag[Model.AirlinePNR[a].passengers[i2].passengerTypeCode.Replace("\"", "")];
+                                                                        <td>XBAG-@weight Kg</td>
+                                                                    }
                                                                 }
 
 

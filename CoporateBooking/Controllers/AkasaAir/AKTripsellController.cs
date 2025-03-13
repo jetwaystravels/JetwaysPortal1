@@ -303,7 +303,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                             AkInfo.residentCountry = "IN";
                             _AkPassengersModel.name = Akname;
                             _AkPassengersModel.info = AkInfo;
-                            HttpContext.Session.SetString("AKPassengerName", JsonConvert.SerializeObject(passengerdetails));
+                          //  HttpContext.Session.SetString("AKPassengerName", JsonConvert.SerializeObject(passengerdetails));
                             var jsonPassengers = JsonConvert.SerializeObject(_AkPassengersModel, Formatting.Indented);
                             logs.WriteLogs(jsonPassengers, "9-ADDPassengerRequest" + i, "AkasaOneWay", "oneway");
                             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));

@@ -781,62 +781,69 @@
 					    </div>
 					    <div class="servc-content select-baggage">
 
-						@{
-						    List<SelectListItem> BaggageOptions = new List<SelectListItem>();
+                                                @{
+                                                    List<SelectListItem> BaggageOptions = new List<SelectListItem>();
+                                                    string weight = "";
+                                                    var bagkey = "";
+                                                    string Bagname = "";
+                                                    for (int i = 0; i < Model.Meals.legSsrs.Count; i++)
+                                                    {
+                                                    //for (int s = 0; s < Model.Meals.legSsrs[i].legssrs.Count; s++)
+                                                        //{
+                                                        string ssrprice = Model.Meals.legSsrs[i].legssrs[0].legpassengers[0].price;
+                                                        string Sssrcode = Model.Meals.legSsrs[i].legssrs[0].ssrCode + "_" + Model.Meals.legSsrs[i].legssrs[0].legpassengers[0].price;
+                                                        string bagcode = Sssrcode.StartsWith("XBAG", StringComparison.OrdinalIgnoreCase).ToString();
+                                                        if (bagcode.ToLower() == "true")
+                                                        {
+                                                            if (Model.passengerNamedetails[pas].passengertypecode == "ADT" || Model.passengerNamedetails[pas].passengertypecode == "CNN" || Model.passengerNamedetails[pas].passengertypecode == "CHD")
+                                                            {
+                                                                weight = "15 kg";
+                                                            }
 
-						    var bagkey = "";
-						    string Bagname = "";
-						    // for (int s = 0; s < Model.Meals.legSsrs[0].legssrs.Count; s++)
-						    // {
-						    //     string ssrprice = Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
-						    //     string Sssrcode = Model.Meals.legSsrs[0].legssrs[s].ssrCode + "_" + Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
-						    //     string bagcode = Sssrcode.StartsWith("X", StringComparison.OrdinalIgnoreCase).ToString();
-						    //     if (bagcode.ToLower() == "true")
-						    //     {
+                                                            Bagname = Model.Meals.legSsrs[i].legssrs[0].name + "-" + weight+ " ₹" + @Model.Meals.legSsrs[i].legssrs[0].legpassengers[0].price;
 
-						    //         Bagname = Model.Meals.legSsrs[0].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
-
-						    //         bagkey = Sssrcode; //Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].ssrKey;
-						    //     }             //string passengerKey = Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].passengerKey;
-						    //     else
-						    //         continue;
+                                                            bagkey = Sssrcode; //Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].ssrKey;
+                                                        }             //string passengerKey = Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].passengerKey;
+                                                        else
+                                                            continue;
 
 
-						    //     if (bagcode != null)
-						    //     {
-						    //         // Assuming MealImageList.GetAllmeal() returns a list of objects with MealCode and MealImage properties
-						    //         BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
-						    //     }
-						    // }
+                                                        if (bagcode != null)
+                                                        {
+                                                            // Assuming MealImageList.GetAllmeal() returns a list of objects with MealCode and MealImage properties
+                                                            BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
+                                                        }
+                                                        //}
+                                                    }
 
-						}
-						<div class="d-flex">
+                                                }
+                                                <div class="d-flex">
 
-						    <select id="ddlbagOptions" class="servc-bordr servc-bordrbaggage">
-							<option selected="selected" value="">Please Select</option>
-							@foreach (var option in BaggageOptions)
-							{
-							    <option value="@option.Value" data-bagkey=@bagkey>
-								@option.Text
-							    </option>
-							}
-						    </select>
-						    <input type="hidden" id="hiddenbagKey" name="bagkey" value="" />
-						</div>
-					    </div>
-					    <div class="servc-content">
-						<select class="servc-bordr wdth-100">
-						    <option></option>
-						    <option>Meal1</option>
-						    <option>Meal2</option>
-						    <option>Meal3</option>
-						    <option>Meal4</option>
-						</select>
-					    </div>
-					</div>
+                                                    <select id="ddlbagOptions" class="servc-bordr servc-bordrbaggage">
+                                                        <option selected="selected" value="">Please Select</option>
+                                                        @foreach (var option in BaggageOptions)
+                                                        {
+                                                            <option value="@option.Value" data-bagkey=@bagkey>
+                                                                @option.Text
+                                                            </option>
+                                                        }
+                                                    </select>
+                                                    <input type="hidden" id="hiddenbagKey" name="bagkey" value="" />
+                                                </div>
+                                            </div>
+                                            <div class="servc-content">
+                                                <select class="servc-bordr wdth-100">
+                                                    <option></option>
+                                                    <option>Meal1</option>
+                                                    <option>Meal2</option>
+                                                    <option>Meal3</option>
+                                                    <option>Meal4</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-				    }
-				}
+                                    }
+                                }
 
 
 

@@ -300,7 +300,7 @@ namespace OnionConsumeWebAPI.Controllers
                             _PassengersModel.name = name;
                             _PassengersModel.info = Info;
 
-                            HttpContext.Session.SetString("PassengerName", JsonConvert.SerializeObject(passengerdetails));
+                          //  HttpContext.Session.SetString("PassengerName", JsonConvert.SerializeObject(passengerdetails));
                             var jsonPassengers = JsonConvert.SerializeObject(_PassengersModel, Formatting.Indented);
                             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

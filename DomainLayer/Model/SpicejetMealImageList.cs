@@ -40,6 +40,7 @@ namespace DomainLayer.Model
             htSSr.Add("XBPC", "15 Kg");
             htSSr.Add("XBPD", "30 Kg");
             htSSr.Add("XBPE", "3 Kg");
+            htSSr.Add("XBAG", " Kg");
             //htSSr.Add("VGPI", "Awadhi Chicken Biryani with Mirch Salan(Free meal code");
             //htSSr.Add("VGNI", "Bajra Khichdi with Matar Bhaji (Diabetic-friendly)(Chargable meal code");
             //htSSr.Add("VCSW", "Chicken Junglee Sandwich(Chargable meal code");
@@ -142,6 +143,7 @@ namespace DomainLayer.Model
             htSSr.Add("XBPC", "15 Kg");
             htSSr.Add("XBPD", "30 Kg");
             htSSr.Add("XBPE", "3 Kg");
+            htSSr.Add("XBAG", " Kg");
 
             //SpiceJet
             htSSr.Add("NVML", "Murg lababdar on bed of palak pulao & Dal panchrattni (260 gms)");

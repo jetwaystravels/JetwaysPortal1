@@ -34,7 +34,7 @@ function validateForm() {
             var starterror = document.getElementById("startDate");
             starterror.style.display = "block";
             document.getElementById("start-date").focus();
-            return false;
+             return false;
             event.preventDefault(); // Stop the form submission
         }
 

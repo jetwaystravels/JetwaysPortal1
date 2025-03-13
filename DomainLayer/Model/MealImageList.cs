@@ -103,7 +103,31 @@
             new { MealCode = "CHNM", MealImage = "Kiddie Delight - Non-Veg" },
             new { MealCode = "CHBR", MealImage = "Chicken Biryani" },
 
-          
+            //GDS Meal..
+            new { MealCode = "AVML",MealImage = "Vegetarian Indian Meal"},
+            new { MealCode = "BBML",MealImage = "Baby Meal"},
+            new { MealCode = "BLML",MealImage = "Bland Meal"},
+            new { MealCode = "CHML",MealImage = "Child Meal"},
+            new { MealCode = "DBML",MealImage = "Diabetic Meal"},
+            new { MealCode = "FPML",MealImage = "Fruit Platter Meal"},
+            new { MealCode = "GFML",MealImage = "Gluten Intolerant Meal"},
+            new { MealCode = "HNML",MealImage = "Hindu Non-Vegetarian Meal"},
+            new { MealCode = "KSML",MealImage = "Kosher Meal"},
+            new { MealCode = "LCML",MealImage = "Low Calorie Meal"},
+            new { MealCode = "LFML",MealImage = "Low Fat Meal"},
+            new { MealCode = "LSML",MealImage = "Low Salt Meal"},
+            new { MealCode = "MOML",MealImage = "Moslem Meal"},
+            new { MealCode = "NBML",MealImage = "No Beef Meal"},
+            new { MealCode = "NLML",MealImage = "Low Lactose Meal"},
+            new { MealCode = "NOML",MealImage = "No Meal"},
+            new { MealCode = "RVML",MealImage = "Vegetarian Raw Meal"},
+            new { MealCode = "SFML",MealImage = "Sea Food Meal"},
+            new { MealCode = "SPML",MealImage = "Special Meal"},
+            //new { MealCode = "VGML",MealImage = "Vegetarian Vegan Meal"},
+            new { MealCode = "VJML",MealImage = "Vegetarian Jain Meal"},
+            //new { MealCode = "VLML",MealImage = "Vegetarian Lacto-ovo Meal"},
+            new { MealCode = "VOML",MealImage = "Vegetarian Oriental Meal"},
+            
 
             //Akasa Meal
            

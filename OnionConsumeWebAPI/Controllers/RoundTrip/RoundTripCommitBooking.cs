@@ -2647,6 +2647,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         Hashtable htname = new Hashtable();
                                         Hashtable htnameempty = new Hashtable();
                                         Hashtable htpax = new Hashtable();
+                                        Hashtable htPaxbag = new Hashtable();
+
 
                                         Hashtable htseatdata = new Hashtable();
                                         Hashtable htmealdata = new Hashtable();
@@ -2957,6 +2959,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             AAJourneyList.Add(AAJourneyobj);
 
                                             //}
+                                            //baggage
+
+                                            foreach (Match mitem in Regex.Matches(strResponse, @"PassengerTypeCode=""(?<PaxType>[\s\S]*?)""[\s\S]*?BaggageAllowance[\s\S]*?MaxWeight Value=""(?<Weight>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                            {
+                                                if (!htPaxbag.Contains(mitem.Groups["PaxType"].Value.Trim()))
+                                                {
+                                                    htPaxbag.Add(mitem.Groups["PaxType"].Value.Trim(), mitem.Groups["Weight"].Value.Trim());
+                                                }
+                                            }
 
                                             #endregion
                                             int passengercount = availibiltyRQGDS.adultcount + availibiltyRQGDS.childcount + availibiltyRQGDS.infantcount;
@@ -3015,7 +3026,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             returnTicketBooking.contacts = _contact;
                                             returnTicketBooking.Seatdata = htseatdata;
                                             returnTicketBooking.Mealdata = htmealdata;
-                                            returnTicketBooking.Bagdata = htbagdata;
+                                            returnTicketBooking.Bagdata = htPaxbag;
+                                            //returnTicketBooking.Bagdata = htbagdata;
                                             returnTicketBooking.htTicketnumber = htTicketdata;
                                             returnTicketBooking.htname = htname;
                                             returnTicketBooking.htnameempty = htnameempty;
