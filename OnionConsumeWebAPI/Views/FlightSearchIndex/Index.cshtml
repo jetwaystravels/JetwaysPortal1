@@ -10,6 +10,9 @@
 	.Radiohide input {
 		display: none;
 	}
+	.endselect {
+		cursor:pointer;
+	}
 </style>
 
 
@@ -337,7 +340,7 @@
 											<input class="form-check-input" type="radio" name="SameAirlineRT" value="RoundTrip" id="round-tripid">
 											<label class="form-check-label">Round Trip</label>
 										</div>
-										<div class="form-check form-check-inline">
+										<div class="form-check form-check-inline d-none">
 											<input class="form-check-input" type="radio" name="SameAirlineRT" value="AirlineRT" id="multi-cityid">
 											<label class="form-check-label">Same Airline Roundtrip</label>
 										</div>
@@ -419,7 +422,7 @@
 												<span id="startDate" class="errorbox" style="display:none;">Enter Start Date*</span>
 											</div>
 
-											<div class="col-12 col-md-10 col-lg-2 space">
+											<div class="col-12 col-md-10 col-lg-2 space endselect">
 												<label>Return</label>
 												<span class="input-group-text" id="bgEnddate">
 													@* <img src="~/img/calender-icon.png" alt="icon"> *@

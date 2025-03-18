@@ -232,7 +232,7 @@
 
         $("#leftNstop2").click(function () {
             debugger;
-            var confirmation = confirm("Do you want to select a connecting seat?"); // Non Stop Left Side
+                var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
             if (confirmation == true) {
                 if ($("#seattabRT1waypopup").is(":visible")) {
                     $("#rightNonstop").show();
@@ -254,7 +254,7 @@
         });
 
         $("#leftConnect2").click(function () {
-            var confirmation = confirm("Do you want to select a connecting seat?"); // Non Stop Left Side
+                var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
             if (confirmation == true) {
                 if ($("#seattab2Popup").is(":visible")) {
                     $("#leftConnect").hide();
@@ -273,9 +273,9 @@
 $("#leftConnectbtn_2").off("click").on("click", function () {
     let isProcessing = false;
     if (isProcessing) return;
-    isProcessing = true; 
-    var confirmation = confirm("Do you want to select a connecting seat?"); 
-    if (confirmation) {
+    isProcessing = true;
+        var confirmation = confirm("would you like to select for you next sector?");
+        if (confirmation) {
         $("#leftConnect").hide();
         $("#leftConnect_2").hide();
         $("#rightConnect1").hide();
@@ -302,7 +302,7 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
 
 
         $("#rightconnect2").click(function () {
-            var confirmation = confirm("Do you want to select a connecting seat?"); // Non Stop Left Side
+                var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
             if (confirmation == true) {
                 if ($("#seattabRT2Popup").is(":visible")) {
                     $("#leftConnect").hide();
@@ -318,7 +318,7 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
         });
 
         $("#Lrightconnect2").click(function () {
-            var confirmation = confirm("Do you want to select a connecting seat?"); // Non Stop Left Side
+                var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
             if (confirmation == true) {
                 if ($("#seattabRT2Popup").is(":visible")) {
                     $("#leftConnect").hide();

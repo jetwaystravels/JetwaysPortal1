@@ -39,6 +39,10 @@ namespace OnionArchitectureAPI.Services.Indigo
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].ProvinceState = "DL";
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].CountryCode = "IN";
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].CultureCode = "en-GB";
+            _bookingCommitRequest.BookingCommitRequestData.ChangeHoldDateTimeSpecified = true;
+            _bookingCommitRequest.BookingCommitRequestData.ChangeHoldDateTime = false;
+            _bookingCommitRequest.BookingCommitRequestData.RestrictionOverrideSpecified = true;
+            _bookingCommitRequest.BookingCommitRequestData.RestrictionOverrideSpecified = false;
             _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].DistributionOption = DistributionOption.Email;
             _bookingCommitRequest.BookingCommitRequestData.DistributeToContactsSpecified = true;
             _bookingCommitRequest.BookingCommitRequestData.DistributeToContacts = true;

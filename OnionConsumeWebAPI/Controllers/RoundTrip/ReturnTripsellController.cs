@@ -819,6 +819,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         AkasaAirTripSellRequestobj.passengers = passengers;
                         AkasaAirTripSellRequestobj.currencyCode = "INR";
                         var AkasaAirTripSellRequest = JsonConvert.SerializeObject(AkasaAirTripSellRequestobj, Formatting.Indented);
+
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                         HttpResponseMessage responseTripsell = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirTripsell, AkasaAirTripSellRequestobj);

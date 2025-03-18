@@ -734,28 +734,28 @@
 													{
 														if (Model.MealslistRT != null && Model.MealslistRT.Count > 0 && Model.MealslistRT[0] != null)
 														{
-															for (int l = 0; l < Model.MealslistRT[0].legSsrs.Count; l++)
-															{
-																for (int s = 0; s < Model.MealslistRT[0].legSsrs[l].legssrs.Count; s++)
+															// for (int l = 0; l < Model.MealslistRT[0].legSsrs.Count; l++)
+															// {
+																for (int s = 0; s < Model.MealslistRT[0].legSsrs[0].legssrs.Count; s++)
 																{
-																	string ssrprice = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price;
-																	mealnamedisplay = Model.MealslistRT[0].legSsrs[l].legssrs[s].name;
-																	string Mealcode = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline + "_" + FullName;
+																	string ssrprice = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
+																	mealnamedisplay = Model.MealslistRT[0].legSsrs[0].legssrs[s].name;
+																	string Mealcode = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline + "_" + FullName;
 																	//string MealcodeData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
-																	AirLine = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline.ToString();
+																	AirLine = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline.ToString();
 																	string Mealname = string.Empty;
 																	//string Mealname = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode + "-" + Model.MealslistRT[0].legSsrs[l].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].price;
 																	// ssrkeyAA = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
 																	if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
 																	{
-																		ssrprice = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].price;
-																		Mealname = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode + "-" + Model.MealslistRT[0].legSsrs[l].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].price;
-																		ssrkeyAA = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
+																		ssrprice = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[pas].price;
+																		Mealname = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode + "-" + Model.MealslistRT[0].legSsrs[0].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[pas].price;
+																		ssrkeyAA = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[pas].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline;
 																	}
 																	else
 																	{
-																		Mealname = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode + "-" + Model.MealslistRT[0].legSsrs[l].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price;
-																		ssrkeyAA = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
+																		Mealname = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode + "-" + Model.MealslistRT[0].legSsrs[0].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
+																		ssrkeyAA = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline;
 																	}
 
 																	string Mcode = (Mealcode.StartsWith("E", StringComparison.OrdinalIgnoreCase) ||
@@ -764,7 +764,7 @@
 																	bool SpecialCode = false;
 																	if (AirLine.ToLower() == "airindia")
 																	{
-																		string Sssrcode = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode;
+																		string Sssrcode = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode;
 																		SpecialCode = (Sssrcode.Equals("AVML", StringComparison.OrdinalIgnoreCase) ||
 																		Sssrcode.Equals("BBML", StringComparison.OrdinalIgnoreCase) ||
 																		Sssrcode.Equals("BLML", StringComparison.OrdinalIgnoreCase) ||
@@ -813,8 +813,8 @@
 																		//     ssrkey = Mealcode;
 
 
-																		string inventry = Model.MealslistRT[0].legSsrs[l].legssrs[s].inventoryControlled.ToString();
-																		string fastFFDW = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode;
+																		string inventry = Model.MealslistRT[0].legSsrs[0].legssrs[s].inventoryControlled.ToString();
+																		string fastFFDW = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode;
 																		// string Mcode = Mealcode.StartsWith("X", StringComparison.OrdinalIgnoreCase).ToString();
 																		if (fastFFDW == "FFWD")
 																		{
@@ -860,7 +860,7 @@
 																		}
 																	}
 																}
-															}
+															//}
 														}
 													}
 													<div class="d-flex">

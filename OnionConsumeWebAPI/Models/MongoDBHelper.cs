@@ -186,8 +186,58 @@ namespace OnionConsumeWebAPI.Models
             }
         }
 
+        public void UpdateMongoFlightToken(string guid, string supp, string Token, string Rtoken)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                if (string.IsNullOrEmpty(Rtoken))
+                {
+                    var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.Token, Token);
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+                }
+                else
+                {
+                    var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.Token, Token).Set(s => s.RToken, Rtoken);
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+                }
 
-        public async Task<MongoSuppFlightToken> GetSuppFlightTokenByGUID(string guid, string supp)
+                if (supp == "Indigo")
+                {
+                    var updatepass = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, "");
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, updatepass);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
+            }
+
+        }
+
+
+        public void UpdatePassengerMongoFlightToken(string guid, string supp, string Passenger)
+		{
+			try
+			{
+				var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+				Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+				var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassengerRequest, Passenger);
+				mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+
+			}
+			catch (Exception ex)
+			{
+				logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
+			}
+
+		}
+
+
+		public async Task<MongoSuppFlightToken> GetSuppFlightTokenByGUID(string guid, string supp)
         {
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
             try
