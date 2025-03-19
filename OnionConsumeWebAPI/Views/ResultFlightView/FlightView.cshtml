@@ -2277,10 +2277,18 @@
 		alert('Please select a start date.');
 		return false;
 	    }
-	    if (!endDateInput.disabled && !endDate) {
-		alert('Please select an end date.');
-		return false;
-	    }
+	 //    if (!endDateInput.disabled && !endDate) {
+		// alert('Please select an end date.');
+		// return false;
+	 //    }
+
+		 const roundTripRadio = document.querySelector('input[name="SameAirlineRT"]:checked');
+		  if (roundTripRadio && roundTripRadio.value === 'RoundTrip') {
+				if (!endDate) {
+					  alert('Please select an end date for Round Trip.');
+					  return false;
+				}
+		  }
 
 	    var adultCount = parseInt(document.getElementById('field_adult').value);
 	    var childCount = parseInt(document.getElementById('field_child').value);
