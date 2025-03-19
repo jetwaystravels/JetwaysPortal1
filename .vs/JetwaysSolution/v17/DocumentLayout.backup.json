@@ -3,16 +3,15 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\views\\resultflightview\\flightview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\views\\resultflightview\\flightview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.102\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\services\\indigo\\_commit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\services\\indigo\\_commit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\views\\roundaatripsell\\_tripsellpatialview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\views\\roundaatripsell\\_tripsellpatialview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\wwwroot\\js\\custom.js\\indexpage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\wwwroot\\js\\custom.js\\indexpage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\airasia\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\airasia\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,49 +21,44 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "_commit.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Services\\Indigo\\_commit.cs",
-              "RelativeDocumentMoniker": "OnionArchitectureAPI\\Services\\Indigo\\_commit.cs",
-              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Services\\Indigo\\_commit.cs",
-              "RelativeToolTip": "OnionArchitectureAPI\\Services\\Indigo\\_commit.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T04:38:53.753Z",
+              "DocumentIndex": 0,
+              "Title": "Microsoft.NET.Sdk.StaticWebAssets.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
+              "ViewState": "AgIAAI4CAAAAAAAAAAD4v5UCAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-03-19T07:21:34.906Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "FlightView.cshtml",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\ResultFlightView\\FlightView.cshtml",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Views\\ResultFlightView\\FlightView.cshtml",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\ResultFlightView\\FlightView.cshtml",
-              "RelativeToolTip": "OnionConsumeWebAPI\\Views\\ResultFlightView\\FlightView.cshtml",
-              "ViewState": "AgIAANMIAAAAAAAAAAAAAOYIAAAGAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "_TripsellPatialView.cshtml",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\RoundAATripsell\\_TripsellPatialView.cshtml",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Views\\RoundAATripsell\\_TripsellPatialView.cshtml",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\RoundAATripsell\\_TripsellPatialView.cshtml",
+              "RelativeToolTip": "OnionConsumeWebAPI\\Views\\RoundAATripsell\\_TripsellPatialView.cshtml",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-18T12:50:47.629Z",
+              "WhenOpened": "2025-03-19T07:21:28.967Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "IndexPage.js",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\wwwroot\\js\\custom.js\\IndexPage.js",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\wwwroot\\js\\custom.js\\IndexPage.js",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\wwwroot\\js\\custom.js\\IndexPage.js",
-              "RelativeToolTip": "OnionConsumeWebAPI\\wwwroot\\js\\custom.js\\IndexPage.js",
-              "ViewState": "AgIAAIIBAAAAAAAAAAAuwJEBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-03-18T12:47:14.348Z"
+              "Title": "EmployeeController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\EmployeeController.cs",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\AirAsia\\EmployeeController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\EmployeeController.cs",
+              "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\AirAsia\\EmployeeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-19T07:15:51.382Z",
+              "EditorCaption": ""
             }
           ]
         }

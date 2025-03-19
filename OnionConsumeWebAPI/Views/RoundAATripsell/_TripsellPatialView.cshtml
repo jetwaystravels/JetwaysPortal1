@@ -936,7 +936,7 @@
                                                 </span>
 
                                             }
-                                            else if (item.segments[i].fares[f].productClass.Equals("Premium Comfort Plus"))
+                                            else if (item.segments[i].fares[f].productClass.Contains("Premium Comfort Plus"))
                                             {
 
                                                 <span class="tooltipF">
@@ -955,7 +955,7 @@
                                                 </span>
 
                                             }
-                                            else if (item.segments[i].fares[f].productClass.Equals("Premium Flex"))
+                                            else if (item.segments[i].fares[f].productClass.Contains("Premium Flex"))
                                             {
 
                                                 <span class="tooltipF">
@@ -975,7 +975,7 @@
 
                                             }
 
-                                            else if (item.segments[i].fares[f].productClass.Equals("Eco Flex"))
+                                            else if (item.segments[i].fares[f].productClass.Contains("Eco Flex"))
                                             {
                                                 <span class="tooltipF">
                                                     Fare Type:  @Faretype<b>Eco Flex</b>
@@ -983,15 +983,48 @@
                                                         <ul>
                                                             <li>1: Cabin Bag: 7 k.g</li>
                                                             <li>2: Check-In: 25 k.g</li>
-                                                            <li>3: Cancellation: Lower cancellation fee. 500</li>
-                                                            <li>4: Date Change: No Refund on  Date change</li>
-                                                            <li>5: Seat : Free seats</li>
-                                                            <li>6: Meal : Complimentary meal</li>
+                                                            <li>3: Cancellation: 1000 (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>4: Date Change: Free</li>
+                                                            <li>5: Seat : -</li>
+                                                            <li>6: Meal : -</li>
                                                         </ul>
                                                     </span>
                                                 </span>
                                             }
-                                            else if (item.segments[i].fares[f].productClass.Equals("Eco Comfort Plus"))
+                                             else if (item.segments[i].fares[f].productClass.Contains("Eco Value"))
+                                            {
+                                                <span class="tooltipF">
+                                                    Fare Type:  @Faretype<b>Eco Value</b>
+                                                    <span class="tooltiptext">
+                                                        <ul>
+                                                            <li>1: Cabin Bag: 7 k.g</li>
+                                                            <li>2: Check-In: 15 k.g</li>
+                                                            <li>3: Cancellation: 4000  (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>4: Date Change: 3000 (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>5: Seat : -</li>
+                                                            <li>6: Meal : -</li>
+                                                        </ul>
+                                                    </span>
+                                                </span>
+                                            }
+                                              else if (item.segments[i].fares[f].productClass.Contains("Eco Classic"))
+                                            {
+                                                <span class="tooltipF">
+                                                    Fare Type:  @Faretype<b>Eco Classic</b>
+                                                    <span class="tooltiptext">
+                                                        <ul>
+                                                            <li>1: Cabin Bag: 7 k.g</li>
+                                                            <li>2: Check-In: 15 k.g</li>
+                                                            <li>3: Cancellation: 3500 (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>4: Date Change: 1000  (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>5: Seat : -</li>
+                                                            <li>6: Meal : -</li>
+                                                        </ul>
+                                                    </span>
+                                                </span>
+                                            }
+
+                                            else if (item.segments[i].fares[f].productClass.Contains("Eco Comfort Plus"))
                                             {
                                                 <span class="tooltipF">
                                                     Fare Type:  @Faretype<b>Eco Comfort Plus</b>
@@ -1007,7 +1040,7 @@
                                                     </span>
                                                 </span>
                                             }
-                                            else if (item.segments[i].fares[f].productClass.Equals("Eco Comfort"))
+                                            else if (item.segments[i].fares[f].productClass.Contains("Eco Comfort"))
                                             {
                                                 <span class="tooltipF">
                                                     Fare Type:  @Faretype<b>Eco Comfort</b>
@@ -1023,7 +1056,7 @@
                                                     </span>
                                                 </span>
                                             }
-                                            else if (item.segments[i].fares[f].productClass.Equals("Premium Economy Standard"))
+                                            else if (item.segments[i].fares[f].productClass.Contains("Premium Economy Standard"))
                                             {
                                                 <span class="tooltipF">
                                                     Fare Type:  @Faretype<b>Premium Economy Standard</b>
@@ -1040,7 +1073,7 @@
                                                 </span>
                                             }
 
-                                            else if (item.segments[i].fares[f].productClass.Equals("Economy Flexi"))
+                                            else if (item.segments[i].fares[f].productClass.Contains("Economy Flexi"))
                                             {
                                                 <span class="tooltipF">
                                                     Fare Type:  @Faretype<b>Economy Flexi</b>
@@ -1057,7 +1090,7 @@
                                                 </span>
                                             }
 
-                                            else if (item.segments[i].fares[f].productClass.Equals("Premium Economy Value"))
+                                            else if (item.segments[i].fares[f].productClass.Contains("Premium Economy Value"))
                                             {
                                                 <span class="tooltipF">
                                                     Fare Type:  @Faretype<b>Premium Economy Value</b>
@@ -1073,7 +1106,7 @@
                                                     </span>
                                                 </span>
                                             }
-                                            else if (item.segments[i].fares[f].productClass.Equals("Economy Standard"))
+                                            else if (item.segments[i].fares[f].productClass.Contains("Economy Standard"))
                                             {
                                                 <span class="tooltipF">
                                                     Fare Type:  @Faretype<b>Economy Standard</b>
@@ -1089,7 +1122,7 @@
                                                     </span>
                                                 </span>
                                             }
-                                            else if (item.segments[i].fares[f].productClass.Equals("Economy Lite"))
+                                            else if (item.segments[i].fares[f].productClass.Contains("Economy Lite"))
                                             {
                                                 <span class="tooltipF">
                                                     Fare Type:  @Faretype<b>Economy Lite</b>
@@ -1468,7 +1501,7 @@
 
                                     }
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Comfort Plus"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Premium Comfort Plus"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1483,7 +1516,7 @@
 
                                     }
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Flex"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Premium Flex"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1498,7 +1531,7 @@
 
                                     }
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Flex"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Eco Flex"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1512,9 +1545,37 @@
                                         </table>
 
                                     }
+                                    else if (item.segments[i].fares[f].productClass.Contains("Eco Value"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs.4000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Contains("Eco Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs.3500 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
 
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Comfort Plus"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Eco Comfort Plus"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1529,7 +1590,7 @@
 
                                     }
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Comfort"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Eco Comfort"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1543,7 +1604,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Economy Standard"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Premium Economy Standard"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1557,7 +1618,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Economy Flexi"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Economy Flexi"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1571,7 +1632,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Economy Value"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Premium Economy Value"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1585,7 +1646,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Economy Standard"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Economy Standard"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1599,7 +1660,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Economy Lite"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Economy Lite"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1902,7 +1963,7 @@
                                     }
 
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Premium Comfort Plus"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Premium Comfort Plus"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1917,7 +1978,7 @@
 
                                     }
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Premium Flex"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Premium Flex"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1932,7 +1993,7 @@
 
                                     }
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Eco Flex"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Eco Flex"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1946,9 +2007,37 @@
                                         </table>
 
                                     }
+                                     else if (item.segments[j].fares[k].productClass.Contains("Eco Value"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 3000 </td>
+                                            </tr>
+                                        </table>
 
+                                    }
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Eco Comfort Plus"))
+                                      else if (item.segments[j].fares[k].productClass.Contains("Eco Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td> 3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 1000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
+                                    else if (item.segments[j].fares[k].productClass.Contains("Eco Comfort Plus"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1963,7 +2052,7 @@
 
                                     }
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Eco Comfort"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Eco Comfort"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1977,7 +2066,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Premium Economy Standard"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Premium Economy Standard"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1991,7 +2080,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Economy Flexi"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Economy Flexi"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2005,7 +2094,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Premium Economy Value"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Premium Economy Value"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2019,7 +2108,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Economy Standard"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Economy Standard"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2033,7 +2122,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Economy Lite"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Economy Lite"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2427,7 +2516,7 @@
                                     }
 
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Comfort Plus"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Premium Comfort Plus"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2442,7 +2531,7 @@
 
                                     }
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Flex"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Premium Flex"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2457,7 +2546,7 @@
 
                                     }
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Flex"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Eco Flex"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2472,8 +2561,36 @@
 
                                     }
 
+                                      else if (item.segments[i].fares[f].productClass.Contains("Eco Value"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td> 3 days upto 2 hrs prior from departure</td>
+                                                    <td>Rs.4000</td>
+                                            </tr>
+                                        </table>
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Comfort Plus"))
+                                    }
+                                      else if (item.segments[i].fares[f].productClass.Contains("Eco Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs.3500</td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
+                                    else if (item.segments[i].fares[f].productClass.Contains("Eco Comfort Plus"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2488,7 +2605,7 @@
 
                                     }
 
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Comfort"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Eco Comfort"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2502,7 +2619,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Economy Standard"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Premium Economy Standard"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2516,7 +2633,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Economy Flexi"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Economy Flexi"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2530,7 +2647,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Premium Economy Value"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Premium Economy Value"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2544,7 +2661,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Economy Standard"))
+                                    else if (item.segments[i].fares[f].productClass.Contains("Economy Standard"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2558,7 +2675,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Economy Lite"))
+                                        else if (item.segments[i].fares[f].productClass.Contains("Economy Lite"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2863,7 +2980,7 @@
 
                                     }
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Premium Comfort Plus"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Premium Comfort Plus"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2878,7 +2995,7 @@
 
                                     }
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Premium Flex"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Premium Flex"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2893,7 +3010,7 @@
 
                                     }
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Eco Flex"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Eco Flex"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2907,9 +3024,38 @@
                                         </table>
 
                                     }
+                                     else if (item.segments[j].fares[k].productClass.Contains("Eco Value"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 3000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+                                      else if (item.segments[j].fares[k].productClass.Contains("Eco Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 1000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
 
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Eco Comfort Plus"))
+
+                                    else if (item.segments[j].fares[k].productClass.Contains("Eco Comfort Plus"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2924,7 +3070,7 @@
 
                                     }
 
-                                    else if (item.segments[j].fares[k].productClass.Equals("Eco Comfort"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Eco Comfort"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2938,7 +3084,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Premium Economy Standard"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Premium Economy Standard"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2952,7 +3098,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Economy Flexi"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Economy Flexi"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2966,7 +3112,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Premium Economy Value"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Premium Economy Value"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2980,7 +3126,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Economy Standard"))
+                                    else if (item.segments[j].fares[k].productClass.Contains("Economy Standard"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -2994,7 +3140,7 @@
                                         </table>
 
                                     }
-                                    else if (item.segments[j].fares[k].productClass.Equals("Economy Lite"))
+                                        else if (item.segments[j].fares[k].productClass.Contains("Economy Lite"))
                                     {
                                         <table style="width:100%">
                                             <tr>

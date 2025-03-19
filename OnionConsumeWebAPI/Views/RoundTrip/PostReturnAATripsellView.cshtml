@@ -488,8 +488,12 @@
 						    Faretype = "Eco Comfort Plus";
 						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("Eco Comfort"))
 						    Faretype = "Eco Comfort";
+						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("Eco Value"))
+						Faretype = "Eco Value";
+						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("Eco Classic"))
+						Faretype = "Eco Classic";
 						else
-						    Faretype = "";
+						    Faretype = ""; 
 
 					    }
 
@@ -612,18 +616,43 @@
 							</ul>
 						    }
 
-						    if (@Faretype == "Eco Flex")
+							if (@Faretype == "Eco Flex")
 						    {
 							<ul>
 							    <li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kgs</li>
 							    <li><img src="~/img/included.png" alt="icon">Check in 25 k.g  (1 piece)</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- Lower cancellation fee. 500</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- No Refund on  Date change</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- Free seats</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Meal :-Complimentary meal</li>
+								<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 1000 (3 days upto 2 hrs prior from departure)</li>
+							    <li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- Free</li>
+							    <li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+							    <li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
 
 							</ul>
 						    }
+							if (@Faretype == "Eco Value")
+							{
+							<ul>
+							<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kg</li>
+							<li><img src="~/img/included.png" alt="icon">Check in 15 k.g</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 4000 (3 days upto 2 hrs prior from departure)</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 3000 (3 days upto 2 hrs prior from departure)</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+                             </ul>
+							}
+
+							if (@Faretype == "Eco Classic")
+							{
+							<ul>
+							<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kg</li>
+							<li><img src="~/img/included.png" alt="icon">Check in 15 k.g</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 3500  (3 days upto 2 hrs prior from departure)</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 1000 (3 days upto 2 hrs prior from departure)</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+                             </ul>
+							}
+
+
 						    if (@Faretype == "Eco Comfort Plus")
 						    {
 							<ul>
@@ -1181,7 +1210,10 @@
 						    Faretype = "Eco Comfort Plus";
 						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("Eco Comfort"))
 						    Faretype = "Eco Comfort";
-						
+                        else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("Eco Value"))
+						 Faretype = "Eco Value";
+						 else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("Eco Classic"))
+						  Faretype = "Eco Classic";
 
 					    }
 
@@ -1294,6 +1326,29 @@
 
 							</ul>
 						    }
+							 if (@Faretype == "Eco Value")
+						    {
+							<ul>
+								<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kg</li>
+								<li><img src="~/img/included.png" alt="icon">Check in 15 k.g</li>
+								<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 4000 (3 days upto 2 hrs prior from departure)</li>
+								<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 3000 (3 days upto 2 hrs prior from departure)</li>
+								<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+								<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+							</ul>
+						    }
+							if (@Faretype == "Eco Classic")
+							{
+								<ul>
+									<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kg</li>
+									<li><img src="~/img/included.png" alt="icon">Check in 15 k.g</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 3500  (3 days upto 2 hrs prior from departure)</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 1000 (3 days upto 2 hrs prior from departure)</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+								</ul>
+							}
+
 						    if (@Faretype == "Eco Comfort Plus")
 						    {
 							<ul>

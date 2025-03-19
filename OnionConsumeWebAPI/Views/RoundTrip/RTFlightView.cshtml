@@ -2619,38 +2619,41 @@
     </style>
 
     <script>
-	$(document).ready(function () {
-		
-	    $('.showBtn').click(function () {
-		//$('.hideme').hide();
-		$('.flightT1').addClass('tabBG');
-		$('.flightT1').click();
-		if ($(this).hasClass('active')) {
-		    $(this).removeClass('active');
-		    $('.hideme').slideUp(1);
-		} else {
-		    $('.hideme').slideUp(1);
-		    $('.showBtn').removeClass('active');
-		    $(this).addClass('active');
-		    $(this).next().filter('.hideme').slideDown(1);
-		}
-	    });
+		$(document).ready(function () {
+			//$('.showBtn').click(function () {
+			$(document).on('click', '.showBtn', function (event) {
+				//$('.hideme').show();
+				event.preventDefault();
+				$('.flightT1').addClass('tabBG');
+				$('.flightT1').click();
+				if ($(this).hasClass('active')) {
+					$(this).removeClass('active');
+					$('.hideme').slideUp(1);
+				} else {
+					$('.hideme').slideUp(1);
+					$('.showBtn').removeClass('active');
+					$(this).addClass('active');
+					$(this).next().filter('.hideme').slideDown(1);
+				}
+			});
 
-	    $('.showBtn2').click(function () {
-		//$('.hideme').hide();
-		$('.flightT1RT').addClass('tabBG');
-		$('.flightT1RT').click();
-		if ($(this).hasClass('active')) {
-		    $(this).removeClass('active');
-		    $('.hideme2').slideUp(1);
-		} else {
-		    $('.hideme2').slideUp(1);
-		    $('.showBtn2').removeClass('active');
-		    $(this).addClass('active');
-		    $(this).next().filter('.hideme2').slideDown(1);
-		}
-	    });
-	});
+			//$('.showBtn2').click(function () {
+			$(document).on('click', '.showBtn2', function (event) {
+				event.preventDefault();
+				//$('.hideme').hide();
+				$('.flightT1RT').addClass('tabBG');
+				$('.flightT1RT').click();
+				if ($(this).hasClass('active')) {
+					$(this).removeClass('active');
+					$('.hideme2').slideUp(1);
+				} else {
+					$('.hideme2').slideUp(1);
+					$('.showBtn2').removeClass('active');
+					$(this).addClass('active');
+					$(this).next().filter('.hideme2').slideDown(1);
+				}
+			});
+		});
     </script>
 
 
