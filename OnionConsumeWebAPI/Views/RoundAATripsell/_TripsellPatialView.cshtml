@@ -964,10 +964,10 @@
                                                         <ul>
                                                             <li>1: Cabin Bag: 7 k.g</li>
                                                             <li>2: Check-In: 25 k.g</li>
-                                                            <li>3: Cancellation: Lower cancellation fee. 500</li>
-                                                            <li>4: Date Change: No Refund on  Date change</li>
-                                                            <li>5: Seat : Free seats</li>
-                                                            <li>6: Meal : Complimentary meal</li>
+                                                            <li>3: Cancellation: 1000 (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>4: Date Change: Free</li>
+                                                            <li>5: Seat : -</li>
+                                                            <li>6: Meal : -</li>
 
                                                         </ul>
                                                     </span>
@@ -991,6 +991,7 @@
                                                     </span>
                                                 </span>
                                             }
+
                                              else if (item.segments[i].fares[f].productClass.Contains("Eco Value"))
                                             {
                                                 <span class="tooltipF">
@@ -1007,6 +1008,58 @@
                                                     </span>
                                                 </span>
                                             }
+                                            else if (item.segments[i].fares[f].productClass.Contains("Business Classic"))
+                                            {
+                                                <span class="tooltipF">
+                                                    Fare Type:  @Faretype<b>Business Classic</b>
+                                                    <span class="tooltiptext">
+                                                        <ul>
+                                                            <li>1: Cabin Bag: 10 k.g</li>
+                                                            <li>2: Check-In: 25 k.g</li>
+                                                            <li>3: Cancellation: 8000   (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>4: Date Change: 5000   (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>5: Seat : -</li>
+                                                            <li>6: Meal : -</li>
+                                                        </ul>
+                                                    </span>
+                                                </span>
+                                            }
+
+                                            else if (item.segments[i].fares[f].productClass.Contains("Business Flex"))
+                                            {
+                                                <span class="tooltipF">
+                                                                                    Fare Type:  @Faretype<b>Business Flex</b>
+                                                    <span class="tooltiptext">
+                                                        <ul>
+                                                            <li>1: Cabin Bag: 10 k.g</li>
+                                                            <li>2: Check-In: 40 k.g</li>
+                                                            <li>3: Cancellation: 8000  (4 hrs prior from departure)</li>
+                                                            <li>4: Date Change: 5000  (4 hrs prior from departure)</li>
+                                                            <li>5: Seat : -</li>
+                                                            <li>6: Meal : -</li>
+                                                        </ul>
+                                                    </span>
+                                                </span>
+                                            }
+
+                                             else if (item.segments[i].fares[f].productClass.Contains("Premium Classic"))
+                                            {
+                                                <span class="tooltipF">
+                                                 Fare Type:  @Faretype<b>Premium Classic</b>
+                                                    <span class="tooltiptext">
+                                                        <ul>
+                                                            <li>1: Cabin Bag: 7 k.g</li>
+                                                            <li>2: Check-In: 15 k.g</li>
+                                                            <li>3: Cancellation: 3500  (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>4: Date Change: 2500  (3 days upto 2 hrs prior from departure)</li>
+                                                            <li>5: Seat : -</li>
+                                                            <li>6: Meal : -</li>
+                                                        </ul>
+                                                    </span>
+                                                </span>
+                                            }
+
+
                                               else if (item.segments[i].fares[f].productClass.Contains("Eco Classic"))
                                             {
                                                 <span class="tooltipF">
@@ -1524,8 +1577,22 @@
                                                 <td><b>Charges</b></td>
                                             </tr>
                                             <tr>
-                                                <td>Lower cancellation fee. 500</td>
-                                                <td>Rs.500</td>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs.1000</td>
+                                            </tr>
+                                        </table>
+
+                                    }
+                                     else if (item.segments[i].fares[f].productClass.Contains("Premium Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 3500 </td>
                                             </tr>
                                         </table>
 
@@ -1589,6 +1656,36 @@
                                         </table>
 
                                     }
+
+                                    else if (item.segments[i].fares[f].productClass.Contains("Business Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 8000</td>
+                                            </tr>
+                                        </table>
+
+                                    }
+                                      else if (item.segments[i].fares[f].productClass.Contains("Business Flex"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4 hrs prior from departure</td>
+                                                <td>Rs. 8000</td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
 
                                     else if (item.segments[i].fares[f].productClass.Contains("Eco Comfort"))
                                     {
@@ -1986,8 +2083,8 @@
                                                 <td><b>Charges</b></td>
                                             </tr>
                                             <tr>
-                                                <td>No Refund on  Date change</td>
-                                                <td>No Refund on  Date change</td>
+                                                <td>-</td>
+                                                <td>Free</td>
                                             </tr>
                                         </table>
 
@@ -2021,6 +2118,21 @@
                                         </table>
 
                                     }
+                                        else if (item.segments[j].fares[k].productClass.Contains("Premium Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 2500 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
 
                                       else if (item.segments[j].fares[k].productClass.Contains("Eco Classic"))
                                     {
@@ -2036,6 +2148,37 @@
                                         </table>
 
                                     }
+
+                                       else if (item.segments[j].fares[k].productClass.Contains("Business Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 5000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
+                                    else if (item.segments[j].fares[k].productClass.Contains("Business Flex"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>4 hrs prior from departure</td>
+                                                <td>Rs. 5000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
 
                                     else if (item.segments[j].fares[k].productClass.Contains("Eco Comfort Plus"))
                                     {
@@ -2539,8 +2682,8 @@
                                                 <td><b>Charges</b></td>
                                             </tr>
                                             <tr>
-                                                <td>Lower cancellation fee. 500</td>
-                                                <td>Rs.500</td>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs.1000</td>
                                             </tr>
                                         </table>
 
@@ -2575,6 +2718,56 @@
                                         </table>
 
                                     }
+
+                                     else if (item.segments[i].fares[f].productClass.Contains("Premium Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                             <td> 3 days upto 2 hrs prior from departure</td>
+                                               <td>Rs.3500</td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
+
+                                   else if (item.segments[i].fares[f].productClass.Contains("Business Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td> 3 days upto 2 hrs prior from departure</td>
+                                                 <td>Rs.8000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
+                                      else if (item.segments[i].fares[f].productClass.Contains("Business Flex"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                              <td>4 hrs prior from departure</td>
+                                              <td>Rs.8000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
+
+
+
                                       else if (item.segments[i].fares[f].productClass.Contains("Eco Classic"))
                                     {
                                         <table style="width:100%">
@@ -3003,8 +3196,8 @@
                                                 <td><b>Charges</b></td>
                                             </tr>
                                             <tr>
-                                                <td>No Refund on  Date change</td>
-                                                <td>No Refund on  Date change</td>
+                                                <td>-</td>
+                                                <td>Free</td>
                                             </tr>
                                         </table>
 
@@ -3038,6 +3231,37 @@
                                         </table>
 
                                     }
+                                       else if (item.segments[j].fares[k].productClass.Contains("Premium Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 2500</td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
+                                      else if (item.segments[j].fares[k].productClass.Contains("Business Classic"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td>Rs. 5000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
+
                                       else if (item.segments[j].fares[k].productClass.Contains("Eco Classic"))
                                     {
                                         <table style="width:100%">
@@ -3052,6 +3276,22 @@
                                         </table>
 
                                     }
+
+                                      else if (item.segments[j].fares[k].productClass.Contains("Business Flex"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                                            <td>4 hrs prior from departure</td>
+                                                <td>Rs. 5000 </td>
+                                            </tr>
+                                        </table>
+
+                                    }
+
 
 
 

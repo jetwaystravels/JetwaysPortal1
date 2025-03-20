@@ -492,6 +492,12 @@
 						Faretype = "Eco Value";
 						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("Eco Classic"))
 						Faretype = "Eco Classic";
+						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("Business Classic"))
+						Faretype = "Business Classic";
+						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("Business Flex"))
+						Faretype = "Business Flex";
+						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("Premium Classic"))
+						Faretype = "Premium Classic";
 						else
 						    Faretype = ""; 
 
@@ -603,18 +609,7 @@
 
 							</ul>
 						    }
-						    if (@Faretype == "Premium Flex")
-						    {
-							<ul>
-							    <li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kgs</li>
-							    <li><img src="~/img/included.png" alt="icon">Check in 25 k.g  (1 piece)</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :-  Lower cancellation fee. 500</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- No Refund on  Date change</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- Free seats</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Meal :-Complimentary meal</li>
-
-							</ul>
-						    }
+						   
 
 							if (@Faretype == "Eco Flex")
 						    {
@@ -638,6 +633,17 @@
 							<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
 							<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
                              </ul>
+							}
+							if (@Faretype == "Premium Classic")
+							{
+								<ul>
+									<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kg</li>
+									<li><img src="~/img/included.png" alt="icon">Check in 15 k.g</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 3500 (3 days upto 2 hrs prior from departure)</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 2500  (3 days upto 2 hrs prior from departure)</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+								</ul>
 							}
 
 							if (@Faretype == "Eco Classic")
@@ -740,7 +746,30 @@
 							    <li><img src="~/img/partial_inclusion.png" alt="icon">Meal :-Complimentary meal</li>
 
 							</ul>
-						    }
+					}
+
+					if (@Faretype == "Business Classic")
+					{
+						<ul>
+							<li><img src="~/img/included.png" alt="icon">Cabin Bag 10 Kgs</li>
+							<li><img src="~/img/included.png" alt="icon">Check in 25 k.g</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 8000  (3 days upto 2 hrs prior from departure)</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 5000  (3 days upto 2 hrs prior from departure)</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+						</ul>
+					}
+					if (@Faretype == "Business Flex")
+					{
+						<ul>
+						<li><img src="~/img/included.png" alt="icon">Cabin Bag 10 Kgs</li>
+						<li><img src="~/img/included.png" alt="icon">Check in 40 k.g</li>
+						<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 8000  (4 hrs prior from departure)</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 5000 :-  (4 hrs prior from departure)</li>
+						<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+						<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+						</ul>
+					}
 
 
 						    ////******************************/
@@ -840,10 +869,10 @@
 							<ul>
 							    <li><img src="~/img/included.png" alt="icon">Cabin Bag - 7 k.g</li>
 							    <li><img src="~/img/included.png" alt="icon">Check in - 25 k.g</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation Rs - Lower cancellation fee. 500</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Date Change Rs - No Refund on  Date change</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- Free seats</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- Complimentary meal</li>
+							<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation Rs  1000   (3 days upto 2 hrs prior from departure)</li>
+							    <li><img src="~/img/partial_inclusion.png" alt="icon">Date Change Free</li>
+							    <li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+							    <li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
 
 							</ul>
 						    }
@@ -1214,6 +1243,12 @@
 						 Faretype = "Eco Value";
 						 else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("Eco Classic"))
 						  Faretype = "Eco Classic";
+						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("Business Classic"))
+						Faretype = "Business Classic";
+						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("Business Flex"))
+                        Faretype = "Business Flex";
+						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("Premium Classic"))
+                        Faretype = "Premium Classic";
 
 					    }
 
@@ -1301,15 +1336,15 @@
 
 							</ul>
 						    }
-						    if (@Faretype == "Premium Flex")
-						    {
-							<ul>
-							    <li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kgs</li>
-							    <li><img src="~/img/included.png" alt="icon">Check in 25 k.g  (1 piece)</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :-  Lower cancellation fee. 500</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- No Refund on  Date change</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- Free seats</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Meal :-Complimentary meal</li>
+							if (@Faretype == "Premium Flex")
+							{
+								<ul>
+									<li><img src="~/img/included.png" alt="icon">Cabin Bag - 7 k.g</li>
+									<li><img src="~/img/included.png" alt="icon">Check in - 25 k.g</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation Rs  1000   (3 days upto 2 hrs prior from departure)</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change Free</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+									<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
 
 							</ul>
 						    }
@@ -1337,6 +1372,20 @@
 								<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
 							</ul>
 						    }
+
+													if (@Faretype == "Premium Classic")
+													{
+														<ul>
+															<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kg</li>
+															<li><img src="~/img/included.png" alt="icon">Check in 15 k.g</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 3500 (3 days upto 2 hrs prior from departure)</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 2500  (3 days upto 2 hrs prior from departure)</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+														</ul>
+													}
+
+
 							if (@Faretype == "Eco Classic")
 							{
 								<ul>
@@ -1348,6 +1397,29 @@
 									<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
 								</ul>
 							}
+
+													if (@Faretype == "Business Classic")
+													{
+														<ul>
+															<li><img src="~/img/included.png" alt="icon">Cabin Bag 10 Kgs</li>
+															<li><img src="~/img/included.png" alt="icon">Check in 25 k.g</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 8000  (3 days upto 2 hrs prior from departure)</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 5000  (3 days upto 2 hrs prior from departure)</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+														</ul>
+													}
+													if (@Faretype == "Business Flex")
+													{
+														<ul>
+															<li><img src="~/img/included.png" alt="icon">Cabin Bag 10 Kgs</li>
+															<li><img src="~/img/included.png" alt="icon">Check in 40 k.g</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- 8000  (4 hrs prior from departure)</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- 5000 :-  (4 hrs prior from departure)</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
+															<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
+														</ul>
+													}
 
 						    if (@Faretype == "Eco Comfort Plus")
 						    {
@@ -1534,18 +1606,7 @@
 							</ul>
 						    }
 
-						    if (@Faretype == "Premium Flex")
-						    {
-							<ul>
-							    <li><img src="~/img/included.png" alt="icon">Cabin Bag - 7 k.g</li>
-							    <li><img src="~/img/included.png" alt="icon">Check in - 25 k.g</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation Rs - Lower cancellation fee. 500</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Date Change Rs - No Refund on  Date change</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- Free seats</li>
-							    <li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- Complimentary meal</li>
-
-							</ul>
-						    }
+						    
 
 						    //AkasaAir Fare Details
 						    if (@Faretype == "Saver")

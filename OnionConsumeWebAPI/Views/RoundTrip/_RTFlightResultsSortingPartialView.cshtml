@@ -590,15 +590,48 @@
 					}
 					else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK"))
 					{
-					    <td>Fee starts at (Rs. 3710) Onward.</td>
-					    <td>Fee starts at (Rs. 3710) Onward.</td>
+					    <td>Rs. 3710</td>
+						<td>3 days upto 2 hrs prior from departure</td>
 					    <td>As per Airline Fare rule</td>
 					}
 					else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI"))
 					{
-					    <td>Fee starts at (Rs. 4000) Onward.</td>
-					    <td>Fee starts at (Rs. 4000) Onward.</td>
-					    <td>As per Airline Fare rule</td>
+						if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Business Classic"))
+						{
+							<td>Rs. 8000</td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Business Flex"))
+						{
+							<td>Rs. 8000 </td>
+							<td>4 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Premium Flex"))
+						{
+							<td>Rs. 1000 </td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Premium Classic"))
+						{
+							<td>Rs. 3500 </td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Eco Value"))
+						{
+							<td>Rs. 4000 </td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else
+						{
+							<td>Rs. 8000</td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
 					}
 					else
 					{
@@ -1215,25 +1248,58 @@
 					}
 					else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("QP"))
 					{
-						<td>2999 Rs.</td>
+						<td>Rs. 2999 </td>
 					    <td>4 days before departure</td>
 					    <td>As per Airline Fare rule</td>
 					}
 					else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("UK"))
 					{
-					    <td>Fee starts at (Rs. 3710) Onward.</td>
-					    <td>Fee starts at (Rs. 3710) Onward.</td>
-					    <td>As per Airline Fare rule</td>
+						<td>Rs. 3710</td>
+					    <td>(3 days upto 2 hrs prior from departure).</td>
+						<td>As per Airline Fare rule</td>
 					}
 					else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("AI"))
 					{
-					    <td>Fee starts at (Rs. 4000) Onward.</td>
-					    <td>Fee starts at (Rs. 4000) Onward.</td>
-					    <td>As per Airline Fare rule</td>
+						if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("Business Classic"))
+						{
+							<td>Rs. 8000</td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("Premium Flex"))
+						{
+							<td>Rs. 1000 </td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("Business Flex"))
+						{
+						<td>Rs. 8000 </td>
+						<td>4 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("Premium Classic"))
+						{
+							<td>Rs. 3500 </td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("Eco Value"))
+						{
+							<td>Rs. 4000 </td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
+						else
+						{
+							<td>Rs. 8000</td>
+							<td>3 days upto 2 hrs prior from departure</td>
+							<td>As per Airline Fare rule</td>
+						}
 					}
 					else
 					{
-					    <td>3500 Rs.</td>
+					    <td>Rs. 3500 </td>
 						<td>Upto 72 hrs before departure</td>
 					    <td>As per Airline Fare rule</td>
 					}

@@ -674,17 +674,17 @@
 													List<SelectListItem> mealOptions = new List<SelectListItem>();
 													if (AirLine.ToLower() == "airasia")
 													{
-														for (int l = 0; l < Model.MealslistRT[0].legSsrs.Count; l++)
-														{
-															for (int s = 0; s < Model.MealslistRT[0].legSsrs[l].legssrs.Count; s++)
+														// for (int l = 0; l < Model.MealslistRT[0].legSsrs.Count; l++)
+														// {
+															for (int s = 0; s < Model.MealslistRT[0].legSsrs[0].legssrs.Count; s++)
 															{
-																string ssrprice = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price;
-																mealnamedisplay = Model.MealslistRT[0].legSsrs[l].legssrs[s].name;
-																string Mealcode = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
+																string ssrprice = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
+																mealnamedisplay = Model.MealslistRT[0].legSsrs[0].legssrs[s].name;
+																string Mealcode = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline;
 																//  string MealcodeData = Mealcode.StartsWith("V", StringComparison.OrdinalIgnoreCase).ToString();
-																AirLine = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline.ToString();
-																string Mealname = Model.MealslistRT[0].legSsrs[l].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price;
-																ssrkeyAA = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
+																AirLine = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline.ToString();
+																string Mealname = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
+														    	ssrkeyAA = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[pas].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline;
 																// if (AirLine.ToLower() == "airasia" || AirLine.ToLower() == "akasaair")
 																// {
 																//     ssrkeyAA = Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[pas].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].price + "_" + "OneWay0" + "_" + Model.MealslistRT[0].legSsrs[l].legssrs[s].legpassengers[0].Airline;
@@ -728,7 +728,7 @@
 																	}
 																}
 															}
-														}
+														//}
 													}
 													else
 													{
