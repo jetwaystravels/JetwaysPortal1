@@ -372,7 +372,24 @@
 		    var gstnoToDisplay = document.getElementById("error-message10");
 		    gstnoToDisplay.style.display = "none";
 		}
+				let gstemailfocus = document.getElementById("emailAddressGST").value; 
 
+		var emailRegex = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+		if (gstemailfocus == "") {
+			document.getElementById('emailErrorMessageGST').innerText = "Enter a valid email address.";
+			return false;
+		} 
+		else if (!emailRegex.test(gstemailfocus)) 
+		{
+			document.getElementById('emailErrorMessageGST').innerText = "Enter a valid email address.";
+			return false;
+		}
+
+		else {
+
+
+			 }
 
 	    }
 
@@ -493,6 +510,34 @@
 	}
 
     }
+
+
+
+	//GStEmail
+	function validateEmailGST(event) {
+
+		var email = event.target.value;
+		var regex = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+		var errorMessage = document.getElementById('emailErrorMessageGST');
+		//var errorDisplay = document.getElementById('error-message7');
+
+		if (email.trim() === "") {
+			errorMessage.innerText = "";
+		} else if (!regex.test(email)) {
+			errorMessage.innerText = "Enter a valid Email Address.";
+		} else {
+			errorMessage.innerText = "";
+		}
+
+		// if (email.trim() === "") {
+		//     errorDisplay.style.display = "block";
+		//     document.getElementById("emailAddress").focus();
+		//     return false;
+		// } else {
+		//     errorDisplay.style.display = "none";
+		// }
+
+	}
 
     //Phone Number
     function validatePhoneNumber(event) {

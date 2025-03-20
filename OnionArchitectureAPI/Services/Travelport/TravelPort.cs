@@ -310,10 +310,6 @@ namespace OnionArchitectureAPI.Services.Travelport
             sbReq.Append("</air:AirPricingModifiers>");
             sbReq.Append("</air:LowFareSearchReq></soap:Body></soap:Envelope>");
 
-
-
-
-
             //sbReq.Append("<air:LowFareSearchReq xmlns:com=\"http://www.travelport.com/schema/common_v52_0\" xmlns:air=\"http://www.travelport.com/schema/air_v52_0\" AuthorizedBy=\"ENDFARE\" ");
             //sbReq.Append("SolutionResult=\"true\" TraceId=\"" + newGuid + "\" TargetBranch=\"" + _objAvail._targetBranch + "\">");
             //sbReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"UAPI\"/>");
@@ -2596,6 +2592,13 @@ namespace OnionArchitectureAPI.Services.Travelport
                 int _id = 0;
                 for (int i = 0; i < passengerdetails.Count; i++)
                 {
+                    string[] _parts = passengerdetails[i].passengerkey.Split('@');
+                    if (_parts.Length > 1 && _parts[1].ToLower().Trim().Contains("airindia"))
+                    {
+                        string[] subParts = _parts[1].Split('^');
+                        passengerdetails[i].passengerkey = subParts[0];
+                    }
+
                     if (passengerdetails[i].passengertypecode == "ADT")
                     {
                         createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey.Split('^')[0] + "\"  TravelerType=\"ADT\">");
