@@ -243,17 +243,17 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
-           
+
 
             HttpContext.Session.SetString("GDSContactdetails", JsonConvert.SerializeObject(contactobject));
             string SelectedAirlinedata = HttpContext.Session.GetString("SelectedAirlineName");
             string[] dataArray = JsonConvert.DeserializeObject<string[]>(SelectedAirlinedata);
             for (int i = 0; i < dataArray.Length; i++)
             {
-                if (dataArray[i] == null)  
+                if (dataArray[i] == null)
                     continue;
                 string tokenview = string.Empty;
-                
+
 
                 if (string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "airasia")
                 {
@@ -275,11 +275,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         _Phonenumber Phonenumber = new _Phonenumber();
                         List<_Phonenumber> Phonenumberlist = new List<_Phonenumber>();
                         Phonenumber.type = "Home";
-                        Phonenumber.number = contactobject.countrycode+ contactobject.number;
+                        Phonenumber.number = contactobject.countrycode + contactobject.number;
                         Phonenumberlist.Add(Phonenumber);
                         _Phonenumber Phonenumber1 = new _Phonenumber();
                         Phonenumber1.type = "Other";
-                        Phonenumber1.number = contactobject.countrycode+ contactobject.number;
+                        Phonenumber1.number = contactobject.countrycode + contactobject.number;
                         Phonenumberlist.Add(Phonenumber1);
                         foreach (var item in Phonenumberlist)
                         {
@@ -309,7 +309,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (responseAddContact.IsSuccessStatusCode)
                         {
                             var _responseAddContact = responseAddContact.Content.ReadAsStringAsync().Result;
-                            
+
                             if (i == 0)
                             {
                                 logs.WriteLogsR(jsonContactRequest, "7-UpdateContactsRequest_Left", "AirAsiaRT");
@@ -328,7 +328,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 }
 
                 tokenview = string.Empty;
-               
+
 
                 if (string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "akasaair")
                 {
@@ -336,11 +336,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                     if (i == 0)
                     {
-                        tokenview = tokenData.Token; 
+                        tokenview = tokenData.Token;
                     }
                     else
                     {
-                        tokenview = tokenData.RToken; 
+                        tokenview = tokenData.RToken;
                     }
 
 
@@ -350,7 +350,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     {
                         ContactModel _ContactModel = new ContactModel();
                         _ContactModel.emailAddress = contactobject.emailAddress;
-                        _ContactModel.customerNumber = null; 
+                        _ContactModel.customerNumber = null;
                         _ContactModel.sourceOrganization = "QPCCJ5003C";
                         _ContactModel.distributionOption = null;
                         _ContactModel.notificationPreference = null;
@@ -358,12 +358,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         _Phonenumber Phonenumber = new _Phonenumber();
                         List<_Phonenumber> Phonenumberlist = new List<_Phonenumber>();
                         Phonenumber.type = "Home";
-                        Phonenumber.number = contactobject.countrycode+ contactobject.number;
+                        Phonenumber.number = contactobject.countrycode + contactobject.number;
                         //Phonenumber.number = passengerdetails.mobile;
                         Phonenumberlist.Add(Phonenumber);
                         _Phonenumber Phonenumber1 = new _Phonenumber();
                         Phonenumber1.type = "Other";
-                        Phonenumber1.number = contactobject.countrycode+ contactobject.number;
+                        Phonenumber1.number = contactobject.countrycode + contactobject.number;
                         Phonenumberlist.Add(Phonenumber1);
                         foreach (var item in Phonenumberlist)
                         {
@@ -380,9 +380,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         _ContactModel.address = Address;
 
                         _Name Name = new _Name();
-                        Name.first = contactobject.first; 
+                        Name.first = contactobject.first;
                         Name.middle = "";
-                        Name.last = contactobject.last; 
+                        Name.last = contactobject.last;
                         Name.title = contactobject.title;
                         _ContactModel.name = Name;
 
@@ -420,11 +420,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "SpiceJet").Result;
                     if (i == 0)
                     {
-                        Signature = tokenData.Token; 
+                        Signature = tokenData.Token;
                     }
                     else
                     {
-                        Signature = tokenData.RToken; 
+                        Signature = tokenData.RToken;
                     }
 
                     if (Signature == null) { Signature = ""; }
@@ -447,7 +447,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     {
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].TypeCode = "P";
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].CountryCode = "IN";
-                        _ContactModelSG.updateContactsRequestData.BookingContactList[0].HomePhone = contactobject.countrycode+ contactobject.number;
+                        _ContactModelSG.updateContactsRequestData.BookingContactList[0].HomePhone = contactobject.countrycode + contactobject.number;
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].EmailAddress = contactobject.emailAddress;
                         BookingName[] Name = new BookingName[1];
                         Name[0] = new BookingName();
@@ -463,18 +463,18 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_ContactModelSG) + "\n\n Response: " + JsonConvert.SerializeObject(responseAddContactSG), "UpdateContact", "SpiceJetRT");
                 }
 
-                
+
                 if (string.IsNullOrEmpty(Signature) && dataArray[i].ToLower() == "indigo")
                 {
                     tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
                     if (i == 0)
                     {
-                        Signature = tokenData.Token; 
+                        Signature = tokenData.Token;
 
                     }
                     else
                     {
-                        Signature = tokenData.RToken; 
+                        Signature = tokenData.RToken;
                     }
 
                     if (Signature == null) { Signature = ""; }
@@ -650,11 +650,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         [HttpPost]
         public async Task<IActionResult> PostReturnTravllerData(List<passkeytype> passengerdetails, List<Infanttype> infanttype, string Guid)
         {
+            HttpContext.Session.SetString("newPassengerdetails", JsonConvert.SerializeObject(passengerdetails));
             MongoHelper objMongoHelper = new MongoHelper();
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
-           
+
 
             SSRAvailabiltyResponceModel Mealslist = null;
             SeatMapResponceModel Seatmaplist = null;
@@ -664,15 +665,17 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             for (int i1 = 0; i1 < dataArray.Length; i1++)
             {
                 string tokenview = "";
+                string _data = HttpContext.Session.GetString("newPassengerdetails");
+                List<passkeytype> _newPassengerdetailsSG = (List<passkeytype>)JsonConvert.DeserializeObject(_data, typeof(List<passkeytype>));
 
-                if (dataArray[i1] == null) 
+                if (dataArray[i1] == null)
                     continue;
                 using (HttpClient client = new HttpClient())
                 {
                     if (string.IsNullOrEmpty(tokenview) && dataArray[i1].ToLower() == "airasia")
                     {
                         tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
-                       
+
                         if (i1 == 0)
                         {
                             tokenview = tokenData.Token;
@@ -847,7 +850,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
                         if (i1 == 0)
                         {
-                            tokenview = tokenData.Token; 
+                            tokenview = tokenData.Token;
                         }
                         else
                         {
@@ -1032,7 +1035,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         UpdatePassengersRequest updatePaxReq = null;
                         try
                         {
-                            updatePaxReq = new UpdatePassengersRequest(); 
+                            updatePaxReq = new UpdatePassengersRequest();
                             updatePaxReq.Signature = Signature;
                             updatePaxReq.ContractVersion = 420;
                             updatePaxReq.updatePassengersRequestData = new UpdatePassengersRequestData();
@@ -1056,27 +1059,27 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
 
                         }
-                        HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
+                        HttpContext.Session.SetString("PassengerNameDetailsSG", JsonConvert.SerializeObject(_newPassengerdetailsSG));
                     }
 
-                    
+
                     if (string.IsNullOrEmpty(Signature) && dataArray[i1].ToLower() == "indigo")
                     {
                         tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Indigo").Result;
 
                         if (i1 == 0)
                         {
-                            Signature = tokenData.Token; 
+                            Signature = tokenData.Token;
 
                         }
                         else
                         {
-                            Signature = tokenData.RToken; 
+                            Signature = tokenData.RToken;
                         }
 
                         if (Signature == null) { Signature = ""; }
                         _updateContact obj = new _updateContact(httpContextAccessorInstance);
-                        IndigoBookingManager_.UpdatePassengersResponse updatePaxResp = await obj.UpdatePassengers(Signature, passengerdetails);
+                        IndigoBookingManager_.UpdatePassengersResponse updatePaxResp = await obj.UpdatePassengers(Signature, _newPassengerdetailsSG);
                         string Str2 = JsonConvert.SerializeObject(updatePaxResp);
 
                         #region GetState
@@ -1155,7 +1158,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
             return PartialView("_ServiceRequestsPartialView", vm);
         }
-       
+
 
         //Post Unit Key
         public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> ssrKey, List<string> BaggageSSrkey, List<string> FastfarwardAddon, List<string> PPBGAddon, string Guid)
@@ -1208,7 +1211,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             {
                 PPBGAddon = new List<string>();
             }
-           //Seat
+            //Seat
 
             string Meals = string.Empty;
             List<AirAsiaTripResponceModel> passeengerKeyListRT = new List<AirAsiaTripResponceModel>();
@@ -1282,7 +1285,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         int _a = 0;
                         foreach (Match item in Regex.Matches(passenger, @"<Start>(?<test>[\s\S]*?)<End>"))
                         {
-                            
+
                             passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
                             if (passenger != null)
                             {
@@ -1295,7 +1298,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     string tokenview = string.Empty;
                                     if (_a == 0)
                                     {
-                                        tokenview = tokenData.Token; 
+                                        tokenview = tokenData.Token;
                                     }
                                     else
                                     {
@@ -2132,7 +2135,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         }
                                         else
                                         {
-                                            tokenview = tokenData.RToken; 
+                                            tokenview = tokenData.RToken;
                                         }
                                         token = tokenview.Replace(@"""", string.Empty);
                                         if (token == "" || token == null)
@@ -2360,7 +2363,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 {
                                     bagid = 0;
                                     mealid = 0;
-                                   
+
                                     tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
 
                                     string tokenview = string.Empty;
@@ -2368,11 +2371,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     {
                                         if (_a == 0)
                                         {
-                                            tokenview = tokenData.Token; 
+                                            tokenview = tokenData.Token;
                                         }
                                         else
                                         {
-                                            tokenview = tokenData.RToken; 
+                                            tokenview = tokenData.RToken;
                                         }
                                         if (tokenview == null) { tokenview = ""; }
                                         token = tokenview.Replace(@"""", string.Empty);
@@ -2780,16 +2783,16 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 {
                                     //seatid = 0;
                                     string tokenview = string.Empty;
-                                  
+
                                     tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
 
                                     if (p == 0)
                                     {
-                                        tokenview = tokenData.Token; 
+                                        tokenview = tokenData.Token;
                                     }
                                     else
                                     {
-                                        tokenview = tokenData.RToken; 
+                                        tokenview = tokenData.RToken;
                                     }
                                     if (!string.IsNullOrEmpty(tokenview))
                                     {
@@ -3007,7 +3010,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     }
                                     else
                                     {
-                                        tokenview = tokenData.RToken; 
+                                        tokenview = tokenData.RToken;
                                     }
                                     if (!string.IsNullOrEmpty(tokenview))
                                     {
@@ -3027,7 +3030,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     _obj.SSRcodeRTI = new List<ssrsKey>();
                                     _obj.SSRcodeRTII = new List<ssrsKey>();
                                     for (int k = 0; k < unitKey.Count; k++)
-                                    {    
+                                    {
                                         if (unitKey[k].ToLower().Contains("spicejet") || unitKey[k].ToLower().Contains("airasia"))
                                             continue;
 
@@ -3230,11 +3233,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                     if (p == 0)
                                     {
-                                        Signature = tokenData.Token; 
+                                        Signature = tokenData.Token;
                                     }
                                     else
                                     {
-                                        Signature = tokenData.RToken; 
+                                        Signature = tokenData.RToken;
                                     }
                                     if (Signature == null) { Signature = ""; }
                                     Signature = Signature.Replace(@"""", string.Empty);
@@ -3252,7 +3255,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 {
 
                 }
-                
+
             }
             #endregion
 

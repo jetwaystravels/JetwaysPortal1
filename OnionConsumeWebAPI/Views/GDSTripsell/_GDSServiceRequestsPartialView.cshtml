@@ -135,27 +135,27 @@
 <script type="text/javascript">
     /*********seatmap_tab_select_function_ServiceRequest_PartialView_Page***********/
     $(document).ready(function () {
-	$("#seattab1").addClass('active');
+	$("#seattabN1").addClass('active');
 	$("#tabshow2").hide();
 	$("#tabnew2").hide();
 	$("#popbtnB").hide();
 	$("#popbtnA").show();
-	$("#seattab1").click(function () {
+	$("#seattabN1").click(function () {
 	    $("#tabshow1").show();
 	    $("#tabnew1").show();
 	    $("#tabnew2").hide();
 	    $("#popbtnB").hide();
 	    $("#popbtnA").show();
 	    $("#tabshow2").hide();
-	    $("#seattab1").addClass('active');
-	    $("#seattab2").removeClass('active');
+	    $("#seattabN1").addClass('active');
+	    $("#seattabN2").removeClass('active');
 
 	});
 
-	$("#seattab2").click(function () {
+	$("#seattabN2").click(function () {
 	    $("#tabshow2").css("display", "block");
-	    $("#seattab2").addClass('active');
-	    $("#seattab1").removeClass('active');
+	    $("#seattabN2").addClass('active');
+	    $("#seattabN1").removeClass('active');
 	    $("#popbtnA").hide();
 	    $("#tabshow1").hide();
 	    $("#tabnew1").hide();
@@ -164,10 +164,25 @@
 
 	});
 
-	$("#btnfocus").click(function () {
-	    alert("Do you want select connect seat");
-	    $("#seattab2").click();
-	});
+	// $("#btnfocus").click(function () {
+	//     alert("Do you want select connect seat");
+	//     $("#seattab2").click();
+	// });
+		$("#btnfocus").click(function () {
+			var confirmation = confirm("would you like to select for you next sector?");
+			if (confirmation == true) {
+				if ($("#seattab2").is(":visible")) {
+					$("#seattab2").click();
+				}
+			}
+			else {
+
+				return false;
+			}
+		});
+
+
+
 
     });
 
@@ -609,12 +624,12 @@
 				    <li class="nav-item d-flex">
 					@if (i == 0)
 					{
-					    <div id="seattab1" class="nav-link">@Model.passeengerlist.journeys[0].segments[i].designator.origin-@Model.passeengerlist.journeys[0].segments[i].designator.destination</div>
+					    <div id="seattabN1" class="nav-link">@Model.passeengerlist.journeys[0].segments[i].designator.origin-@Model.passeengerlist.journeys[0].segments[i].designator.destination</div>
 
 					}
 					else
 					{
-					    <div id="seattab2" class="nav-link">@Model.passeengerlist.journeys[0].segments[i].designator.origin-@Model.passeengerlist.journeys[0].segments[i].designator.destination</div>
+					    <div id="seattabN2" class="nav-link">@Model.passeengerlist.journeys[0].segments[i].designator.origin-@Model.passeengerlist.journeys[0].segments[i].designator.destination</div>
 					}
 				    </li>
 

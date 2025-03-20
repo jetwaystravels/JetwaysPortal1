@@ -174,7 +174,7 @@ namespace OnionArchitectureAPI.Services.Indigo
 
 
             }
-            SetSessionValue("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
+            SetSessionValue("PassengerNameDetailsIndigo", JsonConvert.SerializeObject(passengerdetails));
             return (UpdatePassengersResponse)updatePaxResp;
         }
         public class Paxes

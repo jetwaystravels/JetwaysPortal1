@@ -2650,7 +2650,7 @@ namespace OnionArchitectureAPI.Services.Travelport
 
                                 for (int k = 0; k < _SSRkey.Count; k++)
                                 {
-                                    if (_SSRkey[k].Contains("_OneWay0"))
+                                    if (_SSRkey[k].Contains("_OneWay0") && _SSRkey[k].ToLower().Trim().Contains("airindia"))
                                     {
                                         string[] wordsArray = _SSRkey[k].ToString().Split('_');
                                         if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
@@ -2661,7 +2661,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                                         }
 
                                     }
-                                    else if (_SSRkey[k].Contains("_OneWay1"))
+                                    else if (_SSRkey[k].Contains("_OneWay1") && _SSRkey[k].ToLower().Trim().Contains("airindia"))
                                     {
                                         string[] wordsArray = _SSRkey[k].ToString().Split('_');
                                         if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
@@ -2671,7 +2671,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                                             _obj.SSRcodeOneWayII.Add(_obj1);
                                         }
                                     }
-                                    else if (_SSRkey[k].Contains("_RT0"))
+                                    else if (_SSRkey[k].Contains("_RT0") && _SSRkey[k].ToLower().Trim().Contains("airindia"))
                                     {
                                         string[] wordsArray = _SSRkey[k].ToString().Split('_');
                                         if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
@@ -2681,7 +2681,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                                             _obj.SSRcodeRTI.Add(_obj2);
                                         }
                                     }
-                                    else if (_SSRkey[k].Contains("_RT1"))
+                                    else if (_SSRkey[k].Contains("_RT1") && _SSRkey[k].ToLower().Trim().Contains("airindia"))
                                     {
                                         string[] wordsArray = _SSRkey[k].ToString().Split('_');
                                         if (wordsArray.Length > 1 && !string.IsNullOrEmpty(wordsArray[0]))
