@@ -127,11 +127,11 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             _GetfligthModel.origin = _GetfligthModel.origin.Trim();
             _GetfligthModel.destination = _GetfligthModel.destination.Trim();
 
-            getguid = _mongoDBHelper.GetFlightSearchByKeyRef(objMongoHelper.GetRequestCacheKey(_GetfligthModel)).Result;
-            _mongoDBHelper.SaveSearchLog(_GetfligthModel, SearchGuid);
+            getguid = _mongoDBHelper.GetFlightSearchByKeyRef(objMongoHelper.GetRequestCacheKey(_GetfligthModel, flightclass)).Result;
+            _mongoDBHelper.SaveSearchLog(_GetfligthModel, SearchGuid, flightclass);
             if (string.IsNullOrEmpty(getguid))
             {
-                _mongoDBHelper.SaveKeyRequest(SearchGuid, objMongoHelper.GetRequestCacheKey(_GetfligthModel));
+                _mongoDBHelper.SaveKeyRequest(SearchGuid, objMongoHelper.GetRequestCacheKey(_GetfligthModel, flightclass));
                 _mongoDBHelper.SaveRequest(_GetfligthModel, SearchGuid);
                 ResponseGuid = SearchGuid;
                 searchLog = _mongoDBHelper.GetFlightSearchLog(SearchGuid).Result;

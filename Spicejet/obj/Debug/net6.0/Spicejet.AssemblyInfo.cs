@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Spicejet")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0d1879641065e15810bbe582dd235743bde770f7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10f184ba19f76b6b5e949593933898dc70c0dc19")]
 [assembly: System.Reflection.AssemblyProductAttribute("Spicejet")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Spicejet")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

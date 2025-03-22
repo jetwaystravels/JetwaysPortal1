@@ -359,7 +359,7 @@ namespace OnionConsumeWebAPI.Models
         }
 
 
-        public void SaveSearchLog(SimpleAvailabilityRequestModel requestModel, string Guid)
+        public void SaveSearchLog(SimpleAvailabilityRequestModel requestModel, string Guid, string flightClass)
         {
             MongoHelper mongoHelper = new MongoHelper();
 
@@ -411,9 +411,11 @@ namespace OnionConsumeWebAPI.Models
                     searchLog.Children = requestModel.childcount;
                     searchLog.Infants = requestModel.infantcount;
                 }
-                searchLog.Log_DateTime = DateTime.Now;
+                TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                searchLog.Log_DateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 searchLog.IP = mongoHelper.GetIp();
-
+                searchLog.Device = mongoHelper.DeviceName();
+                searchLog.FlightClass = flightClass;
                 // _mongoDbService.GetCollection<SearchLog>("LogSearchData").InsertOneAsync(searchLog);
                 mDB.GetCollection<SearchLog>("LogSearchData").InsertOneAsync(searchLog);
 

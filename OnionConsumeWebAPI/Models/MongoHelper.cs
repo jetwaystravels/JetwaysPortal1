@@ -13,7 +13,7 @@ namespace OnionConsumeWebAPI.Models
     public class MongoHelper
     {
 
-        public string GetRequestCacheKey(SimpleAvailabilityRequestModel FlightSCriteria)
+        public string GetRequestCacheKey(SimpleAvailabilityRequestModel FlightSCriteria,string flightClass)
         {
             StringBuilder key = new StringBuilder();
             //string key = string.Empty;
@@ -41,7 +41,14 @@ namespace OnionConsumeWebAPI.Models
             //            key.Append(str);
             //}
 
-            key.Append(FlightSCriteria.trip.ToString());
+            if (FlightSCriteria.endDate != null)
+            {
+                key.Append(1);
+            }
+            else
+            {
+                key.Append(0);
+            }
 
             key.Append(Convert.ToDateTime(FlightSCriteria.beginDate).ToString("ddMMyyyy"));  //
             key.Append(Convert.ToDateTime(FlightSCriteria.endDate).ToString("ddMMyyyy"));  //
@@ -65,8 +72,9 @@ namespace OnionConsumeWebAPI.Models
             {
 
                 key.Append(FlightSCriteria.destination);
-            }
 
+            }
+            key.Append(flightClass);
             // key.Append(FlightSCriteria.DirectFlights.ToString());
             //    if (!string.IsNullOrEmpty(FlightSCriteria.Carrier))
             //        key.Append(FlightSCriteria.Carrier.ToString());
@@ -232,8 +240,43 @@ namespace OnionConsumeWebAPI.Models
 
         public string GetIp()
         {
-            string ip = "192.168.1.199";
-            return ip;
+
+            IHttpContextAccessor httpContextAccessorInstance = new HttpContextAccessor();
+
+            IPAddress iPAddress = new IPAddress(httpContextAccessorInstance);
+            return iPAddress.GetVisitorIPAddress();
+
+            //string ip = "192.168.1.199";
+            //         return ip;
+        }
+
+        public string DeviceName()
+        {
+
+            IHttpContextAccessor httpContextAccessorInstance = new HttpContextAccessor();
+            var userAgent = httpContextAccessorInstance.HttpContext.Request.Headers["User-Agent"].ToString();
+            var isMobile = IsMobileDevice(userAgent);
+
+            if (isMobile)
+            {
+                return "Mobile";
+            }
+            else
+            {
+                return "Desktop";
+            }
+
+
+
+            //string ip = "192.168.1.199";
+            //         return ip;
+        }
+
+        private bool IsMobileDevice(string userAgent)
+        {
+            // Simple mobile regex pattern to match common mobile user agents
+            var mobileRegex = new Regex(@"(android|iphone|ipod|blackberry|iemobile|mobile|opera mini)", RegexOptions.IgnoreCase);
+            return mobileRegex.IsMatch(userAgent);
         }
 
 

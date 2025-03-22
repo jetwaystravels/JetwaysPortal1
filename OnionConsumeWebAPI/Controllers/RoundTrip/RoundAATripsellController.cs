@@ -80,6 +80,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             string Mealtext = HttpContext.Session.GetString("Mainmealvm");
             string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
 
+
             #region 2
 
 
@@ -171,6 +172,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             string Mealtext = HttpContext.Session.GetString("Mainmealvm");
             string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
             string BaggageDataR = HttpContext.Session.GetString("BaggageDetails");
+
+            if(string.IsNullOrEmpty(passengerNamedetails))
+            {
+                 passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsSG");
+            }
+
 
             #region 2
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainpassengervm")))
@@ -1102,7 +1109,19 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     string Passenegrtext = HttpContext.Session.GetString("Mainpassengervm");
                     string Seatmap = HttpContext.Session.GetString("Mainseatmapvm");
                     string Meals = HttpContext.Session.GetString("Mainmealvm");
-                    string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+                    //string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+                    string passengerNamedetails = string.Empty;// HttpContext.Session.GetString("PassengerNameDetails");
+                    if (dataArray[i1].ToLower() == "spicejet")
+                    {
+                        passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsSG");
+
+                    }
+                    else if (dataArray[i1].ToLower() == "indigo")
+                    {
+                        passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsIndigo");
+                    }
+                    else
+                        passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
 
                     if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainpassengervm")))
                     {
@@ -1155,7 +1174,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     }
                 }
             }
-            HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
+            //HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
             return PartialView("_ServiceRequestsPartialView", vm);
         }
 
