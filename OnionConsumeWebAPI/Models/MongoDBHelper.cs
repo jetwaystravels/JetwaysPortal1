@@ -416,6 +416,7 @@ namespace OnionConsumeWebAPI.Models
                 searchLog.IP = mongoHelper.GetIp();
                 searchLog.Device = mongoHelper.DeviceName();
                 searchLog.FlightClass = flightClass;
+                searchLog.Webref = "JET-" + mongoHelper.Get8Digits();
                 // _mongoDbService.GetCollection<SearchLog>("LogSearchData").InsertOneAsync(searchLog);
                 mDB.GetCollection<SearchLog>("LogSearchData").InsertOneAsync(searchLog);
 

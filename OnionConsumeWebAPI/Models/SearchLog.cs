@@ -41,6 +41,8 @@ namespace OnionConsumeWebAPI.Models
 
         public string Device { get; set; }
 
+        public string Webref { get; set; }
+
         //   public String Meta { get; set; }
 
         //   public String currencycode { get; set; }

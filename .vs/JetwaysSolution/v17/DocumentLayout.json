@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\roundtrip\\roundtripcommitbooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\roundtrip\\roundtripcommitbooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\models\\mongodbhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\models\\mongodbhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\models\\searchlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\models\\searchlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\views\\airasiaonewaypayment\\airasiaonewaypaymentview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\views\\airasiaonewaypayment\\airasiaonewaypaymentview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\views\\commitbooking\\booking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\views\\commitbooking\\booking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\roundtrip\\roundtripcommitbooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\roundtrip\\roundtripcommitbooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\views\\commitbooking\\booking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\views\\commitbooking\\booking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\roundtrip\\roundaatripsellcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,24 +42,63 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SearchLog.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Models\\SearchLog.cs",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Models\\SearchLog.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Models\\SearchLog.cs",
+              "RelativeToolTip": "OnionConsumeWebAPI\\Models\\SearchLog.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAywCsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-22T12:50:40.031Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "MongoDBHelper.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Models\\MongoDBHelper.cs",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Models\\MongoDBHelper.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Models\\MongoDBHelper.cs",
+              "RelativeToolTip": "OnionConsumeWebAPI\\Models\\MongoDBHelper.cs",
+              "ViewState": "AgIAAI4BAAAAAAAAAAAvwKEBAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-22T12:50:28.424Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AirAsiaOneWayPaymentView.cshtml",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\AirAsiaOneWayPayment\\AirAsiaOneWayPaymentView.cshtml",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Views\\AirAsiaOneWayPayment\\AirAsiaOneWayPaymentView.cshtml",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\AirAsiaOneWayPayment\\AirAsiaOneWayPaymentView.cshtml",
+              "RelativeToolTip": "OnionConsumeWebAPI\\Views\\AirAsiaOneWayPayment\\AirAsiaOneWayPaymentView.cshtml",
+              "ViewState": "AgIAAF0DAAAASAXH29QUwHcDAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-22T12:40:37.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "RoundTripCommitBooking.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\RoundTrip\\RoundTripCommitBooking.cs",
               "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\RoundTrip\\RoundTripCommitBooking.cs",
               "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\RoundTrip\\RoundTripCommitBooking.cs",
               "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\RoundTrip\\RoundTripCommitBooking.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAowBQAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-21T11:33:56.535Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "RoundAATripsellController.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\RoundTrip\\RoundAATripsellController.cs",
               "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\RoundTrip\\RoundAATripsellController.cs",
@@ -59,38 +106,24 @@
               "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\RoundTrip\\RoundAATripsellController.cs",
               "ViewState": "AgIAAD4AAAAAAAAAAAAowKwAAABdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T11:02:04.067Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T11:02:04.067Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AirAsiaOneWayPaymentView.cshtml",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\AirAsiaOneWayPayment\\AirAsiaOneWayPaymentView.cshtml",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Views\\AirAsiaOneWayPayment\\AirAsiaOneWayPaymentView.cshtml",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\AirAsiaOneWayPayment\\AirAsiaOneWayPaymentView.cshtml",
-              "RelativeToolTip": "OnionConsumeWebAPI\\Views\\AirAsiaOneWayPayment\\AirAsiaOneWayPaymentView.cshtml",
-              "ViewState": "AgIAAIUDAAAAAAAAAAAAAJsDAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-21T07:23:49.004Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "FlightSearchIndexController.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
               "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
               "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
               "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
-              "ViewState": "AgIAAIcBAAAAAAAAAAAwwHABAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHABAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-22T09:13:10.774Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "booking.cshtml",
               "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\CommitBooking\\booking.cshtml",
               "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Views\\CommitBooking\\booking.cshtml",
@@ -98,12 +131,11 @@
               "RelativeToolTip": "OnionConsumeWebAPI\\Views\\CommitBooking\\booking.cshtml",
               "ViewState": "AgIAAFQDAAAAAAAAAAAAwH8DAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-21T09:10:59.957Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T09:10:59.957Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "_ServiceRequestsPartialView.cshtml",
               "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\RoundAATripsell\\_ServiceRequestsPartialView.cshtml",
               "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Views\\RoundAATripsell\\_ServiceRequestsPartialView.cshtml",
