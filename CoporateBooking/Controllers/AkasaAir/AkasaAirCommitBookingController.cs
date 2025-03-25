@@ -179,8 +179,10 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
                     var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                     ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
-                    var PassengerData = HttpContext.Session.GetString("AKPassengerName");
-                    List<passkeytype> PassengerDataDetailsList = JsonConvert.DeserializeObject<List<passkeytype>>(PassengerData);
+					//var PassengerData = HttpContext.Session.GetString("AKPassengerName");
+					MongoHelper objMongoHelper = new MongoHelper();
+					var PassengerData = objMongoHelper.UnZip(tokenData.PassengerRequest);
+					List<passkeytype> PassengerDataDetailsList = JsonConvert.DeserializeObject<List<passkeytype>>(PassengerData);
 
                     returnTicketBooking.recordLocator = JsonObjPNRBooking.data.recordLocator;
                     BarcodePNR = JsonObjPNRBooking.data.recordLocator;

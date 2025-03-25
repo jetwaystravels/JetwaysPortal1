@@ -514,19 +514,50 @@
                                                     @{
                                                         string hashdata = @Model.AirlinePNR[a].passengers[i2].name.first.ToString().Replace(" ", "_") + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[a].journeys[0].segments[i3].designator.destination;
 
-                                                        if (htmeal != null)
+                                                        // if (htmeal != null)
+                                                        // {
+                                                        //     <td>@htmeal[hashdata]</td>
+                                                        // }
+                                                        if (htmeal != null && htmeal.ContainsKey(hashdata))
                                                         {
-                                                            <td>@htmeal[hashdata]</td>
+
+                                                            var Mealcode = htmeal[hashdata].ToString();
+
+                                                            var MealName = MealImageList.GetAllmeal()
+                                                            .Where(x => Mealcode.Contains(x.MealCode))
+                                                            .Select(x => x.MealImage)
+                                                            .FirstOrDefault();
+
+
+                                                            if (Mealcode != null)
+                                                            {
+
+                                                                <td>@Mealcode-@MealName</td>
+
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>NA</td>
                                                         }
 
                                                         if (htbag != null)
                                                         {
-                                                            Hashtable htSSr = new Hashtable();
-                                                            SpicejetMealImageList.GetAllmeal(htSSr);
-                                                            if (!htbag.Contains(hashdata))
-                                                                continue;
-                                                            var weight = htSSr[htbag[hashdata]];
-                                                            <td>@htbag[hashdata] - @weight</td>
+                                                            //Hashtable htSSr = new Hashtable();
+                                                            //SpicejetMealImageList.GetAllmeal(htSSr);
+                                                            //if (!htbag.Contains(hashdata))
+                                                            //continue;
+                                                            if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "INF")
+                                                            {
+                                                                <td>NA</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "CHD")
+                                                                    Model.AirlinePNR[a].passengers[i2].passengerTypeCode = "CNN";
+                                                                var weight = htbag[Model.AirlinePNR[a].passengers[i2].passengerTypeCode.Replace("\"", "")];
+                                                                <td>XBAG-@weight Kg</td>
+                                                            }
                                                         }
 
 

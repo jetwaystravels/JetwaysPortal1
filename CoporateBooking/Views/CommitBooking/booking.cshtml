@@ -519,7 +519,7 @@
                                                 }
                                                 <td>@Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin - @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination </td>
                                                 <td colspan="1">@Model.AirlinePNR[0].journeys[0].segments[i3].identifier.carrierCode - @Model.AirlinePNR[0].journeys[0].segments[i3].identifier.identifier</td>
-
+                                              
 
                                                 @{
                                                     string hashdata = @Model.AirlinePNR[0].passengers[i2].passengerKey + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.origin + "_" + @Model.AirlinePNR[0].journeys[0].segments[i3].designator.destination;
@@ -529,7 +529,7 @@
 
                                                         var Mealcode = htmeal[hashdata].ToString();
 
-                                                        var MealName = MealImageList.GetAllmeal()
+                                                         var MealName = MealImageList.GetAllmeal()
                                                         .Where(x => Mealcode.Contains(x.MealCode))
                                                         .Select(x => x.MealImage)
                                                         .FirstOrDefault();
@@ -542,9 +542,9 @@
 
                                                         }
 
-
-
-
+                                                                                                            
+                                                      
+                                                       
                                                     }
                                                     else
                                                     {
@@ -560,7 +560,7 @@
                                                     {
 
                                                         var Baggabgecode = htbag[hashBagdata].ToString();
-
+                                                      
                                                         var BaggageName = MealImageList.GetAllmeal()
                                                         .Where(x => Baggabgecode.Contains(x.MealCode))
                                                         .Select(x => x.MealImage)
@@ -568,16 +568,16 @@
 
                                                         if (Baggabgecode != null)
                                                         {
-
-                                                            if (i3 == 0)
-                                                            {
+                                                          
+                                                                if (i3 == 0)
+                                                                {
 
                                                                 <td>@BaggageName</td>
-                                                            }
+                                                                }
 
+                                                        
 
-
-
+                                                            
                                                         }
 
 
@@ -597,7 +597,7 @@
 
                                                         //             <td>@item.MealImage</td>
                                                         //         }
-
+                                                               
                                                         //     }
                                                         // }
                                                     }
@@ -894,3 +894,14 @@
     }
 
 </script>
+
+
+
+
+
+
+
+
+
+
+

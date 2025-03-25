@@ -7,7 +7,7 @@
         position: fixed;
         z-index: 9999;
         left: 50%;
-        width: 60%!important;
+        width: 60% !important;
         height: 80%;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -189,7 +189,7 @@
                 //AirLine
                 string seatMapName = string.Empty;
                 string aircraftModel = string.Empty;
-                if (@Model.Seatmaplist.datalist != null && @Model.Seatmaplist.datalist.Count>0)
+                if (@Model.Seatmaplist.datalist != null && @Model.Seatmaplist.datalist.Count > 0)
                 {
                     seatMapName = @Model.Seatmaplist.datalist[i].seatMap.name;
                     int hyphenIndex = @Model.Seatmaplist.datalist[i].seatMap.name.LastIndexOf('-');
@@ -313,11 +313,11 @@
                                             <div class="col-auto">
                                                 @{
                                                     var allCityData = Citynamelist.GetAllCityData();
-                                                    string QueryOriginAirportName = item.segments[i].legs[j].designator.origin;
-                                                    string QueryDestinationAirportName = item.segments[i].legs[j].designator.destination;
+                                                    string QueryOriginAirportName = queryorigin;//item.segments[i].legs[j].designator.origin;
+                                                    string QueryDestinationAirportName = querydestination;// item.segments[i].legs[j].designator.destination;
 
-                                                    var originCity = allCityData.SingleOrDefault(x => x.cityname == QueryOriginAirportName);
-                                                    var destinationCity = allCityData.SingleOrDefault(x => x.cityname == QueryDestinationAirportName);
+                                                    var originCity = allCityData.SingleOrDefault(x => x.citycode == QueryOriginAirportName);
+                                                    var destinationCity = allCityData.SingleOrDefault(x => x.citycode == QueryDestinationAirportName);
 
                                                     if (originCity != null)
                                                     {
@@ -330,7 +330,7 @@
                                                 }
                                                 @*<div class="lh-14 fw-500">@item.segments[i].legs[j].designator.origin <span class="text-13 ml-2 fw-600">( @formatteddepartureDate<span class="text-13 text-light-1 ml-2"> Indira Gandhi, T-@item.segments[i].legs[j].legInfo.departureTerminal </span> )</span></div>*@
                                                 <div class="lh-14 fw-500">
-                                                    @QueryOriginAirportName<span class="text-13 ml-2 fw-600">
+                                                    @originCity.cityname<span class="text-13 ml-2 fw-600">
                                                         ( @formatteddepartureDate<span class="text-13 text-light-1 ml-2">@originCity?.airportname</span><span class="text-13 ml-2 fw-600">
                                                             @if (@item.segments[i].legs[j].legInfo.departureTerminal != null)
                                                             {
@@ -387,7 +387,7 @@
 
                             </div> *@
                                             <div class="col-auto lh-14 fw-500">
-                                                @QueryDestinationAirportName
+                                                @destinationCity.cityname
                                                 <span class="text-13 ml-2 fw-600">
                                                     (@formattedarrivalDate
                                                     <span class="text-13 text-light-1 ml-2">@destinationCity?.airportname</span>

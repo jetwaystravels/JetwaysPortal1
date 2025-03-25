@@ -32,7 +32,8 @@
         public string RToken;
         public string JourneyKey;
         public string Supp;
-        public DateTime CreatedDate;
+		public string PassengerRequest;
+		public DateTime CreatedDate;
 
     }
 }

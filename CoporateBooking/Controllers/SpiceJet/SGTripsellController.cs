@@ -300,13 +300,34 @@ namespace OnionConsumeWebAPI.Controllers
                 passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
                 SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
                 SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
-                if (!string.IsNullOrEmpty(passengerNamedetails))
+				vm.passeengerlist = passeengerlist;
+				//if (!string.IsNullOrEmpty(passengerNamedetails))
+				//            {
+				//                List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
+				//                vm.passengerNamedetails = passengerNamedetailsdata;
+
+				//	for (int i = 0; i < vm.passeengerlist.passengers.Count; i++)
+				//	{
+				//		vm.passeengerlist.passengers[i].name = passengerdetails[i].first + " " + passengerdetails[i].last;
+
+				//	}
+
+				//}
+
+				if (passengerdetails != null)
                 {
-                    List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
-                    vm.passengerNamedetails = passengerNamedetailsdata;
+                   // List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
+                    vm.passengerNamedetails = passengerdetails;
+
+                    for (int i = 0; i < vm.passeengerlist.passengers.Count; i++)
+                    {
+                        vm.passeengerlist.passengers[i].name = passengerdetails[i].first + " " + passengerdetails[i].last;
+
+                    }
+
                 }
 
-                vm.passeengerlist = passeengerlist;
+
                 vm.Seatmaplist = Seatmaplist;
                 vm.Meals = Mealslist;
 

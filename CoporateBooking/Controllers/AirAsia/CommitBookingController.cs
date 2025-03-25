@@ -218,7 +218,9 @@ namespace OnionConsumeWebAPI.Controllers
                     //var _responcePNRBooking = responceGetBooking.Content.ReadAsStringAsync().Result;
                     //var JsonObjPNRBooking = JsonConvert.DeserializeObject<dynamic>(_responcePNRBooking);
                     ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
-                    string PassengerData = HttpContext.Session.GetString("PassengerName");
+                    //string PassengerData = HttpContext.Session.GetString("PassengerName");
+                    MongoHelper objMongoHelper = new MongoHelper();
+                    string  PassengerData = objMongoHelper.UnZip(tokenData.PassengerRequest);
                     List<passkeytype> PassengerDataDetailsList = JsonConvert.DeserializeObject<List<passkeytype>>(PassengerData);
                     returnTicketBooking.recordLocator = JsonObjPNRBooking.data.recordLocator;
                     BarcodePNR = JsonObjPNRBooking.data.recordLocator;

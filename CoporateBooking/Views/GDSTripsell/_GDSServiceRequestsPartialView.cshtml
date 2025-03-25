@@ -135,27 +135,27 @@
 <script type="text/javascript">
     /*********seatmap_tab_select_function_ServiceRequest_PartialView_Page***********/
     $(document).ready(function () {
-	$("#seattab1").addClass('active');
+	$("#seattabN1").addClass('active');
 	$("#tabshow2").hide();
 	$("#tabnew2").hide();
 	$("#popbtnB").hide();
 	$("#popbtnA").show();
-	$("#seattab1").click(function () {
+	$("#seattabN1").click(function () {
 	    $("#tabshow1").show();
 	    $("#tabnew1").show();
 	    $("#tabnew2").hide();
 	    $("#popbtnB").hide();
 	    $("#popbtnA").show();
 	    $("#tabshow2").hide();
-	    $("#seattab1").addClass('active');
-	    $("#seattab2").removeClass('active');
+	    $("#seattabN1").addClass('active');
+	    $("#seattabN2").removeClass('active');
 
 	});
 
-	$("#seattab2").click(function () {
+	$("#seattabN2").click(function () {
 	    $("#tabshow2").css("display", "block");
-	    $("#seattab2").addClass('active');
-	    $("#seattab1").removeClass('active');
+	    $("#seattabN2").addClass('active');
+	    $("#seattabN1").removeClass('active');
 	    $("#popbtnA").hide();
 	    $("#tabshow1").hide();
 	    $("#tabnew1").hide();
@@ -164,10 +164,25 @@
 
 	});
 
-	$("#btnfocus").click(function () {
-	    alert("Do you want select connect seat");
-	    $("#seattab2").click();
-	});
+	// $("#btnfocus").click(function () {
+	//     alert("Do you want select connect seat");
+	//     $("#seattab2").click();
+	// });
+		$("#btnfocus").click(function () {
+			var confirmation = confirm("would you like to select for you next sector?");
+			if (confirmation == true) {
+				if ($("#seattab2").is(":visible")) {
+					$("#seattab2").click();
+				}
+			}
+			else {
+
+				return false;
+			}
+		});
+
+
+
 
     });
 
@@ -467,6 +482,13 @@
     });
 
 
+	window.addEventListener("beforeunload", function () {
+		localStorage.removeItem("BagssrKeyCount");
+		localStorage.removeItem("MealssrKeyCount");
+		localStorage.removeItem("MealssrKeyCount2");
+	});
+
+
 
 </script>
 
@@ -609,12 +631,12 @@
 				    <li class="nav-item d-flex">
 					@if (i == 0)
 					{
-					    <div id="seattab1" class="nav-link">@Model.passeengerlist.journeys[0].segments[i].designator.origin-@Model.passeengerlist.journeys[0].segments[i].designator.destination</div>
+					    <div id="seattabN1" class="nav-link">@Model.passeengerlist.journeys[0].segments[i].designator.origin-@Model.passeengerlist.journeys[0].segments[i].designator.destination</div>
 
 					}
 					else
 					{
-					    <div id="seattab2" class="nav-link">@Model.passeengerlist.journeys[0].segments[i].designator.origin-@Model.passeengerlist.journeys[0].segments[i].designator.destination</div>
+					    <div id="seattabN2" class="nav-link">@Model.passeengerlist.journeys[0].segments[i].designator.origin-@Model.passeengerlist.journeys[0].segments[i].designator.destination</div>
 					}
 				    </li>
 
@@ -781,62 +803,69 @@
 					    </div>
 					    <div class="servc-content select-baggage">
 
-						@{
-						    List<SelectListItem> BaggageOptions = new List<SelectListItem>();
+                                                @{
+                                                    List<SelectListItem> BaggageOptions = new List<SelectListItem>();
+                                                    string weight = "";
+                                                    var bagkey = "";
+                                                    string Bagname = "";
+                                                    for (int i = 0; i < Model.Meals.legSsrs.Count; i++)
+                                                    {
+                                                    //for (int s = 0; s < Model.Meals.legSsrs[i].legssrs.Count; s++)
+                                                        //{
+                                                        string ssrprice = Model.Meals.legSsrs[i].legssrs[0].legpassengers[0].price;
+                                                        string Sssrcode = Model.Meals.legSsrs[i].legssrs[0].ssrCode + "_" + Model.Meals.legSsrs[i].legssrs[0].legpassengers[0].price;
+                                                        string bagcode = Sssrcode.StartsWith("XBAG", StringComparison.OrdinalIgnoreCase).ToString();
+                                                        if (bagcode.ToLower() == "true")
+                                                        {
+                                                            if (Model.passengerNamedetails[pas].passengertypecode == "ADT" || Model.passengerNamedetails[pas].passengertypecode == "CNN" || Model.passengerNamedetails[pas].passengertypecode == "CHD")
+                                                            {
+                                                                weight = "15 kg";
+                                                            }
 
-						    var bagkey = "";
-						    string Bagname = "";
-						    // for (int s = 0; s < Model.Meals.legSsrs[0].legssrs.Count; s++)
-						    // {
-						    //     string ssrprice = Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
-						    //     string Sssrcode = Model.Meals.legSsrs[0].legssrs[s].ssrCode + "_" + Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
-						    //     string bagcode = Sssrcode.StartsWith("X", StringComparison.OrdinalIgnoreCase).ToString();
-						    //     if (bagcode.ToLower() == "true")
-						    //     {
+                                                            Bagname = Model.Meals.legSsrs[i].legssrs[0].name + "-" + weight+ " ₹" + @Model.Meals.legSsrs[i].legssrs[0].legpassengers[0].price;
 
-						    //         Bagname = Model.Meals.legSsrs[0].legssrs[s].name + " ₹" + @Model.Meals.legSsrs[0].legssrs[s].legpassengers[0].price;
-
-						    //         bagkey = Sssrcode; //Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].ssrKey;
-						    //     }             //string passengerKey = Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].passengerKey;
-						    //     else
-						    //         continue;
+                                                            bagkey = Sssrcode; //Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].ssrKey;
+                                                        }             //string passengerKey = Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].passengerKey;
+                                                        else
+                                                            continue;
 
 
-						    //     if (bagcode != null)
-						    //     {
-						    //         // Assuming MealImageList.GetAllmeal() returns a list of objects with MealCode and MealImage properties
-						    //         BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
-						    //     }
-						    // }
+                                                        if (bagcode != null)
+                                                        {
+                                                            // Assuming MealImageList.GetAllmeal() returns a list of objects with MealCode and MealImage properties
+                                                            BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
+                                                        }
+                                                        //}
+                                                    }
 
-						}
-						<div class="d-flex">
+                                                }
+                                                <div class="d-flex">
 
-						    <select id="ddlbagOptions" class="servc-bordr servc-bordrbaggage">
-							<option selected="selected" value="">Please Select</option>
-							@foreach (var option in BaggageOptions)
-							{
-							    <option value="@option.Value" data-bagkey=@bagkey>
-								@option.Text
-							    </option>
-							}
-						    </select>
-						    <input type="hidden" id="hiddenbagKey" name="bagkey" value="" />
-						</div>
-					    </div>
-					    <div class="servc-content">
-						<select class="servc-bordr wdth-100">
-						    <option></option>
-						    <option>Meal1</option>
-						    <option>Meal2</option>
-						    <option>Meal3</option>
-						    <option>Meal4</option>
-						</select>
-					    </div>
-					</div>
+                                                    <select id="ddlbagOptions" class="servc-bordr servc-bordrbaggage">
+                                                        <option selected="selected" value="">Please Select</option>
+                                                        @foreach (var option in BaggageOptions)
+                                                        {
+                                                            <option value="@option.Value" data-bagkey=@bagkey>
+                                                                @option.Text
+                                                            </option>
+                                                        }
+                                                    </select>
+                                                    <input type="hidden" id="hiddenbagKey" name="bagkey" value="" />
+                                                </div>
+                                            </div>
+                                            <div class="servc-content">
+                                                <select class="servc-bordr wdth-100">
+                                                    <option></option>
+                                                    <option>Meal1</option>
+                                                    <option>Meal2</option>
+                                                    <option>Meal3</option>
+                                                    <option>Meal4</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-				    }
-				}
+                                    }
+                                }
 
 
 
@@ -1014,33 +1043,6 @@
 				    }
 				}
 
-
-
-
-
-				<div class="col-lg-12">
-
-
-				    <!-- Modal -->
-				    <div class="modal fade" id="sgexampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-					    <div class="modal-content model-wd80">
-						<div class="modal-mfareheader d-flex justify-between">
-						    <h2 class="text-22 fw-600">Seat Details</h2>
-						    <button type="button" class="btnclose" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true" style="font-size: 21px;">&times;</span>
-						    </button>
-						</div>
-						<div class="modal-bodyy mbody-padding">
-						</div>
-						<div class="modal-footer fbody-padding">
-						    <button type="submit" id="flighticon" data-dismiss="modal" class="btn btnclose btn-primary">Continue</button>
-						</div>
-					    </div>
-					</div>
-				    </div>
-
-				</div>
 			    </div>
 			</section>
 		    </div>

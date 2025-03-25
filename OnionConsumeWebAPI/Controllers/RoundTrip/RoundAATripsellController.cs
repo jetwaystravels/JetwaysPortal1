@@ -178,6 +178,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                  passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsSG");
             }
 
+            if (string.IsNullOrEmpty(passengerNamedetails))
+            {
+                passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsIndigo");
+            }
 
             #region 2
             if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainpassengervm")))

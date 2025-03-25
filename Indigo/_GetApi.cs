@@ -65,7 +65,10 @@ namespace Indigo
             catch (Exception ex)
             {
                 //return Ok(session);
-                
+                _SellResponse = new SellResponse();
+                _SellResponse.BookingUpdateResponseData = new BookingUpdateResponseData();
+                _SellResponse.BookingUpdateResponseData.Error = new Error();
+                _SellResponse.BookingUpdateResponseData.Error.ErrorText = ex.Message.ToString();
                 logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_SellRQ) + "\n\n Response: " + ex.ToString(), "sellException", "IndigoOneWay", "oneway");
             }
             return _SellResponse;

@@ -103,14 +103,21 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
             }
         }
-        public IActionResult AkPostSeatMapdataView()
+        public IActionResult AkPostSeatMapdataView(string GUID)
         {
-            ViewModel vm = new ViewModel();
+			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+			MongoHelper objMongoHelper = new MongoHelper();
+
+			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Akasa").Result;
+
+			ViewModel vm = new ViewModel();
             var AKpassenger = HttpContext.Session.GetString("ResultFlightPassenger");
             var AkSeatMap = HttpContext.Session.GetString("AKSeatmap");
-            var AkpassengerDetails = HttpContext.Session.GetString("AKPassengerName");
+          //  var AkpassengerDetails = HttpContext.Session.GetString("AKPassengerName");
+			var AkpassengerDetails = objMongoHelper.UnZip(tokenData.PassengerRequest);
 
-            AirAsiaTripResponceModel AkPassenger = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(AKpassenger, typeof(AirAsiaTripResponceModel));
+			AirAsiaTripResponceModel AkPassenger = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(AKpassenger, typeof(AirAsiaTripResponceModel));
             SeatMapResponceModel AkSeatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(AkSeatMap, typeof(SeatMapResponceModel));
             List<passkeytype> passkeytypesDetails = JsonConvert.DeserializeObject<List<passkeytype>>(AkpassengerDetails);
             vm.AkPassenger = AkPassenger;
@@ -262,8 +269,8 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-
-            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Akasa").Result;
+			MongoHelper objMongoHelper = new MongoHelper();
+			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Akasa").Result;
 
             string tokenview = tokenData.Token;
 
@@ -303,8 +310,12 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                             AkInfo.residentCountry = "IN";
                             _AkPassengersModel.name = Akname;
                             _AkPassengersModel.info = AkInfo;
-                          //  HttpContext.Session.SetString("AKPassengerName", JsonConvert.SerializeObject(passengerdetails));
-                            var jsonPassengers = JsonConvert.SerializeObject(_AkPassengersModel, Formatting.Indented);
+							// HttpContext.Session.SetString("AKPassengerName", JsonConvert.SerializeObject(passengerdetails));
+
+							string passobj = objMongoHelper.Zip(JsonConvert.SerializeObject(passengerdetails));
+							_mongoDBHelper.UpdatePassengerMongoFlightToken(GUID, "Akasa", passobj);
+
+							var jsonPassengers = JsonConvert.SerializeObject(_AkPassengersModel, Formatting.Indented);
                             logs.WriteLogs(jsonPassengers, "9-ADDPassengerRequest" + i, "AkasaOneWay", "oneway");
                             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -400,8 +411,11 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 var AkMeals = HttpContext.Session.GetString("AKMealsBaggage");
                 var Akbaggage = HttpContext.Session.GetString("AKBaggageDetails");
                 var AkSeatMap = HttpContext.Session.GetString("AKSeatmap");
-                var AkpassengerDetails = HttpContext.Session.GetString("AKPassengerName");
-                if (!string.IsNullOrEmpty(AKpassenger))
+                //var AkpassengerDetails = HttpContext.Session.GetString("AKPassengerName");
+
+                var AkpassengerDetails = JsonConvert.SerializeObject(passengerdetails);
+
+				if (!string.IsNullOrEmpty(AKpassenger))
                 {
                     AirAsiaTripResponceModel AkPassenger = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(AKpassenger, typeof(AirAsiaTripResponceModel));
                     vm.AkPassenger = AkPassenger;
@@ -477,8 +491,9 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+			MongoHelper objMongoHelper = new MongoHelper();
 
-            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
+			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
 
             token = tokenData.Token;
 
@@ -492,8 +507,10 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 var AkMeals = HttpContext.Session.GetString("AKMealsBaggage");
                 var Akbaggage = HttpContext.Session.GetString("AKBaggageDetails");
                 var AkSeatMap = HttpContext.Session.GetString("AKSeatmap");
-                var AkpassengerDetails = HttpContext.Session.GetString("AKPassengerName");
-                AirAsiaTripResponceModel AkPassenger = null;
+				//  var AkpassengerDetails = HttpContext.Session.GetString("AKPassengerName");
+				var AkpassengerDetails = objMongoHelper.UnZip(tokenData.PassengerRequest);
+
+				AirAsiaTripResponceModel AkPassenger = null;
                 SSRAvailabiltyResponceModel AkBaggageDetails = null;
                 SeatMapResponceModel AkSeatmaplist = null;
                 SSRAvailabiltyResponceModel AkMealslist = null;

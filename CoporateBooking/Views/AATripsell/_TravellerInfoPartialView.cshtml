@@ -1,37 +1,37 @@
 ﻿@model DomainLayer.ViewModel.ViewModel
 @{
-    Layout = null;
+	Layout = null;
 
 }
 <style>
 
-    .error-message {
+	.error-message {
 	color: red;
 	font-size: 11px;
 	margin: 5px 0 0 0;
 	display: none;
-    }
+	}
 
-    .error-message-val {
+	.error-message-val {
 	color: red;
 	font-size: 11px;
 	margin: 5px 0 0 0;
 	display: none;
-    }
+	}
 
-    .error-input {
+	.error-input {
 	border: 1px solid red;
-    }
+	}
 
-    .modal-body p {
+	.modal-body p {
 	border-radius: 6px;
 	box-shadow: 0 0 10px 0 rgb(0 0 0 / 9%);
 	border: 1px solid #E4E3E1;
 	padding: 8px;
 	margin-bottom: 10px;
-    }
+	}
 
-    .dobinput {
+	.dobinput {
 	background: #fff;
 	color: var(--color-light-1);
 	border: 1px solid var(--color-border);
@@ -41,23 +41,23 @@
 	transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 	width: 100%;
 	font-size: 14px;
-    }
+	}
 
-    .brd-none {
+	.brd-none {
 	border: none;
-    }
+	}
 
-    .custom-select::-ms-expand {
+	.custom-select::-ms-expand {
 	display: none; /* Hide the arrow icon in IE */
-    }
+	}
 
-    .custom-select option {
+	.custom-select option {
 	padding: 5px; /* Set the desired padding for each option */
 	height: 50px;
 	overflow: hidden;
-    }
+	}
 
-    .checkbox-button2 {
+	.checkbox-button2 {
 	display: inline-block;
 	width: 20px;
 	height: 20px;
@@ -65,23 +65,23 @@
 	border: 1px solid #ccc;
 	padding: 0;
 	cursor: pointer;
-    }
+	}
 
 
 	.checkbox-button2.checked::after {
-	    content: '\2713';
-	    font-size: 16px;
-	    color: #333;
-	    display: block;
-	    text-align: center;
-	    line-height: 20px;
+	content: '\2713';
+	font-size: 16px;
+	color: #333;
+	display: block;
+	text-align: center;
+	line-height: 20px;
 	}
 
 </style>
 <div class="py-15 px-20 rounded-4 text-15 bg-blue-1-05 mb-10">
 	@{
-		int pascount = @Model.passeengerlistRT[0].passengers.Count;
-		if (pascount == 1)
+		int pascount = Model.passeengerlist.passengers.Count;
+		if (pascount==1)
 		{
 
 		}
@@ -93,6 +93,7 @@
 			</div>
 		}
 	}
+    
 
     <form asp-action="TravllerDetails" asp-controller="AATripsell" method="post" id="passengerForm">
 	@{
@@ -106,7 +107,7 @@
 	    <input type="hidden" name="passengers[@i].identifier" value="@Model.passeengerlist.journeys[0].segments[0].identifier.identifier" />
 	    <input type="hidden" name="passengers[@i].carrierCode" value="@Model.passeengerlist.journeys[0].segments[0].identifier.carrierCode" />
 
-		<div class="mt-10"><label class="text-16 fw-600">@Model.passeengerlist.passengers[i].passengerTypeCode</label></div>
+	    <div class="mt-10"><label class="text-16 fw-600">@Model.passeengerlist.passengers[i].passengerTypeCode</label></div>
 	    <input type="hidden" name="passengerdetails[@i].passengertypecode" value="@Model.passeengerlist.passengers[i].passengerTypeCode" />
 	    <div class="row">
 		@{
@@ -686,7 +687,7 @@
 	    }
 	    $("#enteredData").html(enteredData);
 	    $('#dataPopup').modal('show');
-
+		
 	});
 		$('#dataPopup').on('show.bs.modal', function () {
 			$('body').css('overflow', 'hidden');
@@ -695,6 +696,7 @@
 		$('#dataPopup').on('hidden.bs.modal', function () {
 			$('body').css('overflow', 'auto');
 		});
+
 	/************************************************************/
 	function isValidFebruaryDay(year, day) {
 	    year = parseInt(year);

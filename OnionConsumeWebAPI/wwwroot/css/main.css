@@ -14195,3 +14195,92 @@ start addons
                     color: #6B879F;
                     font-size: 14px;
                 }
+
+/* Start technical error */
+
+.technical-erro-bx {
+    box-shadow: 0 2px 15px rgba(255, 0, 30, 0.1);
+    border: #FCDFE3 1px solid;
+    padding: 25px 15px;
+    width: 50%;
+    margin: 35px auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+    .technical-erro-bx h3 {
+        padding: 12px 0 10px;
+    }
+
+    .technical-erro-bx p {
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .technical-erro-bx .btn {
+        padding: 15px 47px;
+        margin-top: 25px;
+    }
+
+/* End technical error */
+
+
+/* Start technical error */
+
+.service-erro-bx {
+    box-shadow: 0 2px 15px rgba(255, 0, 30, 0.1);
+    border: #FCDFE3 1px solid;
+    padding: 25px 15px;
+    width: 40%;
+    margin: 35px auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+    .service-erro-bx h6 {
+        padding: 12px 0 10px;
+        font-weight: 500;
+    }
+
+    .service-erro-bx p {
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .service-erro-bx .btn {
+        padding: 15px 47px;
+        margin-top: 25px;
+        background: #f64a4a;
+    }
+
+/* End technical error */
+
+.service-erro-bx {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px 15px;
+    width: 40%;
+    margin: 35px auto;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 12%;
+    background: #fff;
+}
+
+    .service-erro-bx p.main {
+        padding: 12px 0 10px;
+        color: #333;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .service-erro-bx p {
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .service-erro-bx .btn {
+        padding: 15px 47px;
+        margin-top: 25px;
+        background: #085AC0 !important;
+    }

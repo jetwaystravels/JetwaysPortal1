@@ -831,6 +831,7 @@ namespace OnionConsumeWebAPI.Controllers
                                     legSsrs SSRAvailabiltyLegssrobj = new legSsrs();
                                     legDetails legDetailsobj = null;
                                     List<childlegssrs> legssrslist = new List<childlegssrs>();
+                                    SSRAvailabiltyResponceobj.legSsrs = new List<legSsrs>();
                                     for (int i1 = 0; i1 < _res.SSRAvailabilityForBookingResponse.SSRSegmentList.Length; i1++)
                                     {
                                         legssrslist = new List<childlegssrs>();
@@ -919,6 +920,8 @@ namespace OnionConsumeWebAPI.Controllers
                                         SSRAvailabiltyLegssrobj.legDetails = legDetailsobj;
                                         SSRAvailabiltyLegssrobj.legssrs = legssrslist;
                                         SSRAvailabiltyLegssrlist.Add(SSRAvailabiltyLegssrobj);
+                                        SSRAvailabiltyResponceobj.legSsrs.Add(SSRAvailabiltyLegssrobj);
+
                                     }
 
                                 }
@@ -928,7 +931,6 @@ namespace OnionConsumeWebAPI.Controllers
                                 }
 
 
-                                SSRAvailabiltyResponceobj.legSsrs = SSRAvailabiltyLegssrlist;
                                 HttpContext.Session.SetString("Meals", JsonConvert.SerializeObject(SSRAvailabiltyResponceobj));
 
                             }

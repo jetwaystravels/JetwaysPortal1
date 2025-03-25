@@ -7,8 +7,6 @@ using System.Xml.Serialization;
 using OnionConsumeWebAPI.ErrorHandling;
 using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
-using Microsoft.Extensions.Logging;
-
 
 namespace OnionConsumeWebAPI.Models
 {
@@ -25,7 +23,7 @@ namespace OnionConsumeWebAPI.Models
 
         //Logger logger = new Logger();
 
-         public MongoDBHelper(IConfiguration configuration)
+        public MongoDBHelper(IConfiguration configuration)
         {
             // mongoClient = new MongoClient(ConfigurationManager.AppSettings["MongoDBConn"].ToString());
             _configuration = configuration;
@@ -36,7 +34,7 @@ namespace OnionConsumeWebAPI.Models
             //mDB = mongoClient.GetDatabase(_configuration.GetSection("MongoDbSettings").GetValue<string>("DatabaseName"));
 
             _connectionString = _configuration["ConnectionStrings:DefaultConnection"];
-             mongoClient = new MongoClient(_configuration["MongoDbSettings:ConnectionString"]);
+            mongoClient = new MongoClient(_configuration["MongoDbSettings:ConnectionString"]);
             mDB = mongoClient.GetDatabase(_configuration["MongoDbSettings:DatabaseName"]);
 
         }
@@ -188,8 +186,58 @@ namespace OnionConsumeWebAPI.Models
             }
         }
 
+        public void UpdateMongoFlightToken(string guid, string supp, string Token, string Rtoken)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                if (string.IsNullOrEmpty(Rtoken))
+                {
+                    var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.Token, Token);
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+                }
+                else
+                {
+                    var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.Token, Token).Set(s => s.RToken, Rtoken);
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+                }
 
-        public async Task<MongoSuppFlightToken> GetSuppFlightTokenByGUID(string guid, string supp)
+                if (supp == "Indigo")
+                {
+                    var updatepass = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, "");
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, updatepass);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+               // logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
+            }
+
+        }
+
+
+        public void UpdatePassengerMongoFlightToken(string guid, string supp, string Passenger)
+		{
+			try
+			{
+				var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+				Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+				var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassengerRequest, Passenger);
+				mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+
+			}
+			catch (Exception ex)
+			{
+				//logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
+			}
+
+		}
+
+
+		public async Task<MongoSuppFlightToken> GetSuppFlightTokenByGUID(string guid, string supp)
         {
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
             try
@@ -251,7 +299,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
+               // logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
             }
 
         }
@@ -311,7 +359,7 @@ namespace OnionConsumeWebAPI.Models
         }
 
 
-        public void SaveSearchLog(SimpleAvailabilityRequestModel requestModel, string Guid)
+        public void SaveSearchLog(SimpleAvailabilityRequestModel requestModel, string Guid, string flightClass)
         {
             MongoHelper mongoHelper = new MongoHelper();
 
@@ -363,9 +411,11 @@ namespace OnionConsumeWebAPI.Models
                     searchLog.Children = requestModel.childcount;
                     searchLog.Infants = requestModel.infantcount;
                 }
-                searchLog.Log_DateTime = DateTime.Now;
+                TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                searchLog.Log_DateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 searchLog.IP = mongoHelper.GetIp();
-
+                searchLog.Device = mongoHelper.DeviceName();
+                searchLog.FlightClass = flightClass;
                 // _mongoDbService.GetCollection<SearchLog>("LogSearchData").InsertOneAsync(searchLog);
                 mDB.GetCollection<SearchLog>("LogSearchData").InsertOneAsync(searchLog);
 

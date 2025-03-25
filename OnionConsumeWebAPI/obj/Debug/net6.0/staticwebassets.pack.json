@@ -813,6 +813,10 @@
       "PackagePath": "staticwebassets\\img\\employee-T.png"
     },
     {
+      "Id": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\wwwroot\\img\\error-mgs-icon.png",
+      "PackagePath": "staticwebassets\\img\\error-mgs-icon.png"
+    },
+    {
       "Id": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\wwwroot\\img\\evening-icon-white.png",
       "PackagePath": "staticwebassets\\img\\evening-icon-white.png"
     },

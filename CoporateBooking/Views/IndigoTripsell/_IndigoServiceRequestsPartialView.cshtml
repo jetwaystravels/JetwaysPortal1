@@ -489,8 +489,9 @@
 		<div class="journey-box">
 		    <ul class="nav nav-pills">
 			@{
+							
 			    int passengerdata = @Model.passeengerlist.passengerscount;
-
+				
 			}
 			@{
 			    int passengerdataValue = 0;
@@ -592,6 +593,10 @@
 						@if (Model.passengerNamedetails != null)
 						{
 						    string name = Model.passengerNamedetails[pas].first;
+							if(string.IsNullOrEmpty(name))
+							{
+								name = Model.passeengerlist.passengers[pas].name.ToString();
+							}
 						    <span>@name</span>
 						}
 					    </div>
@@ -812,6 +817,10 @@
 						@if (Model.passengerNamedetails != null)
 						{
 						    string name = Model.passengerNamedetails[pas].first;
+							if(string.IsNullOrEmpty(name))
+							{
+								name = Model.passeengerlist.passengers[pas].name.ToString();
+							}
 						    <span>@name</span>
 						}
 					    </div>

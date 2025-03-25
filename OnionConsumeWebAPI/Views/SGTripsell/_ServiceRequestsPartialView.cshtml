@@ -6,7 +6,7 @@
 }
 <script src="~/js/custom.js/spicejet.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script>
+<script type="text/javascript">
 	/*********seatmap_tab_select_function_ServiceRequest_PartialView_Page***********/
 	$(document).ready(function () {
 	$("#seatTab1").addClass('active');
@@ -38,41 +38,30 @@
 
 	});
 
-	// $("#btnfocus").click(function () {
-	//     alert("Do you want select connect seat");
-	//     $("#seattab2").click();
-	// });
+		// $("#btnfocus").click(function () {
+		// 	debugger;
+	 //    alert("Do you want select connect seat");
+	 //    $("#seattab2").click();
+	 //    });
+		$("#btnfocus").click(function () {
+			var confirmation = confirm("would you like to select for you next sector?");
+			if (confirmation == true) {
+				if ($("#seattab2").is(":visible")) {
+					$("#seattab2").click();
+				}
+			}
+			else {
 
-	$("#btnfocus").click(function () {
-	var confirmation = confirm("would you like to select for you next sector?");
-	if (confirmation == true)
-	{
-	if ($("#seattab2").is(":visible"))
-	{
-	$("#seattab2").click();
-	}
-	}
-	else
-	{
-
-	return false;
-	}
-	});
-
-
-
-
-
-	//********************************* */
-
+				return false;
+			}
+		});
+	
+	
 	});
 
 
 
 	$(document).ready(function () {
-
-
-
 
 	$('.servc-bordrm1').change(function () {
 	debugger;
@@ -223,7 +212,7 @@
 
 	$(".exampleModalCSeat").click(function (e) {
 	e.preventDefault();
-	$("#btnfocus").off("click");
+	//$("#btnfocus").off("click");
 	$.ajax({
 	url: "/SGTripsell/PostSeatMapModaldataView?GUID=" + GetParameterValues("Guid"),
 	type: "GET",

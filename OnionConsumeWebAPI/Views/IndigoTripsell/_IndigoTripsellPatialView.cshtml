@@ -157,19 +157,24 @@
 
 
 @{
-
+    DateTime arrivalDate = DateTime.Now;
+    DateTime departureDate = DateTime.Now;
+    TimeSpan diff = TimeSpan.Zero;
+    TimeSpan timeSpan = TimeSpan.Zero;
     string formattedTime = string.Empty;
-    var arrivalDate = Model.passeengerlist.journeys[0].designator.arrival;
-    var departureDate = Model.passeengerlist.journeys[0].designator.departure;
-    var diff = (arrivalDate - departureDate);
-    TimeSpan timeSpan = TimeSpan.Parse(diff.ToString());
-    if ((int)timeSpan.Minutes == 0 && (int)timeSpan.Hours != 0)
-        formattedTime = $"{(int)timeSpan.TotalHours} h";
-    else if ((int)timeSpan.Hours == 0 && (int)timeSpan.Minutes != 0)
-        formattedTime = $"{(int)timeSpan.Minutes} m";
-    else
-        formattedTime = $"{(int)timeSpan.TotalHours} h : {(int)timeSpan.Minutes} m";
-
+    if (Model.passeengerlist.journeys.Count > 0)
+    {
+        arrivalDate = Model.passeengerlist.journeys[0].designator.arrival;
+        departureDate = Model.passeengerlist.journeys[0].designator.departure;
+        diff = (arrivalDate - departureDate);
+        timeSpan = TimeSpan.Parse(diff.ToString());
+        if ((int)timeSpan.Minutes == 0 && (int)timeSpan.Hours != 0)
+            formattedTime = $"{(int)timeSpan.TotalHours} h";
+        else if ((int)timeSpan.Hours == 0 && (int)timeSpan.Minutes != 0)
+            formattedTime = $"{(int)timeSpan.Minutes} m";
+        else
+            formattedTime = $"{(int)timeSpan.TotalHours} h : {(int)timeSpan.Minutes} m";
+    }
 }
 <div class="flight-box-content rounded-4">
     <div class="py-10 px-30">

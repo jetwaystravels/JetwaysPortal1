@@ -456,27 +456,27 @@ $(document).ready(function () {
 
             $("#end-date").val(returncurrentDate);
 
-            $("#end-date").datepicker({
-                dateFormat: 'yy-mm-dd',
-                numberOfMonths: 2,
-                maxDate: '+3m',
-                minDate: '0'
-            });
+            //$("#end-date").datepicker({
+            //    dateFormat: 'yy-mm-dd',
+            //    numberOfMonths: 2,
+            //    maxDate: '+3m',
+            //    minDate: '0'
+            //});
 
             $("#start-date").val(startcurrentDate);
-            $("#start-date").datepicker(
-                {
-                    dateFormat: 'yy-mm-dd',
-                    numberOfMonths: 2,
-                    maxDate: '+2m',
-                    minDate: '0',
-                    onSelect: function (selectedDate) {
-                        var endDate = $('#end-date');
-                        endDate.datepicker('option', 'minDate', selectedDate);
-                        endDate.datepicker('setDate', selectedDate);
+            //$("#start-date").datepicker(
+            //    {
+            //        dateFormat: 'yy-mm-dd',
+            //        numberOfMonths: 2,
+            //        maxDate: '+2m',
+            //        minDate: '0',
+            //        onSelect: function (selectedDate) {
+            //            var endDate = $('#end-date');
+            //            endDate.datepicker('option', 'minDate', selectedDate);
+            //            endDate.datepicker('setDate', selectedDate);
 
-                    }
-                });
+            //        }
+            //    });
 
             const elementToHide = document.querySelector('.rounddateinput');
             elementToHide.style.display = 'none'; // Hide the element
@@ -540,27 +540,27 @@ $(document).ready(function () {
 
             $("#end-date").val(returncurrentDate);
 
-            $("#end-date").datepicker({
-                dateFormat: 'yy-mm-dd',
-                numberOfMonths: 2,
-                maxDate: '+3m',
-                minDate: '0'
-            });
+            //$("#end-date").datepicker({
+            //    dateFormat: 'yy-mm-dd',
+            //    numberOfMonths: 2,
+            //    maxDate: '+3m',
+            //    minDate: '0'
+            //});
 
             $("#start-date").val(startcurrentDate);
-            $("#start-date").datepicker(
-                {
-                    dateFormat: 'yy-mm-dd',
-                    numberOfMonths: 2,
-                    maxDate: '+2m',
-                    minDate: '0',
-                    onSelect: function (selectedDate) {
-                        var endDate = $('#end-date');
-                        endDate.datepicker('option', 'minDate', selectedDate);
-                        endDate.datepicker('setDate', selectedDate);
+            //$("#start-date").datepicker(
+            //    {
+            //        dateFormat: 'yy-mm-dd',
+            //        numberOfMonths: 2,
+            //        maxDate: '+2m',
+            //        minDate: '0',
+            //        onSelect: function (selectedDate) {
+            //            var endDate = $('#end-date');
+            //            endDate.datepicker('option', 'minDate', selectedDate);
+            //            endDate.datepicker('setDate', selectedDate);
 
-                    }
-                });
+            //        }
+            //    });
 
             const elementToHide = document.querySelector('.rounddateinput');
             elementToHide.style.display = 'none'; // Hide the element
@@ -688,19 +688,43 @@ $(document).ready(function () {
 
         // Set the current date as the default value in the input field
         $("#start-date").val(currentDate);
+        //$("#start-date").datepicker({
+        //    dateFormat: 'yy-mm-dd',
+        //    numberOfMonths: 2,
+        //    maxDate: '+' + maxDays + 'd', // Set the maximum date to the last day of the current month
+        //    minDate: '0',
+        //    onSelect: function (selectedDate) {
+        //        var endDate = $('#end-date');
+        //        endDate.datepicker('option', 'minDate', selectedDate);
+        //        endDate.datepicker('setDate', selectedDate);
+        //    }
+        //});
+    });
+
+
+    $(function () {
         $("#start-date").datepicker({
             dateFormat: 'yy-mm-dd',
             numberOfMonths: 2,
-            maxDate: '+' + maxDays + 'd', // Set the maximum date to the last day of the current month
+            maxDate: '+12m',
             minDate: '0',
             onSelect: function (selectedDate) {
-                var endDate = $('#end-date');
-                endDate.datepicker('option', 'minDate', selectedDate);
-                endDate.datepicker('setDate', selectedDate);
+                var startDate = $(this).datepicker('getDate');
+                $("#end-date").datepicker("option", "minDate", startDate);
+            }
+        });
+
+        $("#end-date").datepicker({
+            dateFormat: 'yy-mm-dd',
+            numberOfMonths: 2,
+            maxDate: '+12m',
+            minDate: '0',
+            onSelect: function (selectedDate) {
+                var endDate = $(this).datepicker('getDate');
+                $("#start-date").datepicker("option", "maxDate", endDate);
             }
         });
     });
-
 
 
 

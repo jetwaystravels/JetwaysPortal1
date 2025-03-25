@@ -61,7 +61,7 @@
                     // else
                     // {
                     //     formatTime = $"{(int)time.TotalHours} h : {(int)time.Minutes} m";
-                        // }
+                    // }
 
 
                     <div class="py-15 px-70 rounded-4 text-15  bg-blue-2">
@@ -123,7 +123,7 @@
                                             // // Extract the substring before the hyphen
                                             // string aircraftModel = hyphenIndex == -1 ? seatMapName : seatMapName.Substring(0, hyphenIndex);
 
-                                       // var aircraftname= @Model.Seatmaplist.datalist[i].seatMap.name;
+                        // var aircraftname= @Model.Seatmaplist.datalist[i].seatMap.name;
 
                                         }
                                     </div>
@@ -280,14 +280,14 @@
                                                         <li>4: DATE CHANGE: 3250 (Upto 72 hrs before departure)</li>
                                                         <li>5: SEAT : Chargeable</li>
                                                         <li>6: MEAL : Chargeable</li>
-                                                       
+
                                                     </ul>
                                                 </span>
                                             </span>
                                         }
                                         else if (item.segments[i].fares[f].productClass.Equals("HF"))
                                         {
-                                          
+
                                             <span class="tooltipF">
                                                 Faretype:  @Faretype<b>Vista Flex</b>
                                                 <span class="tooltiptext">
@@ -298,7 +298,7 @@
                                                         <li>4: DATE CHANGE: 3000 (Upto 72 hrs before departure)</li>
                                                         <li>5: SEAT : Standard seats free</li>
                                                         <li>6: MEAL : Free</li>
-                                                        
+
                                                     </ul>
                                                 </span>
                                             </span>
@@ -306,7 +306,7 @@
                                         }
                                         else if (item.segments[i].fares[f].productClass.Equals("LT"))
                                         {
-                                           
+
                                             <span class="tooltipF">
                                                 Faretype:  @Faretype<b>Xpress lite</b>
                                                 <span class="tooltiptext">
@@ -317,14 +317,15 @@
                                                         <li>4: DATE CHANGE: 3000 (Upto 2 hrs before departure)</li>
                                                         <li>5: SEAT : Chargeable</li>
                                                         <li>6: MEAL : Chargeable</li>
-                                                       
+
                                                     </ul>
                                                 </span>
                                             </span>
                                         }
                                         else if (item.segments[i].fares[f].productClass.Equals("VV"))
-                                            {
-                                                <span class="tooltipF">
+                                        {
+                                            //<div class="text-13 mt-1">Economy: @Faretype<b>Xpress Bizz</b></div>
+                                            <span class="tooltipF">
                                                 Faretype:  @Faretype<b>Xpress Bizz</b>
                                                 <span class="tooltiptext">
                                                     <ul>
@@ -339,40 +340,40 @@
                                             </span>
 
                                         }
-                                    else if (item.segments[i].fares[f].productClass.Equals("SM"))
-                                    {
-                                    <span class="tooltipF">
-                                        Faretype:  @Faretype<b>Corporate Value</b>
-                                        <span class="tooltiptext">
-                                            <ul>
-                                                <li>1: CABIN BAG: 7 k.g</li>
-                                                <li>2: CHECK-IN: 15 kg</li>
-                                                <li>3: CANCELLATION: 1500 (1 day before to departure)</li>
-                                                <li>4: DATE CHANGE: 500 (Upto 2 hrs before departure)</li>
-                                                <li>5: SEAT : Chargeable</li>
-                                                <li>6: MEAL : Chargeable</li>
-                                            </ul>
-                                        </span>
-                                    </span>
+                                        else if (item.segments[i].fares[f].productClass.Equals("SM"))
+                                        {
+                                            <span class="tooltipF">
+                                                Faretype:  @Faretype<b>Corporate Value</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: CABIN BAG: 7 k.g</li>
+                                                        <li>2: CHECK-IN: 15 kg</li>
+                                                        <li>3: CANCELLATION: 1500 (1 day before to departure)</li>
+                                                        <li>4: DATE CHANGE: 500 (Upto 2 hrs before departure)</li>
+                                                        <li>5: SEAT : Chargeable</li>
+                                                        <li>6: MEAL : Chargeable</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
 
-                                    }
-                                    else if (item.segments[i].fares[f].productClass.Equals("FS"))
-                                    {
-                                    <span class="tooltipF">
-                                        Faretype:  @Faretype<b>Corporate Flex</b>
-                                        <span class="tooltiptext">
-                                            <ul>
-                                                <li>1: CABIN BAG: 7 k.g</li>
-                                                <li>2: CHECK-IN: 15 kg</li>
-                                                <li>3: CANCELLATION: 500 (Upto 2 hrs before departure)</li>
-                                                <li>4: DATE CHANGE: Free</li>
-                                                <li>5: SEAT : Standard seats free</li>
-                                                <li>6: MEAL : Free</li>
-                                            </ul>
-                                        </span>
-                                    </span>
+                                        }
+                                        else if (item.segments[i].fares[f].productClass.Equals("FS"))
+                                        {
+                                            <span class="tooltipF">
+                                                Faretype:  @Faretype<b>Corporate Flex</b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: CABIN BAG: 7 k.g</li>
+                                                        <li>2: CHECK-IN: 15 kg</li>
+                                                        <li>3: CANCELLATION: 500 (Upto 2 hrs before departure)</li>
+                                                        <li>4: DATE CHANGE: Free</li>
+                                                        <li>5: SEAT : Standard seats free</li>
+                                                        <li>6: MEAL : Free</li>
+                                                    </ul>
+                                                </span>
+                                            </span>
 
-                                    }
+                                        }
 
 
                                         else
@@ -475,7 +476,7 @@
 
                                             </tr>
                                             <tr>
-                                                <td>Upto 72 hrs before departure</td>
+                                                <td>Upto 72 hrs before departure)</td>
                                                 <td>Rs. 3500</td>
 
                                             </tr>
@@ -732,7 +733,7 @@
         position: fixed;
         z-index: 9999;
         left: 50%;
-        width: 60%!important;
+        width: 60% !important;
         height: 60%;
         top: 50%;
         transform: translate(-50%, -50%);

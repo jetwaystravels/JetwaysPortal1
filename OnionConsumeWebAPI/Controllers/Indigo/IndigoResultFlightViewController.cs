@@ -135,7 +135,11 @@ namespace OnionConsumeWebAPI.Controllers
                 IndigoBookingManager_.SellResponse _getSellRS = await objsell.Sell(Signature, journeyKey, fareKey, "", "", TotalCount, adultcount, childcount, infantcount,0, "OneWay");
                 //string str = JsonConvert.SerializeObject(_getSellRS);
                 #endregion
-
+                if(_getSellRS==null || _getSellRS.BookingUpdateResponseData.Error!=null)
+                {
+                    ViewBag.ErrorMessage = _getSellRS.BookingUpdateResponseData.Error.ErrorText;
+                    return View("service-error-msg");
+                }
                 #region GetState
 
                 IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(Signature, 0,"OneWay");

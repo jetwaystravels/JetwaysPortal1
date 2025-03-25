@@ -4,8 +4,9 @@
 
 }
 <div class="py-15 px-20 rounded-4 text-15 bg-blue-1-05 mb-10">
+	
 	@{
-		int pascount = @Model.AkPassenger.passengers.Count;
+		int pascount = Model.AkPassenger.passengers.Count;
 		if (pascount == 1)
 		{
 
@@ -18,6 +19,8 @@
 			</div>
 		}
 	}
+	
+	
 
     <form asp-action="TravllerDetails" asp-controller="AATripsell" method="post" id="passengerForm">
 	@{
@@ -587,6 +590,7 @@
 	    $('#dataPopup').modal('show');
 
 	});
+
 		$('#dataPopup').on('show.bs.modal', function () {
 			$('body').css('overflow', 'hidden');
 		});
@@ -594,7 +598,6 @@
 		$('#dataPopup').on('hidden.bs.modal', function () {
 			$('body').css('overflow', 'auto');
 		});
-
 	/************************************************************/
 	function isValidFebruaryDay(year, day) {
 	    year = parseInt(year);

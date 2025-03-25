@@ -113,7 +113,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                     #endregion
                     #region Addpayment Commneted For Api Payment deduction
                     IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment, "OneWay");
-                    if (_BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors[0].ErrorDescription.ToLower().Contains("not enough funds available"))
+                    if (_BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors.Length>0 && _BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors[0].ErrorDescription.ToLower().Contains("not enough funds available"))
                     {
                         _AirLinePNRTicket.ErrorDesc = "Not enough funds available.";
                     }
