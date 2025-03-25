@@ -137,8 +137,30 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
             #endregion
 
+            if (vm.passeengerlistRT.Count > 1)
+            {
+                //    ViewBag.ErrorMessage = "";
+                if (vm.passeengerlistRT[0].journeys.Count == 0 || vm.passeengerlistRT[1].journeys.Count == 0)
+                {
+                    ViewBag.ErrorMessage = "";
+                    return View("service-error-msg");
+                }
+                else
+                {
+                    return View(vm);
+                }
 
-            return View(vm);
+            }
+            else if (vm.passeengerlistRT.Count == 1)
+            {
+                ViewBag.ErrorMessage = "";
+                return View("service-error-msg");
+            }
+            else
+            {
+                return View(vm);
+            }
+            //return View(vm);
 
 
         }

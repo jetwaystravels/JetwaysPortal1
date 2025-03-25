@@ -244,7 +244,7 @@
                                                             }
                                                             else
                                                             {
-                                                                if (feeamountF1 == "0")
+                                                                if (Convert.ToDouble(feeamountF1) <= 0)
                                                                 {
 
                                                                     <li class="seat-li free-seat tooltip">
@@ -409,7 +409,7 @@
                                                             }
                                                             else
                                                             {
-                                                                if (feeamountF1 == "0")
+                                                                if (Convert.ToDouble(feeamountF1) <= 0)
                                                                 {
                                                                     <li class="seat-li free-seat tooltip">
                                                                         <input type="hidden" id="passengerkey" name="passengerkey" value="@Model.passeengerlist.passengers[0].passengerKey" />
