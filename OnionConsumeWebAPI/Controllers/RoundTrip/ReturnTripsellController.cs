@@ -3878,13 +3878,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             
                             if (p == 0)
                             {
-                                logs.WriteLogsR(_req.ToString(), "9-GetSSRAvailabilityForBookingReq_Left", "SpiceJetRT");
-                                logs.WriteLogsR(_res.ToString(), "9-GetSSRAvailabilityForBookingRes_Left", "SpiceJetRT");
+                                logs.WriteLogsR(Str2.ToString(), "9-GetSSRAvailabilityForBookingReq_Left", "SpiceJetRT");
+                                logs.WriteLogsR(Str2.ToString(), "9-GetSSRAvailabilityForBookingRes_Left", "SpiceJetRT");
                             }
                             else
                             {
-                                logs.WriteLogsR(_req.ToString(), "8-GetSSRAvailabilityForBookingReq_Right", "SpiceJetRT");
-                                logs.WriteLogsR(_res.ToString(), "8-GetSSRAvailabilityForBookingRes_Right", "SpiceJetRT");
+                                logs.WriteLogsR(Str2.ToString(), "8-GetSSRAvailabilityForBookingReq_Right", "SpiceJetRT");
+                                logs.WriteLogsR(Str2.ToString(), "8-GetSSRAvailabilityForBookingRes_Right", "SpiceJetRT");
                             }
                             //******Vinay***********//
                             if (_res != null)

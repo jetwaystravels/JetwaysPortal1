@@ -1225,14 +1225,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             string serializedUnitKey = JsonConvert.SerializeObject(unitKey);
             HttpContext.Session.SetString("UnitKey", serializedUnitKey);
 
-            if (BaggageSSrkey.Count > 0 && BaggageSSrkey[0] == null)
-            {
-                BaggageSSrkey = new List<string>();
-            }
-            if (ssrKey.Count > 0 && ssrKey[0] == null)
-            {
-                ssrKey = new List<string>();
-            }
+
             List<string> _ssrKey = new List<string>();
             for (int i = 0; i < ssrKey.Count; i++)
             {
@@ -1240,8 +1233,26 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     continue;
                 _ssrKey.Add(ssrKey[i].Trim());
             }
+            List<string> _BaggageSSrkey = new List<string>();
+            for (int i = 0; i < BaggageSSrkey.Count; i++)
+            {
+                if (BaggageSSrkey[i] == null)
+                    continue;
+                _BaggageSSrkey.Add(BaggageSSrkey[i].Trim());
+            }
+
+            if (_BaggageSSrkey.Count > 0 && _BaggageSSrkey[0] == null)
+            {
+                _BaggageSSrkey = new List<string>();
+            }
+            if (_ssrKey.Count > 0 && _ssrKey[0] == null)
+            {
+                _ssrKey = new List<string>();
+            }
             ssrKey = new List<string>();
+            BaggageSSrkey = new List<string>();
             ssrKey = _ssrKey;
+            BaggageSSrkey = _BaggageSSrkey;
             string serializedSSRKey = JsonConvert.SerializeObject(ssrKey);
             HttpContext.Session.SetString("ssrKey", serializedSSRKey);
             if (unitKey.Count > 0 && unitKey[0] == null)
