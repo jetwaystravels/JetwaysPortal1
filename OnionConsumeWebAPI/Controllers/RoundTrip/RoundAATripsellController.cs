@@ -318,7 +318,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             _ContactModel.phoneNumbers = Phonenumberlist;
                         }
-                        _ContactModel.contactTypeCode = "P";
+                        _ContactModel.contactTypeCode = "p";
 
                         _Address Address = new _Address();
                         Address.lineOne = "Barakhamba Road";
@@ -402,7 +402,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             _ContactModel.phoneNumbers = Phonenumberlist;
                         }
-                        _ContactModel.contactTypeCode = "P";
+                        _ContactModel.contactTypeCode = "p";
 
                         _Address Address = new _Address();
                         Address.lineOne = "Barakhamba Road";

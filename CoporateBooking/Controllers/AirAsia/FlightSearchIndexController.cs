@@ -2059,7 +2059,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                         var fareAmount = 0;
                                         for (int fc = 0; fc < fareAvilableCount; fc++)
                                         {
-                                            int fareH = JsonObjR.data.faresAvailable[fareAvailabilityKeyhead].fares[fc].passengerFares[0].fareAmount;
+                                            int fareH = JsonObjR.data.faresAvailable[fareAvailabilityKeyhead].fares[0].passengerFares[0].fareAmount;
 
                                             fareTotalsum += fareH;
                                             int fare = JsonObjR.data.faresAvailable[fareAvailabilityKey].fares[fc].passengerFares[0].fareAmount;
