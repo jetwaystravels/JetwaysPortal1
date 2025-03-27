@@ -14586,24 +14586,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ashok\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Vinay Singh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj",
+      "projectUniqueName": "D:\\Working\\2025\\JetwaysCorporate\\CoporateBooking\\CoporateBooking.csproj",
       "projectName": "CoporateBooking",
-      "projectPath": "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj",
-      "packagesPath": "C:\\Users\\Ashok\\.nuget\\packages\\",
-      "outputPath": "D:\\JetwaysPortal\\CoporateBooking\\obj\\",
+      "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\CoporateBooking\\CoporateBooking.csproj",
+      "packagesPath": "C:\\Users\\Vinay Singh\\.nuget\\packages\\",
+      "outputPath": "D:\\Working\\2025\\JetwaysCorporate\\CoporateBooking\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Ashok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Vinay Singh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -14611,20 +14606,21 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\JetwaysPortal\\DomainLayer\\DomainLayer.csproj": {
-              "projectPath": "D:\\JetwaysPortal\\DomainLayer\\DomainLayer.csproj"
+            "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\DomainLayer.csproj": {
+              "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\DomainLayer.csproj"
             },
-            "D:\\JetwaysPortal\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj": {
-              "projectPath": "D:\\JetwaysPortal\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj"
+            "D:\\Working\\2025\\JetwaysCorporate\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj": {
+              "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj"
             },
-            "D:\\JetwaysPortal\\Utility\\Utility.csproj": {
-              "projectPath": "D:\\JetwaysPortal\\Utility\\Utility.csproj"
+            "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj": {
+              "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj"
             }
           }
         }
@@ -14638,8 +14634,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+      }
     },
     "frameworks": {
       "net6.0": {
@@ -14708,19 +14703,19 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.36, 6.0.36]"
+            "version": "[6.0.35, 6.0.35]"
           },
           {
             "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[6.0.36, 6.0.36]"
+            "version": "[6.0.35, 6.0.35]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.36, 6.0.36]"
+            "version": "[6.0.35, 6.0.35]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.36, 6.0.36]"
+            "version": "[6.0.35, 6.0.35]"
           }
         ],
         "frameworkReferences": {
@@ -14731,7 +14726,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -14740,7 +14735,7 @@
       "code": "NU1603",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "bootstrap.chosen 1.0.0 depends on jQuery (>= 1.13.1) but jQuery 1.13.1 was not found. jQuery 2.0.0 was resolved instead.",
+      "message": "jQuery.UI.Combined 1.13.2 depends on jQuery (>= 1.13.1) but jQuery 1.13.1 was not found. An approximate best match of jQuery 2.0.0 was resolved.",
       "libraryId": "jQuery",
       "targetGraphs": [
         "net6.0"

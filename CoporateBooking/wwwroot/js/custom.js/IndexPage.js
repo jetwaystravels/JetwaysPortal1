@@ -34,7 +34,7 @@ function validateForm() {
             var starterror = document.getElementById("startDate");
             starterror.style.display = "block";
             document.getElementById("start-date").focus();
-            return false;
+             return false;
             event.preventDefault(); // Stop the form submission
         }
 
@@ -188,6 +188,7 @@ function toggleDropdownArrival() {
 
 
 function arrivalSelection() {
+    debugger;
     $('.autoarrival input').focus();
     //alert("Hello Test");
     var dropdown = document.getElementById("arrivalItemId");
@@ -215,11 +216,13 @@ function arrivalSelection() {
 //**********Chosen Departure Code Start ****************//
 //*****************************************************//
 $(document).ready(function () {
+    debugger;
     $('#selectedItemId').chosen();
     $('.chosen-drop').hide();
     $('#selectedItemId').trigger('chosen:open');
 
     $('#myInputbx').on('click', function (event) {
+        debugger;
         event.stopPropagation();
         $('#selectedItemId').trigger('chosen:open');
         $('.chosen-drop').show();
@@ -337,6 +340,7 @@ function handleSelection() {
     var cityName = cityDetails[0].trim();
     var cityCode = cityDetails[1].trim();
     var airportName = cityDetails[2].trim();
+    
 
     //alert("Selected City Name: " + cityName);
     //alert("Selected City Code: " + cityCode);
@@ -358,7 +362,9 @@ function handleSelection() {
 
 ////*****-----------RoundTrip end date disabled--********------//
 $(document).ready(function () {
-
+    
+ 
+  
     //****  Replace Icon JS Start*/
     $('.rplc-btn').on('click', function (event) {
         var flyingFromValue = $('#myInput').val();
@@ -383,8 +389,9 @@ $(document).ready(function () {
         // Check if departure and arrival airports are the same
         if (flyingFromValue == flyingToValue || airportName == airportName2) {
             alert("Departure and Arrival Airport are the same. Please change it.");
-            return false;
             event.preventDefault();
+            return false;
+            
         }
     });
 
@@ -399,6 +406,25 @@ $(document).ready(function () {
     $('#bgEnddate').css('background-color', '#e9ecef');
 
 
+    $('.endselect').on('click', function () {
+        $('#round-tripid').prop('checked', true);
+        let nextTwoDays = new Date();
+        nextTwoDays.setDate(nextTwoDays.getDate() + 2);
+        let formattedDate = nextTwoDays.toISOString().split('T')[0];
+        $('#end-date').val(formattedDate);
+        let nextOneDays = new Date();
+        nextOneDays.setDate(nextOneDays.getDate() + 1);
+        let OnewayDate = nextOneDays.toISOString().split('T')[0];
+        $('#start-date').val(OnewayDate);
+        $('#bgEnddate').css('background-color', '#fff');
+        $('.hasDatepicker').css('background-color', '#fff');
+        $('#end-date').css('visibility', 'visible');
+        $('.hasDatepicker').prop('disabled', false);
+        $('.rounddateinput').css('display', 'none');
+
+    });
+
+
     // Event handler for radio button change
     $('input[type="radio"]').on('change', function () {
         if ($('#round-tripid').is(':checked')) {
@@ -408,22 +434,6 @@ $(document).ready(function () {
             $('#end-date').css('visibility', 'visible');
             //Date Picker end date
 
-            //var returndate = new Date();
-            //var returndd = String(returndate.getDate() + 2).padStart(2, '0');
-            //var returnmm = String(returndate.getMonth() + 1).padStart(2, '0');
-            //var returnyyyy = returndate.getFullYear();
-            //var returncurrentDate = returnyyyy + '-' + returnmm + '-' + returndd;
-            //$("#end-date").val(returncurrentDate);
-
-            //$("#end-date").datepicker(
-            //    {
-            //        dateFormat: 'yy-mm-dd',
-            //        numberOfMonths: 2,
-            //        maxDate: '+3m',
-            //        minDate: '0'
-            //    });
-
-            //$("#start-date").val(returncurrentDate);
 
             var returndate = new Date();
             returndate.setDate(returndate.getDate() + 2); // Add 2 days to the current date
@@ -455,28 +465,28 @@ $(document).ready(function () {
             var startcurrentDate = startyyyy + '-' + (startnmm < 10 ? '0' + startnmm : startnmm) + '-' + (startdd < 10 ? '0' + startdd : startdd);
 
             $("#end-date").val(returncurrentDate);
-
             //$("#end-date").datepicker({
             //    dateFormat: 'yy-mm-dd',
             //    numberOfMonths: 2,
-            //    maxDate: '+3m',
-            //    minDate: '0'
+            //    maxDate: '+6m',
+            //    minDate: '0',
+            //    onSelect: function (selectedDate) {
+            //        var endDate = $(this).datepicker('getDate');
+            //        $("#start-date").datepicker("option", "maxDate", endDate);
+            //    }
             //});
 
             $("#start-date").val(startcurrentDate);
-            //$("#start-date").datepicker(
-            //    {
-            //        dateFormat: 'yy-mm-dd',
-            //        numberOfMonths: 2,
-            //        maxDate: '+2m',
-            //        minDate: '0',
-            //        onSelect: function (selectedDate) {
-            //            var endDate = $('#end-date');
-            //            endDate.datepicker('option', 'minDate', selectedDate);
-            //            endDate.datepicker('setDate', selectedDate);
-
-            //        }
-            //    });
+            //$("#start-date").datepicker({
+            //    dateFormat: 'yy-mm-dd',
+            //    numberOfMonths: 2,
+            //    maxDate: '+6m',
+            //    minDate: '0',
+            //    onSelect: function (selectedDate) {
+            //        var startDate = $(this).datepicker('getDate');
+            //        $("#end-date").datepicker("option", "minDate", startDate);
+            //    }
+            //});
 
             const elementToHide = document.querySelector('.rounddateinput');
             elementToHide.style.display = 'none'; // Hide the element
@@ -492,22 +502,7 @@ $(document).ready(function () {
             $('#end-date').css('visibility', 'visible');
             //Date Picker end date
 
-            //var returndate = new Date();
-            //var returndd = String(returndate.getDate() + 2).padStart(2, '0');
-            //var returnmm = String(returndate.getMonth() + 1).padStart(2, '0');
-            //var returnyyyy = returndate.getFullYear();
-            //var returncurrentDate = returnyyyy + '-' + returnmm + '-' + returndd;
-            //$("#end-date").val(returncurrentDate);
-
-            //$("#end-date").datepicker(
-            //    {
-            //        dateFormat: 'yy-mm-dd',
-            //        numberOfMonths: 2,
-            //        maxDate: '+3m',
-            //        minDate: '0'
-            //    });
-
-            //$("#start-date").val(returncurrentDate);
+       
 
             var returndate = new Date();
             returndate.setDate(returndate.getDate() + 2); // Add 2 days to the current date
@@ -584,100 +579,7 @@ $(document).ready(function () {
 
     });
 
-    //$('input[type="radio"]').on('change', function () {
-    //    if ($('#round-tripid').is(':checked')) {
-
-    //        $('#end-date').prop('disabled', false);
-    //        $('#bgEnddate').css('background-color', '#fff');
-    //        $('#end-date').css('visibility', 'visible');
-
-    //        // Date Picker end date
-    //        var returndate = new Date();
-    //        var returndd = returndate.getDate() + 2; // Note: Don't pad with 0
-    //        var returnmm = returndate.getMonth() + 1; // Note: Don't pad with 0
-    //        var returnyyyy = returndate.getFullYear();
-
-    //        // Check if the return day exceeds the maximum number of days in the month
-    //        if (returndd > new Date(returnyyyy, returnmm, 0).getDate()) {
-    //            returndd = new Date(returnyyyy, returnmm, 0).getDate(); // Set to the last day of the month
-    //        }
-
-    //        var returncurrentDate = returnyyyy + '-' + returnmm + '-' + returndd;
-    //        $("#end-date").val(returncurrentDate);
-
-    //        $("#end-date").datepicker({
-    //            dateFormat: 'yy-mm-dd',
-    //            numberOfMonths: 2,
-    //            maxDate: '+3m',
-    //            minDate: '0'
-    //        });
-
-    //        $("#start-date").val(returncurrentDate);
-    //        $("#start-date").datepicker({
-    //            dateFormat: 'yy-mm-dd',
-    //            numberOfMonths: 2,
-    //            maxDate: '+2m',
-    //            minDate: '0',
-    //            onSelect: function (selectedDate) {
-    //                var endDate = $('#end-date');
-    //                endDate.datepicker('option', 'minDate', selectedDate);
-    //                endDate.datepicker('setDate', selectedDate);
-    //                var maxEndDate = new Date(selectedDate);
-    //                maxEndDate.setMonth(maxEndDate.getMonth() + 3); 
-    //                endDate.datepicker('option', 'maxDate', maxEndDate);
-
-    //                if (endDate.val() < selectedDate) {
-    //                    endDate.datepicker('setDate', selectedDate);
-    //                }
-    //            }
-    //        });
-
-    //        const elementToHide = document.querySelector('.rounddateinput');
-    //        elementToHide.style.display = 'none'; // Hide the element
-
-    //    } else {
-    //        // Disable the end date input field for other options
-    //        $('#end-date').prop('disabled', true);
-    //        $('#bgEnddate').css('background-color', '#e9ecef');
-    //        $('#end-date').css('visibility', 'hidden');
-    //        const elementToHide = document.querySelector('.rounddateinput');
-    //        elementToHide.style.display = 'block'; // Hide the element
-
-    //    }
-    //});
-
-
-
-
-
-
-
-
-    ////*****-----------DatePicker Start*****-----------//
-    //$(function () {
-    //    var today = new Date();
-    //    var dd = String(today.getDate() + 1).padStart(2, '0');
-    //    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-    //    var yyyy = today.getFullYear();
-    //    var currentDate = yyyy + '-' + mm + '-' + dd;
-
-    //    // Set the current date as the default value in the input field
-    //    $("#start-date").val(currentDate);
-    //    $("#start-date").datepicker( {
-    //            dateFormat: 'yy-mm-dd',
-    //            numberOfMonths: 2,
-    //            maxDate: '+2m',
-    //            minDate: '0',
-    //           onSelect: function (selectedDate) {
-    //            var endDate = $('#end-date');
-    //            endDate.datepicker('option', 'minDate', selectedDate);
-    //            endDate.datepicker('setDate', selectedDate);
-    //           }
-    //    });
-
-
-    //});
-
+    
     $(function () {
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -700,7 +602,6 @@ $(document).ready(function () {
         //    }
         //});
     });
-
 
     $(function () {
         $("#start-date").datepicker({
@@ -727,6 +628,7 @@ $(document).ready(function () {
     });
 
 
+  
 
 
     var maxField = 6;
@@ -801,5 +703,9 @@ $(document).ready(function () {
     });
 
 });
+
+
+
+
 
 

@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj": {}
+    "D:\\Working\\2025\\JetwaysCorporate\\CoporateBooking\\CoporateBooking.csproj": {}
   },
   "projects": {
-    "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj": {
+    "D:\\Working\\2025\\JetwaysCorporate\\CoporateBooking\\CoporateBooking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj",
+        "projectUniqueName": "D:\\Working\\2025\\JetwaysCorporate\\CoporateBooking\\CoporateBooking.csproj",
         "projectName": "CoporateBooking",
-        "projectPath": "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj",
-        "packagesPath": "C:\\Users\\Ashok\\.nuget\\packages\\",
-        "outputPath": "D:\\JetwaysPortal\\CoporateBooking\\obj\\",
+        "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\CoporateBooking\\CoporateBooking.csproj",
+        "packagesPath": "C:\\Users\\Vinay Singh\\.nuget\\packages\\",
+        "outputPath": "D:\\Working\\2025\\JetwaysCorporate\\CoporateBooking\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ashok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Vinay Singh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,20 +22,21 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\JetwaysPortal\\DomainLayer\\DomainLayer.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\DomainLayer\\DomainLayer.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\DomainLayer.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\DomainLayer.csproj"
               },
-              "D:\\JetwaysPortal\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj"
               },
-              "D:\\JetwaysPortal\\Utility\\Utility.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\Utility\\Utility.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj"
               }
             }
           }
@@ -53,8 +50,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net6.0": {
@@ -123,19 +119,19 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             }
           ],
           "frameworkReferences": {
@@ -146,25 +142,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\JetwaysPortal\\DomainLayer\\DomainLayer.csproj": {
+    "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\DomainLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\JetwaysPortal\\DomainLayer\\DomainLayer.csproj",
+        "projectUniqueName": "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\DomainLayer.csproj",
         "projectName": "DomainLayer",
-        "projectPath": "D:\\JetwaysPortal\\DomainLayer\\DomainLayer.csproj",
-        "packagesPath": "C:\\Users\\Ashok\\.nuget\\packages\\",
-        "outputPath": "D:\\JetwaysPortal\\DomainLayer\\obj\\",
+        "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\DomainLayer.csproj",
+        "packagesPath": "C:\\Users\\Vinay Singh\\.nuget\\packages\\",
+        "outputPath": "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ashok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Vinay Singh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -172,6 +164,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -189,8 +182,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net6.0": {
@@ -245,15 +237,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             }
           ],
           "frameworkReferences": {
@@ -261,25 +253,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\JetwaysPortal\\Indigo\\Indigo.csproj": {
+    "D:\\Working\\2025\\JetwaysCorporate\\Indigo\\Indigo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\JetwaysPortal\\Indigo\\Indigo.csproj",
+        "projectUniqueName": "D:\\Working\\2025\\JetwaysCorporate\\Indigo\\Indigo.csproj",
         "projectName": "Indigo",
-        "projectPath": "D:\\JetwaysPortal\\Indigo\\Indigo.csproj",
-        "packagesPath": "C:\\Users\\Ashok\\.nuget\\packages\\",
-        "outputPath": "D:\\JetwaysPortal\\Indigo\\obj\\",
+        "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Indigo\\Indigo.csproj",
+        "packagesPath": "C:\\Users\\Vinay Singh\\.nuget\\packages\\",
+        "outputPath": "D:\\Working\\2025\\JetwaysCorporate\\Indigo\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ashok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Vinay Singh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -287,14 +275,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\JetwaysPortal\\Utility\\Utility.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\Utility\\Utility.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj"
               }
             }
           }
@@ -308,8 +297,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net6.0": {
@@ -354,15 +342,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             }
           ],
           "frameworkReferences": {
@@ -370,25 +358,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\JetwaysPortal\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj": {
+    "D:\\Working\\2025\\JetwaysCorporate\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\JetwaysPortal\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj",
+        "projectUniqueName": "D:\\Working\\2025\\JetwaysCorporate\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj",
         "projectName": "OnionArchitectureAPI",
-        "projectPath": "D:\\JetwaysPortal\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj",
-        "packagesPath": "C:\\Users\\Ashok\\.nuget\\packages\\",
-        "outputPath": "D:\\JetwaysPortal\\OnionArchitectureAPI\\obj\\",
+        "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\OnionArchitectureAPI\\OnionArchitectureAPI.csproj",
+        "packagesPath": "C:\\Users\\Vinay Singh\\.nuget\\packages\\",
+        "outputPath": "D:\\Working\\2025\\JetwaysCorporate\\OnionArchitectureAPI\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ashok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Vinay Singh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -396,23 +380,24 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\JetwaysPortal\\Indigo\\Indigo.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\Indigo\\Indigo.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\Indigo\\Indigo.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Indigo\\Indigo.csproj"
               },
-              "D:\\JetwaysPortal\\ServiceLayer\\ServiceLayer.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\ServiceLayer\\ServiceLayer.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\ServiceLayer\\ServiceLayer.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\ServiceLayer\\ServiceLayer.csproj"
               },
-              "D:\\JetwaysPortal\\Spicejet\\Spicejet.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\Spicejet\\Spicejet.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\Spicejet\\Spicejet.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Spicejet\\Spicejet.csproj"
               },
-              "D:\\JetwaysPortal\\Utility\\Utility.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\Utility\\Utility.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj"
               }
             }
           }
@@ -426,8 +411,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net6.0": {
@@ -478,19 +462,19 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             }
           ],
           "frameworkReferences": {
@@ -501,25 +485,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\JetwaysPortal\\RepositoryLayer\\RepositoryLayer.csproj": {
+    "D:\\Working\\2025\\JetwaysCorporate\\RepositoryLayer\\RepositoryLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\JetwaysPortal\\RepositoryLayer\\RepositoryLayer.csproj",
+        "projectUniqueName": "D:\\Working\\2025\\JetwaysCorporate\\RepositoryLayer\\RepositoryLayer.csproj",
         "projectName": "RepositoryLayer",
-        "projectPath": "D:\\JetwaysPortal\\RepositoryLayer\\RepositoryLayer.csproj",
-        "packagesPath": "C:\\Users\\Ashok\\.nuget\\packages\\",
-        "outputPath": "D:\\JetwaysPortal\\RepositoryLayer\\obj\\",
+        "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\RepositoryLayer\\RepositoryLayer.csproj",
+        "packagesPath": "C:\\Users\\Vinay Singh\\.nuget\\packages\\",
+        "outputPath": "D:\\Working\\2025\\JetwaysCorporate\\RepositoryLayer\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ashok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Vinay Singh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -527,14 +507,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\JetwaysPortal\\DomainLayer\\DomainLayer.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\DomainLayer\\DomainLayer.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\DomainLayer.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\DomainLayer\\DomainLayer.csproj"
               }
             }
           }
@@ -548,8 +529,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net6.0": {
@@ -584,15 +564,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             }
           ],
           "frameworkReferences": {
@@ -600,25 +580,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\JetwaysPortal\\ServiceLayer\\ServiceLayer.csproj": {
+    "D:\\Working\\2025\\JetwaysCorporate\\ServiceLayer\\ServiceLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\JetwaysPortal\\ServiceLayer\\ServiceLayer.csproj",
+        "projectUniqueName": "D:\\Working\\2025\\JetwaysCorporate\\ServiceLayer\\ServiceLayer.csproj",
         "projectName": "ServiceLayer",
-        "projectPath": "D:\\JetwaysPortal\\ServiceLayer\\ServiceLayer.csproj",
-        "packagesPath": "C:\\Users\\Ashok\\.nuget\\packages\\",
-        "outputPath": "D:\\JetwaysPortal\\ServiceLayer\\obj\\",
+        "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\ServiceLayer\\ServiceLayer.csproj",
+        "packagesPath": "C:\\Users\\Vinay Singh\\.nuget\\packages\\",
+        "outputPath": "D:\\Working\\2025\\JetwaysCorporate\\ServiceLayer\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ashok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Vinay Singh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -626,14 +602,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\JetwaysPortal\\RepositoryLayer\\RepositoryLayer.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\RepositoryLayer\\RepositoryLayer.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\RepositoryLayer\\RepositoryLayer.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\RepositoryLayer\\RepositoryLayer.csproj"
               }
             }
           }
@@ -647,8 +624,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net6.0": {
@@ -667,15 +643,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             }
           ],
           "frameworkReferences": {
@@ -683,25 +659,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\JetwaysPortal\\Spicejet\\Spicejet.csproj": {
+    "D:\\Working\\2025\\JetwaysCorporate\\Spicejet\\Spicejet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\JetwaysPortal\\Spicejet\\Spicejet.csproj",
+        "projectUniqueName": "D:\\Working\\2025\\JetwaysCorporate\\Spicejet\\Spicejet.csproj",
         "projectName": "Spicejet",
-        "projectPath": "D:\\JetwaysPortal\\Spicejet\\Spicejet.csproj",
-        "packagesPath": "C:\\Users\\Ashok\\.nuget\\packages\\",
-        "outputPath": "D:\\JetwaysPortal\\Spicejet\\obj\\",
+        "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Spicejet\\Spicejet.csproj",
+        "packagesPath": "C:\\Users\\Vinay Singh\\.nuget\\packages\\",
+        "outputPath": "D:\\Working\\2025\\JetwaysCorporate\\Spicejet\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ashok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Vinay Singh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -709,14 +681,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\JetwaysPortal\\Utility\\Utility.csproj": {
-                "projectPath": "D:\\JetwaysPortal\\Utility\\Utility.csproj"
+              "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj": {
+                "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj"
               }
             }
           }
@@ -730,8 +703,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net6.0": {
@@ -776,15 +748,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             }
           ],
           "frameworkReferences": {
@@ -792,25 +764,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\JetwaysPortal\\Utility\\Utility.csproj": {
+    "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\JetwaysPortal\\Utility\\Utility.csproj",
+        "projectUniqueName": "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj",
         "projectName": "Utility",
-        "projectPath": "D:\\JetwaysPortal\\Utility\\Utility.csproj",
-        "packagesPath": "C:\\Users\\Ashok\\.nuget\\packages\\",
-        "outputPath": "D:\\JetwaysPortal\\Utility\\obj\\",
+        "projectPath": "D:\\Working\\2025\\JetwaysCorporate\\Utility\\Utility.csproj",
+        "packagesPath": "C:\\Users\\Vinay Singh\\.nuget\\packages\\",
+        "outputPath": "D:\\Working\\2025\\JetwaysCorporate\\Utility\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Ashok\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Vinay Singh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -818,6 +786,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -835,8 +804,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net6.0": {
@@ -855,15 +823,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
+              "version": "[6.0.35, 6.0.35]"
             }
           ],
           "frameworkReferences": {
@@ -871,7 +839,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

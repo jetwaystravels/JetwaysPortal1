@@ -223,7 +223,7 @@ namespace OnionArchitectureAPI.Services.Indigo
 
 
         //Corporate Get Availibilty
-        public async Task<GetAvailabilityVer2Response> GetCorporateTripAvailability(SimpleAvailabilityRequestModel _GetfligthModel, LogonResponse _IndigologonResponseobj, int TotalCount, int adultcount, int childcount, int infantcount, string flightclass, string _AirlineWay = "")
+        public async Task<GetAvailabilityVer2Response> GetCorporateTripAvailability(SimpleAvailabilityRequestModel _GetfligthModel, LogonResponse _IndigologonResponseobj, int TotalCount, int adultcount, int childcount, int infantcount, string flightclass,string SameAirlineRT, string _AirlineWay = "")
         {
             #region Logon
 

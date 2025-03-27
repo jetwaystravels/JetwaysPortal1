@@ -19,12 +19,12 @@
     <link rel="icon" href="~/img/favicon.png">
     <!-- Style css -->
     <link rel="stylesheet" href="~/css/vendors.min.css">
-   <link rel="stylesheet" href="~/css/main.css">
+  <link rel="stylesheet" href="~/css/main.css">
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/daterangepicker.css"> 
-    <link rel="stylesheet" href="~/css/style.min.css" />
-    <link href="~/css/roundviewpage.css" rel="stylesheet" />
-    <link href="~/css/indexvny.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.min.css" />
+    @*  <link href="~/css/roundviewpage.css" rel="stylesheet" />
+    <link href="~/css/indexvny.css" rel="stylesheet" /> *@
 
 </head>
 <body>
@@ -128,8 +128,8 @@
 						    <div class="d-flex radioW-400">
 							<input type="radio" name="SameAirlineRT" value="OneWay" onclick="checkRadio(this)" checked>
 							<label class="form-check-label">One Way</label>
-							<input type="radio" class="d-none" name="SameAirlineRT" value="RoundTrip" onclick="checkRadio(this)">
-							<label class="form-check-label d-none">Round Trip</label>
+							<input type="radio" name="SameAirlineRT" id="roundtripid" value="RoundTrip" onclick="checkRadio(this)">
+							<label class="form-check-label">Round Trip</label>
 							<input type="radio" class="d-none" name="SameAirlineRT" value="AirlineRT" onclick="checkRadio(this)">
 							<label class="form-check-label d-none">Same Airline Roundtrip</label>
 						    </div>
@@ -182,8 +182,8 @@
 						</div>
 						<div class="col-12 col-md-10 col-lg-2 space">
 						    <label style="margin-bottom: 0.1rem;">Return</label>
-						    <span class="input-group-text">
-							<input id="Oneway-endDate" name="endDate" type="text" class="form-control" value="" disabled>
+							<span class="input-group-text">
+							<input id="Oneway-endDate" name="endDate" type="text" class="form-control" value="">
 						    </span>
 						</div>
 						<script type="text/javascript">
@@ -237,98 +237,98 @@
 						    // }
 
 
-						    <div class="col-12 col-md-10 col-lg-2 space travellers">
-							<label style="margin-bottom: 0.1rem;">Travellers </label>
+									<div class="col-12 col-md-10 col-lg-2 space travellers">
+									<label style="margin-bottom: 0.1rem;">Travellers </label>
 
-							<div class="searchMenu-guests js-form-dd js-form-counters">
-							    <div data-x-dd-click="searchMenu-guests">
+									<div class="searchMenu-guests js-form-dd js-form-counters">
+										<div data-x-dd-click="searchMenu-guests">
 
-								<div class="text-15 text-light-1 ls-2 lh-16">
-								    <span class="js-count-adult text-22 text-light-1 fw-600" id="count_adult">@AdultCount</span> adults
-								    -
-								    <span class="js-count-child text-22 text-light-1 fw-600" id="count_child">@ChildCount</span> children
-								    -
-								    <span class="js-count-infents text-22 text-light-1 fw-600" id="count_infant">@InfantCount</span> Infants
-								</div>
-							    </div>
+										<div class="text-15 text-light-1 ls-2 lh-16">
+											<span class="js-count-adult text-22 text-light-1 fw-600" id="count_adult">@AdultCount</span> adults
+											-
+											<span class="js-count-child text-22 text-light-1 fw-600" id="count_child">@ChildCount</span> children
+											-
+											<span class="js-count-infents text-22 text-light-1 fw-600" id="count_infant">@InfantCount</span> Infants
+										</div>
+										</div>
 
-							    <div class="searchMenu-guests__field shadow-2" data-x-dd="searchMenu-guests" data-x-dd-toggle="-is-active">
+										<div class="searchMenu-guests__field shadow-2" data-x-dd="searchMenu-guests" data-x-dd-toggle="-is-active">
 
-								<div class="bg-white px-30 py-30 rounded-4">
+										<div class="bg-white px-30 py-30 rounded-4">
 
-								    @*  ------------------------ *@
-								    <div class="d-flex y-gap-10 justify-between items-center">
-									<div class="btn-incr-adult text-dark">
-									    <div class="text-13 fw-600">Adults</div>
+											@*  ------------------------ *@
+											<div class="d-flex y-gap-10 justify-between items-center">
+											<div class="btn-incr-adult text-dark">
+												<div class="text-13 fw-600">Adults</div>
 
-									    <input type="hidden" id="adulttype" name="adulttype" value="ADT" asp-for="@AdultCount" />
-									    <div class="text-13 fw-500">Aged 12+ yrs</div>
+												<input type="hidden" id="adulttype" name="adulttype" value="ADT" asp-for="@AdultCount" />
+												<div class="text-13 fw-500">Aged 12+ yrs</div>
+											</div>
+											<div class="btn-increase">
+												<div class="decrement sub btn_sub">-</div>
+
+												<input type="number" id="field_adult" name="adultcount" class="input-field" value="@AdultCount" asp-for="@AdultCount" min="1" max="9">
+												<div class="increment add btn_sub">+</div>
+											</div>
+											</div>
+											<div class="border-top-light mt-24 mb-24"></div>
+											<div class="d-flex y-gap-10 justify-between items-center">
+											<div class="btn-incr-chld  text-dark">
+												<div class="text-13 fw-600">
+												Children
+												</div>
+												<input type="hidden" id="childtype" name="childtype" value="CHD" asp-for="@ChildCount" />
+												<div class="text-13 fw-500">
+												Aged 2-12 yrs
+												</div>
+											</div>
+											<div class="btn-increase">
+												<div class="decrement1 sub btn_sub">-</div>
+												<input type="number" id="field_child" name="childcount" class="input-field" value="@ChildCount" asp-for="@ChildCount" min="0" max="6">
+												<div class="increment1 add btn_sub">+</div>
+
+											</div>
+											</div>
+											<div class="border-top-light mt-24 mb-24"></div>
+											<div class="d-flex y-gap-10 justify-between items-center">
+											<div class="infant-area  text-dark">
+												<div class="text-13 fw-600">Infants</div>
+												<input type="hidden" id="infanttype" name="infanttype" value="INFT" asp-for="@InfantCount" />
+												<div class="text-13 fw-500">
+												Below 2 yrs
+												</div>
+											</div>
+											<div class="btn-increase">
+												<div class="decrement2 sub btn_sub">-</div>
+
+												<input type="number" id="field_infant" name="infantcount" class="input-field" value="@InfantCount" asp-for="@InfantCount" min="0" max="6">
+												<div class="increment2 add btn_sub">+</div>
+
+											</div>
+											</div>
+
+											<div class="border-top-light mt-24 mb-24"></div>
+
+										</div>
+										</div>
 									</div>
-									<div class="btn-increase">
-									    <div class="decrement sub btn_sub">-</div>
 
-									    <input type="number" id="field_adult" name="adultcount" class="input-field" value="@AdultCount" asp-for="@AdultCount" min="1" max="9">
-									    <div class="increment add btn_sub">+</div>
-									</div>
-								    </div>
-								    <div class="border-top-light mt-24 mb-24"></div>
-								    <div class="d-flex y-gap-10 justify-between items-center">
-									<div class="btn-incr-chld  text-dark">
-									    <div class="text-13 fw-600">
-										Children
-									    </div>
-									    <input type="hidden" id="childtype" name="childtype" value="CHD" asp-for="@ChildCount" />
-									    <div class="text-13 fw-500">
-										Aged 2-12 yrs
-									    </div>
-									</div>
-									<div class="btn-increase">
-									    <div class="decrement1 sub btn_sub">-</div>
-									    <input type="number" id="field_child" name="childcount" class="input-field" value="@ChildCount" asp-for="@ChildCount" min="0" max="6">
-									    <div class="increment1 add btn_sub">+</div>
+									<script>
+
+										document.getElementById("field_adult").value = GetParameterValues("AdultCount");
+										document.getElementById("field_child").value = GetParameterValues("ChildCount");
+										document.getElementById("field_infant").value = GetParameterValues("InfantCount");
+
+
+										document.getElementById("count_adult").innerHTML = GetParameterValues("AdultCount");
+										document.getElementById("count_child").innerHTML = GetParameterValues("ChildCount");
+										document.getElementById("count_infant").innerHTML = GetParameterValues("InfantCount");
+
+
+									</script>
+
 
 									</div>
-								    </div>
-								    <div class="border-top-light mt-24 mb-24"></div>
-								    <div class="d-flex y-gap-10 justify-between items-center">
-									<div class="infant-area  text-dark">
-									    <div class="text-13 fw-600">Infants</div>
-									    <input type="hidden" id="infanttype" name="infanttype" value="INFT" asp-for="@InfantCount" />
-									    <div class="text-13 fw-500">
-										Below 2 yrs
-									    </div>
-									</div>
-									<div class="btn-increase">
-									    <div class="decrement2 sub btn_sub">-</div>
-
-									    <input type="number" id="field_infant" name="infantcount" class="input-field" value="@InfantCount" asp-for="@InfantCount" min="0" max="6">
-									    <div class="increment2 add btn_sub">+</div>
-
-									</div>
-								    </div>
-
-								    <div class="border-top-light mt-24 mb-24"></div>
-
-								</div>
-							    </div>
-							</div>
-
-							<script>
-
-							    document.getElementById("field_adult").value = GetParameterValues("AdultCount");
-							    document.getElementById("field_child").value = GetParameterValues("ChildCount");
-							    document.getElementById("field_infant").value = GetParameterValues("InfantCount");
-
-
-							    document.getElementById("count_adult").innerHTML = GetParameterValues("AdultCount");
-							    document.getElementById("count_child").innerHTML = GetParameterValues("ChildCount");
-							    document.getElementById("count_infant").innerHTML = GetParameterValues("InfantCount");
-
-
-							</script>
-
-
-						    </div>
 						}
 						<div class="col-12 col-md-10 col-lg-2"><button style="margin-top:0px;" type="submit" class="btn btn-lg btn-block" onclick="validateInputs()"><i class="fa fa-search mr-10" aria-hidden="true"></i>Modify Search</button></div>
 
@@ -397,7 +397,7 @@
 	    <div class="container">
 		<div class="row y-gap-30">
 		    <div class="col-xl-3 col-lg-4">
-			<aside class="sidebar py-20 px-40 rounded-4 bg-white">
+			<aside class="sidebar py-20 px-30 rounded-4 bg-white">
 			    <partial name="_FlightViewPartialView.cshtml" />
 			</aside>
 		    </div>
@@ -2163,6 +2163,7 @@
 
 	#Oneway-endDate {
 	    background: #0e4d74;
+		cursor: pointer;
 	}
     </style>
     <script>
@@ -2276,10 +2277,18 @@
 		alert('Please select a start date.');
 		return false;
 	    }
-	    if (!endDateInput.disabled && !endDate) {
-		alert('Please select an end date.');
-		return false;
-	    }
+	 //    if (!endDateInput.disabled && !endDate) {
+		// alert('Please select an end date.');
+		// return false;
+	 //    }
+
+		 const roundTripRadio = document.querySelector('input[name="SameAirlineRT"]:checked');
+		  if (roundTripRadio && roundTripRadio.value === 'RoundTrip') {
+				if (!endDate) {
+					  alert('Please select an end date for Round Trip.');
+					  return false;
+				}
+		  }
 
 	    var adultCount = parseInt(document.getElementById('field_adult').value);
 	    var childCount = parseInt(document.getElementById('field_child').value);
@@ -2798,6 +2807,22 @@
 	    }
 	    inputField.focus();
 	}
+		$(document).ready(function () {
+			$('#Oneway-endDate').on('click', function () {
+				$('#roundtripid').prop('checked', true);
+				let nextTwoDays = new Date();
+				nextTwoDays.setDate(nextTwoDays.getDate() + 2);
+				let formattedDate = nextTwoDays.toISOString().split('T')[0];
+				$('#Oneway-endDate').val(formattedDate);
+				let nextOneDays = new Date();
+				nextOneDays.setDate(nextOneDays.getDate() + 1);
+				let OnewayDate = nextOneDays.toISOString().split('T')[0];
+				$('#Oneway-date').val(OnewayDate);
+				//$('.hasDatepicker').prop('disabled', false);
+				$('#Oneway-endDate').css('visibility', 'visible');
+				$('#Oneway-endDate').focus();
+			});
+		});
 
     </script>
 
