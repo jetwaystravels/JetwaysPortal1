@@ -514,8 +514,8 @@
                                                 <span class="tooltiptext">
                                                     <ul>
 
-                                                        <li>1: Cabin Bag: 7 k.g</li>
-                                                        <li>2: Check-IN: 30 k.g  </li>
+                                                        <li>1: Cabin Bag: 10 k.g</li>
+                                                        <li>2: Check-IN: 15  k.g  </li>
                                                         <li>3: Cancellation: Change charges upto 499</li>
                                                         <li>4: Date Change: Change charges upto 0</li>
                                                         <li>5: Seat : Limited Free Seat</li>
@@ -534,12 +534,12 @@
                                                 <span class="tooltiptext">
                                                     <ul>
 
-                                                        <li>1: Cabin Bag: 7 k.g</li>
-                                                        <li>2: Check-IN: 30 k.g  </li>
-                                                        <li>3: Cancellation: Fee starts at (Rs. 3499) Onward.</li>
-                                                        <li>4: Date Change: Fee starts at (Rs. 2499) Onward.</li>
-                                                        <li>5: Seat :  Free seats</li>
-                                                        <li>6: Meal :Complimentary meal</li>
+                                                        <li>1: Cabin Bag: -</li>
+                                                        <li>2: Check-IN: -  </li>
+                                                        <li>3: Cancellation: -</li>
+                                                        <li>4: Date Change: -</li>
+                                                        <li>5: Seat :  -</li>
+                                                        <li>6: Meal :-</li>
 
                                                     </ul>
                                                 </span>
@@ -730,6 +730,41 @@
                                         </table>
 
                                     }
+                                    else if (item.segments[i].fares[f].productClass.Equals("M"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>Rs.-</td>
+
+                                            </tr>
+
+                                        </table>
+
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("F"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Change charges upto </td>
+                                                <td>Rs.499</td>
+
+                                            </tr>
+
+                                        </table>
+
+                                    }
+
 
                                 }
                             </div>
@@ -855,6 +890,44 @@
                                             </tr>
                                         </table>
                                     }
+                                    else if (item.segments[i].fares[f].productClass.Equals("M"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>Rs.-</td>
+
+                                            </tr>
+
+                                        </table>
+
+                                    }
+                                    else if (item.segments[i].fares[f].productClass.Equals("F"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Change charges upto </td>
+                                                <td>Free</td>
+
+                                            </tr>
+
+                                        </table>
+
+                                    }
+
+
+
+
 
 
                                 }

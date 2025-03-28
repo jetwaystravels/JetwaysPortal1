@@ -287,6 +287,25 @@
                                             </span>
 
                                         }
+                                        else if (item.segments[i].fares[f].productClass.Equals("CP"))
+                                        {
+
+                                            <span class="tooltipF">
+                                                Faretype:  @Faretype<b> Corporate </b>
+                                                <span class="tooltiptext">
+                                                    <ul>
+                                                        <li>1: Cabin Bag: 7 k.g</li>
+                                                        <li>2: Check-in: 15 k.g </li>
+                                                        <li>3: Cancellation: Free  Upto 3 hours from departure</li>
+                                                        <li>4: Date Change: Rs. 99 Upto 3 hours from departure</li>
+                                                        <li>5: Seat : -</li>
+                                                        <li>6: Meal : -</li>
+
+                                                    </ul>
+                                                </span>
+                                            </span>
+
+                                        }
                                        else
                                         {
                                           
@@ -394,6 +413,22 @@
 
                                         </table>
                                     }
+                                    else if (item.segments[i].fares[f].productClass.Equals("CP"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Upto 3 hours from departure</td>
+                                                <td>Free</td>
+
+                                            </tr>
+
+                                        </table>
+                                    }
                                     
                                     else
                                     {
@@ -470,6 +505,20 @@
 
                                         </table>
                                     }
+                                    else if (item.segments[j].fares[k].productClass.Equals("CP"))
+                                    {
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><b>Time</b></td>
+                                                <td><b>Charges</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Upto 3 hours from departure</td>
+                                                <td>Rs. 99</td>
+                                            </tr>
+                                        </table>
+                                    }
+
                                    else
                                     {
                                         <table style="width:100%">
