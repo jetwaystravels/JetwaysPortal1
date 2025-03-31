@@ -1486,7 +1486,10 @@
 													@{
 														if (Model.MealslistRT[1] != null)
 														{
-															AirLine = Model.MealslistRT[1].legSsrs[0].legssrs[0].legpassengers[0].Airline.ToString();
+															if (Model.MealslistRT[1].legSsrs[0].legssrs.Count > 0)
+															{
+																AirLine = Model.MealslistRT[1].legSsrs[0].legssrs[0].legpassengers[0].Airline.ToString();
+															}
 														}
 														List<SelectListItem> mealOptions = new List<SelectListItem>();
 														if (AirLine.ToLower() == "airasia")

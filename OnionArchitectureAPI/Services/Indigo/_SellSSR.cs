@@ -167,6 +167,9 @@ namespace OnionArchitectureAPI.Services.Indigo
                             }
                             for (int k = 0; k < BaggageSSrkey.Count; k++)
                             {
+                                if (BaggageSSrkey[k].ToLower().Contains("airasia"))
+                                    continue;
+                                        
                                 string[] sskeydata = new string[2];
                                 if (BaggageSSrkey[k].Contains("_OneWay0"))
                                 {
@@ -647,7 +650,8 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         int baggagecount = _obj.SSRbaggagecodeRTI.Count;
                                                         if (baggagecount > 0 && k + 1 <= baggagecount)
                                                         {
-                                                            if (idx > 0)
+                                                            //if (idx > 0)
+                                                            if (sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] != null)
                                                                 idx++;
                                                             else
                                                                 idx = k;
