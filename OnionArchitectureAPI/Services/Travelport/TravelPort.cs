@@ -2592,28 +2592,32 @@ namespace OnionArchitectureAPI.Services.Travelport
                 int _id = 0;
                 for (int i = 0; i < passengerdetails.Count; i++)
                 {
+                    string[] subParts = new string[2];
                     string[] _parts = passengerdetails[i].passengerkey.Split('@');
-                    if (_parts.Length > 1 && _parts[1].ToLower().Trim().Contains("airindia"))
+                    for (int a = 0; a < _parts.Length; a++)
                     {
-                        string[] subParts = _parts[1].Split('^');
-                        passengerdetails[i].passengerkey = subParts[0];
+                        // Check if the part contains "Airasia" or "AirIndia"
+                        if (_parts[a].ToLower().Trim().Contains("airindia"))
+                        {
+                            // Split the part at '^' and get the value before '^'
+                            subParts = _parts[a].Split('^');
+                        }
                     }
-
                     if (passengerdetails[i].passengertypecode == "ADT")
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey.Split('^')[0] + "\"  TravelerType=\"ADT\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + subParts[0] + "\"  TravelerType=\"ADT\">");
                     }
                     else if (passengerdetails[i].passengertypecode == "CHD" || passengerdetails[i].passengertypecode == "CNN")
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey.Split('^')[0] + "\"  TravelerType=\"CNN\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + subParts[0] + "\"  TravelerType=\"CNN\">");
                     }
                     else if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey.Split('^')[0] + "\" TravelerType=\"INF\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + subParts[0] + "\" TravelerType=\"INF\">");
                     }
                     else
                     {
-                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey.Split('^')[0] + "\"  TravelerType=\"ADT\">");
+                        createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + subParts[0] + "\"  TravelerType=\"ADT\">");
                     }
 
 
