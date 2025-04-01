@@ -3074,8 +3074,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     else
                                     {
                                         ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
+                                        _AirLinePNRTicket.ErrorDesc = "";
                                         _AirLinePNRTicket.AirlinePNR.Add(returnTicketBooking);
                                     }
+                                }
+                                else
+                                {
+                                    ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
+                                    _AirLinePNRTicket.ErrorDesc = "";
+                                    _AirLinePNRTicket.AirlinePNR.Add(returnTicketBooking);
                                 }
                             }
                         }

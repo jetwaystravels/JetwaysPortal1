@@ -3636,21 +3636,26 @@
 		window.onload = function () {
 			localStorage.clear();
 		};
-		$(document).ready(function () {
-			$('#Rway-endDate').on('click', function () {
-				$('#roundtripid').prop('checked', true);
-				let nextTwoDays = new Date();
-				nextTwoDays.setDate(nextTwoDays.getDate() + 2);
-				let formattedDate = nextTwoDays.toISOString().split('T')[0];
-				$('#Rway-endDate').val(formattedDate);
-				let nextOneDays = new Date();
-				nextOneDays.setDate(nextOneDays.getDate() + 1);
-				let OnewayDate = nextOneDays.toISOString().split('T')[0];
-				$('#Rway-date').val(OnewayDate);
-				$('#Rway-endDate').css('visibility', 'visible');
-				$('#Rway-endDate').focus();
-			});
+				$(document).ready(function () {
+			  $('#Rway-endDate').on('click', function () {
+					debugger;
+					let selectedTrip = $('input[name="SameAirlineRT"]:checked').val();
+					if (selectedTrip === 'OneWay') {
+						  $('#roundtripid').prop('checked', true);
+						  let nextTwoDays = new Date();
+						  nextTwoDays.setDate(nextTwoDays.getDate() + 2);
+						  let formattedDate = nextTwoDays.toISOString().split('T')[0];
+						  $('#Rway-endDate').val(formattedDate);
+						  let nextOneDays = new Date();
+						  nextOneDays.setDate(nextOneDays.getDate() + 1);
+						  let OnewayDate = nextOneDays.toISOString().split('T')[0];
+						  $('#Rway-date').val(OnewayDate);
+						  $('#Rway-endDate').css('visibility', 'visible');
+						  $('#Rway-endDate').focus();
+					}
+			  });
 		});
+
 
 
 
