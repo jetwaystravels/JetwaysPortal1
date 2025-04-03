@@ -39,6 +39,7 @@ namespace DomainLayer.Model
     public class passkeytype
     {
         public string passengerkey { get; set; }
+        public string passengercombinedkey { get; set; }
         public string passengertypecode { get; set; }
         //public int passengertypecount { get; set; }        
         public string? first { get; set; }

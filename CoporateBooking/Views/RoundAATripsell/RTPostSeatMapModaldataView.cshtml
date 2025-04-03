@@ -724,7 +724,8 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
 <div class="journey-box">
     <ul class="nav nav-pills">
         @{
-            int passengerdata = @Model.passeengerlistRT[0].passengerscount;
+            int passengerdata = 0;
+             passengerdata = @Model.passeengerlistRT[0].passengerscount;
 
         }
         @{

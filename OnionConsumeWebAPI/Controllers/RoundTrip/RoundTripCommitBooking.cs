@@ -2541,7 +2541,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     else if (flagIndigo == true && (data.Airline[k1].ToLower().Contains("vistara") || data.Airline[k1].ToLower().Contains("airindia") || data.Airline[k1].ToLower().Contains("Hahnair")))
                     {
                         //flagIndigo = false;
-                        #region Indigo Commit
+                        #region GDS Commit
                         //Spicejet
                         token = string.Empty;
 

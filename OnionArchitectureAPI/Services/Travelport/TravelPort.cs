@@ -2593,7 +2593,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                 for (int i = 0; i < passengerdetails.Count; i++)
                 {
                     string[] subParts = new string[2];
-                    string[] _parts = passengerdetails[i].passengerkey.Split('@');
+                    string[] _parts = passengerdetails[i].passengercombinedkey.Split('@');
                     for (int a = 0; a < _parts.Length; a++)
                     {
                         // Check if the part contains "Airasia" or "AirIndia"

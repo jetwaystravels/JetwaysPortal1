@@ -457,5 +457,39 @@ namespace OnionConsumeWebAPI.Models
             return srchData;
 
         }
-    }
+
+		public void SaveResultSeatMealRequest(MongoSeatMealdetail mongoSeat)
+		{
+    		MongoHelper mongoHelper = new MongoHelper();
+			try
+			{
+
+				mongoSeat.CreatedDate = DateTime.UtcNow.AddMinutes(Convert.ToInt16(0));
+			    mDB.GetCollection<MongoSeatMealdetail>("SeatMealRequests").InsertOneAsync(mongoSeat);
+
+			}
+			catch (Exception ex)
+			{
+				logger.WriteLog(ex, "SaveResultSeatMealRequest methhod", _connectionString);
+			}
+		}
+
+		public async Task<MongoSeatMealdetail> GetSuppSeatMealByGUID(string guid, string supp)
+		{
+			MongoSeatMealdetail seatMeal = new MongoSeatMealdetail();
+			try
+			{
+				var filter = Builders<MongoSeatMealdetail>.Filter.And(Builders<MongoSeatMealdetail>.Filter.Eq(emp => emp.Guid, guid),
+				Builders<MongoSeatMealdetail>.Filter.Eq(emp => emp.Supp, supp));
+				seatMeal = await mDB.GetCollection<MongoSeatMealdetail>("SeatMealRequests").Find(filter).Sort(Builders<MongoSeatMealdetail>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
+			}
+			catch (Exception ex)
+			{
+				logger.WriteLog(ex, "GetSuppSeatMealByGUID methhod", _connectionString);
+			}
+			return seatMeal;
+		}
+
+
+	}
 }

@@ -295,6 +295,7 @@ namespace OnionConsumeWebAPI.Controllers
                 MongoHelper objMongoHelper = new MongoHelper();
                 MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
                 MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+				MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
 
                 tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
 
@@ -322,13 +323,13 @@ namespace OnionConsumeWebAPI.Controllers
 
                 _SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
                 var AdtType = "";
-                var AdtCount = 0;
+              //  var AdtCount = 0;
 
                 var chdtype = "";
-                var chdcount = 0;
+               // var chdcount = 0;
 
                 var infanttype = "";
-                var infantcount = 0;
+               // var infantcount = 0;
 
                 int countpassenger = _SimpleAvailabilityobj.passengers.types.Count;
                 AdtType = _SimpleAvailabilityobj.passengers.types[0].type;
@@ -388,9 +389,11 @@ namespace OnionConsumeWebAPI.Controllers
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage responseTripsell = await client.PostAsJsonAsync(AppUrlConstant.AirasiaTripsell, AirAsiaTripSellRequestobj);
 
-                if (responseTripsell.IsSuccessStatusCode)
+				AirAsiaTripResponceModel AirAsiaTripResponceobj = new AirAsiaTripResponceModel();
+
+				if (responseTripsell.IsSuccessStatusCode)
                 {
-                    AirAsiaTripResponceModel AirAsiaTripResponceobj = new AirAsiaTripResponceModel();
+                   
                     var resultsTripsell = responseTripsell.Content.ReadAsStringAsync().Result;
                     //string OnewayOnward= HttpContext.Session.GetString("OneWayPassengerModel");
                     //List<SimpleAvailibilityaAddResponce> OnewaydeserializedData = null;
@@ -571,14 +574,20 @@ namespace OnionConsumeWebAPI.Controllers
                     AirAsiaTripResponceobj.passengers = passkeylist;
                     AirAsiaTripResponceobj.passengerscount = passengercount;
 
-                    HttpContext.Session.SetString("keypassenger", JsonConvert.SerializeObject(AirAsiaTripResponceobj));
-                }
-                #region Itenary 
-                if (!string.IsNullOrEmpty(infanttype))
-                {
+                   // HttpContext.Session.SetString("keypassenger", JsonConvert.SerializeObject(AirAsiaTripResponceobj));
 
-                    string passengerdatainfant = HttpContext.Session.GetString("keypassenger");
-                    AirAsiaTripResponceModel passeengerKeyListinfant = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdatainfant, typeof(AirAsiaTripResponceModel));
+                    seatMealdetail.ResultRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(AirAsiaTripResponceobj));
+
+				}
+				#region Itenary 
+
+				AirAsiaTripResponceModel AirAasiaobjectInfantdata = new AirAsiaTripResponceModel();
+				if (!string.IsNullOrEmpty(infanttype))
+                {
+					
+					// string passengerdatainfant = HttpContext.Session.GetString("keypassenger");
+					string passengerdatainfant = JsonConvert.SerializeObject(AirAsiaTripResponceobj);
+					AirAsiaTripResponceModel passeengerKeyListinfant = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdatainfant, typeof(AirAsiaTripResponceModel));
 
                     SimpleAvailabilityRequestModel _SimpleAvailabilityobject = new SimpleAvailabilityRequestModel();
                     var jsonDataObject = objMongoHelper.UnZip(tokenData.PassRequest); //HttpContext.Session.GetString("PassengerModel");
@@ -685,7 +694,8 @@ namespace OnionConsumeWebAPI.Controllers
                     passengers1.types = typelist;
                     itenaryInfant.passengers = passengers1;
                     itenaryInfant.currencyCode = "INR";
-                    if (infant == "INFT")
+					
+					if (infant == "INFT")
                     {
                         var jsonPassengers = JsonConvert.SerializeObject(itenaryInfant, Formatting.Indented);
                         client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -693,7 +703,7 @@ namespace OnionConsumeWebAPI.Controllers
                         HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.Airasiainfantquote, itenaryInfant);
                         if (responsePassengers.IsSuccessStatusCode)
                         {
-                            AirAsiaTripResponceModel AirAasiaobjectInfantdata = new AirAsiaTripResponceModel();
+                           
                             var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
                             //logs.WriteLogs("Url: " + AppUrlConstant.Airasiainfantquote + "Request: " + JsonConvert.SerializeObject(itenaryInfant) + "\n Response: " + _responsePassengers, "itenaryInfant", "AirAsiaOneWay", "oneway");
                             logs.WriteLogs(jsonPassengers, "4-itenaryInfantRequest", "AirAsiaOneWay", "oneway");
@@ -895,10 +905,11 @@ namespace OnionConsumeWebAPI.Controllers
                                 AirAasiaobjectInfantdata.journeys = AAJourneyList;
                                 AirAasiaobjectInfantdata.passengers = passkeyList;
                                 AirAasiaobjectInfantdata.passengerscount = passengercount;
-                                HttpContext.Session.SetString("InfantData", JsonConvert.SerializeObject(AirAasiaobjectInfantdata));
-                                //string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
+                               // HttpContext.Session.SetString("InfantData", JsonConvert.SerializeObject(AirAasiaobjectInfantdata));
+								seatMealdetail.Infant = objMongoHelper.Zip(JsonConvert.SerializeObject(AirAasiaobjectInfantdata));
+								//string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
 
-                            }
+							}
 
 
                         }
@@ -911,8 +922,9 @@ namespace OnionConsumeWebAPI.Controllers
                 HttpResponseMessage responseSeatmap = await client.GetAsync(AppUrlConstant.Airasiaseatmap + journeyKey + "?IncludePropertyLookup=true");
                 if (responseSeatmap.IsSuccessStatusCode)
                 {
-                    string passengerInfant = HttpContext.Session.GetString("InfantData");
-                    string columncount0 = string.Empty;
+					// string passengerInfant = HttpContext.Session.GetString("InfantData");
+					string passengerInfant = JsonConvert.SerializeObject(AirAasiaobjectInfantdata);
+					string columncount0 = string.Empty;
                     Logs logs = new Logs();
                     var _responseSeatmap = responseSeatmap.Content.ReadAsStringAsync().Result;
                     //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.Airasiaseatmap + journeyKey + "?IncludePropertyLookup=true") + "\n\n Response: " + JsonConvert.SerializeObject(_responseSeatmap), "SeatMap", "AirAsiaOneWay", "oneway");
@@ -1038,14 +1050,19 @@ namespace OnionConsumeWebAPI.Controllers
 
                         x++;
                     }
-                    HttpContext.Session.SetString("Seatmap", JsonConvert.SerializeObject(SeatMapResponceModel));
-                }
+                   // HttpContext.Session.SetString("Seatmap", JsonConvert.SerializeObject(SeatMapResponceModel));
+                    seatMealdetail.SeatMap = objMongoHelper.Zip(JsonConvert.SerializeObject(SeatMapResponceModel));
+
+
+				}
                 //}
                 #endregion
                 #region Meals -Baggage
 
-                string passengerdata = HttpContext.Session.GetString("keypassenger");
-                AirAsiaTripResponceModel passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdata, typeof(AirAsiaTripResponceModel));
+                //string passengerdata = HttpContext.Session.GetString("keypassenger");
+
+                string passengerdata = JsonConvert.SerializeObject(AirAsiaTripResponceobj);
+				AirAsiaTripResponceModel passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdata, typeof(AirAsiaTripResponceModel));
                 int passengerscount = passeengerKeyList.passengerscount;
                 string departuredate = string.Empty;
                 SSRAvailabiltyModel _SSRAvailabilty = new SSRAvailabiltyModel();
@@ -1190,7 +1207,11 @@ namespace OnionConsumeWebAPI.Controllers
 
                     }
                     SSRAvailabiltyResponceobj.journeySsrsBaggage = journeyssrBaggagesList;
-                    HttpContext.Session.SetString("BaggageDetails", JsonConvert.SerializeObject(SSRAvailabiltyResponceobj));
+                   // HttpContext.Session.SetString("BaggageDetails", JsonConvert.SerializeObject(SSRAvailabiltyResponceobj));
+
+                    seatMealdetail.Baggage = objMongoHelper.Zip(JsonConvert.SerializeObject(SSRAvailabiltyResponceobj));
+
+
                     int SegmentSSrcount = JsonObjresponseSSRAvailabilty.data.segmentSsrs.Count;
 
                     int legSsrscount = JsonObjresponseSSRAvailabilty.data.legSsrs.Count;
@@ -1238,11 +1259,18 @@ namespace OnionConsumeWebAPI.Controllers
                     }
                     SSRAvailabiltyResponceobj.legSsrs = SSRAvailabiltyLegssrlist;
                     SSRAvailabiltyResponceobj.SegmentSSrcount = SegmentSSrcount;
-                    HttpContext.Session.SetString("Meals", JsonConvert.SerializeObject(SSRAvailabiltyResponceobj));
+					//   HttpContext.Session.SetString("Meals", JsonConvert.SerializeObject(SSRAvailabiltyResponceobj));
 
-                }
+					//seatMealdetail.Meals = objMongoHelper.Zip(JsonConvert.SerializeObject(SSRAvailabiltyResponceobj));
+					seatMealdetail.Meals = objMongoHelper.Zip(JsonConvert.SerializeObject(SSRAvailabiltyResponceobj));
+
+				}
                 #endregion
-            }
+
+                seatMealdetail.Supp = "AirAsia";
+                seatMealdetail.Guid = Guid;
+				_mongoDBHelper.SaveResultSeatMealRequest(seatMealdetail);
+			}
             return RedirectToAction("Tripsell", "AATripsell", new { Guid = Guid });
         }
 

@@ -36,4 +36,19 @@
 		public DateTime CreatedDate;
 
     }
+
+	public class MongoSeatMealdetail
+	{
+		public MongoDB.Bson.ObjectId _id;
+		public string Guid;
+		public string ResultRequest;
+		public string SeatMap;
+		public string Meals;
+		public string Baggage;
+		public string Infant;
+		public string Supp;
+    	public DateTime CreatedDate;
+
+	}
+
 }

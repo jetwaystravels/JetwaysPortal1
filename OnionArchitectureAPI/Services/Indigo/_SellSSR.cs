@@ -337,7 +337,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                 if (infantcount > 0 && i2 + 1 <= infantcount)
                                                 {
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].SSRCode = "INFT";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].PassengerNumber = Convert.ToInt16(i2);
@@ -368,7 +368,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         ssrCodeKey = _obj.SSRcodeOneWayI[i2].key.ToString();
                                                     idx = j1 + i2;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(i2);
@@ -402,7 +402,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRbaggagecodeOneWayI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -436,7 +436,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRffwOneWayI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -467,7 +467,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.PPBGOneWayI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -502,7 +502,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                 if (infantcount > 0 && i2 + 1 <= infantcount)
                                                 {
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].SSRCode = "INFT";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].PassengerNumber = Convert.ToInt16(i2);
@@ -533,7 +533,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         ssrCodeKey = _obj.SSRcodeOneWayII[i2].key.ToString();
                                                     idx = j1 + i2;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(i2);
@@ -567,7 +567,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         else
                                                             ssrCodeKey = _obj.SSRbaggagecodeOneWayII[k].key.ToString();
                                                         sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                        sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                        sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                         sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                         sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                         sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -601,7 +601,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                 if (infantcount > 0 && i2 + 1 <= infantcount)
                                                 {
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].SSRCode = "INFT";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].PassengerNumber = Convert.ToInt16(i2);
@@ -632,7 +632,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         ssrCodeKey = _obj.SSRcodeRTI[i2].key.ToString();
                                                     idx = j1 + i2;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(i2);
@@ -667,7 +667,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRbaggagecodeRTI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -697,7 +697,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRffwcodeRTI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -732,7 +732,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.PPBGcodeRTI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -767,7 +767,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                 if (infantcount > 0 && i2 + 1 <= infantcount)
                                                 {
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].SSRCode = "INFT";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[i2].PassengerNumber = Convert.ToInt16(i2);
@@ -798,7 +798,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         ssrCodeKey = _obj.SSRcodeRTII[i2].key.ToString();
                                                     idx = j1 + i2;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(i2);
@@ -829,7 +829,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRbaggagecodeRTII[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[j].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -1367,7 +1367,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                 if (infantcount > 0 && i2 + 1 <= infantcount)
                                                 {
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].SSRCode = "INFT";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].PassengerNumber = Convert.ToInt16(i2);
@@ -1398,7 +1398,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         ssrCodeKey = _obj.SSRcodeOneWayI[i2].key.ToString();
                                                     idx = j1 + i2;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(i2);
@@ -1432,7 +1432,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRbaggagecodeOneWayI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -1466,7 +1466,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRffwOneWayI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -1497,7 +1497,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.PPBGOneWayI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -1532,7 +1532,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                 if (infantcount > 0 && i2 + 1 <= infantcount)
                                                 {
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].SSRCode = "INFT";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].PassengerNumber = Convert.ToInt16(i2);
@@ -1563,7 +1563,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         ssrCodeKey = _obj.SSRcodeOneWayII[i2].key.ToString();
                                                     idx = j1 + i2;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(i2);
@@ -1597,7 +1597,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         else
                                                             ssrCodeKey = _obj.SSRbaggagecodeOneWayII[k].key.ToString();
                                                         sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                        sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                        sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                         sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                         sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                         sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -1631,7 +1631,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                 if (infantcount > 0 && i2 + 1 <= infantcount)
                                                 {
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].SSRCode = "INFT";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].PassengerNumber = Convert.ToInt16(i2);
@@ -1662,7 +1662,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         ssrCodeKey = _obj.SSRcodeRTI[i2].key.ToString();
                                                     idx = j1 + i2;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(i2);
@@ -1696,7 +1696,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRbaggagecodeRTI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -1726,7 +1726,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRffwcodeRTI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -1761,7 +1761,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.PPBGcodeRTI[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);
@@ -1796,7 +1796,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                 if (infantcount > 0 && i2 + 1 <= infantcount)
                                                 {
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].SSRCode = "INFT";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[i2].PassengerNumber = Convert.ToInt16(i2);
@@ -1827,7 +1827,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                         ssrCodeKey = _obj.SSRcodeRTII[i2].key.ToString();
                                                     idx = j1 + i2;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                    sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                     sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(i2);
@@ -1858,7 +1858,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                                                             else
                                                                 ssrCodeKey = _obj.SSRbaggagecodeRTII[k].key.ToString();
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx] = new PaxSSR();
-                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NN";
+                                                            sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].ActionStatusCode = "NU";
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].SSRCode = ssrCodeKey;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumberSpecified = true;
                                                             sellreqd.SellSSR.SSRRequest.SegmentSSRRequests[_id].PaxSSRs[idx].PassengerNumber = Convert.ToInt16(k);

@@ -1531,7 +1531,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         uniqueidx++;
                         SimpleAvailibilityaAddResponcelist.Add(_SimpleAvailibilityaAddResponceobj);
                     }
-                    HttpContext.Session.SetString("IndigoSignature", JsonConvert.SerializeObject(_IndigologonResponseobj.Signature));
+                 //   HttpContext.Session.SetString("IndigoSignature", JsonConvert.SerializeObject(_IndigologonResponseobj.Signature));
                 }
                 #endregion
 
