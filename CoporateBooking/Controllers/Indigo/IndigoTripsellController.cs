@@ -53,10 +53,10 @@ namespace OnionConsumeWebAPI.Controllers
             var AirCraftName = TempData["AirCraftName"];
             ViewData["name"] = AirCraftName;
             //spicejet
-            string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
-            string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
-            string Seatmap = HttpContext.Session.GetString("Seatmap");
-            string Meals = HttpContext.Session.GetString("Meals");
+            //string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
+            //string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
+            //string Seatmap = HttpContext.Session.GetString("Seatmap");
+            //string Meals = HttpContext.Session.GetString("Meals");
             // string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
 
             MongoHelper objMongoHelper = new MongoHelper();
@@ -65,14 +65,17 @@ namespace OnionConsumeWebAPI.Controllers
             tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Indigo").Result;
             string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
 
+			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
+			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(GUID, "Indigo").Result;
 
-            ViewModel vm = new ViewModel();
-            if (passengerInfant != null)
+
+			ViewModel vm = new ViewModel();
+            if (seatMealdetail.ResultRequest != null)
             {
-                AirAsiaTripResponceModel passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerInfant, typeof(AirAsiaTripResponceModel));
-                passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                AirAsiaTripResponceModel passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.ResultRequest), typeof(AirAsiaTripResponceModel));
+                passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.ResultRequest), typeof(AirAsiaTripResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.SeatMap), typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.Meals), typeof(SSRAvailabiltyResponceModel));
                 vm.passeengerlist = passeengerlist;
                 vm.passeengerlistItanary = passeengerlistItanary;
                 vm.Seatmaplist = Seatmaplist;
@@ -80,9 +83,9 @@ namespace OnionConsumeWebAPI.Controllers
             }
             else
             {
-                passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.ResultRequest), typeof(AirAsiaTripResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.SeatMap), typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.Meals), typeof(SSRAvailabiltyResponceModel));
                 //SeatMapResponceModel Seatmaplist = new SeatMapResponceModel();
                 //SSRAvailabiltyResponceModel Mealslist = new SSRAvailabiltyResponceModel();
                 vm.passeengerlist = passeengerlist;
@@ -114,10 +117,10 @@ namespace OnionConsumeWebAPI.Controllers
             var AirlineName = TempData["AirLineName"];
             ViewData["name"] = AirlineName;
 
-            string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
-            string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
-            string Seatmap = HttpContext.Session.GetString("Seatmap");
-            string Meals = HttpContext.Session.GetString("Meals");
+            //string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
+            //string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
+            //string Seatmap = HttpContext.Session.GetString("Seatmap");
+            //string Meals = HttpContext.Session.GetString("Meals");
             //  string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
 
             MongoHelper objMongoHelper = new MongoHelper();
@@ -126,13 +129,16 @@ namespace OnionConsumeWebAPI.Controllers
             tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Indigo").Result;
             string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
 
-            ViewModel vm = new ViewModel();
-            if (passengerInfant != null)
+			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
+			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(GUID, "Indigo").Result;
+
+			ViewModel vm = new ViewModel();
+            if (seatMealdetail.ResultRequest != null)
             {
-                AirAsiaTripResponceModel passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerInfant, typeof(AirAsiaTripResponceModel));
-                passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                AirAsiaTripResponceModel passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.ResultRequest), typeof(AirAsiaTripResponceModel));
+                passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.ResultRequest), typeof(AirAsiaTripResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.SeatMap), typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.Meals), typeof(SSRAvailabiltyResponceModel));
                 //SeatMapResponceModel Seatmaplist = new SeatMapResponceModel();
                 //SSRAvailabiltyResponceModel Mealslist = new SSRAvailabiltyResponceModel();
                 if (!string.IsNullOrEmpty(passengerNamedetails))
@@ -147,9 +153,9 @@ namespace OnionConsumeWebAPI.Controllers
             }
             else
             {
-                passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.ResultRequest), typeof(AirAsiaTripResponceModel));
+                SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.SeatMap), typeof(SeatMapResponceModel));
+                SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.Meals), typeof(SSRAvailabiltyResponceModel));
                 //SeatMapResponceModel Seatmaplist = new SeatMapResponceModel();
                 //SSRAvailabiltyResponceModel Mealslist = new SSRAvailabiltyResponceModel();
                 if (!string.IsNullOrEmpty(passengerNamedetails))
@@ -253,26 +259,29 @@ namespace OnionConsumeWebAPI.Controllers
                 string Str2 = JsonConvert.SerializeObject(updatePaxResp);
             }
 
-            #region GetState
-            //_sell objsell = new _sell();
-            //IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(Signature, "");
+			#region GetState
+			//_sell objsell = new _sell();
+			//IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(Signature, "");
 
-            //string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
-            #endregion
+			//string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
+			#endregion
 
 
-            string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
-            string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
-            string Seatmap = HttpContext.Session.GetString("Seatmap");
-            string Meals = HttpContext.Session.GetString("Meals");
-            // string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+			//string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
+			//string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
+			//string Seatmap = HttpContext.Session.GetString("Seatmap");
+			//string Meals = HttpContext.Session.GetString("Meals");
+			// string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
 
-            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
+			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(GUID, "Indigo").Result;
+
+			string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
 
             ViewModel vm = new ViewModel();
-            passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-            SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-            SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+            passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.ResultRequest), typeof(AirAsiaTripResponceModel));
+            SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.SeatMap), typeof(SeatMapResponceModel));
+            SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.Meals), typeof(SSRAvailabiltyResponceModel));
 			vm.passeengerlist = passeengerlist;
 			if (passengerdetails != null)
             {
@@ -331,15 +340,25 @@ namespace OnionConsumeWebAPI.Controllers
                 PPBGAddon = new List<string>();
             }
 
-            string tokenview = HttpContext.Session.GetString("IndigoSignature");
+			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+			MongoHelper objMongoHelper = new MongoHelper();
+			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Indigo").Result;
+
+            string tokenview = tokenData.Token; // HttpContext.Session.GetString("IndigoSignature");
             if (tokenview == null) { tokenview = ""; }
             token = tokenview.Replace(@"""", string.Empty);
             if (token == "" || token == null)
             {
                 return RedirectToAction("Index");
             }
-            string passenger = HttpContext.Session.GetString("SGkeypassenger");
-            AirAsiaTripResponceModel passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
+
+			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
+			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(GUID, "Indigo").Result;
+
+		//	string passenger = HttpContext.Session.GetString("SGkeypassenger");
+            AirAsiaTripResponceModel passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.ResultRequest), typeof(AirAsiaTripResponceModel));
             int passengerscount = passeengerKeyList.passengerscount;
             using (HttpClient client = new HttpClient())
             {

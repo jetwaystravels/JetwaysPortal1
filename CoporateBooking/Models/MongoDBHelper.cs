@@ -21,7 +21,7 @@ namespace OnionConsumeWebAPI.Models
         //  private readonly IOptionsSnapshot<AppSettings> _balSettings;
         //IOptionsSnapshot<AppSettings> serviceSettings
 
-        //Logger logger = new Logger();
+        Logger logger = new Logger();
 
         public MongoDBHelper(IConfiguration configuration)
         {
@@ -74,7 +74,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "GetFlightSearchByKeyRef methhod", _connectionString);
+                logger.WriteLog(ex, "GetFlightSearchByKeyRef methhod", _connectionString);
 
             }
             return guid;
@@ -89,7 +89,7 @@ namespace OnionConsumeWebAPI.Models
 			}
 			catch (Exception ex)
 			{
-				//logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
+				logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
 			}
 			return srchDataALL;
 		}
@@ -103,7 +103,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
+                logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
             }
 
             if (srchDataALL == null)
@@ -126,7 +126,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
+                logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
             }
             return srchDataALL.RightResponse;
         }
@@ -144,7 +144,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "SaveKeyRequest methhod", _connectionString);
+                logger.WriteLog(ex, "SaveKeyRequest methhod", _connectionString);
             }
         }
 
@@ -166,7 +166,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "SaveFlightSearch methhod", _connectionString);
+                logger.WriteLog(ex, "SaveFlightSearch methhod", _connectionString);
             }
         }
 
@@ -182,7 +182,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "SaveMongoFlightToken methhod", _connectionString);
+                logger.WriteLog(ex, "SaveMongoFlightToken methhod", _connectionString);
             }
         }
 
@@ -213,7 +213,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-               // logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
+                logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
             }
 
         }
@@ -231,7 +231,7 @@ namespace OnionConsumeWebAPI.Models
 			}
 			catch (Exception ex)
 			{
-				//logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
+				logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
 			}
 
 		}
@@ -248,7 +248,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
+                logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
             }
             return tokenData;
         }
@@ -265,7 +265,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "UpdateFlightTokenJourney methhod", _connectionString);
+                logger.WriteLog(ex, "UpdateFlightTokenJourney methhod", _connectionString);
             }
             
         }
@@ -282,7 +282,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
+                logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
             }
 
         }
@@ -299,7 +299,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-               // logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
+                logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
             }
 
         }
@@ -325,7 +325,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "SaveRequest methhod", _connectionString);
+                logger.WriteLog(ex, "SaveRequest methhod", _connectionString);
             }
         }
 
@@ -352,7 +352,7 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "GetRequests methhod", _connectionString);
+                logger.WriteLog(ex, "GetRequests methhod", _connectionString);
             }
 
             return sCriteria;
@@ -416,13 +416,14 @@ namespace OnionConsumeWebAPI.Models
                 searchLog.IP = mongoHelper.GetIp();
                 searchLog.Device = mongoHelper.DeviceName();
                 searchLog.FlightClass = flightClass;
+                searchLog.Webref = "JET-" + mongoHelper.Get8Digits();
                 // _mongoDbService.GetCollection<SearchLog>("LogSearchData").InsertOneAsync(searchLog);
                 mDB.GetCollection<SearchLog>("LogSearchData").InsertOneAsync(searchLog);
 
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "SaveSearchLog methhod", _connectionString);
+                logger.WriteLog(ex, "SaveSearchLog methhod", _connectionString);
             }
         }
 
@@ -449,12 +450,46 @@ namespace OnionConsumeWebAPI.Models
             }
             catch (Exception ex)
             {
-                //logger.WriteLog(ex, "GetFlightSearchLog methhod", _connectionString);
+                logger.WriteLog(ex, "GetFlightSearchLog methhod", _connectionString);
 
             }
 
             return srchData;
 
         }
-    }
+
+		public void SaveResultSeatMealRequest(MongoSeatMealdetail mongoSeat)
+		{
+    		MongoHelper mongoHelper = new MongoHelper();
+			try
+			{
+
+				mongoSeat.CreatedDate = DateTime.UtcNow.AddMinutes(Convert.ToInt16(0));
+			    mDB.GetCollection<MongoSeatMealdetail>("SeatMealRequests").InsertOneAsync(mongoSeat);
+
+			}
+			catch (Exception ex)
+			{
+				logger.WriteLog(ex, "SaveResultSeatMealRequest methhod", _connectionString);
+			}
+		}
+
+		public async Task<MongoSeatMealdetail> GetSuppSeatMealByGUID(string guid, string supp)
+		{
+			MongoSeatMealdetail seatMeal = new MongoSeatMealdetail();
+			try
+			{
+				var filter = Builders<MongoSeatMealdetail>.Filter.And(Builders<MongoSeatMealdetail>.Filter.Eq(emp => emp.Guid, guid),
+				Builders<MongoSeatMealdetail>.Filter.Eq(emp => emp.Supp, supp));
+				seatMeal = await mDB.GetCollection<MongoSeatMealdetail>("SeatMealRequests").Find(filter).Sort(Builders<MongoSeatMealdetail>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
+			}
+			catch (Exception ex)
+			{
+				logger.WriteLog(ex, "GetSuppSeatMealByGUID methhod", _connectionString);
+			}
+			return seatMeal;
+		}
+
+
+	}
 }

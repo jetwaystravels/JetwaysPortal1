@@ -137,8 +137,30 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
             #endregion
 
+            if (vm.passeengerlistRT.Count > 1)
+            {
+                //    ViewBag.ErrorMessage = "";
+                if (vm.passeengerlistRT[0].journeys.Count == 0 || vm.passeengerlistRT[1].journeys.Count == 0)
+                {
+                    ViewBag.ErrorMessage = "";
+                    return View("service-error-msg");
+                }
+                else
+                {
+                    return View(vm);
+                }
 
-            return View(vm);
+            }
+            else if (vm.passeengerlistRT.Count == 1)
+            {
+                ViewBag.ErrorMessage = "";
+                return View("service-error-msg");
+            }
+            else
+            {
+                return View(vm);
+            }
+            //return View(vm);
 
 
         }
@@ -273,10 +295,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     if (i == 0)
                     {
                         token = tokenData.Token;
-                    }
+						contactobject.notificationPreference = token;
+
+					}
                     else
                     {
                         token = tokenData.RToken;
+                        contactobject.notificationPreferenceR = token;
                     }
 
                     using (HttpClient client = new HttpClient())
@@ -296,7 +321,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             _ContactModel.phoneNumbers = Phonenumberlist;
                         }
-                        _ContactModel.contactTypeCode = "P";
+                        _ContactModel.contactTypeCode = "p";
 
                         _Address Address = new _Address();
                         Address.lineOne = "Barakhamba Road";
@@ -348,11 +373,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     if (i == 0)
                     {
                         tokenview = tokenData.Token;
+                        contactobject.notificationPreference = tokenview;
                     }
                     else
                     {
                         tokenview = tokenData.RToken;
-                    }
+						contactobject.notificationPreferenceR = tokenview;
+					}
 
 
                     if (tokenview == null) { tokenview = ""; }
@@ -380,7 +407,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         {
                             _ContactModel.phoneNumbers = Phonenumberlist;
                         }
-                        _ContactModel.contactTypeCode = "P";
+                        _ContactModel.contactTypeCode = "p";
 
                         _Address Address = new _Address();
                         Address.lineOne = "Barakhamba Road";
@@ -512,12 +539,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 string tokenview = string.Empty;
                 if (i == 0)
                 {
-                    tokenview = HttpContext.Session.GetString("AirasiaTokan");
-                }
+					// tokenview = HttpContext.Session.GetString("AirasiaTokan");
+					tokenview = contactobject.notificationPreference;
+				}
                 else
                 {
-                    tokenview = HttpContext.Session.GetString("AirasiaTokanR");
-                }
+                   // tokenview = HttpContext.Session.GetString("AirasiaTokanR");
+					tokenview = contactobject.notificationPreferenceR;
+				}
 
                 if (!string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "airasia")
                 {
@@ -581,17 +610,19 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     }
                 }
 
-                tokenview = string.Empty;
-                if (i == 0)
-                {
-                    tokenview = HttpContext.Session.GetString("AkasaTokan");
-                }
-                else
-                {
-                    tokenview = HttpContext.Session.GetString("AkasaTokanR");
-                }
+    //            tokenview = string.Empty;
+    //            if (i == 0)
+    //            {
+    //               // tokenview = HttpContext.Session.GetString("AkasaTokan");
+				//	tokenview = contactobject.notificationPreference;
+				//}
+    //            else
+    //            {
+    //               // tokenview = HttpContext.Session.GetString("AkasaTokanR");
+				//	tokenview = contactobject.notificationPreferenceR;
+				//}
 
-                if (!string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "akasa")
+                if (!string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "akasaair")
                 {
                     //if (token == null) { token = ""; }
                     token = tokenview.Replace(@"""", string.Empty);
@@ -1203,14 +1234,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             string serializedUnitKey = JsonConvert.SerializeObject(unitKey);
             HttpContext.Session.SetString("UnitKey", serializedUnitKey);
 
-            if (BaggageSSrkey.Count > 0 && BaggageSSrkey[0] == null)
-            {
-                BaggageSSrkey = new List<string>();
-            }
-            if (ssrKey.Count > 0 && ssrKey[0] == null)
-            {
-                ssrKey = new List<string>();
-            }
+
             List<string> _ssrKey = new List<string>();
             for (int i = 0; i < ssrKey.Count; i++)
             {
@@ -1218,8 +1242,26 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     continue;
                 _ssrKey.Add(ssrKey[i].Trim());
             }
+            List<string> _BaggageSSrkey = new List<string>();
+            for (int i = 0; i < BaggageSSrkey.Count; i++)
+            {
+                if (BaggageSSrkey[i] == null)
+                    continue;
+                _BaggageSSrkey.Add(BaggageSSrkey[i].Trim());
+            }
+
+            if (_BaggageSSrkey.Count > 0 && _BaggageSSrkey[0] == null)
+            {
+                _BaggageSSrkey = new List<string>();
+            }
+            if (_ssrKey.Count > 0 && _ssrKey[0] == null)
+            {
+                _ssrKey = new List<string>();
+            }
             ssrKey = new List<string>();
+            BaggageSSrkey = new List<string>();
             ssrKey = _ssrKey;
+            BaggageSSrkey = _BaggageSSrkey;
             string serializedSSRKey = JsonConvert.SerializeObject(ssrKey);
             HttpContext.Session.SetString("ssrKey", serializedSSRKey);
             if (unitKey.Count > 0 && unitKey[0] == null)
@@ -1284,7 +1326,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
                 mealListRT.Add(Mealslist);
             }
-            int passengerscount = passeengerKeyList.passengerscount;
+            int passengerscount = 0; //passeengerKeyList.passengerscount;
             int Seatcount = unitKey.Count;
             #region RoundTripSSR
 

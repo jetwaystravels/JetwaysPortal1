@@ -44,6 +44,8 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 MongoHelper objMongoHelper = new MongoHelper();
                 MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
                 MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+				MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
+
 
                 tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "Akasa").Result;
 
@@ -71,13 +73,13 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
                 _SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
                 var AdtType = "";
-                var AdtCount = 0;
+             //   var AdtCount = 0;
 
                 var chdtype = "";
-                var chdcount = 0;
+              //  var chdcount = 0;
 
                 var infanttype = "";
-                var infantcount = 0;
+              //  var infantcount = 0;
 
                 int countpassenger = _SimpleAvailabilityobj.passengers.types.Count;
                 AdtType = _SimpleAvailabilityobj.passengers.types[0].type;
@@ -136,9 +138,12 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage responseTripsellAK = await client.PostAsJsonAsync(AppUrlConstant.AkasaAirTripsell, AirAsiaTripSellRequestobj);
-                if (responseTripsellAK.IsSuccessStatusCode)
+
+				AirAsiaTripResponceModel AkasaAirTripResponceobj = new AirAsiaTripResponceModel();
+
+				if (responseTripsellAK.IsSuccessStatusCode)
                 {
-                    AirAsiaTripResponceModel AkasaAirTripResponceobj = new AirAsiaTripResponceModel();
+                 
                     var AKjsondata = responseTripsellAK.Content.ReadAsStringAsync().Result;
                     
                     logs.WriteLogs(AKjsondata, "3-TripsellResponse", "AkasaOneWay", "oneway");
@@ -296,8 +301,10 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     AkasaAirTripResponceobj.passengers = Akasapasskeylist;
                     AkasaAirTripResponceobj.passengerscount = passengercount;
 
-                    HttpContext.Session.SetString("ResultFlightPassenger", JsonConvert.SerializeObject(AkasaAirTripResponceobj));
-                }
+					//  HttpContext.Session.SetString("ResultFlightPassenger", JsonConvert.SerializeObject(AkasaAirTripResponceobj));
+
+					seatMealdetail.ResultRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(AkasaAirTripResponceobj));
+				}
                 else
                 {
                     var AKjsondataexception = responseTripsellAK.Content.ReadAsStringAsync().Result;
@@ -310,7 +317,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 				//if (infanttype != null)
 				if (!string.IsNullOrEmpty(infanttype))
 				{
-                    string passengerdatainfant = HttpContext.Session.GetString("ResultFlightPassenger");
+                    string passengerdatainfant = JsonConvert.SerializeObject(AkasaAirTripResponceobj); //  HttpContext.Session.GetString("ResultFlightPassenger");
                     AirAsiaTripResponceModel passeengerKeyListinfant = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerdatainfant, typeof(AirAsiaTripResponceModel));
 
                     SimpleAvailabilityRequestModel _SimpleAvailabilityobject = new SimpleAvailabilityRequestModel();
@@ -604,10 +611,12 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 AirAsiaTripResponceobject.journeys = AAJourneyList;
                                 AirAsiaTripResponceobject.passengers = passkeyList;
                                 AirAsiaTripResponceobject.passengerscount = passengercount;
-                                HttpContext.Session.SetString("AkasaAirItanary", JsonConvert.SerializeObject(AirAsiaTripResponceobject));
-                                //string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
+								//   HttpContext.Session.SetString("AkasaAirItanary", JsonConvert.SerializeObject(AirAsiaTripResponceobject));
+								//string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
 
-                            }
+								seatMealdetail.Infant = objMongoHelper.Zip(JsonConvert.SerializeObject(AirAsiaTripResponceobject));
+
+							}
 
 
                         }
@@ -622,7 +631,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 #endregion
 
                 #region Meals& Baggage
-                string Akpassengerdata = HttpContext.Session.GetString("ResultFlightPassenger");
+                string Akpassengerdata = JsonConvert.SerializeObject(AkasaAirTripResponceobj);
                 AirAsiaTripResponceModel AKpasseengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(Akpassengerdata, typeof(AirAsiaTripResponceModel));
            
                 int passengerscount = AKpasseengerKeyList.passengerscount;
@@ -728,8 +737,12 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
                     }
                     AkasaSSRAvailabiltyResponceobj.journeySsrsBaggage = AkjourneyssrBaggagesList;
-                    HttpContext.Session.SetString("AKBaggageDetails", JsonConvert.SerializeObject(AkasaSSRAvailabiltyResponceobj));
-                    int SegmentSSrcount = JsonAkasaSSRAvailabilty.data.segmentSsrs.Count;
+                 //   HttpContext.Session.SetString("AKBaggageDetails", JsonConvert.SerializeObject(AkasaSSRAvailabiltyResponceobj));
+
+					seatMealdetail.Baggage = objMongoHelper.Zip(JsonConvert.SerializeObject(AkasaSSRAvailabiltyResponceobj));
+
+
+					int SegmentSSrcount = JsonAkasaSSRAvailabilty.data.segmentSsrs.Count;
                     int legSsrscount = JsonAkasaSSRAvailabilty.data.legSsrs.Count;
                     List<legSsrs> AkSSRAvailabiltyLegssrlist = new List<legSsrs>();
                     for (int i = 0; i < legSsrscount; i++)
@@ -776,9 +789,10 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     }
                     AkasaSSRAvailabiltyResponceobj.legSsrs = AkSSRAvailabiltyLegssrlist;
                     AkasaSSRAvailabiltyResponceobj.SegmentSSrcount = SegmentSSrcount;
-                    HttpContext.Session.SetString("AKMealsBaggage", JsonConvert.SerializeObject(AkasaSSRAvailabiltyResponceobj));
+					// HttpContext.Session.SetString("AKMealsBaggage", JsonConvert.SerializeObject(AkasaSSRAvailabiltyResponceobj));
+					seatMealdetail.Meals = objMongoHelper.Zip(JsonConvert.SerializeObject(AkasaSSRAvailabiltyResponceobj));
 
-                }
+				}
                 else
                 {
                     var _AkasaResponseSSRAvailabiltyexception = responseAkasaSSRAvailabilty.Content.ReadAsStringAsync().Result;
@@ -914,17 +928,24 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                         AkSeatMapResponceModel.datalist = Akdatalist;
                         x++;
                     }
-                    HttpContext.Session.SetString("AKSeatmap", JsonConvert.SerializeObject(AkSeatMapResponceModel));
-                }
+                  
+                    //HttpContext.Session.SetString("AKSeatmap", JsonConvert.SerializeObject(AkSeatMapResponceModel));
+					seatMealdetail.SeatMap = objMongoHelper.Zip(JsonConvert.SerializeObject(AkSeatMapResponceModel));
+				}
                 else
                 {
                     var _AkresponseSeatmapexception = AkresponseSeatmap.Content.ReadAsStringAsync().Result;
 
                     logs.WriteLogs(_AkresponseSeatmapexception, "6-SeatMapResponse", "AkasaOneWay", "oneway");
                 }
-                //}
-                #endregion
-            }
+				//}
+				#endregion
+
+				seatMealdetail.Supp = "Akasa";
+				seatMealdetail.Guid = Guid;
+				_mongoDBHelper.SaveResultSeatMealRequest(seatMealdetail);
+
+			}
             return RedirectToAction("AkTripsellView", "AKTripsell", new { Guid = Guid });
         }
     }
