@@ -280,68 +280,6 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             {
                 unitKey = new List<string>();
             }
-
-            string tokenview = HttpContext.Session.GetString("IndigoSignature");
-            if (tokenview == null) { tokenview = ""; }
-            token = tokenview.Replace(@"""", string.Empty);
-            if (token == "" || token == null)
-            {
-                return RedirectToAction("Index");
-            }
-            string passenger = HttpContext.Session.GetString("SGkeypassenger");
-            AirAsiaTripResponceModel passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-            int passengerscount = passeengerKeyList.passengerscount;
-            using (HttpClient client = new HttpClient())
-            {
-                if (ssrKey.Count > 0)
-                {
-                    #region SellSSr
-                    //_SellSSR obj_ = new _SellSSR(httpContextAccessorInstance);
-                    //IndigoBookingManager_.SellResponse sellSsrResponse = null;// await obj_.sellssr(token, passeengerKeyList, ssrKey, BaggageSSrkey, FastfarwardAddon, PPBGAddon, 0, "OneWay");
-                    #endregion
-
-                }
-                if (unitKey.Count > 0)
-                {
-                    //try
-                    //{
-                    //    var unitKey_1 = unitKey;// selectedIds;
-                    //    string[] unitKey2 = null;
-                    //    string[] unitsubKey2 = null;
-                    //    string pas_unitKey = string.Empty;
-
-                    //    int journeyscount = passeengerKeyList.journeys.Count;
-
-                    //    //_SellSSR obj_ = new _SellSSR(httpContextAccessorInstance);
-                    //    IndigoBookingManager_.AssignSeatsResponse _AssignseatRes = null; //await obj_.AssignSeat(token, passeengerKeyList, unitKey, 0, unitKey.Count, 0, "OneWay");
-
-                    //    string Str2 = JsonConvert.SerializeObject(_AssignseatRes);
-
-                    //    if (_AssignseatRes != null)
-                    //    {
-                    //        var JsonObjSeatAssignment = _AssignseatRes;
-                    //        #region GetBookingFromState
-                    //        //_sell objsell = new _sell();
-                    //        IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS = null;// await objsell.GetBookingFromState(token, "OneWay");
-
-                    //        string str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS);
-
-                    //        if (_GetBookingFromStateRS != null)
-                    //        {
-                    //            //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                    //        }
-
-                    //        #endregion
-                    //    }
-
-                    //}
-                    //catch (Exception ex)
-                    //{
-
-                    //}
-                }
-            }
-
             return RedirectToAction("GDSPayment", "GDSPaymentGateway", new { Guid = GUID });
         }
 
