@@ -3000,8 +3000,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>fzhbzg00z6</Fingerprint>
-      <Integrity>NY1h8jo8URudb+RZKMG2iqPxG2Iw9lrmKLA9r/viHKI=</Integrity>
+      <Fingerprint>6befmmgeo4</Fingerprint>
+      <Integrity>MmRJlJMInzYRi7+2+noeHMzb9tQyUNNahFjCBol5QoY=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\vendors.min.css'))</OriginalItemSpec>

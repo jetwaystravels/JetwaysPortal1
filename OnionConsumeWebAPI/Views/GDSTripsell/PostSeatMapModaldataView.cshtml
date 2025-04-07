@@ -560,7 +560,7 @@
                                                             if (!ht0.Contains(data))
                                                             {
                                                                 <li class="seat-li chkbox tooltip">
-                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
                                                                     <span class="tooltiptext">Sorry, seat is occupied.</span>
                                                                 </li>
                                                             }
@@ -584,9 +584,9 @@
                                                                 // }
                                                                 if (seatavailability == "100")
                                                                 {
-                                                                    <li class="seat-li chkbox tooltip">
+                                                                    <li class="seat-li midcomfort chkbox tooltip">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
-                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span>
                                                                     </li>
                                                                 }
                                                                 else if (seatavailability == "10")
@@ -599,7 +599,7 @@
                                                                 else if (seatavailability == "5")
                                                                 {
                                                                     <li class="seat-li chkbox tooltip">
-                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox d-none"  disabled />
                                                                         <span class="tooltiptext">Sorry, seat is occupied.</span>
                                                                     </li>
                                                                 }
@@ -607,7 +607,7 @@
                                                                 {
                                                                     <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
-                                                                        <span class="tooltiptext">No Seat Available.</span>
+                                                                        <span class="tooltiptext">No Seat Available. </span>
                                                                     </li>
                                                                 }
                                                                 else
@@ -653,7 +653,7 @@
                                             if (countcolumnseg_0 == 0)
                                             {
                                                 <div class="text-center" style="position: relative;top: -110px;">
-                                                    <h6 class="text-danger" style="margin-left: 45px;">Seats are not Available</h6>
+                                                    <h6 class="text-danger" style="margin-left: 45px;">Seats are not Available </h6>
                                                 </div>
                                             }
                                         }
@@ -723,9 +723,9 @@
                                                                 //string feeamountF1 = ht1[data].ToString();
                                                                 if (seatavailability == "100")
                                                                 {
-                                                                    <li class="seat-li chkbox tooltip">
+                                                                    <li class="seat-li midcomfort chkbox tooltip">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
-                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span>
                                                                     </li>
                                                                 }
                                                                 else if (seatavailability == "10")
@@ -746,7 +746,7 @@
                                                                 {
                                                                     <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
-                                                                        <span class="tooltiptext">No Seat Available.</span>
+                                                                        <span class="tooltiptext">No Seat Available. </span>
                                                                     </li>
                                                                 }
                                                                 else

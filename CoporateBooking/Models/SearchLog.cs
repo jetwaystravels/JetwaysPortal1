@@ -40,6 +40,7 @@ namespace OnionConsumeWebAPI.Models
         public DateTime Log_DateTime { get; set; }
 
         public string Device { get; set; }
+        public string Webref { get; set; }
 
         //   public String Meta { get; set; }
 
