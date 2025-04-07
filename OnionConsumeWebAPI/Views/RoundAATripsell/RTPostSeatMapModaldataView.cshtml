@@ -63,297 +63,297 @@
 
 <script src="~/js/custom.js/roundtripsell.js"></script>
 <script type="text/javascript">
-    /*********seatmap_tab_select_function_ServiceRequest_PartialView_Page***********/
-    $(document).ready(function () {
+        /*********seatmap_tab_select_function_ServiceRequest_PartialView_Page***********/
+        $(document).ready(function () {
 
-        //$("#passtab1").hide();
-        $("#passtab2").hide();
-        $("#passtab1RT").hide();
-        $("#passtab2RT").hide();
-        $("#tabshow1").show();
-        $("#LeftNonstop").show();
-        $("#leftConnect").show();
-        $("#leftConnect_2").hide();
-        $("#tabshow2popup").hide();
-        $("#RightNonstop").hide();
-        $("#rightNonstop").hide();
-        $("#LrightConnect2").hide();
-        $("#rightConnect2").hide();
-        $("#seattab1waypopup").click(function () {
-            //alert("Left One Way");
-            $("#tabshow1popup").show();
-            $("#tabshow2popup").hide();
-            $("#tabshowRT1").hide();
-            $("#tabshowRT2").hide();
-            $("#passtab1").show();
+            //$("#passtab1").hide();
             $("#passtab2").hide();
             $("#passtab1RT").hide();
             $("#passtab2RT").hide();
-            $("#seattab1waypopup").addClass('activeblue');
-            $("#seattabRT1waypopup").removeClass('activeblue');
-            $("#seattabRT1Popup").removeClass('activeblue');
-            $("#seattabRT2Popup").removeClass('activeblue');
-
-            if ($("#tabshow1popup").is(":visible")) {
-                $("#LeftNonstop").show();
-                $("#rightNonstop").hide();
-                $("#LrightConnect1").hide();
-                $("#LrightConnect2").hide();
-
-            }
-        });
-        $("#seattabRT1waypopup").click(function () {
-            //alert("Right One Way");
-            //debugger;
-            $("#tabshow1popup").hide();
+            $("#tabshow1").show();
+            $("#LeftNonstop").show();
+            $("#leftConnect").show();
+            $("#leftConnect_2").hide();
             $("#tabshow2popup").hide();
-            $("#tabshowRT1").show();
-            $("#tabshowRT2").hide();
-            $("#passtab1").hide();
-            $("#passtab2").hide();
-            $("#passtab1RT").show();
-            $("#passtab2RT").hide();
-            $("#seattabRT1waypopup").addClass('activeblue');
-            $("#seattab1waypopup").removeClass('activeblue');
-            $("#seattab2Popup").removeClass('activeblue');
-            $("#seattab1waypopup").removeClass('activeblue');
-            $("#seattab1Popup").removeClass('activeblue');
+            $("#RightNonstop").hide();
+            $("#rightNonstop").hide();
+            $("#LrightConnect2").hide();
+            $("#rightConnect2").hide();
+            $("#seattab1waypopup").click(function () {
+                //alert("Left One Way");
+                $("#tabshow1popup").show();
+                $("#tabshow2popup").hide();
+                $("#tabshowRT1").hide();
+                $("#tabshowRT2").hide();
+                $("#passtab1").show();
+                $("#passtab2").hide();
+                $("#passtab1RT").hide();
+                $("#passtab2RT").hide();
+                $("#seattab1waypopup").addClass('activeblue');
+                $("#seattabRT1waypopup").removeClass('activeblue');
+                $("#seattabRT1Popup").removeClass('activeblue');
+                $("#seattabRT2Popup").removeClass('activeblue');
 
-            if ($("#tabshowRT1").is(":visible")) {
-                $("#rightNonstop").show();
-                $("#RightNonstop").show();
-                $("#LeftNonstop").hide();
+                if ($("#tabshow1popup").is(":visible")) {
+                    $("#LeftNonstop").show();
+                    $("#rightNonstop").hide();
+                    $("#LrightConnect1").hide();
+                    $("#LrightConnect2").hide();
+
+                }
+            });
+            $("#seattabRT1waypopup").click(function () {
+                //alert("Right One Way");
+                //debugger;
+                $("#tabshow1popup").hide();
+                $("#tabshow2popup").hide();
+                $("#tabshowRT1").show();
+                $("#tabshowRT2").hide();
+                $("#passtab1").hide();
+                $("#passtab2").hide();
+                $("#passtab1RT").show();
+                $("#passtab2RT").hide();
+                $("#seattabRT1waypopup").addClass('activeblue');
+                $("#seattab1waypopup").removeClass('activeblue');
+                $("#seattab2Popup").removeClass('activeblue');
+                $("#seattab1waypopup").removeClass('activeblue');
+                $("#seattab1Popup").removeClass('activeblue');
+
+                if ($("#tabshowRT1").is(":visible")) {
+                    $("#rightNonstop").show();
+                    $("#RightNonstop").show();
+                    $("#LeftNonstop").hide();
+                    $("#leftConnect").hide();
+                    $("#leftConnect_2").hide();
+
+                }
+            });
+
+
+            $("#seattab1Popup").click(function () {
+                //alert("Left Segment1");
+                $("#tabshow1popup").show();
+                $("#tabshow2popup").hide();
+                $("#tabshowRT1").hide();
+                $("#tabshowRT2").hide();
+                $("#passtab1").show();
+                $("#passtab2").hide();
+                $("#passtab1RT").hide();
+                $("#passtab2RT").hide();
+                $("#leftConnect").show();
+                $("#leftConnect_2").hide();
+                $("#rightConnect1").hide();
+                $("#rightConnect2").hide();
+                $("#RightNonstop").hide();
+                $("#seattab1Popup").addClass('activeblue');
+                $("#seattab2Popup").removeClass('activeblue');
+                $("#seattabRT1waypopup").removeClass('activeblue');
+                $("#seattabRT1Popup").removeClass('activeblue');
+                $("#seattabRT2Popup").removeClass('activeblue');
+
+
+            });
+
+            $("#seattab2Popup").click(function () {
+                //alert("Left Segment2");
+                $("#tabshow1popup").hide();
+                $("#tabshow2popup").show();
+                $("#tabshowRT1").hide();
+                $("#tabshowRT2").hide();
+                $("#passtab1").hide();
+                $("#passtab2").show();
+                $("#passtab1RT").hide();
+                $("#passtab2RT").hide();
+                $("#leftConnect").hide();
+                $("#leftConnect_2").show();
+                $("#RightNonstop").hide();
+                $("#rightConnect1").hide();
+                $("#rightConnect2").hide();
+                $("#seattab2Popup").addClass('activeblue');
+                $("#seattab1Popup").removeClass('activeblue');
+                $("#seattabRT1waypopup").removeClass('activeblue');
+                $("#seattabRT1Popup").removeClass('activeblue');
+                $("#seattabRT2Popup").removeClass('activeblue');
+
+            });
+            $("#seattabRT1Popup").click(function () {
+                //alert("right RT Segment1");
+                $("#tabshow1popup").hide();
+                $("#tabshow2popup").hide();
+                $("#tabshowRT1").show();
+                $("#tabshowRT2").hide();
+                $("#passtab1").hide();
+                $("#passtab2").hide();
+                $("#passtab1RT").show();
+                $("#passtab2RT").hide();
                 $("#leftConnect").hide();
                 $("#leftConnect_2").hide();
+                $("#LeftNonstop").hide();
+                $("#rightConnect1").show();
+                $("#rightConnect2").hide();
+                $("#LrightConnect1").show();
+                $("#LrightConnect2").hide();
+                $("#seattabRT1Popup").addClass('activeblue');
+                $("#seattab1Popup").removeClass('activeblue');
+                $("#seattab2Popup").removeClass('activeblue');
+                $("#seattab1waypopup").removeClass('activeblue');
+                $("#seattabRT2Popup").removeClass('activeblue');
 
-            }
-        });
+            });
+            $("#seattabRT2Popup").click(function () {
+                //alert("right RT Segment2");
+                $("#tabshow1popup").hide();
+                $("#tabshow2popup").hide();
+                $("#tabshowRT1").hide();
+                $("#tabshowRT2").show();
+                $("#passtab1").hide();
+                $("#passtab2").hide();
+                $("#passtab1RT").hide();
+                $("#passtab2RT").show();
+                $("#leftConnect").hide();
+                $("#LeftNonstop").hide();
+                $("#leftConnect_2").hide();
+                $("#rightConnect1").hide();
+                $("#rightConnect2").show();
+                $("#LrightConnect1").hide();
+                $("#LrightConnect2").show();
+                $("#seattabRT2Popup").addClass('activeblue');
+                $("#seattab1Popup").removeClass('activeblue');
+                $("#seattab2Popup").removeClass('activeblue');
+                $("#seattab1waypopup").removeClass('activeblue');
+                $("#seattabRT1Popup").removeClass('activeblue');
+
+            });
 
 
-        $("#seattab1Popup").click(function () {
-            //alert("Left Segment1");
-            $("#tabshow1popup").show();
-            $("#tabshow2popup").hide();
-            $("#tabshowRT1").hide();
-            $("#tabshowRT2").hide();
-            $("#passtab1").show();
-            $("#passtab2").hide();
-            $("#passtab1RT").hide();
-            $("#passtab2RT").hide();
-            $("#leftConnect").show();
+
+
+            // ********Hide Show Popup button Contine *********************
+
+            $("#leftNstop2").click(function () {
+                debugger;
+                    var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
+                if (confirmation == true) {
+                    if ($("#seattabRT1waypopup").is(":visible")) {
+                        $("#rightNonstop").show();
+                        $("#LeftNonstop").hide();
+                        $("#seattabRT1waypopup").click();
+                    } else if ($("#seattabRT1Popup").is(":visible")) {
+                        //$("#rightConnect1").show();
+                        $("#LrightConnect1").show();
+                        $("#LrightConnect2").hide();
+                        $("#LeftNonstop").hide();
+                        $("#seattabRT1Popup").click();
+                    }
+                }
+
+                else {
+
+                    return false;
+                }
+            });
+
+            $("#leftConnect2").click(function () {
+                    var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
+                if (confirmation == true) {
+                    if ($("#seattab2Popup").is(":visible")) {
+                        $("#leftConnect").hide();
+                        $("#leftConnect_2").show();
+                        $("#seattab2Popup").click();
+                    }
+
+                }
+                else {
+                    return false;
+                }
+            });
+
+
+
+    $("#leftConnectbtn_2").off("click").on("click", function () {
+        let isProcessing = false;
+        if (isProcessing) return;
+        isProcessing = true;
+            var confirmation = confirm("would you like to select for you next sector?");
+            if (confirmation) {
+            $("#leftConnect").hide();
             $("#leftConnect_2").hide();
             $("#rightConnect1").hide();
             $("#rightConnect2").hide();
-            $("#RightNonstop").hide();
-            $("#seattab1Popup").addClass('activeblue');
-            $("#seattab2Popup").removeClass('activeblue');
-            $("#seattabRT1waypopup").removeClass('activeblue');
-            $("#seattabRT1Popup").removeClass('activeblue');
-            $("#seattabRT2Popup").removeClass('activeblue');
-
-
-        });
-
-        $("#seattab2Popup").click(function () {
-            //alert("Left Segment2");
-            $("#tabshow1popup").hide();
-            $("#tabshow2popup").show();
-            $("#tabshowRT1").hide();
-            $("#tabshowRT2").hide();
-            $("#passtab1").hide();
-            $("#passtab2").show();
-            $("#passtab1RT").hide();
-            $("#passtab2RT").hide();
-            $("#leftConnect").hide();
-            $("#leftConnect_2").show();
-            $("#RightNonstop").hide();
-            $("#rightConnect1").hide();
-            $("#rightConnect2").hide();
-            $("#seattab2Popup").addClass('activeblue');
-            $("#seattab1Popup").removeClass('activeblue');
-            $("#seattabRT1waypopup").removeClass('activeblue');
-            $("#seattabRT1Popup").removeClass('activeblue');
-            $("#seattabRT2Popup").removeClass('activeblue');
-
-        });
-        $("#seattabRT1Popup").click(function () {
-            //alert("right RT Segment1");
-            $("#tabshow1popup").hide();
-            $("#tabshow2popup").hide();
-            $("#tabshowRT1").show();
-            $("#tabshowRT2").hide();
-            $("#passtab1").hide();
-            $("#passtab2").hide();
-            $("#passtab1RT").show();
-            $("#passtab2RT").hide();
-            $("#leftConnect").hide();
-            $("#leftConnect_2").hide();
-            $("#LeftNonstop").hide();
-            $("#rightConnect1").show();
-            $("#rightConnect2").hide();
-            $("#LrightConnect1").show();
-            $("#LrightConnect2").hide();
-            $("#seattabRT1Popup").addClass('activeblue');
-            $("#seattab1Popup").removeClass('activeblue');
-            $("#seattab2Popup").removeClass('activeblue');
-            $("#seattab1waypopup").removeClass('activeblue');
-            $("#seattabRT2Popup").removeClass('activeblue');
-
-        });
-        $("#seattabRT2Popup").click(function () {
-            //alert("right RT Segment2");
-            $("#tabshow1popup").hide();
-            $("#tabshow2popup").hide();
-            $("#tabshowRT1").hide();
-            $("#tabshowRT2").show();
-            $("#passtab1").hide();
-            $("#passtab2").hide();
-            $("#passtab1RT").hide();
-            $("#passtab2RT").show();
-            $("#leftConnect").hide();
-            $("#LeftNonstop").hide();
-            $("#leftConnect_2").hide();
-            $("#rightConnect1").hide();
-            $("#rightConnect2").show();
-            $("#LrightConnect1").hide();
-            $("#LrightConnect2").show();
-            $("#seattabRT2Popup").addClass('activeblue');
-            $("#seattab1Popup").removeClass('activeblue');
-            $("#seattab2Popup").removeClass('activeblue');
-            $("#seattab1waypopup").removeClass('activeblue');
-            $("#seattabRT1Popup").removeClass('activeblue');
-
-        });
-
-
-
-
-        // ********Hide Show Popup button Contine *********************
-
-        $("#leftNstop2").click(function () {
-            debugger;
-                var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
-            if (confirmation == true) {
-                if ($("#seattabRT1waypopup").is(":visible")) {
-                    $("#rightNonstop").show();
-                    $("#LeftNonstop").hide();
-                    $("#seattabRT1waypopup").click();
-                } else if ($("#seattabRT1Popup").is(":visible")) {
-                    //$("#rightConnect1").show();
-                    $("#LrightConnect1").show();
-                    $("#LrightConnect2").hide();
-                    $("#LeftNonstop").hide();
-                    $("#seattabRT1Popup").click();
-                }
-            }
-
-            else {
-
-                return false;
-            }
-        });
-
-        $("#leftConnect2").click(function () {
-                var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
-            if (confirmation == true) {
-                if ($("#seattab2Popup").is(":visible")) {
-                    $("#leftConnect").hide();
-                    $("#leftConnect_2").show();
-                    $("#seattab2Popup").click();
-                }
-
-            }
-            else {
-                return false;
-            }
-        });
-
-      
-    
-$("#leftConnectbtn_2").off("click").on("click", function () {
-    let isProcessing = false;
-    if (isProcessing) return;
-    isProcessing = true;
-        var confirmation = confirm("would you like to select for you next sector?");
-        if (confirmation) {
-        $("#leftConnect").hide();
-        $("#leftConnect_2").hide();
-        $("#rightConnect1").hide();
-        $("#rightConnect2").hide();
-        $("#rightNonstop").hide();
-        if ($("#seattabRT1waypopup").is(":visible")) {
-            $("#RightNonstop").show();
-            $("#seattabRT1waypopup").click();
-        } 
-        
-        if ($("#seattabRT1Popup").is(":visible")) {
-            $("#rightConnect1").show();
-            $("#seattabRT1Popup").click();
-        }
-    }
-    setTimeout(() => {
-        isProcessing = false;
-    }, 500);
-});
-
-
-
-
-
-
-        $("#rightconnect2").click(function () {
-                var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
-            if (confirmation == true) {
-                if ($("#seattabRT2Popup").is(":visible")) {
-                    $("#leftConnect").hide();
-                    $("#leftConnect_2").hide();
-                    $("#rightConnect1").hide();
-                    $("#rightConnect2").show();
-                    $("#seattabRT2Popup").click();
-                }
-            }
-            else {
-                return false;
-            }
-        });
-
-        $("#Lrightconnect2").click(function () {
-                var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
-            if (confirmation == true) {
-                if ($("#seattabRT2Popup").is(":visible")) {
-                    $("#leftConnect").hide();
-                    $("#leftConnect_2").hide();
-                    $("#rightConnect1").hide();
-                    $("#rightConnect2").show();
-                    $("#LrightConnect1").hide();
-                    $("#LrightConnect2").show();
-                    $("#seattabRT2Popup").click();
-                }
-            }
-            else {
-                return false;
-            }
-        });
-
-
-
-        $("#RightNonstop2").click(function () {
-            $("#leftConnect").show();
-            $("#RightNonstop").hide();
-            //$("#LeftNonstop").show();
-
-        });
-        $("#rightNstop2").click(function () {
-            $("#LeftNonstop").show();
             $("#rightNonstop").hide();
-            //$("#LeftNonstop").show();
+            if ($("#seattabRT1waypopup").is(":visible")) {
+                $("#RightNonstop").show();
+                $("#seattabRT1waypopup").click();
+            }
+
+            if ($("#seattabRT1Popup").is(":visible")) {
+                $("#rightConnect1").show();
+                $("#seattabRT1Popup").click();
+            }
+        }
+        setTimeout(() => {
+            isProcessing = false;
+        }, 500);
+    });
+
+
+
+
+
+
+            $("#rightconnect2").click(function () {
+                    var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
+                if (confirmation == true) {
+                    if ($("#seattabRT2Popup").is(":visible")) {
+                        $("#leftConnect").hide();
+                        $("#leftConnect_2").hide();
+                        $("#rightConnect1").hide();
+                        $("#rightConnect2").show();
+                        $("#seattabRT2Popup").click();
+                    }
+                }
+                else {
+                    return false;
+                }
+            });
+
+            $("#Lrightconnect2").click(function () {
+                    var confirmation = confirm("would you like to select for you next sector?"); // Non Stop Left Side
+                if (confirmation == true) {
+                    if ($("#seattabRT2Popup").is(":visible")) {
+                        $("#leftConnect").hide();
+                        $("#leftConnect_2").hide();
+                        $("#rightConnect1").hide();
+                        $("#rightConnect2").show();
+                        $("#LrightConnect1").hide();
+                        $("#LrightConnect2").show();
+                        $("#seattabRT2Popup").click();
+                    }
+                }
+                else {
+                    return false;
+                }
+            });
+
+
+
+            $("#RightNonstop2").click(function () {
+                $("#leftConnect").show();
+                $("#RightNonstop").hide();
+                //$("#LeftNonstop").show();
+
+            });
+            $("#rightNstop2").click(function () {
+                $("#LeftNonstop").show();
+                $("#rightNonstop").hide();
+                //$("#LeftNonstop").show();
+
+            });
+
+
+
 
         });
-
-
-
-
-    });
 </script>
 <script>
 
@@ -1057,9 +1057,9 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                                             {
                                                                 if (seatavailability == "100")
                                                                 {
-                                                                    <li class="seat-li chkbox tooltip">
+                                                                    <li class="seat-li midcomfort chkbox tooltip">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
-                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span></span>
                                                                     </li>
                                                                 }
                                                                 else if (seatavailability == "10")
@@ -1229,9 +1229,9 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                                             {
                                                                 if (seatavailability == "100")
                                                                 {
-                                                                    <li class="seat-li chkbox tooltip">
+                                                                    <li class="seat-li midcomfort chkbox tooltip">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
-                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span></span>
                                                                     </li>
                                                                 }
                                                                 else if (seatavailability == "10")
@@ -1454,9 +1454,9 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                                                 {
                                                                     if (seatavailability == "100")
                                                                     {
-                                                                        <li class="seat-li chkbox tooltip">
+                                                                        <li class="seat-li midcomfort chkbox tooltip">
                                                                             <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
-                                                                            <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                            <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span></span>
                                                                         </li>
                                                                     }
                                                                     else if (seatavailability == "10")
@@ -1627,9 +1627,9 @@ $("#leftConnectbtn_2").off("click").on("click", function () {
                                                                 {
                                                                     if (seatavailability == "100")
                                                                     {
-                                                                        <li class="seat-li chkbox tooltip">
+                                                                        <li class="seat-li midcomfort chkbox tooltip">
                                                                             <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
-                                                                            <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                            <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span></span>
                                                                         </li>
                                                                     }
                                                                     else if (seatavailability == "10")

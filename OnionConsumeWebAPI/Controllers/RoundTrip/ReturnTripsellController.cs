@@ -2479,7 +2479,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         }
 
                         TimeSpan timeSpan1 = new TimeSpan(0, 0, 0, 10);
-                        string _JourneykeyDataAA =  journeySellKeyAA;
+                        string _JourneykeyDataAA = journeySellKeyAA;
                         _JourneykeyDataAA = _JourneykeyDataAA.Replace(@"""", string.Empty);
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -3292,6 +3292,17 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 Decks Decksobj = null;
                                 string _seatPosition = "";
                                 //for (int i = 0; i < compartmentsunitCount; i++) // 2 times 
+                                Hashtable htPaidSeatPrice = new Hashtable();
+                                foreach (Match mSeat in Regex.Matches(SeatMapres, @"PreReservedSeatAssignment[\s\S]*?TotalPrice=""(?<Price>[\s\S]*?)""[\s\S]*?Key=""(?<Key>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                {
+                                    if (!htPaidSeatPrice.Contains(mSeat.Groups["Key"].Value.Trim()))
+                                    {
+                                        htPaidSeatPrice.Add(mSeat.Groups["Key"].Value.Trim(), mSeat.Groups["Price"].Value.Trim());
+                                    }
+
+                                }
+
+
                                 foreach (Match mRows in Regex.Matches(SeatMapres, @"<air:Rows SegmentRef=""(?<Key>[\s\S]*?)""[\s\S]*?</air:Rows>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                 {
 
@@ -3301,6 +3312,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     {
                                         foreach (Match mFacility in Regex.Matches(mRows.Value, @"<air:Facility Type=""[\s\S]*?SeatCode=""(?<SeatNumber>[\s\S]*?)""\s*Availability=""(?<Availablity>[\s\S]*?)""[\s\S]*?>[\s\S]*?</air:Facility>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                         {
+                                            string _OptionalServiceRef = string.Empty;
+                                            if (mFacility.Value.Contains("OptionalServiceRef"))
+                                            {
+                                                _OptionalServiceRef = Regex.Match(mFacility.Value, @"<air:Facility Type=""[\s\S]*?OptionalServiceRef=""(?<optionkey>[\s\S]*?)""[\s\S]*?</air:Facility>", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["optionkey"].Value.Trim();
+                                            }
                                             int _Count = Regex.Matches(mRows.Value, @"<air:Facility Type=""(?<SeatNumber>[\s\S]*?)""[s\S]*?</air:Facility>", RegexOptions.IgnoreCase | RegexOptions.Multiline).Count;
                                             Decksobj.availableUnits = _Count; //; SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].AvailableUnits;
                                             Decksobj.designator = "";// SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].Compartments[i].CompartmentDesignator;
@@ -3320,6 +3336,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 //compartmentsunitobj.availability = Convert.ToInt32("1");
                                                 compartmentsunitobj.compartmentDesignator = "";// SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].Compartments[i].Seats[i1].CompartmentDesignator;
                                                 compartmentsunitobj.designator = mFacility.Groups["SeatNumber"].Value.Trim();// SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].Compartments[i].Seats[i1].SeatDesignator;
+                                                if (!string.IsNullOrEmpty(_OptionalServiceRef))
+                                                {
+                                                    compartmentsunitobj.servicechargefeeAmount = Convert.ToDecimal(Regex.Match(htPaidSeatPrice[_OptionalServiceRef].ToString(), @"\d+").Value);
+                                                }
+                                                else
+                                                    compartmentsunitobj.servicechargefeeAmount = 0M;
                                                 compartmentsunitobj.type = Convert.ToInt32(0);
                                                 compartmentsunitobj.travelClassCode = "0";// SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].Compartments[i].Seats[i1].TravelClassCode;
                                                 compartmentsunitobj.set = 0;// SeatGroup[x].SeatAvailabilityResponse.EquipmentInfos[0].Compartments[i].Seats[i1].SeatSet;
@@ -3340,7 +3362,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     Properties compartmentyproperties = new Properties();
                                                     compartmentyproperties.code = item.Groups["Code"].Value.Trim();
                                                     compartmentyproperties.value = item.Groups["value"].Value.Trim();
-                                                    if (compartmentyproperties.value.Contains("PaidGeneralSeat") && (mFacility.Groups["Availablity"].Value.Trim().ToLower() == "available" || mFacility.Groups["Availablity"].Value.Trim().ToLower() == "blocked"))
+                                                    if (compartmentyproperties.value.Contains("PaidGeneralSeat") && (mFacility.Groups["Availablity"].Value.Trim().ToLower() == "available" && mFacility.Value.Contains("Paid=\"true\"")))
                                                     {
                                                         compartmentsunitobj.availability = Convert.ToInt32("100");
                                                     }
@@ -3348,15 +3370,15 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     {
                                                         compartmentsunitobj.availability = Convert.ToInt32("10");
                                                     }
-                                                    else if (mFacility.Groups["Availablity"].Value.Trim().ToLower() == "occupied")
+                                                    else if (!mFacility.Value.Contains("PaidGeneralSeat") && mFacility.Groups["Availablity"].Value.Trim().ToLower() == "occupied")
                                                     {
                                                         compartmentsunitobj.availability = Convert.ToInt32("5");
                                                     }
-                                                    else if (mFacility.Groups["Availablity"].Value.Trim().ToLower() == "available")
+                                                    else if (!mFacility.Value.Contains("PaidGeneralSeat") && mFacility.Groups["Availablity"].Value.Trim().ToLower() == "available")
                                                     {
                                                         compartmentsunitobj.availability = Convert.ToInt32("1");
                                                     }
-                                                    else if (mFacility.Groups["Availablity"].Value.Trim().ToLower() == "noseat")
+                                                    else if (!mFacility.Value.Contains("PaidGeneralSeat") && mFacility.Groups["Availablity"].Value.Trim().ToLower() == "noseat")
                                                     {
                                                         compartmentsunitobj.availability = Convert.ToInt32("11");
                                                     }
@@ -3875,7 +3897,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             _res = await objSpiceJet.GetSSRAvailabilityForBooking(_req);
 
                             string Str2 = JsonConvert.SerializeObject(_res);
-                            
+
                             if (p == 0)
                             {
                                 logs.WriteLogsR(Str2.ToString(), "9-GetSSRAvailabilityForBookingReq_Left", "SpiceJetRT");

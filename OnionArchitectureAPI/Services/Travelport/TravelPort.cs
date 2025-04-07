@@ -1189,7 +1189,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             int legKeyCounter = 0;
             //<SeatMapReq xmlns="http://www.travelport.com/schema/air_v52_0" TraceId="bd4398ec-5a0f-4918-82a9-7571c4536227" AuthorizedBy="Travelport" TargetBranch="P7087680" ReturnSeatPricing="true" ReturnBrandingInfo="true">
             SeatMapReq = new StringBuilder();
-            SeatMapReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body> <SeatMapReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\" AuthorizedBy=\"Travelport\" TargetBranch=\"" + _targetBranch + "\" ReturnSeatPricing=\"false\" ReturnBrandingInfo=\"true\">");
+            SeatMapReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body> <SeatMapReq xmlns=\"http://www.travelport.com/schema/air_v52_0\" TraceId=\"" + newGuid + "\" AuthorizedBy=\"Travelport\" TargetBranch=\"" + _targetBranch + "\" ReturnSeatPricing=\"true\" ReturnBrandingInfo=\"true\">");
             SeatMapReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"uAPI\" />");
 
             // to do
@@ -2644,7 +2644,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                         createPNRReq.Append("<Email EmailID=\"" + passengerdetails[i].Email + "\" />");
                         int seg = 0;
 
-                        foreach(Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
+                        foreach (Match itemsegment in Regex.Matches(Getdetails.PriceSolution, "AirSegment Key=\"(?<Segmentid>[\\s\\S]*?)\""))
                         {
 
                             if (_SSRkey.Count > _id)
@@ -3493,7 +3493,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                         }
 
 
-                        if (_unitkey.Count > 0 && idx< _unitkey.Count)
+                        if (_unitkey.Count > 0 && idx < _unitkey.Count)
                         {
                             for (int a = 0; a < _unitkey.Count; a++)
                             {
