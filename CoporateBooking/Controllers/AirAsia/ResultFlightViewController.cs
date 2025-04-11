@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.Metrics;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using DomainLayer.Model;
@@ -21,6 +24,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NuGet.Common;
 using NuGet.Packaging.Signing;
+//using OfficeOpenXml;
+//using OfficeOpenXml.Style;
 using OnionConsumeWebAPI.ApiService;
 using OnionConsumeWebAPI.Extensions;
 using OnionConsumeWebAPI.Models;
@@ -28,6 +33,7 @@ using Utility;
 using ZXing;
 using static DomainLayer.Model.GetItenaryModel;
 using static DomainLayer.Model.SeatMapResponceModel;
+
 //using static DomainLayer.Model.testseat;
 
 namespace OnionConsumeWebAPI.Controllers
@@ -90,14 +96,14 @@ namespace OnionConsumeWebAPI.Controllers
             //viewModelobject.SimpleAvailibilityaAddResponcelist = OnewaydeserializedObjects;
 
             viewModelobject.SimpleAvailibilityaAddResponcelist = ListResponse;
-
-            //string OneWayFlightEditData = HttpContext.Session.GetString("OneWayPassengerModel");
-            // SimpleAvailabilityRequestModel simpleAvailabilityRequestModel = null;
-            // if (!string.IsNullOrEmpty(OneWayFlightEditData))
-            // {
-            //     simpleAvailabilityRequestModel = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(OneWayFlightEditData);
-            // }
-            // viewModelobject.simpleAvailabilityRequestModelEdit = simpleAvailabilityRequestModel;
+			HttpContext.Session.SetString("OnewayFlightsPopup", JsonConvert.SerializeObject(ListResponse));
+			//string OneWayFlightEditData = HttpContext.Session.GetString("OneWayPassengerModel");
+			// SimpleAvailabilityRequestModel simpleAvailabilityRequestModel = null;
+			// if (!string.IsNullOrEmpty(OneWayFlightEditData))
+			// {
+			//     simpleAvailabilityRequestModel = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(OneWayFlightEditData);
+			// }
+			// viewModelobject.simpleAvailabilityRequestModelEdit = simpleAvailabilityRequestModel;
 
             return View(viewModelobject);
         }
@@ -273,12 +279,83 @@ namespace OnionConsumeWebAPI.Controllers
 
             }
 
-
-
             viewModelobject.SimpleAvailibilityaAddResponcelist = OnewaydeserializedObjects;
+
+            HttpContext.Session.SetString("OnewayFlightsFilterPopup", JsonConvert.SerializeObject(OnewaydeserializedObjects));
             //return PartialView("_FlightResultsSortingPartialView", viewModelobject);
             return PartialView("_FlightResultsSortingPartialView", viewModelobject);
         }
+
+		[HttpPost]
+		public IActionResult GetFlightDetailsPopup(List<int> indexes)
+		{
+
+            var allFlightsSession = HttpContext.Session.GetString("OnewayFlightsPopup");
+            var filteredFlightsSession = HttpContext.Session.GetString("OnewayFlightsFilterPopup");
+
+            // Determine which session to use: filtered first if available
+            string sessionDataToUse = !string.IsNullOrEmpty(filteredFlightsSession)
+                ? filteredFlightsSession
+                : allFlightsSession;
+
+            if (string.IsNullOrEmpty(sessionDataToUse))
+                return BadRequest("Flight data not found in session.");
+
+            var FlightList = JsonConvert.DeserializeObject<List<SimpleAvailibilityaAddResponce>>(sessionDataToUse);
+
+			// Ensure indexes are in range to avoid out-of-bounds
+			var selectedFlights = indexes
+				.Where(i => i >= 0 && i < FlightList.Count)
+				.Select(i => FlightList[i])
+				.ToList();
+
+			ViewModel viewModelobject = new ViewModel
+			{
+				SimpleAvailibilityaAddResponcelist = selectedFlights
+			};
+
+
+			//return View(viewModelobject);
+			return PartialView("GetFlightDetailsPopup", viewModelobject);
+		}
+
+        [HttpPost]
+        public IActionResult SendEmail(string emailTo, string emailSubject, string emailMessage)
+        {
+            try
+            {
+                var fromAddress = new MailAddress("vinayjetways11@gmail.com", "Vinay Singh");
+                var toAddress = new MailAddress(emailTo);
+                const string fromPassword = "vinaytest@123";
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = emailSubject,
+                    Body = emailMessage
+                })
+                {
+                    smtp.Send(message);
+                }
+
+                TempData["Success"] = "Email sent successfully!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Failed to send email: {ex.Message}";
+            }
+
+            return RedirectToAction("FlightView", "ResultFlightView"); 
+        }
+
+
 
 
 
@@ -1272,7 +1349,12 @@ namespace OnionConsumeWebAPI.Controllers
 				_mongoDBHelper.SaveResultSeatMealRequest(seatMealdetail);
 			}
             return RedirectToAction("Tripsell", "AATripsell", new { Guid = Guid });
-        }
+        } 
+
+
+       
+
+
 
     }
 }

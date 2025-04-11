@@ -3767,6 +3767,39 @@ FOOTER AREA CSS
 
 /*End round trip domestic flight listing */
 
+/*start Oneway flight listing */
+
+.booking-quote {
+    box-shadow: #757575 0px 0px 12px;
+    padding: 0.5% 2% 1% 0;
+    position: fixed;
+    bottom: -14px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: #0a223d;
+    color: #fff;
+    z-index: 10;
+}
+
+    .booking-quote .select-quote {
+        position: relative;
+        top: 2px;
+        margin-right: 24px;
+    }
+
+        .booking-quote .select-quote input {
+            margin-right: 10px;
+        }
+
+        .booking-quote .select-quote label {
+            vertical-align: middle;
+        }
+
+/*End Oneway flight listing */
+
+
+
 /*Start more fare option */
 
 .modal-mfareBlock {

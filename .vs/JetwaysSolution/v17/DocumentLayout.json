@@ -3,6 +3,13 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.102\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\airasia\\resultflightviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\airasia\\resultflightviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -19,12 +26,36 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Microsoft.NET.Sdk.StaticWebAssets.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.102\\Sdks\\Microsoft.NET.Sdk.StaticWebAssets\\targets\\Microsoft.NET.Sdk.StaticWebAssets.targets",
+              "ViewState": "AgIAAI4CAAAAAAAAAAD4v5UCAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-04-11T05:59:05.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ResultFlightViewController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\AirAsia\\ResultFlightViewController.cs",
+              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\AirAsia\\ResultFlightViewController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\AirAsia\\ResultFlightViewController.cs",
+              "RelativeToolTip": "CoporateBooking\\Controllers\\AirAsia\\ResultFlightViewController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAApwBsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T05:57:08.403Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\FlightSearchIndex\\Index.cshtml",
               "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Views\\FlightSearchIndex\\Index.cshtml",
               "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\FlightSearchIndex\\Index.cshtml",
               "RelativeToolTip": "OnionConsumeWebAPI\\Views\\FlightSearchIndex\\Index.cshtml",
-              "ViewState": "AgIAAAgBAAAAAAAAAAAAAGAAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAPwAAAAAAAAAAAAAAGAAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-04-10T11:03:37.962Z",
               "EditorCaption": ""

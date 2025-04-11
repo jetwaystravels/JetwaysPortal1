@@ -14200,3 +14200,244 @@ start addons
 /* ******************************
 End addons
 ****************************** */
+
+
+
+/* ******************************
+Emulate section Start
+****************************** */
+
+.emulate-bx {
+    border-radius: 0.7rem;
+    padding: 1.5rem 2rem 0rem;
+    /*box-shadow: 0 6px 60px rgba(0, 0, 0, 0.1);*/
+    margin-top: -26px;
+    margin-bottom: 13px;
+    position: relative;
+    left: -24px;
+    width: 104%;
+}
+
+    .emulate-bx .toggle-arrow i {
+        position: relative;
+        top: 3px;
+        left: 2px;
+    }
+
+    .emulate-bx h6 {
+        font-size: 15px;
+        border-bottom: #E0E4E7 1px solid;
+        padding-bottom: 10px;
+        margin-left: -10px;
+        width: 101.8%;
+    }
+
+    .emulate-bx .col-lg-3 {
+        padding: 6px;
+        flex: 0 0 28.2%;
+        max-width: 28.2%;
+    }
+
+    .emulate-bx label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: .1rem;
+    }
+
+    .emulate-bx .select2-container {
+        margin-top: 6px;
+    }
+
+    .emulate-bx input {
+        border: #DDDDDD 1px solid !important;
+        height: 40px;
+        padding-left: 10px;
+        border-radius: 3px;
+        margin-top: 6px;
+    }
+
+    .emulate-bx .col-lg-2 {
+        padding-left: 6px;
+    }
+
+
+    .emulate-bx .select-container {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .emulate-bx .remove-icon {
+        position: absolute;
+        top: 55%;
+        right: 20px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #fff;
+        background: #ff4d54;
+        font-size: 15px;
+        display: none;
+        font-weight: 600;
+        height: 18px;
+        width: 18px;
+        line-height: 15px;
+        padding: 0;
+        border-radius: 30px;
+        text-align: center;
+    }
+
+/* ******************************
+Emulate section End
+****************************** */
+
+/* ******************************
+Search history Start
+****************************** */
+
+.serach-history-bx {
+    margin: 40px 0 40px 0;
+    -webkit-box-shadow: 0px 1px 20px 0px rgba(69, 90, 100, 0.19);
+    box-shadow: 0px 1px 20px 0px rgba(69, 90, 100, 0.19);
+    border-radius: .25rem;
+    background: #fff;
+}
+
+    .serach-history-bx h4 {
+        background: #0C4D75;
+        padding: 15px;
+        color: #fff;
+        border-radius: .25rem .25rem 0 0;
+    }
+
+    .serach-history-bx .inner-bx {
+        padding: 0 20px;
+    }
+
+        .serach-history-bx .inner-bx table tr th {
+            font-weight: 600;
+            padding: 17px 13px;
+        }
+
+        .serach-history-bx .inner-bx table tr td {
+            padding: 11px 11px;
+        }
+
+        .serach-history-bx .inner-bx button {
+            padding: 10px 15px;
+            font-size: 12px;
+        }
+
+/* ******************************
+Search history End
+****************************** */
+
+
+/* ******************************
+ modal popup Airline quote Start
+****************************** */
+
+.modal-content.popup-common .modal-header .close, .close:focus {
+    outline: none;
+    margin: -1.5rem -1rem -1rem auto;
+    font-size: 37px;
+    font-weight: 300;
+}
+
+.modal-content.popup-common .user-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #15405B;
+}
+
+    .modal-content.popup-common .user-name svg {
+        margin-right: 12px;
+    }
+
+.modal-content.popup-common .modal-header {
+    box-shadow: 0 0 12px 0 rgb(0 0 0 / 20%);
+}
+
+.modal-content.popup-common .airline-bx {
+    margin: 6px 0 10px 0;
+    -webkit-box-shadow: 0px 1px 20px 0px rgba(69, 90, 100, 0.19);
+    box-shadow: 0px 1px 20px 0px rgba(69, 90, 100, 0.19);
+    border-radius: .25rem;
+    background: #fff;
+}
+
+    .modal-content.popup-common .airline-bx h4 {
+        background: #0C4D75;
+        padding: 8px;
+        color: #fff;
+        border-radius: .25rem .25rem 0 0;
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .modal-content.popup-common .airline-bx .inner-bx {
+        padding: 0 20px;
+    }
+
+        .modal-content.popup-common .airline-bx .inner-bx table tr th {
+            font-weight: 600;
+            padding: 17px 13px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+            .modal-content.popup-common .airline-bx .inner-bx table tr th.check-bx {
+                position: relative;
+                top: 4px;
+            }
+
+        .modal-content.popup-common .airline-bx .inner-bx table tr td {
+            padding: 11px 0 8px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+            .modal-content.popup-common .airline-bx .inner-bx table tr td.price {
+                color: #EF0000;
+                font-weight: 600;
+                font-size: 14px;
+            }
+
+            .modal-content.popup-common .airline-bx .inner-bx table tr td.check-bx {
+                position: relative;
+                top: 4px;
+            }
+
+            .modal-content.popup-common .airline-bx .inner-bx table tr td span {
+                display: block;
+            }
+
+        .modal-content.popup-common .airline-bx .inner-bx button {
+            padding: 10px 15px;
+            font-size: 12px;
+        }
+
+.modal-content.popup-common .modal-footer {
+    display: block;
+    border: none;
+}
+
+.modal-content.popup-common .modal-body {
+    padding: 0.4rem 0.4rem 0;
+}
+
+.modal-content.popup-common .modal-footer .btn {
+    font-size: 0.8rem;
+    padding: 13px 7px;
+    border-radius: 4px;
+    margin-top: 7px;
+    width: 136px;
+    margin-right: 20px;
+}
+
+    .modal-content.popup-common .modal-footer .btn svg {
+        margin-right: 5px;
+    }
+
+/* ******************************
+ modal popup Airline quote End
+****************************** */

@@ -87,15 +87,6 @@
             </div>
         </div>
 
-        @*  <div class="cs-loader-main" id="loader" style="display:none;">
-		<div class="cs-loader">
-		<div class="cs-loader-inner">
-		<div><img src="~/img/cloude-1.png"></div>
-		<div><img src="~/img/airo-f.png"></div>
-		</div>
-		</div>
-		</div> *@
-
 
         <!-- ***** Header Start ***** -->
         <header class="navbar navbar-sticky navbar-expand-lg navbar-dark">
@@ -114,54 +105,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    @* <nav>
-					<ul class="navbar-nav" id="top-navbar-nav">
-
-					<li class="nav-item">
-					<select aria-label="Default">
-					<option>English</option>
-					<option value="1">French</option>
-					<option value="2">Russian </option>
-					<option value="3">Spanish</option>
-					<option value="3">
-
-					</option>
-					</select>
-					</li>
-
-					<li class="nav-item">
-					<select aria-label="Default">
-					<option>India</option>
-					<option value="1">UAE</option>
-					<option value="2">USA</option>
-					</select>
-					</li>
-
-					<li class="dropdown mt-20">
-					<a class="nav-link dropbtn " href="#">Login or Signup</a>
-					<div class="dropdown-content">
-					<a href="#" data-toggle="modal" data-target="#signUp-pop">
-					Customer Login
-					<span>Login &amp; check bookings</span>
-					</a>
-					<a href="#">
-					Corporate Travel
-					<span>Login corporate account</span>
-					</a>
-					<a href="#">
-					Agent Login
-					<span>Login your agent account</span>
-					</a>
-					<a href="#">
-					My Booking
-					<span>Manage your bookings here</span>
-					</a>
-					</div>
-					</li>
-					</ul>
-
-					</nav> *@
-
+                    
                     <nav>
                         <ul class="navbar-nav" id="top-navbar-nav">
                             <li class="nav-item">
@@ -340,6 +284,66 @@
                             </div>
 
                             <div class="search-box">
+                                <!-- ***** Emulate to Company / Employee Start ***** -->
+                                <div class="emulate-bx">
+                                    <h6>Emulate to Company / Employee <span class="toggle-arrow"><i class="fa fa-angle-down" aria-hidden="true"></i></span></h6>
+                                    <div class="row" style="display: none; border-bottom: 1px solid #e8ecee; background: linear-gradient(90deg, rgb(244, 244, 244) 0%, rgb(244, 244, 244) 35%, rgb(255, 255, 255) 89%); padding-bottom: 7px; ">
+                                        <!-- Legal Entity Name -->
+                                        <div class="col-12 col-md-10 col-lg-3">
+                                            <label>Legal Entity Name</label>
+                                            <div class="select-container">
+                                                <select class="select legalentity-select">
+                                                    <option value=""></option>
+                                                    <option value="3">[3] DR OETKER</option>
+                                                    <option value="2">[2] FIREFOX BIKES PRIVATE LIMITED</option>
+                                                    <option value="19D007">[19D007] DEMO ACCOUNT</option>
+                                                    <option value="16S007">[16S007] SIEGWERK INDIA PVT. LTD</option>
+                                                    <option value="S00014">[S00014] SHARDUL AMARCHAND MANGALDAS & CO -DEL</option>
+                                                    <option value="21H005">[21H005] HAIIER APPLIANCES INDIA PVT LTD NOIDA</option>
+                                                    <option value="000019">[000019] FERRERO INDIA PVT LTD</option>
+                                                    <option value="FE0001">[FE0001] FERRERO INDIA PVT. LTD.</option>
+                                                    <option value="FE0002">[FE0002] FERRERO INDIA P LTD</option>
+                                                    <option value="T054">[T054] YAZAKI INDIA PVT LIMITED</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Employee -->
+                                        <div class="col-12 col-md-10 col-lg-3">
+                                            <label>Employee</label>
+                                            <div class="select-container">
+                                                <select class="select employee-select">
+                                                    <option value=""></option>
+                                                    <option value="test">[Test] Test Tanya</option>
+                                                    <option value="EIL225">[EIL225] Pavan Gandratwar</option>
+                                                    <option value="EIL1090">[EIL1090] Dalveer Singh</option>
+                                                    <option value="EIL1091">[EIL1091] Govindnath Jaiswar</option>
+                                                    <option value="EIL1294">[EIL1294] Sreekanth Annouju</option>
+                                                    <option value="EIL904">[EIL904] Sunny Grover</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Billing Entity Name -->
+                                        <div class="col-12 col-md-10 col-lg-3">
+                                            <label>Billing Entity Name</label>
+                                            <div class="select-container">
+                                                <select class="select billingentity-select">
+                                                    <option value=""></option>
+                                                    <option value="23E008">[23E008] EISAI PHARMACEUTICALS INDIA PVT LTD-MUM</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Balance Field -->
+                                        <div class="col-12 col-md-10 col-lg-2 mt-5">
+                                            <label>Balance</label>
+                                            <input type="text" name="balance" placeholder="₹ 12,00,000">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ***** Emulate to Company / Employee End ***** -->
+
 
                                 <form asp-action="SearchResultFlight" asp-controller="FlightSearchIndex" method="post" id="multipleValuesForm">
                                     <div class="S-option">
@@ -359,70 +363,6 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="row">
-                                            @* <div class="col-12 col-md-10 col-lg-3 space autocomplete">
-                                                @{
-                                                    string Serchhome = ViewBag.SearchHome;
-                                                    if (!string.IsNullOrEmpty(Serchhome))
-                                                    {
-                                                        //object _simpleAvailabilityRequestModel = Newtonsoft.Json.JsonConvert.DeserializeObject<object>(Serchhome);
-
-
-                                                        model = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(Serchhome);
-
-
-                                                        origin = model.origin;
-                                                        startdate = model.beginDate;
-
-                                                    }
-
-                                                }
-                                                <label>Flying From</label>
-                                                <span class="input-group-text flightdepr" id="myInputbx">
-                                                    <input type="text" id="myInput" maxlength="40" asp-for="origin" class="form-control text-15 " value="@origin" placeholder="Enter AirportName" onclick="toggleDropdown()">
-                                                    <span id="airportName"></span>
-                                                </span>
-                                                <div id="errororigin" class="errorbox" style="display:none;">Enter Origin Name*</div>
-
-                                                <span class="autodropdown">
-                                                    <select id="selectedItemId" name="selectedItemId" onchange="handleSelection()">
-                                                        <option value="" style="display:none;">Please select</option>
-
-                                                        @foreach (var item in Citynamelist.GetAllCityData())
-                                                        {
-                                                                <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
-
-                                                        }
-
-                                                    </select>
-                                                </span>
-
-                                            </div>
-                                            <div class="rplc-btn">
-                                                <img src="~/img/direction-arrows.png" />
-                                            </div>
-                                            <div class="col-12 col-md-10 col-lg-3 space autocomplete">
-                                                <label>Flying To</label>
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <input type="text" maxlength="40" id="myInput1" asp-for="destination" class="form-control text-15 " value="" placeholder="Enter AirportName" onclick="toggleDropdownArrival()">
-                                                    <span id="airportArval"></span>
-                                                </span>
-                                                <div id="errordestinaton" class="errorbox" style="display:none;">Enter Destination Name*</div>
-                                                <span class="autoarrival">
-                                                    <select id="arrivalItemId" name="arrivalItemId" onchange="arrivalSelection()">
-                                                        <option value="" style="display:none;">Please select</option>
-
-                                                        @foreach (var item in Citynamelist.GetAllCityData())
-                                                        {
-                                                                <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
-
-                                                        }
-
-                                                    </select>
-                                                </span>
-
-                                            </div>
-                                           
-                                             *@
                                             <div class="col-12 col-md-10 col-lg-3 space autocomplete">
                                                 @{
                                                     string Serchhome = ViewBag.SearchHome;
@@ -598,26 +538,6 @@
                                                                     <i class="fa fa-angle-down icon icon-chevron-sm-down" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div class="toggle-element -dropdown  js-click-dropdown js-economy-toggle">
-                                                                    @*  <div class="text-14 y-gap-8 js-dropdown-list">
-
-																	<a href="#" class="d-block js-dropdown-link" onclick="toggleRadio(event, 'radioid1')">
-																	<input class="m-2 form-radio-input" type="radio" name="flightclass" value="E" id="radioid1" checked>
-																	Economic
-																	</a>
-																	<a href="#" class="d-block js-dropdown-link" onclick="toggleRadio(event, 'radioid2')">
-																	<input class="m-2 form-radio-input" type="radio" name="flightclass" value="P" id="radioid2">
-																	Premium
-																	</a>
-																	<a href="#" class="d-block js-dropdown-link" onclick="toggleRadio(event, 'radioid3')">
-																	<input class="m-2 form-radio-input" type="radio" name="flightclass" value="B" id="radioid4">
-																	Business
-																	</a>
-
-																	<a href="#" class="d-block js-dropdown-link" onclick="toggleRadio(event, 'radioid4')">
-																	<input class="m-2 form-radio-input" type="radio" name="flightclass" value="F" id="radioid4">
-																	First
-																	</a>
-																	</div> *@
                                                                     <div class="text-14 y-gap-8 js-dropdown-list">
                                                                         <a href="#" class="d-block js-dropdown-link" onclick="toggleRadio(event, 'radioid1')">
                                                                             <input class="m-2 form-radio-input d-none" type="radio" name="flightclass" value="E" id="radioid1" checked>
@@ -704,6 +624,67 @@
             </div>
         </section>
         <!-- ***** whybook Area End ***** -->
+        <!-- ***** Search History Start ***** -->
+        <section>
+            <div class="container">
+                <div class="serach-history-bx">
+                    <h4>Search History</h4>
+                    <div class="inner-bx">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Searched On</th>
+                                    <th>Corporate Name</th>
+                                    <th>Corporate Travel</th>
+                                    <th>Trip Type</th>
+                                    <th>Travel date</th>
+                                    <th>Flying From</th>
+                                    <th>Flying To</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lorem ipsum dolor sit amet</td>
+                                    <td>[2] FIREFOX BIKES PRIVATE LIMITED</td>
+                                    <td>Lorem ipsum dolor sit</td>
+                                    <td>Economic</td>
+                                    <td>03/30/2025 </td>
+                                    <td>Delhi DL</td>
+                                    <td>Mumbai BOM</td>
+                                    <td><button type="submit" class="btn btn-lg btn-block">Select</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Lorem ipsum dolor sit amet</td>
+                                    <td>[2] FIREFOX BIKES PRIVATE LIMITED</td>
+                                    <td>Lorem ipsum dolor sit</td>
+                                    <td>Economic</td>
+                                    <td>03/30/2025 </td>
+                                    <td>Delhi DL</td>
+                                    <td>Mumbai BOM</td>
+                                    <td><button type="submit" class="btn btn-lg btn-block">Select</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Lorem ipsum dolor sit amet</td>
+                                    <td>[2] FIREFOX BIKES PRIVATE LIMITED</td>
+                                    <td>Lorem ipsum dolor sit</td>
+                                    <td>Economic</td>
+                                    <td>03/30/2025 </td>
+                                    <td>Delhi DL</td>
+                                    <td>Mumbai BOM</td>
+                                    <td><button type="submit" class="btn btn-lg btn-block">Select</button></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ***** Search History End ***** -->
+
+
+
+
         <!-- ***** SPECIAL OFFER Area Start ***** -->
         <section id="special-offer" class="section features-area style-two overflow-hidden pt_50">
             <div class="container">
@@ -1058,7 +1039,67 @@
             <script src="~/js/custom.js/indexpage.js"></script>
             <script src="~/lib/jquery/chosen.jquery.js"></script>
             <script src="~/lib/jquery/chosen.jquery.min.js"></script>
+        <script>
+            $(function () {
+                $(".select").select2();
+            });
+        </script>
+        <!--input close function start -->
+        <script>
+            $(document).ready(function () {
+                // Initialize all select elements with Select2
+                $('.select').each(function () {
+                    $(this).select2({
+                        placeholder: "Select an option",
+                        allowClear: false
+                    });
 
+                    // Add a unique remove icon inside each select container
+                    let removeIcon = $('<span class="remove-icon">x</span>').hide();
+                    $(this).parent().append(removeIcon);
+
+                    // Show remove icon when an option is selected
+                    $(this).on('select2:select', function () {
+                        $(this).siblings('.remove-icon').show();
+                    });
+
+                    // Remove selection when clicking the ❌ icon
+                    removeIcon.on('click', function () {
+                        let selectElement = $(this).siblings('.select');
+                        selectElement.val(null).trigger('change');
+                        $(this).hide(); // Hide ❌ icon after clearing
+                    });
+
+                    // Hide remove icon when selection is cleared
+                    $(this).on('select2:clear', function () {
+                        $(this).siblings('.remove-icon').hide();
+                    });
+                });
+            });
+        </script>
+        <!--input close function End -->
+        <!--Start show and hide box -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const emulateBox = document.querySelector(".emulate-bx");
+                const header = emulateBox.querySelector("h6");
+                const arrow = header.querySelector(".toggle-arrow i");
+                const row = emulateBox.querySelector(".row");
+
+                header.style.cursor = "pointer";
+
+                header.addEventListener("click", function () {
+                    if (row.style.display === "none" || row.style.display === "") {
+                        row.style.display = "flex";
+                        arrow.className = "fa fa-angle-up"; // Change to up arrow
+                    } else {
+                        row.style.display = "none";
+                        arrow.className = "fa fa-angle-down"; // Change back to down arrow
+                    }
+                });
+            });
+        </script>
+        <!--End show and hide box -->
 
 
     }

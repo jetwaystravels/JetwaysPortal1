@@ -237,98 +237,98 @@
 						    // }
 
 
-									<div class="col-12 col-md-10 col-lg-2 space travellers">
-									<label style="margin-bottom: 0.1rem;">Travellers </label>
+										<div class="col-12 col-md-10 col-lg-2 space travellers">
+										<label style="margin-bottom: 0.1rem;">Travellers </label>
 
-									<div class="searchMenu-guests js-form-dd js-form-counters">
-										<div data-x-dd-click="searchMenu-guests">
+										<div class="searchMenu-guests js-form-dd js-form-counters">
+											<div data-x-dd-click="searchMenu-guests">
 
-										<div class="text-15 text-light-1 ls-2 lh-16">
-											<span class="js-count-adult text-22 text-light-1 fw-600" id="count_adult">@AdultCount</span> adults
-											-
-											<span class="js-count-child text-22 text-light-1 fw-600" id="count_child">@ChildCount</span> children
-											-
-											<span class="js-count-infents text-22 text-light-1 fw-600" id="count_infant">@InfantCount</span> Infants
-										</div>
-										</div>
-
-										<div class="searchMenu-guests__field shadow-2" data-x-dd="searchMenu-guests" data-x-dd-toggle="-is-active">
-
-										<div class="bg-white px-30 py-30 rounded-4">
-
-											@*  ------------------------ *@
-											<div class="d-flex y-gap-10 justify-between items-center">
-											<div class="btn-incr-adult text-dark">
-												<div class="text-13 fw-600">Adults</div>
-
-												<input type="hidden" id="adulttype" name="adulttype" value="ADT" asp-for="@AdultCount" />
-												<div class="text-13 fw-500">Aged 12+ yrs</div>
-											</div>
-											<div class="btn-increase">
-												<div class="decrement sub btn_sub">-</div>
-
-												<input type="number" id="field_adult" name="adultcount" class="input-field" value="@AdultCount" asp-for="@AdultCount" min="1" max="9">
-												<div class="increment add btn_sub">+</div>
+											<div class="text-15 text-light-1 ls-2 lh-16">
+												<span class="js-count-adult text-22 text-light-1 fw-600" id="count_adult">@AdultCount</span> adults
+												-
+												<span class="js-count-child text-22 text-light-1 fw-600" id="count_child">@ChildCount</span> children
+												-
+												<span class="js-count-infents text-22 text-light-1 fw-600" id="count_infant">@InfantCount</span> Infants
 											</div>
 											</div>
-											<div class="border-top-light mt-24 mb-24"></div>
-											<div class="d-flex y-gap-10 justify-between items-center">
-											<div class="btn-incr-chld  text-dark">
-												<div class="text-13 fw-600">
-												Children
+
+											<div class="searchMenu-guests__field shadow-2" data-x-dd="searchMenu-guests" data-x-dd-toggle="-is-active">
+
+											<div class="bg-white px-30 py-30 rounded-4">
+
+												@*  ------------------------ *@
+												<div class="d-flex y-gap-10 justify-between items-center">
+												<div class="btn-incr-adult text-dark">
+													<div class="text-13 fw-600">Adults</div>
+
+													<input type="hidden" id="adulttype" name="adulttype" value="ADT" asp-for="@AdultCount" />
+													<div class="text-13 fw-500">Aged 12+ yrs</div>
 												</div>
-												<input type="hidden" id="childtype" name="childtype" value="CHD" asp-for="@ChildCount" />
-												<div class="text-13 fw-500">
-												Aged 2-12 yrs
+												<div class="btn-increase">
+													<div class="decrement sub btn_sub">-</div>
+
+													<input type="number" id="field_adult" name="adultcount" class="input-field" value="@AdultCount" asp-for="@AdultCount" min="1" max="9">
+													<div class="increment add btn_sub">+</div>
 												</div>
-											</div>
-											<div class="btn-increase">
-												<div class="decrement1 sub btn_sub">-</div>
-												<input type="number" id="field_child" name="childcount" class="input-field" value="@ChildCount" asp-for="@ChildCount" min="0" max="6">
-												<div class="increment1 add btn_sub">+</div>
-
-											</div>
-											</div>
-											<div class="border-top-light mt-24 mb-24"></div>
-											<div class="d-flex y-gap-10 justify-between items-center">
-											<div class="infant-area  text-dark">
-												<div class="text-13 fw-600">Infants</div>
-												<input type="hidden" id="infanttype" name="infanttype" value="INFT" asp-for="@InfantCount" />
-												<div class="text-13 fw-500">
-												Below 2 yrs
 												</div>
-											</div>
-											<div class="btn-increase">
-												<div class="decrement2 sub btn_sub">-</div>
+												<div class="border-top-light mt-24 mb-24"></div>
+												<div class="d-flex y-gap-10 justify-between items-center">
+												<div class="btn-incr-chld  text-dark">
+													<div class="text-13 fw-600">
+													Children
+													</div>
+													<input type="hidden" id="childtype" name="childtype" value="CHD" asp-for="@ChildCount" />
+													<div class="text-13 fw-500">
+													Aged 2-12 yrs
+													</div>
+												</div>
+												<div class="btn-increase">
+													<div class="decrement1 sub btn_sub">-</div>
+													<input type="number" id="field_child" name="childcount" class="input-field" value="@ChildCount" asp-for="@ChildCount" min="0" max="6">
+													<div class="increment1 add btn_sub">+</div>
 
-												<input type="number" id="field_infant" name="infantcount" class="input-field" value="@InfantCount" asp-for="@InfantCount" min="0" max="6">
-												<div class="increment2 add btn_sub">+</div>
+												</div>
+												</div>
+												<div class="border-top-light mt-24 mb-24"></div>
+												<div class="d-flex y-gap-10 justify-between items-center">
+												<div class="infant-area  text-dark">
+													<div class="text-13 fw-600">Infants</div>
+													<input type="hidden" id="infanttype" name="infanttype" value="INFT" asp-for="@InfantCount" />
+													<div class="text-13 fw-500">
+													Below 2 yrs
+													</div>
+												</div>
+												<div class="btn-increase">
+													<div class="decrement2 sub btn_sub">-</div>
+
+													<input type="number" id="field_infant" name="infantcount" class="input-field" value="@InfantCount" asp-for="@InfantCount" min="0" max="6">
+													<div class="increment2 add btn_sub">+</div>
+
+												</div>
+												</div>
+
+												<div class="border-top-light mt-24 mb-24"></div>
 
 											</div>
 											</div>
+										</div>
 
-											<div class="border-top-light mt-24 mb-24"></div>
+										<script>
+
+											document.getElementById("field_adult").value = GetParameterValues("AdultCount");
+											document.getElementById("field_child").value = GetParameterValues("ChildCount");
+											document.getElementById("field_infant").value = GetParameterValues("InfantCount");
+
+
+											document.getElementById("count_adult").innerHTML = GetParameterValues("AdultCount");
+											document.getElementById("count_child").innerHTML = GetParameterValues("ChildCount");
+											document.getElementById("count_infant").innerHTML = GetParameterValues("InfantCount");
+
+
+										</script>
+
 
 										</div>
-										</div>
-									</div>
-
-									<script>
-
-										document.getElementById("field_adult").value = GetParameterValues("AdultCount");
-										document.getElementById("field_child").value = GetParameterValues("ChildCount");
-										document.getElementById("field_infant").value = GetParameterValues("InfantCount");
-
-
-										document.getElementById("count_adult").innerHTML = GetParameterValues("AdultCount");
-										document.getElementById("count_child").innerHTML = GetParameterValues("ChildCount");
-										document.getElementById("count_infant").innerHTML = GetParameterValues("InfantCount");
-
-
-									</script>
-
-
-									</div>
 						}
 						<div class="col-12 col-md-10 col-lg-2"><button style="margin-top:0px;" type="submit" class="btn btn-lg btn-block" onclick="validateInputs()"><i class="fa fa-search mr-10" aria-hidden="true"></i>Modify Search</button></div>
 
@@ -422,6 +422,7 @@
 
 			    </div>
 			</div>
+			<div class="select-bx text-right"><input type="checkbox" id="selectAll">Select all</div>
 			<div id="flight-results">
 			    @Html.Partial("_FlightResultsSortingPartialView", Model)
 			</div>
@@ -442,123 +443,56 @@
 		</div>
 	    </div>
 	</section>
-	<!--====== Footer Area Start ======-->
-	<footer class="footer-area footer-fixed">
-	    <!-- Footer Top -->
-	    <div class="footer-top ptb_62">
-		<div class="container">
-		    <h3 class="footer-title mb-2">Travel Guide</h3>
-		    <div class="row">
-			<div class="col-12 col-sm-6 col-lg-3">
-			    <!-- Footer Items -->
-			    <div class="footer-items">
-				<ul>
-				    <li class="py-2"><a href="#">Andaman and Nicobar Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Kerala Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Himachal Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Kashmir Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Gujarat Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Maharashtra Travel Guide</a></li>
-				</ul>
-			    </div>
+
+		@* <section>
+			@Html.Partial("GetFlightDetailsPopup.cshtml", Model)
+		</section>
+ *@
+
+		<section class="booking-quote">
+			<div class="container">
+				<div class="text-right select-quote">
+					<input type="checkbox" id="quoteCheckbox" name="quote">
+					<label for="quoteCheckbox">Quote</label>
+				</div>
 			</div>
-			<div class="col-12 col-sm-6 col-lg-3">
-			    <!-- Footer Items -->
-			    <div class="footer-items">
-				<ul>
-				    <li class="py-2"><a href="#">Lakshwadweep Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Assam Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Arunachal Pradesh Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Andhra Pradesh Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Manipur Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Madhya Pradesh Travel Guide</a></li>
-				</ul>
-			    </div>
+		</section>
+		<!-- ***** corp quote Start ***** -->
+
+		<div class="modal fade" id="exampleModalToggle" aria-hidden="true" tabindex="-1">
+			<div class="modal-dialog modal-xl modal-dialog-centered">
+				<div class="modal-content popup-common">
+					<div class="modal-header">
+						<div class="d-flex justify-content-between w-100">
+							<h5 class="modal-title"><img class="navbar-brand-regular" src="/img/logo/logo.png" alt="brand-logo" style="height:32px;"></h5>
+							<div class="user-name"><i class="fa fa-user" aria-hidden="true"></i> Jetways Travels</div>
+						</div>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body Modal-body">
+					</div>
+					<div class="modal-footer">
+						<div class="text-center">&copy; 2025 - Powered by Jetways Pvt Ltd</div>
+						<div class="d-flex justify-content-center pt-3 col-12">
+							<button type="button" id="addMarkupBtn" class="btn btn-lg btn-block"><i class="fa fa-check-circle" aria-hidden="true"></i>Add Markup</button>
+							<button type="button" id="exportExcelBtn" class="btn btn-lg btn-block"><i class="fa fa-check-circle" aria-hidden="true"></i>Excel</button>
+							<button type="button" id="previewBtn" class="btn btn-lg btn-block"><i class="fa fa-check-circle" aria-hidden="true"></i>Preview</button>
+							<button type="button" id="emailsendBtn" class="btn btn-lg btn-block"><i class="fa fa-check-circle" aria-hidden="true"></i>Send Quote</button>
+							<button type="button"  id="copyModalContentBtn"  class="btn btn-lg btn-block"><i class="fa fa-copy" aria-hidden="true"></i> Copy</button>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="col-12 col-sm-6 col-lg-3">
-			    <!-- Footer Items -->
-			    <div class="footer-items">
-				<ul>
-				    <li class="py-2"><a href="#">Nagaland Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Odisha Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Tamil Nadu Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Uttaranchal Travel Guide</a></li>
-				    <li class="py-2"><a href="#">West Bengal Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Karnataka Travel Guide</a></li>
-				</ul>
-			    </div>
-			</div>
-			<div class="col-12 col-sm-6 col-lg-3">
-			    <!-- Footer Items -->
-			    <div class="footer-items">
-				<ul>
-				    <li class="py-2"><a href="#">Lakshwadweep Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Assam Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Arunachal Pradesh Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Andhra Pradesh Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Manipur Travel Guide</a></li>
-				    <li class="py-2"><a href="#">Madhya Pradesh Travel Guide</a></li>
-				</ul>
-			    </div>
-			</div>
-		    </div>
 		</div>
-	    </div>
 
-	    <div class="footer-mid ptb_50">
-		<div class="container">
-		    <h3 class="footer-title mb-2">Why jetwaystravel.com?</h3>
-		    <p>Our competitive rates and exclusive offers are what gives us a top notch over our competitors. We promise 'Unbeatable' services both in pricing and quality. For instance: Every Wednesday, travelers can save big with our ZERO Convenience fee on flight bookings.</p>
-		    <p>Also, we get it - travel’s a big decision. It’s not every day that you fly across the world to wander the souks of Dubai or enjoy a dreamy sunrise in Paris. But for us, it’s been our every day job for the past four decades. Let’s just say we know what travelers really want. We give you the pros and cons for all the different travel products and allow you to decide what works best for you and your family. While many travel companies claim to have experts, we believe few, match our own specialists for genuine- firsthand knowledge. We combine first-hand knowledge with exceptional special offers, and we take care of every detail to create a holiday as unique as you are. You will no more need to worry about coordinating flight bookings, hotel reservations, visa stamps or tours as all your needs are taken care of under one roof; the Jetways Travels roof. More than 85% of clients come back to us for future trips.</p>
-		    <p>When you choose Jetways Travels, your trip is in safe hands. Whilst you are abroad our team is available 24 hours a day, 365 days a year should you need assistance. We do absolutely everything for you, all you need to do is turn up at the airport with your bags and go!</p>
-		</div>
-	    </div>
-
-	    <div class="footer-mid-bottom ptb_25">
-		<div class="container">
-		    <div class="row">
-			<div class="col-12 col-sm-6 col-lg-6">
-			    <!-- Social Icons -->
-			    <div class="social-icons d-flex">
-				<a class="facebook" href="#">
-				    <i class="fab fa-facebook-f"></i>
-
-				</a>
-				<a class="twitter" href="#">
-				    <i class="fab fa-twitter"></i>
-
-				</a>
-				<a class="google-plus" href="#">
-				    <i class="fab fa-google-plus-g"></i>
-
-				</a>
-			    </div>
-			</div>
-
-			<div class="col-12 col-sm-6 col-lg-6 text-right">
-			    <img src="~/img/card.png" alt="card">
-			</div>
-
-		    </div>
-		</div>
-	    </div>
-
-	    <!-- Footer Bottom -->
-	    <div class="footer-bottom">
-		<div class="container">
-		    <div class="row">
-			<div class="col-12">
-			    <!-- Copyright Area -->
-			    <div class="copyright-area text-center py-4">
-				<!-- Copyright-->
-				<div class="copyright">Copyrights &copy; 2023 www.jetwaystravel.com All Rights Reserved..</div>
-			    </div>
-			</div>
-		    </div>
-		</div>
-	    </div>
-	</footer>
-	<!--====== Footer Area End ======-->
+		@{
+			var flightClasss = Context.Request.Query["FlightClass"].ToString();
+			TempData["FlightClass"] = flightClasss;
+		}
+		<!-- ***** corp quote End ***** -->
+	 
     </main>
 
     <div class="langMenu is-hidden js-langMenu" data-x="lang" data-x-toggle="is-hidden">
@@ -1980,6 +1914,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="~/lib/jquery/chosen.jquery.js"></script>
     <script src="~/lib/jquery/chosen.jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <style type="text/css">
 	#ui-datepicker-div {
 	    position: fixed;
@@ -2825,6 +2761,116 @@
 		});
 
     </script>
+
+
+	<!--Start checkbox unchecked -->
+	<script>
+		$(document).ready(function () {
+			document.getElementById("quoteCheckbox").addEventListener("change", function () {
+				
+				let modal = new bootstrap.Modal(document.getElementById('exampleModalToggle'));
+				if (this.checked) {
+					
+					getFlightDetails(modal);
+				} else {
+					modal.hide();
+				}
+			});
+			//****************** */
+			
+
+			function getFlightDetails(modal) {
+				let selectedIndexes = [];
+
+				$('.flight-checkbox:checked').each(function () {
+					selectedIndexes.push($(this).data('index'));
+				});
+
+				if (selectedIndexes.length === 0) {
+					alert("Please select at least one flight.");
+					let checkBox = document.getElementById('quoteCheckbox');
+					checkBox.checked = false;
+					return false;
+				}
+				$.ajax({
+					url: '/ResultFlightView/GetFlightDetailsPopup',
+					type: 'POST',
+					data: { indexes: selectedIndexes },
+					success: function (data) {
+						debugger;
+						console.log("Full flight data:", data);
+						$('#exampleModalToggle .modal-body').html(data);
+						modal.show();
+					},
+					error: function (err) {
+						console.log("Error fetching flight details", err);
+					}
+				});
+			}
+
+			//**************** */
+			document.querySelectorAll(".close").forEach(button => {
+				button.addEventListener("click", function () {
+					let checkbox = document.getElementById('quoteCheckbox');
+					checkbox.checked = false; 
+				});
+			});
+
+			// document.body.addEventListener("click", function (e) {
+			// 	debugger;
+			// 	// Keep your original line as-is:
+			// 	let popup = new bootstrap.Modal(document.getElementById('exampleModalToggle'));
+
+			// 	// Check if the modal is currently visible
+			// 	if (document.getElementById('exampleModalToggle').classList.contains('show')) {
+			// 		document.querySelector(".close").click();
+			// 	}
+			// });
+
+			$('#selectAll').on('change', function () {
+				$('.flight-checkbox').prop('checked', this.checked);
+			});
+
+			
+			
+		});
+	//******************* */
+		//PopUp button hide code
+		document.addEventListener('DOMContentLoaded', function () {
+			function hideAll() {
+				document.querySelector('.airline-bx').style.display = 'none';
+				document.querySelector('.email-bx').style.display = 'none';
+				document.querySelector('.addmarkup-bx').style.display = 'none';
+			}
+			document.getElementById('addMarkupBtn').addEventListener('click', function () {
+				hideAll();
+				document.querySelector('.addmarkup-bx').style.display = 'block';
+			});
+			document.getElementById('exportExcelBtn').addEventListener('click', function () {
+				hideAll();
+				document.querySelector('.airline-bx').style.display = 'block';
+			});
+			document.getElementById('emailsendBtn').addEventListener('click', function () {
+				hideAll();
+				document.querySelector('.email-bx').style.display = 'block';
+			});
+			document.getElementById('previewBtn').addEventListener('click', function () {
+				hideAll();
+				document.querySelector('.airline-bx').style.display = 'block';
+				
+			});
+			hideAll();
+			document.querySelector('.airline-bx').style.display = 'block';
+			const closeButton = modalContent.querySelector('.close');
+            closeButton.style.display = 'block';
+		});
+
+
+	
+
+	</script>
+	
+	
 
 </body>
 
