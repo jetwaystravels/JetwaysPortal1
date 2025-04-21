@@ -1,12 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Q+nc1SxSJDQ=",
+  "dgSpecHash": "FO5fFC5/uDo=",
   "success": true,
   "projectFilePath": "D:\\JetwaysPortal\\Utility\\Utility.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Ashok\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.36\\microsoft.windowsdesktop.app.ref.6.0.36.nupkg.sha512",
-    "C:\\Users\\Ashok\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.36\\microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
-    "C:\\Users\\Ashok\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.36\\microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

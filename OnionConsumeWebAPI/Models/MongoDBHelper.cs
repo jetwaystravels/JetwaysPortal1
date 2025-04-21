@@ -80,21 +80,21 @@ namespace OnionConsumeWebAPI.Models
             return guid;
         }
 
-		public async Task<MongoResponces> GetALLFlightResulByGUIDRoundTrip(string guid)
-		{
-			MongoResponces srchDataALL = new MongoResponces();
-			try
-			{
-				srchDataALL = await mDB.GetCollection<MongoResponces>("Result").Find(Builders<MongoResponces>.Filter.Eq("Guid", guid)).Sort(Builders<MongoResponces>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
-			}
-			catch (Exception ex)
-			{
-				logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
-			}
-			return srchDataALL;
-		}
+        public async Task<MongoResponces> GetALLFlightResulByGUIDRoundTrip(string guid)
+        {
+            MongoResponces srchDataALL = new MongoResponces();
+            try
+            {
+                srchDataALL = await mDB.GetCollection<MongoResponces>("Result").Find(Builders<MongoResponces>.Filter.Eq("Guid", guid)).Sort(Builders<MongoResponces>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "GetALLFlightResulByGUID methhod", _connectionString);
+            }
+            return srchDataALL;
+        }
 
-		public async Task<string> GetALLFlightResulByGUID(string guid)
+        public async Task<string> GetALLFlightResulByGUID(string guid)
         {
             MongoResponces srchDataALL = new MongoResponces();
             try
@@ -157,7 +157,7 @@ namespace OnionConsumeWebAPI.Models
                 srchData.CreatedDate = DateTime.UtcNow.AddMinutes(Convert.ToInt16(20));
                 srchData.Guid = Guid;
                 srchData.Response = resp;
-                if(!string.IsNullOrEmpty(rightResponse))
+                if (!string.IsNullOrEmpty(rightResponse))
                 {
                     srchData.RightResponse = rightResponse;
                 }
@@ -174,7 +174,7 @@ namespace OnionConsumeWebAPI.Models
         {
             try
             {
-               
+
                 mongoSuppFlightToken.CreatedDate = DateTime.UtcNow.AddMinutes(Convert.ToInt16(20));
 
 
@@ -220,24 +220,24 @@ namespace OnionConsumeWebAPI.Models
 
 
         public void UpdatePassengerMongoFlightToken(string guid, string supp, string Passenger)
-		{
-			try
-			{
-				var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
-				Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
-				var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassengerRequest, Passenger);
-				mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassengerRequest, Passenger);
+                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
 
-			}
-			catch (Exception ex)
-			{
-				logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
-			}
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
+            }
 
-		}
+        }
 
 
-		public async Task<MongoSuppFlightToken> GetSuppFlightTokenByGUID(string guid, string supp)
+        public async Task<MongoSuppFlightToken> GetSuppFlightTokenByGUID(string guid, string supp)
         {
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
             try
@@ -267,7 +267,7 @@ namespace OnionConsumeWebAPI.Models
             {
                 logger.WriteLog(ex, "UpdateFlightTokenJourney methhod", _connectionString);
             }
-            
+
         }
 
         public void UpdateFlightTokenPassenger(string guid, string supp, string Passenger)
@@ -277,6 +277,23 @@ namespace OnionConsumeWebAPI.Models
                 var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
                 Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
                 var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, Passenger);
+                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
+            }
+
+        }
+
+        public void UpdateCommitResponse(string guid, string supp, string CommitValue)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.CommResponse, CommitValue);
                 mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
 
             }
@@ -458,38 +475,38 @@ namespace OnionConsumeWebAPI.Models
 
         }
 
-		public void SaveResultSeatMealRequest(MongoSeatMealdetail mongoSeat)
-		{
-    		MongoHelper mongoHelper = new MongoHelper();
-			try
-			{
+        public void SaveResultSeatMealRequest(MongoSeatMealdetail mongoSeat)
+        {
+            MongoHelper mongoHelper = new MongoHelper();
+            try
+            {
 
-				mongoSeat.CreatedDate = DateTime.UtcNow.AddMinutes(Convert.ToInt16(0));
-			    mDB.GetCollection<MongoSeatMealdetail>("SeatMealRequests").InsertOneAsync(mongoSeat);
+                mongoSeat.CreatedDate = DateTime.UtcNow.AddMinutes(Convert.ToInt16(0));
+                mDB.GetCollection<MongoSeatMealdetail>("SeatMealRequests").InsertOneAsync(mongoSeat);
 
-			}
-			catch (Exception ex)
-			{
-				logger.WriteLog(ex, "SaveResultSeatMealRequest methhod", _connectionString);
-			}
-		}
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "SaveResultSeatMealRequest methhod", _connectionString);
+            }
+        }
 
-		public async Task<MongoSeatMealdetail> GetSuppSeatMealByGUID(string guid, string supp)
-		{
-			MongoSeatMealdetail seatMeal = new MongoSeatMealdetail();
-			try
-			{
-				var filter = Builders<MongoSeatMealdetail>.Filter.And(Builders<MongoSeatMealdetail>.Filter.Eq(emp => emp.Guid, guid),
-				Builders<MongoSeatMealdetail>.Filter.Eq(emp => emp.Supp, supp));
-				seatMeal = await mDB.GetCollection<MongoSeatMealdetail>("SeatMealRequests").Find(filter).Sort(Builders<MongoSeatMealdetail>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
-			}
-			catch (Exception ex)
-			{
-				logger.WriteLog(ex, "GetSuppSeatMealByGUID methhod", _connectionString);
-			}
-			return seatMeal;
-		}
+        public async Task<MongoSeatMealdetail> GetSuppSeatMealByGUID(string guid, string supp)
+        {
+            MongoSeatMealdetail seatMeal = new MongoSeatMealdetail();
+            try
+            {
+                var filter = Builders<MongoSeatMealdetail>.Filter.And(Builders<MongoSeatMealdetail>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSeatMealdetail>.Filter.Eq(emp => emp.Supp, supp));
+                seatMeal = await mDB.GetCollection<MongoSeatMealdetail>("SeatMealRequests").Find(filter).Sort(Builders<MongoSeatMealdetail>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "GetSuppSeatMealByGUID methhod", _connectionString);
+            }
+            return seatMeal;
+        }
 
 
-	}
+    }
 }

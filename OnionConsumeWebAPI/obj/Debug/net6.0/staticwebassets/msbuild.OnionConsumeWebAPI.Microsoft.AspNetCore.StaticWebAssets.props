@@ -3018,8 +3018,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>pdtqnqp1xv</Fingerprint>
-      <Integrity>PQbZ57FQwPNXoKC2vg5YUYTr2aTlGdSHRQR2EVXXbug=</Integrity>
+      <Fingerprint>a5jvkv7jpe</Fingerprint>
+      <Integrity>rhK60Rgja7NBs2xBK95SEEkqBCqrhsh7qYej+89eAjI=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\error.txt'))</OriginalItemSpec>
