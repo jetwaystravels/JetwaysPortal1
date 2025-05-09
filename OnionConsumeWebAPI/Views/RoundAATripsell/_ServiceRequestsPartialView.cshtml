@@ -410,7 +410,8 @@
 	$("#RightNonstop2").off("click");
 	$("#rightNstop2").off("click");
 	$.ajax({
-	url: '@Url.Action("RTPostSeatMapModaldataView", "RoundAATripsell")',
+	//url: '@Url.Action("RTPostSeatMapModaldataView", "RoundAATripsell")',
+	url: "/RoundAATripsell/RTPostSeatMapModaldataView?GUID=" + GetParameterValues("Guid"),
 	type: "GET",
 	success: function (data) {
 	//console.log('POST request successful');
@@ -982,6 +983,26 @@
 
 														}
 													}
+													else if (AirLine.ToLower() == "airindia")
+													{
+														BaggageOptions = new List<SelectListItem>();
+														string weight = "";
+														bagkey = "";
+														string Bagname = "";
+
+														for (int i = 0; i < Model.BaggagelistRT[0].legSsrs.Count; i++)
+														{
+															string ssrprice = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+															string Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[0] + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+															Bagname = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+														    bagkey = Sssrcode;
+														    if (bagkey != null)
+															{
+															  BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
+															}
+
+														}
+													}
 													else
 													{
 														if (Model.MealslistRT != null && Model.MealslistRT.Count > 0 && Model.MealslistRT[0] != null)
@@ -996,30 +1017,30 @@
 																	string Sssrcode = Model.MealslistRT[0].legSsrs[0].legssrs[s].ssrCode + "_" + Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
 																	AirLine = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].Airline.ToString();
 																	string bagcode = string.Empty;
-																	if (AirLine.ToLower() == "airindia")
-																	{
-																		bagcode = Sssrcode.StartsWith("XBAG", StringComparison.OrdinalIgnoreCase).ToString();
-																		if (Model.passengerNamedetails[pas].passengertypecode == "ADT" || Model.passengerNamedetails[pas].passengertypecode == "CNN" || Model.passengerNamedetails[pas].passengertypecode == "CHD")
-																		{
-																			weight = "15 kg";
-																		}
-																	}
-																	else
-																	{
-																		bagcode = (Sssrcode.StartsWith("X", StringComparison.OrdinalIgnoreCase) || Sssrcode.StartsWith("E", StringComparison.OrdinalIgnoreCase)).ToString();
-																	}
+																	// if (AirLine.ToLower() == "airindia")
+																	// {
+																	// 	bagcode = Sssrcode.StartsWith("XBAG", StringComparison.OrdinalIgnoreCase).ToString();
+																	// 	if (Model.passengerNamedetails[pas].passengertypecode == "ADT" || Model.passengerNamedetails[pas].passengertypecode == "CNN" || Model.passengerNamedetails[pas].passengertypecode == "CHD")
+																	// 	{
+																	// 		weight = "15 kg";
+																	// 	}
+																	// }
+																	// else
+																	// {
+																	bagcode = (Sssrcode.StartsWith("X", StringComparison.OrdinalIgnoreCase) || Sssrcode.StartsWith("E", StringComparison.OrdinalIgnoreCase)).ToString();
+																	//  }
 																	bagkeyAA = Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].ssrKey + "_" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
 																	if (bagcode.ToLower() == "true")
 																	{
-																		if (AirLine.ToLower() == "airindia")
-																		{
-																			Bagname = Model.MealslistRT[0].legSsrs[0].legssrs[s].name + "-" + weight + " ₹" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
+																		// if (AirLine.ToLower() == "airindia")
+																		// {
+																		// 	Bagname = Model.MealslistRT[0].legSsrs[0].legssrs[s].name + "-" + weight + " ₹" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
 
-																		}
-																		else
-																		{
-																			Bagname = Model.MealslistRT[0].legSsrs[0].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
-																		}
+																		// }
+																		// else
+																		// {
+																		Bagname = Model.MealslistRT[0].legSsrs[0].legssrs[s].name + " ₹" + @Model.MealslistRT[0].legSsrs[0].legssrs[s].legpassengers[0].price;
+																		// }
 																		bagkey = Sssrcode;
 																	}
 																	else
@@ -1028,22 +1049,23 @@
 
 																	if (bagcode != null)
 																	{
-																		if (AirLine.ToLower() == "airasia")
-																		{
-																			if (bagkeyAA != null)
-																			{
-																				BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = bagkeyAA });
-																			}
-																		}
+																		// if (AirLine.ToLower() == "airasia")
+																		// {
+																		// 	if (bagkeyAA != null)
+																		// 	{
+																		// 		BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = bagkeyAA });
+																		// 	}
+																		// }
 
-																		else
-																		{     // Baggage Code except airasia
-																			BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
-																		}
+																		// else
+																		// {     // Baggage Code except airasia
+																		BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
+																		//  }
 																	}
 																}
 															}
 														}
+
 													}
 												}
 
@@ -1052,16 +1074,27 @@
 
 													<select id="ddlbagOptions" class="servc-bordr servc-bordrbaggage">
 														<option selected="selected" value="">Please select baggage</option>
-														@{
+														@if(AirLine.ToLower() == "airindia")
+														{
+															foreach (var option in BaggageOptions)
+															{
+																<option value="@option.Value" data-bagkey=@bagkey>
+																	@option.Text.Split('*')[0].ToString()
+																</option>
+															}
+														}
+														else
+														{
 															var sortedBaggageOptions = BaggageOptions.OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
 															.ToList();
+															@foreach (var option in sortedBaggageOptions)
+															{
+																<option value="@option.Value" data-bagkey=@bagkey>
+																	@option.Text
+																</option>
+															}
 														}
-														@foreach (var option in sortedBaggageOptions)
-														{
-															<option value="@option.Value" data-bagkey=@bagkey>
-																@option.Text
-															</option>
-														}
+														
 													</select>
 													<input type="hidden" id="hiddenbagKey" name="bagkey" value="" />
 												</div>
@@ -1484,11 +1517,14 @@
 												</div>
 												<div class="servc-content select-optionRT">
 													@{
-														if (Model.MealslistRT[1] != null)
+														if (Model.MealslistRT != null && Model.MealslistRT.Count > 1)
 														{
-															if (Model.MealslistRT[1].legSsrs[0].legssrs.Count > 0)
+															if (Model.MealslistRT[1] != null)
 															{
-																AirLine = Model.MealslistRT[1].legSsrs[0].legssrs[0].legpassengers[0].Airline.ToString();
+																if (Model.MealslistRT[1].legSsrs[0].legssrs.Count > 0)
+																{
+																	AirLine = Model.MealslistRT[1].legSsrs[0].legssrs[0].legpassengers[0].Airline.ToString();
+																}
 															}
 														}
 														List<SelectListItem> mealOptions = new List<SelectListItem>();
@@ -1800,11 +1836,30 @@
 																}
 
 															}
+														}
+														else if (AirLine.ToLower() == "airindia")
+														{
+															BaggageOptions = new List<SelectListItem>();
+															string weight = "";
+															//var bagkey = "";
+															string Bagname = "";
 
+															for (int i = 0; i < Model.BaggagelistRT[1].legSsrs.Count; i++)
+															{
+																string ssrprice = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																string Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[1] + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																Bagname = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																bagkeyAA = Sssrcode;
+																if (bagkeyAA != null)
+																{
+																	BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
+																}
+
+															}
 														}
 														else
 														{
-															if (Model.MealslistRT != null && Model.MealslistRT.Count > 0 && Model.MealslistRT[1] != null)
+															if (Model.MealslistRT != null && Model.MealslistRT.Count > 1 && Model.MealslistRT[1] != null)
 															{
 																var bagkey = "";
 																string Bagname = "";
@@ -1819,31 +1874,31 @@
 																			AirLine = Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].Airline.ToString();
 																			string bagcode = string.Empty;
 																			string weight = string.Empty;
-																			if (AirLine.ToLower() == "airindia")
-																			{
-																				bagcode = Sssrcode.StartsWith("XBAG", StringComparison.OrdinalIgnoreCase).ToString();
-																				if (Model.passengerNamedetails[pas].passengertypecode == "ADT" || Model.passengerNamedetails[pas].passengertypecode == "CNN" || Model.passengerNamedetails[pas].passengertypecode == "CHD")
-																				{
-																					weight = "15 kg";
-																				}
+																			// if (AirLine.ToLower() == "airindia")
+																			// {
+																			// 	bagcode = Sssrcode.StartsWith("XBAG", StringComparison.OrdinalIgnoreCase).ToString();
+																			// 	if (Model.passengerNamedetails[pas].passengertypecode == "ADT" || Model.passengerNamedetails[pas].passengertypecode == "CNN" || Model.passengerNamedetails[pas].passengertypecode == "CHD")
+																			// 	{
+																			// 		weight = "15 kg";
+																			// 	}
 
-																			}
-																			else
-																			{
+																			// }
+																			// else
+																			// {
 																				bagcode = (Sssrcode.StartsWith("X", StringComparison.OrdinalIgnoreCase) || Sssrcode.StartsWith("E", StringComparison.OrdinalIgnoreCase)).ToString();
-																			}
+																			//}
 																			bagkeyAA = Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].ssrKey + "_" + @Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price;
 																			if (bagcode.ToLower() == "true")
 																			{
-																				if (AirLine.ToLower() == "airindia")
-																				{
-																					Bagname = Model.MealslistRT[1].legSsrs[0].legssrs[s].name + "-" + weight + " ₹" + @Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price;
+																				// if (AirLine.ToLower() == "airindia")
+																				// {
+																				// 	Bagname = Model.MealslistRT[1].legSsrs[0].legssrs[s].name + "-" + weight + " ₹" + @Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price;
 
-																				}
-																				else
-																				{
+																				// }
+																				// else
+																				// {
 																					Bagname = Model.MealslistRT[1].legSsrs[0].legssrs[s].name + " ₹" + @Model.MealslistRT[1].legSsrs[0].legssrs[s].legpassengers[0].price;
-																				}
+																				//}
 
 																				bagkeyAA = Sssrcode; //Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].ssrKey;
 																			}             //string passengerKey = Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].passengerKey;
@@ -1860,8 +1915,6 @@
 																						BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = bagkeyAA });
 																					}
 																				}
-
-
 																				else
 																				{   // Baggage Code except AirAsia
 																					// Assuming MealImageList.GetAllmeal() returns a list of objects with MealCode and MealImage properties
@@ -1883,15 +1936,26 @@
 														<select id="ddlbagOptions" class="servc-bordr servc-bordrbaggagem2">
 
 															<option selected="selected" value="">Please select baggage</option>
-															@{
+															@if (AirLine.ToLower() == "airindia")
+															{
+																@foreach (var option in BaggageOptions)
+																{
+																	<option value="@option.Value" data-bagkey=@bagkeyAA>
+																		@option.Text.Split('*')[0].ToString()
+																	</option>
+																}
+															}
+															else
+															{
 																var sortedBaggageOptions = BaggageOptions.OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
 																.ToList();
-															}
-															@foreach (var option in sortedBaggageOptions)
-															{
-																<option value="@option.Value" data-bagkey=@bagkeyAA>
-																	@option.Text
-																</option>
+
+																@foreach (var option in sortedBaggageOptions)
+																{
+																	<option value="@option.Value" data-bagkey=@bagkeyAA>
+																		@option.Text
+																	</option>
+																}
 															}
 														</select>
 														<input type="hidden" id="hiddenbagKeyRT" name="bagkey" value="" />
@@ -1996,9 +2060,15 @@
 												<div class="servc-content select-option2RT">
 
 													@{
-														if (Model.MealslistRT[1] != null && Model.MealslistRT[1].legSsrs.Count > 1)
+														if (Model.MealslistRT != null && Model.MealslistRT.Count > 1)
 														{
-															AirLine = Model.MealslistRT[1].legSsrs[1].legssrs[0].legpassengers[0].Airline.ToString();
+															if (Model.MealslistRT[1] != null && Model.MealslistRT[1].legSsrs.Count > 1)
+															{
+															   if (Model.MealslistRT[1].legSsrs[1].legssrs.Count > 0)
+														       {
+																 AirLine = Model.MealslistRT[1].legSsrs[1].legssrs[0].legpassengers[0].Airline.ToString();
+														       }
+															}
 														}
 														List<SelectListItem> mealOptions = new List<SelectListItem>();
 														if (AirLine.ToLower() == "airasia")
@@ -2054,7 +2124,7 @@
 														}
 														else
 														{
-															if (Model.MealslistRT != null && Model.MealslistRT.Count > 0 && Model.MealslistRT[1] != null)
+															if (Model.MealslistRT != null && Model.MealslistRT.Count > 1 && Model.MealslistRT[1] != null)
 															{
 																if (Model.MealslistRT.Count > 1 && Model.MealslistRT[1].legSsrs != null)
 																{

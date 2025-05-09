@@ -209,7 +209,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
-                HttpResponseMessage response = await client.GetAsync("api/Login/getotacredairasia");
+                //HttpResponseMessage response = await client.GetAsync("api/Login/getotacredairasia");
+                HttpResponseMessage response = await client.GetAsync(AppUrlConstant.AirlineLogin);
                 //Air Asia login
                 if (response.IsSuccessStatusCode)
                 {
@@ -267,7 +268,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 airlineLogin login = new airlineLogin();
                 login.credentials = _credentialsAirasia;
 
-                TempData["AirAsiaLogin"] = login.credentials.Image;
+              //  TempData["AirAsiaLogin"] = login.credentials.Image;
                 AirasiaTokan AirasiaTokan = new AirasiaTokan();
                 var AirasialoginRequest = JsonConvert.SerializeObject(login, Formatting.Indented);
                 if (SaveLogs)
@@ -1551,7 +1552,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 TravelPort _objAvail = null;
                 _objAvail = new TravelPort(httpContextAccessorInstance);
                 //   mongoGDSToken.Token = Convert.ToString(newGuid);
-                mongoGDSToken.PassRequest = "";
+                mongoGDSToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_GetfligthModel)); ;
                 mongoGDSToken.Guid = SearchGuid;
                 mongoGDSToken.Supp = "GDS";
                 res = _objAvail.GetAvailabilty(_testURL, sbReq, _objAvail, _GetfligthModel, newGuid.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, SameAirlineRT, "GDSOneWay");
@@ -3304,6 +3305,12 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         mongoIndigoToken.Supp = "Indigo";
                         _mongoDBHelper.SaveMongoFlightToken(mongoIndigoToken);
                     }
+                    //if (mongoGDSToken.Token != "")
+                    //{
+
+                    //    mongoGDSToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                    //    _mongoDBHelper.SaveMongoFlightToken(mongoGDSToken);
+                    //}
                     _mongoDBHelper.SaveMongoFlightToken(mongoGDSToken);
                     return RedirectToAction("FlightView", "ResultFlightView", new { Guid = SearchGuid, TripType = SameAirlineRT, Origin = searchLog.Origin.Trim(), OriginCode = searchLog.OrgCode.Trim(), Destination = searchLog.Destination.Trim(), DestinationCode = searchLog.DestCode.Trim(), BeginDate = _GetfligthModel.beginDate, EndDate = _GetfligthModel.endDate, AdultCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.adultcount : _GetfligthModel.adultcount, ChildCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.childcount : _GetfligthModel.childcount, InfantCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.infantcount : _GetfligthModel.infantcount, FlightClass = flightclass });
 

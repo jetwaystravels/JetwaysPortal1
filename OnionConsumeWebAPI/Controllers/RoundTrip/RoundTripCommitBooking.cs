@@ -2545,50 +2545,53 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         //Spicejet
                         token = string.Empty;
 
-                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
-                        if (k1 == 0)
-                        {
-                            tokenview = tokenData.Token;
-                        }
-                        else
-                        {
-                            tokenview = tokenData.RToken;
-                        }
-                        if (!string.IsNullOrEmpty(tokenview))
-                        {
-                            if (tokenview == null) { tokenview = ""; }
-                            string newGuid = token = tokenview.Replace(@"""", string.Empty);
-                            string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+						tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
+						if (k1 == 0)
+						{
+							tokenview = tokenData.Token;
+						}
+						else
+						{
+							tokenview = tokenData.RToken;
+						}
+						if (!string.IsNullOrEmpty(tokenview))
+						{
+							if (tokenview == null) { tokenview = ""; }
+							string newGuid = token = tokenview.Replace(@"""", string.Empty);
+							//string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+                            string passengernamedetails = objMongoHelper.UnZip(tokenData.PassengerRequest);
                             List<passkeytype> passeengerlist = (List<passkeytype>)JsonConvert.DeserializeObject(passengernamedetails, typeof(List<passkeytype>));
-                            string contactdata = HttpContext.Session.GetString("GDSContactdetails");
+							//string contactdata = HttpContext.Session.GetString("GDSContactdetails");
+                            string contactdata = objMongoHelper.UnZip(tokenData.ContactRequest);
                             ContactModel contactList = (ContactModel)JsonConvert.DeserializeObject(contactdata, typeof(ContactModel));
-                            using (HttpClient client1 = new HttpClient())
-                            {
-                                //_commit objcommit = new _commit();
-                                #region GetState
-                                #endregion
-                                #region Addpayment For Api payment deduction
-                                //IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment);
+							using (HttpClient client1 = new HttpClient())
+							{
+								//_commit objcommit = new _commit();
+								#region GetState
+								#endregion
+								#region Addpayment For Api payment deduction
+								//IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment);
 
-                                #endregion
-                                #region Commit Booking
-                                TravelPort _objAvail = null;
-                                SearchLog searchLog = new SearchLog();
-                                searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
-                                HttpContextAccessor httpContextAccessorInstance = new HttpContextAccessor();
-                                _objAvail = new TravelPort(httpContextAccessorInstance);
-                                string _UniversalRecordURL = AppUrlConstant.GDSUniversalRecordURL;
-                                string _testURL = AppUrlConstant.GDSURL;
-                                string _targetBranch = string.Empty;
-                                string _userName = string.Empty;
-                                string _password = string.Empty;
-                                _targetBranch = "P7027135";
-                                _userName = "Universal API/uAPI5098257106-beb65aec";
-                                _password = "Q!f5-d7A3D";
-                                StringBuilder createPNRReq = new StringBuilder();
-                                string AdultTraveller = HttpContext.Session.GetString("PassengerNameDetails");
+								#endregion
+								#region Commit Booking
+								TravelPort _objAvail = null;
+								SearchLog searchLog = new SearchLog();
+								searchLog = _mongoDBHelper.GetFlightSearchLog(Guid).Result;
+								HttpContextAccessor httpContextAccessorInstance = new HttpContextAccessor();
+								_objAvail = new TravelPort(httpContextAccessorInstance);
+								string _UniversalRecordURL = AppUrlConstant.GDSUniversalRecordURL;
+								string _testURL = AppUrlConstant.GDSURL;
+								string _targetBranch = string.Empty;
+								string _userName = string.Empty;
+								string _password = string.Empty;
+								_targetBranch = "P7027135";
+								_userName = "Universal API/uAPI5098257106-beb65aec";
+								_password = "Q!f5-d7A3D";
+								StringBuilder createPNRReq = new StringBuilder();
+								//string AdultTraveller = HttpContext.Session.GetString("PassengerNameDetails");
+								string AdultTraveller = passengernamedetails;
                                 string _data = HttpContext.Session.GetString("SGkeypassengerRT");
-                                string _Total = HttpContext.Session.GetString("Total");
+								string _Total = HttpContext.Session.GetString("Total");
 
                                 //retrive PNR
                                 string _pricesolution = string.Empty;
@@ -2624,12 +2627,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     _SSRkey = JsonConvert.DeserializeObject<List<string>>(serializedSSRKey);
                                 }
 
-                                res = _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, k1, _unitkey, _SSRkey, _pricesolution);
+                                //res = "";// _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, k1, _unitkey, _SSRkey, _pricesolution);
 
-                                RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
-
-                                //getdetails
-                                strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
+                                //RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
+                                strResponse = HttpContext.Session.GetString("PNR").Split("@@")[0];
 
                                 _TicketRecordLocator = Regex.Match(strResponse, @"AirReservation[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
                                 //GetAirTicket
@@ -2649,9 +2650,18 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     catch (Exception ex)
                                     {
 
-                                    }
+									}
 
-                                }
+								}
+                                //getdetails
+                                RecordLocator = HttpContext.Session.GetString("PNR").Split("@@")[1];
+
+                                strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
+
+                                //_TicketRecordLocator = Regex.Match(strResponse, @"AirReservation[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
+                               
+
+
                                 GDSResModel.PnrResponseDetails pnrResDetail = new GDSResModel.PnrResponseDetails();
                                 if (!string.IsNullOrEmpty(strResponse) && !string.IsNullOrEmpty(RecordLocator))
                                 {

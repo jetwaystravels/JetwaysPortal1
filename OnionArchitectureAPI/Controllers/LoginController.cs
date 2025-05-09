@@ -26,7 +26,7 @@ namespace OnionArchitectureAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getotacredairasia")]
+        [Route("GetAirlinelogin")]
         public IActionResult Getcredential()
         {
             var response = this._Credential.GetAllCredentialRepo();

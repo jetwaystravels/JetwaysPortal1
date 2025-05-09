@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OnionConsumeWebAPI.Extensions;
+using static System.Net.WebRequestMethods;
 
 namespace OnionConsumeWebAPI.Controllers.Admin
 {
@@ -18,13 +19,20 @@ namespace OnionConsumeWebAPI.Controllers.Admin
         //{
         //    return View();
         //}
-        public async Task<IActionResult> UserLogin()
+        public async Task<IActionResult> UserLogin(string returnUrl = null)
         {
+            if(returnUrl == null)
+            {
+                HttpContext.Session.Clear();
+            }
+            
+            ViewBag.ReturnUrl = returnUrl;
             return View();
+            
         }
 
          [HttpPost]
-        public async Task<IActionResult> UserLogin(string username, string password)
+        public async Task<IActionResult> UserLogin(string username, string password, string returnUrl = null)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -37,15 +45,26 @@ namespace OnionConsumeWebAPI.Controllers.Admin
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     var jsonResult = JObject.Parse(result);
+                    var email = username; // or "email" if that's the correct key
 
-                  //  var token = jsonResult["token"].ToString();
-                    var adminUsername = jsonResult["username"].ToString();
+                    // ✅ Save to session
+                    HttpContext.Session.SetString("LoggedInEmail", email);
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        TempData["Email"] = email;
+                        return RedirectToAction("Index", "FlightSearchIndex");
+                       // return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        TempData["Email"] = email;
+                        return RedirectToAction("Index", "FlightSearchIndex");
 
-                    // Store the token in session or cookie
-                    //HttpContext.Session.SetString("JwtToken", token);
-                    //HttpContext.Session.SetString("AdminUsername", adminUsername);
 
-                    return RedirectToAction("Dashboard");  // Redirect to dashboard
+                    }
+                    //return RedirectToAction("SearchResultFlight", "FlightSearchIndex", new { email = email });
+
+
                 }
 
                 ViewBag.ErrorMessage = "Invalid login credentials";
@@ -59,6 +78,17 @@ namespace OnionConsumeWebAPI.Controllers.Admin
         public IActionResult Dashboard()
         {
             return View();
+        }
+        public IActionResult Logout()
+        {
+
+            // Clear the session
+            HttpContext.Session.Remove("LoggedInEmail");
+
+            // Optionally, clear TempData if you need
+            TempData.Remove("Email");
+
+            return RedirectToAction("Index", "FlightSearchIndex");
         }
 
 

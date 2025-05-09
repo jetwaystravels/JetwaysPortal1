@@ -19,7 +19,19 @@
     }
 
 </style>
-
+<script>
+    function handleBooking(isLoggedIn) {
+        if (!isLoggedIn) {
+            const confirmLogin = confirm("Please login to book your flight.");
+            if (confirmLogin) {
+                const returnUrl = encodeURIComponent(window.location.href);
+                window.location.href = `/Login/UserLogin?returnUrl=${returnUrl}`;
+            }
+            return false; // Prevent form submission when not logged in
+        }
+        return true; // Allow submission if logged in
+    }
+</script>
 
 
 @for (var j = 0; j < Model.SimpleAvailibilityaAddResponcelist.Count; j++)
@@ -1642,32 +1654,35 @@
                                     </div>
 
                                     @{
+                                        bool isLoggedIn = !string.IsNullOrEmpty(@Model.SimpleAvailibilityaAddResponcelist[j].Loginstatus);
+                                        var isLoggedInJs = isLoggedIn.ToString().ToLower(); // Pass to JS as "true"/"false"
                                         if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SG"))
+
                                         {
-                                            <form asp-action="SpicejetTripsell" asp-controller="SpiceJetResultFlightView">
+                                            <form asp-action="SpicejetTripsell" asp-controller="SpiceJetResultFlightView" method="post" onsubmit="return handleBooking(@isLoggedInJs);">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="taxes" name="taxes" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].taxamount" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
-                                                <input type="submit" value="Book Now" class="button small-btn">
+                                                <input type="submit" value="Book Now" class="button small-btn" />
                                             </form>
                                         }
                                         else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("6E"))
                                         {
-                                            <form asp-action="IndigoTripsell" asp-controller="IndigoResultFlightView">
+                                            <form asp-action="IndigoTripsell" asp-controller="IndigoResultFlightView" method="post" onsubmit="return handleBooking(@isLoggedInJs);">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
-                                                <input type="submit" value="Book Now" class="button small-btn">
+                                                <input type="submit" value="Book Now" class="button small-btn" @(isLoggedIn ? "" : "disabled") />
                                             </form>
                                         }
                                         else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QP"))
                                         {
-                                            <form asp-action="AkasaAirTripsell" asp-controller="AKResultFlight">
+                                            <form asp-action="AkasaAirTripsell" asp-controller="AKResultFlight" method="post" onsubmit="return handleBooking(@isLoggedInJs);">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
-                                                <input type="submit" value="Book Now" class="button small-btn">
+                                                <input type="submit" value="Book Now" class="button small-btn" />
                                             </form>
                                         }
                                         else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("H1")
@@ -1686,20 +1701,29 @@
 
                                             }
 
-                                            <form asp-action="GDSTripsell" asp-controller="GDSResultFlightView">
+                                            <form asp-action="GDSTripsell" asp-controller="GDSResultFlightView" method="post" onsubmit="return handleBooking(@isLoggedInJs);">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@data" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
-                                                <input type="submit" value="Book Now" class="button small-btn">
+                                                <input type="submit" value="Book Now" class="button small-btn" />
                                             </form>
                                         }
                                         else
                                         {
-                                            <form asp-controller="FlightSearchIndex" asp-action="Tripsell">
+                                            <form asp-controller="FlightSearchIndex" asp-action="Tripsell" method="post" onsubmit="return handleBooking(@isLoggedInJs);">
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
-                                                <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn">
+
+                                                @if (!string.IsNullOrEmpty(Model.SimpleAvailibilityaAddResponcelist[j].Loginstatus))
+                                                {
+                                                    <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn" />
+                                                }
+                                               
                                             </form>
                                         }
                                     }
@@ -2375,3 +2399,6 @@
     </div>
 
 }
+
+
+

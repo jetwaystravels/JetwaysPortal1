@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DomainLayer.Model;
 using Bookingmanager_;
+using System.Collections;
+
 namespace DomainLayer.ViewModel
 {
     public class ViewModel
@@ -24,6 +26,7 @@ namespace DomainLayer.ViewModel
         public List<AirAsiaTripResponceModel> passeengerlistRT { set; get; }
         public List<SeatMapResponceModel> SeatmaplistRT { set; get; }
         public List<SSRAvailabiltyResponceModel> MealslistRT { set; get; }
+        public List<SSRAvailabiltyResponceModel> BaggagelistRT { set; get; }
         public SimpleAvailabilityRequestModel MyProperty { get; set; }
         public SimpleAvailabilityRequestModel simpleAvailabilityRequestModelEdit { get; set; }
         public List<passkeytype> passkeytype { get; set; }
@@ -36,5 +39,6 @@ namespace DomainLayer.ViewModel
         public SSRAvailabiltyResponceModel AkMealslist { set; get; }
         public SSRAvailabiltyResponceModel AkBaggageDetails { set; get; }
         public AirAsiaTripResponceModel AkpasseengerItanary { set; get; }
+        public Hashtable htpaxwiseBaggage { get; set; }
     }
 }

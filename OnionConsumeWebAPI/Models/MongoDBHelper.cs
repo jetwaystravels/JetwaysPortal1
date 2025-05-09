@@ -287,13 +287,14 @@ namespace OnionConsumeWebAPI.Models
 
         }
 
-        public void UpdateCommitResponse(string guid, string supp, string CommitValue)
+        public void UpdateFlightTokenPassengerGDS(string guid, string supp, string Passenger)
         {
             try
             {
                 var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
                 Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
-                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.CommResponse, CommitValue);
+                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassengerRequest, Passenger);
+                //var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.OldPassengerRequest, Passenger);
                 mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
 
             }
@@ -304,6 +305,23 @@ namespace OnionConsumeWebAPI.Models
 
         }
 
+        public void UpdateFlightTokenOldPassengerGDS(string guid, string supp, string Passenger)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                //var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassengerRequest, Passenger);
+                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.OldPassengerRequest, Passenger);
+                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
+            }
+
+        }
         public void UpdateFlightTokenContact(string guid, string supp, string Contact)
         {
             try

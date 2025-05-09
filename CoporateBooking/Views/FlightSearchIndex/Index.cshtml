@@ -1,5 +1,6 @@
 ﻿@* @model DomainLayer.Model.GetfligthModel *@
 @model DomainLayer.Model.SimpleAvailabilityRequestModel
+
 @{
     var data = Model;
 
@@ -8,13 +9,14 @@
 <style>
 
     .Radiohide input {
-        display: none;
+    display: none;
     }
 
     .endselect {
-        cursor: pointer;
+    cursor: pointer;
     }
 
+   
 </style>
 
 
@@ -29,13 +31,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        function preventBack() {
-            window.history.forward();
-        }
-        preventBack();
-        window.onunload = function () {
-            preventDefault();
-        };
+    function preventBack() {
+    window.history.forward();
+    }
+    preventBack();
+    window.onunload = function () {
+    preventDefault();
+    };
     });
 
 
@@ -46,16 +48,16 @@
     // }
 
     function toggleRadio(event, radioId) {
-        event.preventDefault(); // Prevent the default anchor behavior
+    event.preventDefault(); // Prevent the default anchor behavior
 
-        // Uncheck all radio buttons
-        document.querySelectorAll('.form-radio-input').forEach(radio => {
-            radio.checked = false;
-        });
+    // Uncheck all radio buttons
+    document.querySelectorAll('.form-radio-input').forEach(radio => {
+    radio.checked = false;
+    });
 
-        // Check the selected radio button
-        var radioButton = document.getElementById(radioId);
-        radioButton.checked = true;
+    // Check the selected radio button
+    var radioButton = document.getElementById(radioId);
+    radioButton.checked = true;
     }
 </script>
 
@@ -105,20 +107,20 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    
+
                     <nav>
                         <ul class="navbar-nav" id="top-navbar-nav">
                             <li class="nav-item">
-                            <li class="nav-item">
-                                <small>Language</small>
-                                <select aria-label="Default">
-                                    <option>English</option>
-                                    <option value="1">French</option>
-                                    <option value="2">Russian </option>
-                                    <option value="3">Spanish</option>
-                                    <option value="3">Arabic</option>
-                                </select>
-                            </li>
+                                <li class="nav-item">
+                                    <small>Language</small>
+                                    <select aria-label="Default">
+                                        <option>English</option>
+                                        <option value="1">French</option>
+                                        <option value="2">Russian </option>
+                                        <option value="3">Spanish</option>
+                                        <option value="3">Arabic</option>
+                                    </select>
+                                </li>
                             </li>
                             <li class="nav-item">
                                 <small>Country</small>
@@ -129,15 +131,28 @@
                                 </select>
                             </li>
                             <li class="dropdown">
-                                <a class="nav-link dropbtn " href="#">Login or Signup</a>
+                                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
+
+                                    @if (HttpContextAccessor.HttpContext.Session.GetString("LoggedInEmail") != null)
+                                    {
+                                        var email = HttpContextAccessor.HttpContext.Session.GetString("LoggedInEmail");
+
+                                        <span>Welcome, @email</span>
+                                    <a class="nav-link dropbtn" href="@Url.Action("Logout", "Login")" class="logout-button">Logout</a>
+                                    }
+                                    else
+                                    {
+                                    <a class="nav-link dropbtn" href="@Url.Action("UserLogin", "Login")">Login or Signup</a>
+                                    }
+                                
 
                                 <div class="dropdown-content">
                                     <a href="#" data-toggle="modal" data-target="#signUp-pop">
                                         Customer Login
                                         <span>Login &amp; check bookings</span>
                                     </a>
-                                    <a href="#">
+                                    <a asp-controller="Login" asp-action="UserLogin">
                                         Corporate Travel
                                         <span>Login corporate account</span>
                                     </a>
@@ -285,25 +300,45 @@
 
                             <div class="search-box">
                                 <!-- ***** Emulate to Company / Employee Start ***** -->
+                                @using Newtonsoft.Json
+                                @{
+                                    // 1) Server‐side: parse your incoming JSON
+                                    string customerJson = ViewBag.CustomerData as string;
+                                    var dataList = !string.IsNullOrEmpty(customerJson)
+                                    ? JsonConvert.DeserializeObject<List<dynamic>>(customerJson)
+                                    : new List<dynamic>();
+
+                                    // 2) Serialize into a JS literal
+                                    var jsonData = JsonConvert.SerializeObject(dataList);
+                                }
+                                @if (dataList.Any())
+{
                                 <div class="emulate-bx">
-                                    <h6>Emulate to Company / Employee <span class="toggle-arrow"><i class="fa fa-angle-down" aria-hidden="true"></i></span></h6>
-                                    <div class="row" style="display: none; border-bottom: 1px solid #e8ecee; background: linear-gradient(90deg, rgb(244, 244, 244) 0%, rgb(244, 244, 244) 35%, rgb(255, 255, 255) 89%); padding-bottom: 7px; ">
+                                    <h6>
+                                        Emulate to Company / Employee
+                                        <span class="toggle-arrow" style="cursor:pointer">
+                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                        </span>
+                                    </h6>
+
+                                    <div class="row d-flex" id="emltoggle"
+                                         style="display: none;
+              border-bottom: 1px solid #e8ecee;
+              background: linear-gradient(90deg, #f4f4f4 0%, #f4f4f4 35%, #fff 89%);
+              padding-bottom: 7px;">
+
                                         <!-- Legal Entity Name -->
                                         <div class="col-12 col-md-10 col-lg-3">
                                             <label>Legal Entity Name</label>
                                             <div class="select-container">
-                                                <select class="select legalentity-select">
-                                                    <option value=""></option>
-                                                    <option value="3">[3] DR OETKER</option>
-                                                    <option value="2">[2] FIREFOX BIKES PRIVATE LIMITED</option>
-                                                    <option value="19D007">[19D007] DEMO ACCOUNT</option>
-                                                    <option value="16S007">[16S007] SIEGWERK INDIA PVT. LTD</option>
-                                                    <option value="S00014">[S00014] SHARDUL AMARCHAND MANGALDAS & CO -DEL</option>
-                                                    <option value="21H005">[21H005] HAIIER APPLIANCES INDIA PVT LTD NOIDA</option>
-                                                    <option value="000019">[000019] FERRERO INDIA PVT LTD</option>
-                                                    <option value="FE0001">[FE0001] FERRERO INDIA PVT. LTD.</option>
-                                                    <option value="FE0002">[FE0002] FERRERO INDIA P LTD</option>
-                                                    <option value="T054">[T054] YAZAKI INDIA PVT LIMITED</option>
+                                                <select class="select legalentity-select form-control">
+                                                    <option value="">-- Select Company --</option>
+                                                    @foreach (var item in dataList)
+                                                    {
+                                                        <option value="@item.legalEntityName">
+                                                            @item.legalEntityName
+                                                        </option>
+                                                    }
                                                 </select>
                                             </div>
                                         </div>
@@ -312,14 +347,8 @@
                                         <div class="col-12 col-md-10 col-lg-3">
                                             <label>Employee</label>
                                             <div class="select-container">
-                                                <select class="select employee-select">
-                                                    <option value=""></option>
-                                                    <option value="test">[Test] Test Tanya</option>
-                                                    <option value="EIL225">[EIL225] Pavan Gandratwar</option>
-                                                    <option value="EIL1090">[EIL1090] Dalveer Singh</option>
-                                                    <option value="EIL1091">[EIL1091] Govindnath Jaiswar</option>
-                                                    <option value="EIL1294">[EIL1294] Sreekanth Annouju</option>
-                                                    <option value="EIL904">[EIL904] Sunny Grover</option>
+                                                <select class="select employee-select form-control">
+                                                    <option value="">-- Select Employee --</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -328,9 +357,12 @@
                                         <div class="col-12 col-md-10 col-lg-3">
                                             <label>Billing Entity Name</label>
                                             <div class="select-container">
-                                                <select class="select billingentity-select">
-                                                    <option value=""></option>
-                                                    <option value="23E008">[23E008] EISAI PHARMACEUTICALS INDIA PVT LTD-MUM</option>
+                                                <select class="select billingentity-select form-control">
+                                                    <option value="">-- Select Billing Entity --</option>
+                                                    <option value="23E008">
+                                                        [23E008] EISAI PHARMACEUTICALS INDIA PVT LTD-MUM
+                                                    </option>
+                                                    @* …or generate these dynamically if you have the mapping… *@
                                                 </select>
                                             </div>
                                         </div>
@@ -338,10 +370,16 @@
                                         <!-- Balance Field -->
                                         <div class="col-12 col-md-10 col-lg-2 mt-5">
                                             <label>Balance</label>
-                                            <input type="text" name="balance" placeholder="₹ 12,00,000">
+                                            <input type="text"
+                                                   name="balance"
+                                                   class="form-control balance-input"
+                                                   placeholder="₹ 0.00"
+                                                   readonly />
                                         </div>
                                     </div>
                                 </div>
+                                }
+                               
                                 <!-- ***** Emulate to Company / Employee End ***** -->
 
 
@@ -1097,6 +1135,58 @@
                         arrow.className = "fa fa-angle-down"; // Change back to down arrow
                     }
                 });
+            });
+        </script>
+
+        <script>
+            $(function(){
+              // slide‐toggle on header click
+              $('.toggle-arrow').on('click', function(){
+                $('#emltoggle').slideToggle();
+                $(this).find('i').toggleClass('fa-angle-down fa-angle-up');
+              });
+
+              // 3) our data array in JS
+              var data = @Html.Raw(jsonData);
+
+              // helper to bind employees + balance
+              function bindFor(companyName) {
+                var item = data.find(function(x){
+                  return x.legalEntityName === companyName;
+                });
+
+                // clear old values
+                $('.employee-select')
+                  .empty()
+                  .append('<option value="">-- Select Employee --</option>');
+                $('.balance-input').val('');
+
+                if (!item) return;
+
+                // populate employees
+                item.employeeNames
+                  .split(',')
+                  .map(function(e){ return e.trim(); })
+                  .forEach(function(name){
+                    $('.employee-select')
+                      .append($('<option>').val(name).text(name));
+                  });
+
+                // bind balance
+                $('.balance-input').val('₹ ' + item.presentBalance);
+              }
+
+              // 4) when user picks a company
+              $('.legalentity-select').on('change', function(){
+                bindFor(this.value);
+              });
+
+              // 5) immediately bind the first entry if present
+              if (data.length > 0) {
+                // select the first option in the dropdown
+                $('.legalentity-select').val(data[0].legalEntityName);
+                bindFor(data[0].legalEntityName);
+              }
             });
         </script>
         <!--End show and hide box -->

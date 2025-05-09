@@ -3,6 +3,7 @@
 {
     public static class AppUrlConstant
     {
+
         public static string BaseURL = "http://localhost:5225/";
        // public static string BaseURL = "http://192.168.1.104/";
         public static string GDSURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/AirService";
@@ -11,7 +12,8 @@
         public static string GDSUniversalRecordURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/UniversalRecordService";
         public static string URLAirasia = "https://dotrezapi.test.I5.navitaire.com";
         public static string URLAkasaAir = "https://tbnk-reyalrb.qp.akasaair.com";
-        public static string Corporatelogin = BaseURL + "api/Admin/LogIn";
+        
+        public static string AirlineLogin = "api/Login/GetAirlinelogin";
         #region AirAsia URLs
         public static string AirasiaTokan = URLAirasia + "/api/nsk/v1/token";
         public static string Airasiasearchsimple = URLAirasia + "/api/nsk/v4/availability/search/simple";
@@ -67,6 +69,12 @@
 
         public static string CPGST = BaseURL + "api/CP_GST/GetGstDetail";
         #endregion
+
+        public static string AdminBaseURL = "http://localhost:7260";
+        public static string Corporatelogin = AdminBaseURL + "/api/Admin/LogIn";
+        public static string CompanyEmployeeGST = AdminBaseURL + "/api/Customer/GetCompanyEmployeeGST";
+        public static string CustomerDetailsByEmail = AdminBaseURL + "/api/Customer/GetCustomerDetailsByEmail";
+
 
     }
 }

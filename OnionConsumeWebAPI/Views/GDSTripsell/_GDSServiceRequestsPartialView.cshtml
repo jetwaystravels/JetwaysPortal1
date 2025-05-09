@@ -808,34 +808,17 @@
                                                     string weight = "";
                                                     var bagkey = "";
                                                     string Bagname = "";
-                                                    for (int i = 0; i < Model.Meals.legSsrs.Count; i++)
+                                                    for (int i = 0; i < Model.Baggage.legSsrs.Count; i++)
                                                     {
-                                                    //for (int s = 0; s < Model.Meals.legSsrs[i].legssrs.Count; s++)
-                                                        //{
-                                                        string ssrprice = Model.Meals.legSsrs[i].legssrs[0].legpassengers[0].price;
-                                                        string Sssrcode = Model.Meals.legSsrs[i].legssrs[0].ssrCode + "_" + Model.Meals.legSsrs[i].legssrs[0].legpassengers[0].price;
-                                                        string bagcode = Sssrcode.StartsWith("XBAG", StringComparison.OrdinalIgnoreCase).ToString();
-                                                        if (bagcode.ToLower() == "true")
+                                                        string ssrprice = Model.Baggage.legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR","");
+                                                        string Sssrcode = Model.Baggage.legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey+ "_" + Model.Baggage.legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+                                                        Bagname = Model.Baggage.legSsrs[i].legssrs[0].name + " ₹" + @Model.Baggage.legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+                                                        bagkey = Sssrcode;
+                                                        if (bagkey != null)
                                                         {
-                                                            if (Model.passengerNamedetails[pas].passengertypecode == "ADT" || Model.passengerNamedetails[pas].passengertypecode == "CNN" || Model.passengerNamedetails[pas].passengertypecode == "CHD")
-                                                            {
-                                                                weight = "15 kg";
-                                                            }
-
-                                                            Bagname = Model.Meals.legSsrs[i].legssrs[0].name + "-" + weight+ " ₹" + @Model.Meals.legSsrs[i].legssrs[0].legpassengers[0].price;
-
-                                                            bagkey = Sssrcode; //Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].ssrKey;
-                                                        }             //string passengerKey = Model.Meals.legSsrs[0].legssrs[s].legpassengers[pas].passengerKey;
-                                                        else
-                                                            continue;
-
-
-                                                        if (bagcode != null)
-                                                        {
-                                                            // Assuming MealImageList.GetAllmeal() returns a list of objects with MealCode and MealImage properties
-                                                            BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
+                                                            BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode
+                                                        });
                                                         }
-                                                        //}
                                                     }
 
                                                 }
@@ -846,7 +829,7 @@
                                                         @foreach (var option in BaggageOptions)
                                                         {
                                                             <option value="@option.Value" data-bagkey=@bagkey>
-                                                                @option.Text
+                                                                @option.Text.Split('@')[0].ToString()
                                                             </option>
                                                         }
                                                     </select>

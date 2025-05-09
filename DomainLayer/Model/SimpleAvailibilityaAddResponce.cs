@@ -9,6 +9,7 @@ namespace DomainLayer.Model
 {
     public class SimpleAvailibilityaAddResponce
     {
+        public string Loginstatus { get; set; }
         public int uniqueId { get; set; }
         public Airlines Airline { get; set; }
         public int flightType { get; set; }

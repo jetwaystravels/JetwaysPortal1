@@ -74,6 +74,7 @@
         <form asp-controller="Login" asp-action="UserLogin" id="login-form" method="post">
             <input type="text" name="username" id="login-username" placeholder="Username" required>
             <input type="password" name="password" id="login-password" placeholder="Password" required>
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
             <input type="submit" value="Log In">
             <p style="color:red;font-weight:600">@ViewBag.ErrorMessage</p>
         </form>

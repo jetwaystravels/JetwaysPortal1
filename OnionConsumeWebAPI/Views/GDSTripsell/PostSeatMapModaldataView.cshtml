@@ -323,6 +323,7 @@
 <div class="journey-box">
     <ul class="nav nav-pills mb-3">
         @{
+            Hashtable htseat = Model.Seatmaplist.htSeatlist;
             int passengerdata = @Model.passeengerlist.passengerscount;
 
         }
@@ -568,11 +569,16 @@
                                                             {
                                                                 string[] arrayofseat = ht0[data].ToString().Split("_");
                                                                 string feeamountF1 = string.Empty;
+                                                                string againtfeeamountData = string.Empty;
                                                                 string seatavailability = string.Empty;
                                                                 if (arrayofseat.Length > 1)
                                                                 {
                                                                     feeamountF1 = arrayofseat[0].Trim();
                                                                     seatavailability = arrayofseat[1].Trim();
+                                                                    if (seatavailability == "100")
+                                                                    {
+                                                                        againtfeeamountData = htseat[feeamountF1].ToString();
+                                                                    }
                                                                 }
 
                                                                 // if (seatavailability != "5" && seatavailability == "1")
@@ -584,8 +590,9 @@
                                                                 // }
                                                                 if (seatavailability == "100")
                                                                 {
-                                                                    <li class="seat-li midcomfort chkbox tooltip">
-                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <li class="seat-li midcomfort tooltip">
+                                                                        <!--<input type="checkbox" name="unitKey" value="" class="chkbox" />-->
+                                                                        <input type="checkbox" class="mycheck" name="unitKey" value="@feeamountF1 _@data _OneWay0 _@l _@Model.passeengerlist.journeys[0].segments[0].externalIdentifier __@againtfeeamountData" id="unitKey" />
                                                                         <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span>
                                                                     </li>
                                                                 }
@@ -714,17 +721,23 @@
                                                             {
                                                                 string[] arrayofseat = ht1[data].ToString().Split("_");
                                                                 string feeamountF1 = string.Empty;
+                                                                string againtfeeamountData1 = string.Empty;
                                                                 string seatavailability = string.Empty;
                                                                 if (arrayofseat.Length > 1)
                                                                 {
                                                                     feeamountF1 = arrayofseat[0].Trim();
                                                                     seatavailability = arrayofseat[1].Trim();
+                                                                    if (seatavailability == "100")
+                                                                    {
+                                                                        againtfeeamountData1 = htseat[feeamountF1].ToString();
+                                                                    }
                                                                 }
                                                                 //string feeamountF1 = ht1[data].ToString();
                                                                 if (seatavailability == "100")
                                                                 {
                                                                     <li class="seat-li midcomfort chkbox tooltip">
-                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <input type="checkbox" class="mycheck2" name="unitKey" value="@feeamountF1 _@data _OneWay1 _@l  _@Model.passeengerlist.journeys[0].segments[1].externalIdentifier __@againtfeeamountData1" id="unitKey" />
+                                                                        <!--<input type="checkbox" name="unitKey" value="" class="chkbox" />-->
                                                                         <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span>
                                                                     </li>
                                                                 }

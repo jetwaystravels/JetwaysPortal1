@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using Bookingmanager_;
+using CoporateBooking.Models;
 using DomainLayer.Model;
 using DomainLayer.ViewModel;
 using Microsoft.AspNetCore.Http;
@@ -47,7 +48,7 @@ namespace OnionConsumeWebAPI.Controllers
         {
             _configuration = configuration;
         }
-        public IActionResult Tripsell(string Guid)
+        public async Task<IActionResult> TripsellAsync(string Guid)
         {
 
             List<SelectListItem> Title = new()
@@ -62,7 +63,53 @@ namespace OnionConsumeWebAPI.Controllers
             var AirlineName = TempData["AirLineName"];
             ViewData["name"] = AirlineName;
 
-			MongoHelper objMongoHelper = new MongoHelper();
+            //Start:Coprate GST AND EMPLOYEE DETAIL
+           
+            string employeeCode = "EO0001";
+            string legalEntityCode = "23E008";
+           
+            string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={employeeCode}&legalEntityCode={legalEntityCode}";
+            List<CompanyEmployeeGSTDetails> gstList = new();
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Add(
+                        new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                   
+                   
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+                   
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string jsonData = await response.Content.ReadAsStringAsync();
+                            gstList = JsonConvert.DeserializeObject<List<CompanyEmployeeGSTDetails>>(jsonData);
+                            // Optional: Deserialize JSON if you have a model
+                            // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
+                            // ViewBag.GSTdata = gstData;
+                        }
+                   
+
+                }
+            }
+
+            catch when (Guid == null)
+            {
+                // Handle the exception when Guid is null
+                // You can log the error or take appropriate action
+            }
+            catch 
+            {
+
+            }
+           
+
+            
+            ViewBag.GSTdata = gstList;
+
+            //End:Coprate GST AND EMPLOYEE DETAIL
+
+            MongoHelper objMongoHelper = new MongoHelper();
 			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
 			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
 			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(Guid, "AirAsia").Result;

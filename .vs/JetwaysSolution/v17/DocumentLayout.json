@@ -3,24 +3,44 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6619DE03-424B-4252-9953-FCAD7BEC244D}|Utility\\Utility.csproj|d:\\jetwaysportal\\utility\\utility.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{6619DE03-424B-4252-9953-FCAD7BEC244D}|Utility\\Utility.csproj|solutionrelative:utility\\utility.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\models\\customerdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\models\\customerdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6619DE03-424B-4252-9953-FCAD7BEC244D}|Utility\\Utility.csproj|d:\\jetwaysportal\\utility\\methodshit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6619DE03-424B-4252-9953-FCAD7BEC244D}|Utility\\Utility.csproj|solutionrelative:utility\\methodshit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6619DE03-424B-4252-9953-FCAD7BEC244D}|Utility\\Utility.csproj|d:\\jetwaysportal\\utility\\logs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6619DE03-424B-4252-9953-FCAD7BEC244D}|Utility\\Utility.csproj|solutionrelative:utility\\logs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{00E6BDC4-FAD3-4C68-96F7-FD67576A36B5}|Indigo\\Indigo.csproj|d:\\jetwaysportal\\indigo\\indigo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{00E6BDC4-FAD3-4C68-96F7-FD67576A36B5}|Indigo\\Indigo.csproj|solutionrelative:indigo\\indigo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\coporatebooking.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\coporatebooking.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\admin\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\admin\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,72 +50,128 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Methodshit.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\Utility\\Methodshit.cs",
-              "RelativeDocumentMoniker": "Utility\\Methodshit.cs",
-              "ToolTip": "D:\\JetwaysPortal\\Utility\\Methodshit.cs",
-              "RelativeToolTip": "Utility\\Methodshit.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T09:17:36.453Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Logs.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\Utility\\Logs.cs",
-              "RelativeDocumentMoniker": "Utility\\Logs.cs",
-              "ToolTip": "D:\\JetwaysPortal\\Utility\\Logs.cs",
-              "RelativeToolTip": "Utility\\Logs.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T09:17:35.144Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Utility",
-              "DocumentMoniker": "D:\\JetwaysPortal\\Utility\\Utility.csproj",
-              "RelativeDocumentMoniker": "Utility\\Utility.csproj",
-              "ToolTip": "D:\\JetwaysPortal\\Utility\\Utility.csproj",
-              "RelativeToolTip": "Utility\\Utility.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-21T09:17:29.548Z",
-              "EditorCaption": ""
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\appsettings.Development.json",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\appsettings.Development.json",
+              "RelativeToolTip": "OnionArchitectureAPI\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-09T05:59:27.918Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Indigo",
-              "DocumentMoniker": "D:\\JetwaysPortal\\Indigo\\Indigo.csproj",
-              "RelativeDocumentMoniker": "Indigo\\Indigo.csproj",
-              "ToolTip": "D:\\JetwaysPortal\\Indigo\\Indigo.csproj",
-              "RelativeToolTip": "Indigo\\Indigo.csproj",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\appsettings.json",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\appsettings.json",
+              "RelativeToolTip": "OnionArchitectureAPI\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-21T09:17:27.612Z",
-              "EditorCaption": ""
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-09T05:59:25.478Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\appsettings.Development.json",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\appsettings.Development.json",
+              "RelativeToolTip": "OnionConsumeWebAPI\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-09T05:59:19.718Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "CoporateBooking.csproj",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj",
-              "RelativeDocumentMoniker": "CoporateBooking\\CoporateBooking.csproj",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\CoporateBooking.csproj",
-              "RelativeToolTip": "CoporateBooking\\CoporateBooking.csproj",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\appsettings.json",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\appsettings.json",
+              "RelativeToolTip": "OnionConsumeWebAPI\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-21T08:51:55.444Z",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-09T05:59:16.983Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\appsettings.json",
+              "RelativeDocumentMoniker": "CoporateBooking\\appsettings.json",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\appsettings.json",
+              "RelativeToolTip": "CoporateBooking\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-09T05:58:58.639Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "CoporateBooking\\appsettings.Development.json",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\appsettings.Development.json",
+              "RelativeToolTip": "CoporateBooking\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-09T05:58:56.26Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
+              "RelativeDocumentMoniker": "CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
+              "RelativeToolTip": "CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAAAIgAAAB0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-08T11:43:09.268Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CustomerDetails.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Models\\CustomerDetails.cs",
+              "RelativeDocumentMoniker": "CoporateBooking\\Models\\CustomerDetails.cs",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Models\\CustomerDetails.cs",
+              "RelativeToolTip": "CoporateBooking\\Models\\CustomerDetails.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T10:57:33.831Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\Admin\\LoginController.cs",
+              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\Admin\\LoginController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\Admin\\LoginController.cs",
+              "RelativeToolTip": "CoporateBooking\\Controllers\\Admin\\LoginController.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAQwC4AAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-07T05:59:43.2Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FlightSearchIndexController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
+              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
+              "RelativeToolTip": "CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
+              "ViewState": "AgIAAIYAAAAAAAAAAAArwKYAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-30T11:29:17.891Z"
             }
           ]
         }

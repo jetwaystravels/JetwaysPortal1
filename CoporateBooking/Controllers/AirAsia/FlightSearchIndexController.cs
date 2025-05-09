@@ -41,6 +41,10 @@ using static DomainLayer.Model.SeatMapResponceModel;
 using Spicejet;
 using OnionConsumeWebAPI.Controllers.Indigo;
 using Indigo;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using static System.Net.WebRequestMethods;
+using CoporateBooking.Models;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace OnionConsumeWebAPI.Controllers.AirAsia
 {
@@ -77,18 +81,50 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
         string token = string.Empty;
         int TotalCount = 0;
 
-
+ 
 
 
         [Route("")]
         public async Task<IActionResult> Index()
         {
+            
+           // var email = HttpContext.Session.GetString("LoggedInEmail");
+
+           // string emaillogin1 = "kanpur.ashok@gmail.com";
+
+            var emaillogin1 = HttpContext.Session.GetString("LoggedInEmail");
+
+            string apiUrl = $"{AppUrlConstant.CustomerDetailsByEmail}?email={emaillogin1}";
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Add(
+                        new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonData = await response.Content.ReadAsStringAsync();
+
+                        // Optional: Deserialize JSON if you have a model
+                       // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
+                         ViewBag.CustomerData = jsonData;
+                    }
+
+                }
+            }
+            catch
+            {
+
+            }
             return View();
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> SearchResultFlight(SimpleAvailabilityRequestModel _GetfligthModel, string flightclass, string SameAirlineRT)
+        public async Task<IActionResult> SearchResultFlight(SimpleAvailabilityRequestModel _GetfligthModel, string flightclass, string SameAirlineRT, string email, string returnUrl)
         {
             if (SameAirlineRT.ToLower() == "airlinert")
             {
@@ -98,6 +134,10 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             string SearchGuid = Guid.NewGuid().ToString().ToUpper();
             string ResponseGuid = string.Empty;
             string getguid = string.Empty;
+           // HttpContext.Session.Clear();
+            string userEmail = HttpContext.Session.GetString("LoggedInEmail");
+            //string emaillogin = "kanpur.ashok@gmail.com";
+            string emaillogin = userEmail;
 
             MongoHelper objMongoHelper = new MongoHelper();
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
@@ -209,7 +249,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
-                HttpResponseMessage response = await client.GetAsync("api/Login/getotacredairasia");
+                //HttpResponseMessage response = await client.GetAsync("api/Login/getotacredairasia");
+                HttpResponseMessage response = await client.GetAsync(AppUrlConstant.AirlineLogin);
                 //Air Asia login
                 if (response.IsSuccessStatusCode)
                 {
@@ -779,6 +820,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 _SimpleAvailibilityaAddResponceobj.faresIndividual = fareIndividualsList;
                                 _SimpleAvailibilityaAddResponceobj.Airline = Airlines.Airasia;
                                 _SimpleAvailibilityaAddResponceobj.uniqueId = uniqueidx;
+                                _SimpleAvailibilityaAddResponceobj.Loginstatus = emaillogin;
                                 if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0 || stops >= 2)
                                     continue;
                                 uniqueidx++;
@@ -1034,6 +1076,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                             _SimpleAvailibilityaAddResponceobj.faresIndividual = AkasafareIndividualsList;
                                             _SimpleAvailibilityaAddResponceobj.Airline = Airlines.AkasaAir;
                                             _SimpleAvailibilityaAddResponceobj.uniqueId = uniqueidx;
+                                            _SimpleAvailibilityaAddResponceobj.Loginstatus = emaillogin;
                                             if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0 || stops >= 2)
                                                 continue;
                                             uniqueidx++;
@@ -1286,6 +1329,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             _SimpleAvailibilityaAddResponceobj.faresIndividual = fareIndividualsconnectedList;// fareIndividualsList;
                             _SimpleAvailibilityaAddResponceobj.uniqueId = uniqueidx;
                             _SimpleAvailibilityaAddResponceobj.Airline = Airlines.Spicejet;
+                            _SimpleAvailibilityaAddResponceobj.Loginstatus = emaillogin;
                             if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0)
                                 continue;
                             uniqueidx++;
@@ -1526,6 +1570,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         _SimpleAvailibilityaAddResponceobj.faresIndividual = fareIndividualsconnectedList;// fareIndividualsList;
                         _SimpleAvailibilityaAddResponceobj.uniqueId = uniqueidx;
                         _SimpleAvailibilityaAddResponceobj.Airline = Airlines.Indigo;
+                        _SimpleAvailibilityaAddResponceobj.Loginstatus = emaillogin;
                         if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0)
                             continue;
                         uniqueidx++;
@@ -1823,6 +1868,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 _SimpleAvailibilityaAddResponceobj.Airline = Airlines.AirIndia;
                             else if (_SimpleAvailibilityaAddResponceobj.segments[0].identifier.carrierCode.Equals("H1"))
                                 _SimpleAvailibilityaAddResponceobj.Airline = Airlines.Hehnair;
+                            _SimpleAvailibilityaAddResponceobj.Loginstatus = emaillogin;
                             if (_SimpleAvailibilityaAddResponceobj.fareTotalsum <= 0)
                                 continue;
                             uniqueidx++;

@@ -127,11 +127,14 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                 {
                     return RedirectToAction("Index");
                 }
-                //var Signature = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(token);
-                string stravailibitilityrequest = HttpContext.Session.GetString("GDSAvailibilityRequest");
-                SimpleAvailabilityRequestModel availibiltyRQGDS = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(stravailibitilityrequest);
 
-                GetAvailabilityRequest availibiltyRQ = Newtonsoft.Json.JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
+                //var Signature = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(token);
+                //string stravailibitilityrequest = HttpContext.Session.GetString("GDSAvailibilityRequest");
+
+                var jsonData = objMongoHelper.UnZip(tokenData.PassRequest);
+                SimpleAvailabilityRequestModel availibiltyRQGDS = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData);
+
+                //GetAvailabilityRequest availibiltyRQ = Newtonsoft.Json.JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
 
                 #region GDSAirPricelRequest
 
@@ -660,6 +663,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                         string columncount0 = string.Empty;
                         var data = 2;// SeatMapres.Count;// _getSeatAvailabilityResponse.SeatAvailabilityResponse.EquipmentInfos.Length;
                         List<data> datalist = new List<data>();
+                        Hashtable htseat=new Hashtable();
                         SeatMapResponceModel SeatMapResponceModel = new SeatMapResponceModel();
                         List<SeatMapResponceModel> SeatMapResponceModellist = new List<SeatMapResponceModel>();
                         foreach (Match mitem in Regex.Matches(SeatMapres, @"<air:AirSegment\s*Key=""(?<segmentkey>[\s\S]*?)""[\s\S]*?</air:Airsegment>",RegexOptions.IgnoreCase|RegexOptions.Multiline))
@@ -687,17 +691,25 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 							string _seatPosition = "";
 							//for (int i = 0; i < compartmentsunitCount; i++) // 2 times 
 							Hashtable htPaidSeatPrice = new Hashtable();
-							foreach (Match mSeat in Regex.Matches(SeatMapres, @"PreReservedSeatAssignment[\s\S]*?TotalPrice=""(?<Price>[\s\S]*?)""[\s\S]*?Key=""(?<Key>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+							Hashtable _htpaxwiseSeat = new Hashtable();
+                            string BookingTravellerref = string.Empty;
+
+                            foreach (Match mSeat in Regex.Matches(SeatMapres, @"<air:OptionalService Type=""PreReservedSeatAssignment[\s\S]*?TotalPrice=""(?<Price>[\s\S]*?)""[\s\S]*?Key=""(?<Key>[\s\S]*?)""[\s\S]*?</air:OptionalService>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
 							{
 								if (!htPaidSeatPrice.Contains(mSeat.Groups["Key"].Value.Trim()))
 								{
 									htPaidSeatPrice.Add(mSeat.Groups["Key"].Value.Trim(), mSeat.Groups["Price"].Value.Trim());
-								}
+                                }
 
-							}
+                                if (!htseat.Contains(mSeat.Groups["Price"].Value.Trim().Replace("INR", "")))
+                                {
+                                    htseat.Add(mSeat.Groups["Price"].Value.Trim().Replace("INR", ""), mSeat.Value.Trim());
+                                }
+                                BookingTravellerref= Regex.Match(mSeat.Value.Trim(), "BookingTravelerRef=\"(?<Travellerref>[\\s\\S]*?)\"").Groups["Travellerref"].Value.Trim();
+                            }
 
 
-							foreach (Match mRows in Regex.Matches(SeatMapres, @"<air:Rows SegmentRef=""(?<Key>[\s\S]*?)""[\s\S]*?</air:Rows>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                            foreach (Match mRows in Regex.Matches(SeatMapres, @"<air:Rows SegmentRef=""(?<Key>[\s\S]*?)""[\s\S]*?</air:Rows>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                             {
 
 								compartmentsunitlist = new List<Unit>();
@@ -1003,6 +1015,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                             dataobj.seatMapfees = Fees;
                             datalist.Add(dataobj);
                             SeatMapResponceModel.datalist = datalist;
+                            SeatMapResponceModel.htSeatlist = htseat;
                         }
                         string strseat = JsonConvert.SerializeObject(SeatMapResponceModel);
                         HttpContext.Session.SetString("Seatmap", JsonConvert.SerializeObject(SeatMapResponceModel));

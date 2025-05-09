@@ -98,7 +98,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                 // token = tokenview.Replace(@"""", string.Empty);
                 // string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
 
-                string passengernamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+                string passengernamedetails = objMongoHelper.UnZip(tokenData.PassengerRequest);
 
                 List<passkeytype> passeengerlist = (List<passkeytype>)JsonConvert.DeserializeObject(passengernamedetails, typeof(List<passkeytype>));
                 // string contactdata = HttpContext.Session.GetString("GDSContactdetails");
@@ -141,38 +141,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     _password = "Q!f5-d7A3D";
                     StringBuilder createPNRReq = new StringBuilder();
                     string AdultTraveller = passengernamedetails;
-                    string _data = HttpContext.Session.GetString("SGkeypassenger");
-                    string _Total = HttpContext.Session.GetString("Total");
-
-                    string serializedUnitKey = HttpContext.Session.GetString("UnitKey");
-                    List<string> _unitkey = new List<string>();
-                    if (!string.IsNullOrEmpty(serializedUnitKey))
-                    {
-                        // Deserialize the JSON string back into a List<string>
-                        _unitkey= JsonConvert.DeserializeObject<List<string>>(serializedUnitKey);
-                    }
-
-                    string serializedSSRKey = HttpContext.Session.GetString("ssrKey");
-                    List<string> _SSRkey = new List<string>();
-                    if (!string.IsNullOrEmpty(serializedSSRKey))
-                    {
-                        // Deserialize the JSON string back into a List<string>
-                        _SSRkey = JsonConvert.DeserializeObject<List<string>>(serializedSSRKey);
-                    }
-
-                    //retrive PNR
-
-                    string res = _objAvail.CreatePNR(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, "GDSOneWay", _unitkey, _SSRkey,_pricesolution);
-
-                    //string RecordLocator = Regex.Match(res, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
-                    string RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
-                    //string RecordLocator = Regex.Match(res, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
-
-                    //getdetails
-                    string strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, "GDSOneWay");
-
-
-
+                    string strResponse = HttpContext.Session.GetString("PNR").Split("@@")[0];
 
                     string _TicketRecordLocator = Regex.Match(strResponse, @"AirReservation[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
                     //GetAirTicket
@@ -196,8 +165,10 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                         }
 
                     }
+                    //getdetails
+                    string RecordLocator = HttpContext.Session.GetString("PNR").Split("@@")[1];
+                    strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, "GDSOneWay");
 
-                    //IndigoBookingManager_.BookingCommitResponse _BookingCommitResponse = await objcommit.commit(token, contactList, passeengerlist, "OneWay");
                     GDSResModel.PnrResponseDetails pnrResDetail = new GDSResModel.PnrResponseDetails();
                     if (!string.IsNullOrEmpty(strResponse) && !string.IsNullOrEmpty(RecordLocator))
                     {

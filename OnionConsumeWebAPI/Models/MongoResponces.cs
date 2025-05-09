@@ -26,15 +26,15 @@
         public MongoDB.Bson.ObjectId _id;
         public string Guid;
         public string PassRequest;
-        public string ContactRequest;
+		public string ContactRequest;
         public string Request;
         public string Token;
         public string RToken;
         public string JourneyKey;
         public string Supp;
-        public string PassengerRequest;
-        public string CommResponse;
-        public DateTime CreatedDate;
+		public string PassengerRequest;
+		public string OldPassengerRequest;
+		public DateTime CreatedDate;
 
     }
 

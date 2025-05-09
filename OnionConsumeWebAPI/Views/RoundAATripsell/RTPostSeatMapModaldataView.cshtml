@@ -724,6 +724,7 @@
 <div class="journey-box">
     <ul class="nav nav-pills">
         @{
+            //Hashtable htseat = Model.SeatmaplistRT[0].htSeatlist;
             int passengerdata = @Model.passeengerlistRT[0].passengerscount;
 
         }
@@ -1045,6 +1046,7 @@
                                                         {
                                                             string[] arrayofseat = ht0[data].ToString().Split("_@");
                                                             string feeamountF1 = string.Empty;
+                                                            string againtfeeamountData = string.Empty;
                                                             string seatavailability = string.Empty;
                                                             string Airlinename = string.Empty;
                                                             if (arrayofseat.Length > 1)
@@ -1057,8 +1059,11 @@
                                                             {
                                                                 if (seatavailability == "100")
                                                                 {
+                                                                    //againtfeeamountData = htseat[feeamountF1].ToString();
+
                                                                     <li class="seat-li midcomfort chkbox tooltip">
-                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <!--<input type="checkbox" name="unitKey" value="" class="chkbox"/>-->
+                                                                        <input type="checkbox" class="mycheck" name="unitKey" value="@feeamountF1 _@arrayofseat[1] _@data _@l _@arrayofseat[2] _OneWay0 __@againtfeeamountData" id="unitKey" />
                                                                         <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span></span>
                                                                     </li>
                                                                 }
@@ -1216,6 +1221,7 @@
                                                         {
                                                             string[] arrayofseat = ht1[data].ToString().Split("_@");
                                                             string feeamountF1 = string.Empty;
+                                                            string againtfeeamountData1 = string.Empty;
                                                             string seatavailability = string.Empty;
                                                             string Airlinename = string.Empty;
                                                             if (arrayofseat.Length > 1)
@@ -1229,8 +1235,11 @@
                                                             {
                                                                 if (seatavailability == "100")
                                                                 {
+                                                                    //againtfeeamountData1 = htseat[feeamountF1].ToString();
+
                                                                     <li class="seat-li midcomfort chkbox tooltip">
-                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <!--<input type="checkbox" name="unitKey" value="" class="chkbox" disabled />-->
+                                                                        <input type="checkbox" class="mycheck" name="unitKey" value="@feeamountF1 _@arrayofseat[1] _@data _@l _@arrayofseat[2] _OneWay1 __@againtfeeamountData1" id="unitKey" />
                                                                         <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span></span>
                                                                     </li>
                                                                 }
@@ -1441,6 +1450,7 @@
                                                             {
                                                                 string[] arrayofseat = htRT0[data].ToString().Split("_@");
                                                                 string feeamountF1 = string.Empty;
+                                                                string againtfeeamountData1 = string.Empty;
                                                                 string seatavailability = string.Empty;
                                                                 string Airlinename = string.Empty;
                                                                 if (arrayofseat.Length > 1)
@@ -1454,8 +1464,11 @@
                                                                 {
                                                                     if (seatavailability == "100")
                                                                     {
+                                                                        //againtfeeamountData1 = htseat[feeamountF1].ToString();
+
                                                                         <li class="seat-li midcomfort chkbox tooltip">
-                                                                            <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                           <!-- <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />-->
+                                                                            <input type="checkbox" class="mycheckRT" name="unitKey" value="@feeamountF1 _@arrayofseat[1] _@data _@l _@arrayofseat[2] _RT0 __@againtfeeamountData1" id="unitKey" />
                                                                             <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span></span>
                                                                         </li>
                                                                     }
@@ -1615,6 +1628,7 @@
                                                             {
                                                                 string[] arrayofseat = htRT1[data].ToString().Split("_@");
                                                                 string feeamountF1 = string.Empty;
+                                                                string againtfeeamountData1 = string.Empty;
                                                                 string seatavailability = string.Empty;
                                                                 string Airlinename = string.Empty;
                                                                 if (arrayofseat.Length > 1)
@@ -1627,8 +1641,11 @@
                                                                 {
                                                                     if (seatavailability == "100")
                                                                     {
+                                                                        //againtfeeamountData1 = htseat[feeamountF1].ToString();
+
                                                                         <li class="seat-li midcomfort chkbox tooltip">
-                                                                            <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                            <!--<input type="checkbox" name="unitKey" value="" class="chkbox" disabled />-->
+                                                                            <input type="checkbox" class="mycheck2RT" name="unitKey" value="@feeamountF1 _@arrayofseat[1] _@data _@l _@arrayofseat[2] _RT1 __@againtfeeamountData1" id="unitKey" />
                                                                             <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span></span>
                                                                         </li>
                                                                     }

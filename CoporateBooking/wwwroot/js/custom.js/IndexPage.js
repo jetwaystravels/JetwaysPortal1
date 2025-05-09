@@ -1,8 +1,22 @@
 ﻿//**********Validation home page  Code Start ****************//
 //*****************************************************//
 localStorage.clear();
+
+
+
 function validateForm() {
     $('#multipleValuesForm').submit(function (event) {
+        
+        var empselect = document.getElementById("empid").value;
+        if (empselect == "") {
+            debugger;
+            var ToDisplay = document.getElementById("emltoggle");
+            ToDisplay.style.display = "block";
+            document.getElementById("empid").focus();
+            return false;
+            event.preventDefault();
+        }
+
         var originfocus = document.getElementById("myInput").value;
         if (originfocus == "") {
             //alert("Enter Origin Name");

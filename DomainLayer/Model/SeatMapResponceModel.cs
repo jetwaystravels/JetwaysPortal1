@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ namespace DomainLayer.Model
     {
 
         public List<data> datalist { get; set; }
+        public Hashtable htSeatlist { get; set; }
+        //public Dictionary <string, string> DictSeatlist { get; set; }
         public class data
         {
             public Seatmap seatMap { get; set; }
