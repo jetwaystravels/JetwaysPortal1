@@ -2761,20 +2761,18 @@ namespace OnionArchitectureAPI.Services.Travelport
                     {
                         if (passengerdetails[i].title.ToLower() == "mr")
                         {
+
+                            //For Hardcoded DOB
                             /////30JAN98/M//Test/Umesh
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/03Dec06/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////03Dec06/M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/01jan00/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////01jan00/M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            
 
                         }
                         else
                         {
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/03Dec06/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////03Dec06/F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/01jan00/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////01jan00/F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
                         }
                         createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
                         createPNRReq.Append("<SSR Type=\"CTCE\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"test//ENDFARE.in\"/>");
@@ -2803,18 +2801,14 @@ namespace OnionArchitectureAPI.Services.Travelport
                     {
                         if (passengerdetails[i].title.ToLower() == "mstr")
                         {
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/11Dec13/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////11Dec13/M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/01jan00/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////01jan00/M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
 
                         }
                         else
                         {
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/11Dec13/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////11Dec13/F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/01jan00/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////01jan00/F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
 
                         }
                         createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
@@ -4438,18 +4432,24 @@ namespace OnionArchitectureAPI.Services.Travelport
                     {
                         if (passengerdetails[i].title.ToLower() == "mr")
                         {
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/03Dec90/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////03Dec90/M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //for DEFAULT DOB
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/01Jan00/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////01Jan00/M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            
+                            //for Hardcoded DOB
+                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
 
                         }
                         else
                         {
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/03Dec90/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////03Dec90/F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //for DEFAULT DOB
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/01Jan00/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////01Jan00/F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+
+                            //for Hardcoded DOB
+                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
 
                         }
                         createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
@@ -4479,18 +4479,24 @@ namespace OnionArchitectureAPI.Services.Travelport
                     {
                         if (passengerdetails[i].title.ToLower() == "mstr")
                         {
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/11Dec90/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////11Dec90/M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //for DEFAULT DOB
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/01Jan00/M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////01Jan00/M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+
+                            //for Hardcoded DOB
+                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//M/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////M//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
 
                         }
                         else
                         {
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/11Dec90/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////11Dec90/F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //for DEFAULT DOB
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/01Jan00/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////01Jan00/F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            
+                            //for Hardcoded DOB
+                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
+                            //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
 
                         }
                         createPNRReq.Append("<SSR Type=\"CTCM\" Status=\"HK\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\" FreeText=\"1234567890\"/>");
