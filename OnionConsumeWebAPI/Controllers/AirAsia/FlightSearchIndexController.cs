@@ -83,6 +83,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
         [Route("")]
         public async Task<IActionResult> Index()
         {
+            HttpContext.Session.Clear();
             return View();
         }
 

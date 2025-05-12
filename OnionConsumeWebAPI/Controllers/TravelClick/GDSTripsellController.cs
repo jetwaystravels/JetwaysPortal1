@@ -239,7 +239,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
             _mongoDBHelper.UpdateFlightTokenOldPassengerGDS(GUID, "GDS", passobj);
 
-            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "GDS").Result;
+           
 
             string passenger = HttpContext.Session.GetString("SGkeypassenger"); //From Itenary Response
             string passengerInfant = HttpContext.Session.GetString("SGkeypassenger");
@@ -247,9 +247,12 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             string Meals = HttpContext.Session.GetString("Meals");
             string Baggage = HttpContext.Session.GetString("Baggage");
             //string passengerNamedetails = JsonConvert.SerializeObject(passengerdetails); // HttpContext.Session.GetString("PassengerNameDetails");
-            string passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
+          
             ViewModel vm = new ViewModel();
             passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
+
+            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "GDS").Result;
+            string passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
 
             //Addcreate Reservation
             string _pricesolution = string.Empty;

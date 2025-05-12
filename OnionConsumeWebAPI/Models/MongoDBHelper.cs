@@ -286,6 +286,23 @@ namespace OnionConsumeWebAPI.Models
             }
 
         }
+		
+		public void UpdateCommitResponse(string guid, string supp, string CommitValue)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.CommResponse, CommitValue);
+                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
+            }
+
+        }
 
         public void UpdateFlightTokenPassengerGDS(string guid, string supp, string Passenger)
         {

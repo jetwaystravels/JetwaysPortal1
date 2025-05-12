@@ -462,66 +462,66 @@ namespace OnionConsumeWebAPI.Controllers
 
             }
         }
-        public async Task<IActionResult> GetGstDetails01(AddGSTInformation addGSTInformation, string lineOne, string lineTwo, string city, string number, string postalCode)
-        {
-            string tokenview = HttpContext.Session.GetString("AirasiaTokan");
-            token = tokenview.Replace(@"""", string.Empty);
+        //public async Task<IActionResult> GetGstDetails01(AddGSTInformation addGSTInformation, string lineOne, string lineTwo, string city, string number, string postalCode)
+        //{
+        //    string tokenview = HttpContext.Session.GetString("AirasiaTokan");
+        //    token = tokenview.Replace(@"""", string.Empty);
 
-            using (HttpClient client = new HttpClient())
-            {
-                AddGSTInformation addinformation = new AddGSTInformation();
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        AddGSTInformation addinformation = new AddGSTInformation();
 
 
-                addinformation.contactTypeCode = "G";
+        //        addinformation.contactTypeCode = "G";
 
-                GSTPhonenumber Phonenumber = new GSTPhonenumber();
-                List<GSTPhonenumber> Phonenumberlist = new List<GSTPhonenumber>();
-                Phonenumber.type = "Other";
-                Phonenumber.number = number;
-                Phonenumberlist.Add(Phonenumber);
+        //        GSTPhonenumber Phonenumber = new GSTPhonenumber();
+        //        List<GSTPhonenumber> Phonenumberlist = new List<GSTPhonenumber>();
+        //        Phonenumber.type = "Other";
+        //        Phonenumber.number = number;
+        //        Phonenumberlist.Add(Phonenumber);
 
-                foreach (var item in Phonenumberlist)
-                {
-                    addinformation.phoneNumbers = Phonenumberlist;
-                }
-                addinformation.cultureCode = "";
-                GSTAddress Address = new GSTAddress();
-                Address.lineOne = lineOne;
-                Address.lineTwo = lineTwo;
-                Address.lineThree = "";
-                Address.countryCode = "IN";
-                Address.provinceState = "TN";
-                Address.city = city;
-                Address.postalCode = postalCode;
-                addinformation.Address = Address;
+        //        foreach (var item in Phonenumberlist)
+        //        {
+        //            addinformation.phoneNumbers = Phonenumberlist;
+        //        }
+        //        addinformation.cultureCode = "";
+        //        GSTAddress Address = new GSTAddress();
+        //        Address.lineOne = lineOne;
+        //        Address.lineTwo = lineTwo;
+        //        Address.lineThree = "";
+        //        Address.countryCode = "IN";
+        //        Address.provinceState = "TN";
+        //        Address.city = city;
+        //        Address.postalCode = postalCode;
+        //        addinformation.Address = Address;
 
-                addinformation.emailAddress = addGSTInformation.emailAddress;
-                addinformation.customerNumber = addGSTInformation.customerNumber;
-                addinformation.sourceOrganization = "";
-                addinformation.distributionOption = "None";
-                addinformation.notificationPreference = "None";
-                addinformation.companyName = addGSTInformation.companyName;
+        //        addinformation.emailAddress = addGSTInformation.emailAddress;
+        //        addinformation.customerNumber = addGSTInformation.customerNumber;
+        //        addinformation.sourceOrganization = "";
+        //        addinformation.distributionOption = "None";
+        //        addinformation.notificationPreference = "None";
+        //        addinformation.companyName = addGSTInformation.companyName;
 
-                GSTName Name = new GSTName();
-                Name.first = "Vadivel";
-                Name.middle = "raja";
-                Name.last = "VR";
-                Name.title = "MR";
-                Name.suffix = "";
-                addinformation.Name = Name;
+        //        GSTName Name = new GSTName();
+        //        Name.first = "Vadivel";
+        //        Name.middle = "raja";
+        //        Name.last = "VR";
+        //        Name.title = "MR";
+        //        Name.suffix = "";
+        //        addinformation.Name = Name;
 
-                var jsonContactRequest = JsonConvert.SerializeObject(addinformation, Formatting.Indented);
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage responseAddContact = await client.PostAsJsonAsync(AppUrlConstant.AirasiaGstDetail, addinformation);
-                if (responseAddContact.IsSuccessStatusCode)
-                {
-                    var _responseAddContact = responseAddContact.Content.ReadAsStringAsync().Result;
-                    var JsonObjAddContact = JsonConvert.DeserializeObject<dynamic>(_responseAddContact);
-                }
-            }
-            return RedirectToAction("Tripsell", "AATripsell");
-        }
+        //        var jsonContactRequest = JsonConvert.SerializeObject(addinformation, Formatting.Indented);
+        //        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        //        HttpResponseMessage responseAddContact = await client.PostAsJsonAsync(AppUrlConstant.AirasiaGstDetail, addinformation);
+        //        if (responseAddContact.IsSuccessStatusCode)
+        //        {
+        //            var _responseAddContact = responseAddContact.Content.ReadAsStringAsync().Result;
+        //            var JsonObjAddContact = JsonConvert.DeserializeObject<dynamic>(_responseAddContact);
+        //        }
+        //    }
+        //    return RedirectToAction("Tripsell", "AATripsell");
+        //}
         public async Task<IActionResult> PostUnitkey(List<string> unitKey, List<string> mealssrKey, List<string> BaggageSSrkey, List<string> wheelSsrkey, string GUID)
         {
             List<string> _unitkey = new List<string>();

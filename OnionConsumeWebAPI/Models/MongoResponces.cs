@@ -33,24 +33,26 @@
         public string JourneyKey;
         public string Supp;
 		public string PassengerRequest;
+		public string CommResponse;
 		public string OldPassengerRequest;
 		public DateTime CreatedDate;
 
     }
 
-    public class MongoSeatMealdetail
-    {
-        public MongoDB.Bson.ObjectId _id;
-        public string Guid;
-        public string ResultRequest;
-        public string SeatMap;
-        public string Meals;
-        public string Baggage;
-        public string Infant;
-        public string KPassenger;
-
-        public string Supp;
-        public DateTime CreatedDate;
+	public class MongoSeatMealdetail
+	{
+		public MongoDB.Bson.ObjectId _id;
+		public string Guid;
+		public string ResultRequest;
+		public string SeatMap;
+		public string Meals;
+		public string MainMeals;
+		public string Baggage;
+		public string Infant;
+		public string KPassenger;
+		public string Supp;
+		public string PSupp;
+		public DateTime CreatedDate;
 
     }
 

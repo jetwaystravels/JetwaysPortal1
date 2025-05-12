@@ -50,6 +50,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
         }
         public async Task<IActionResult> RoundTripBookingView(string Guid)
         {
+            
             AirLinePNRTicket _AirLinePNRTicket = new AirLinePNRTicket();
             _AirLinePNRTicket.AirlinePNR = new List<ReturnTicketBooking>();
             Logs logs = new Logs();

@@ -87,19 +87,22 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 
                 //GetBOoking FRom State
                 // STRAT Get INFO
-
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.AkasaAirGetBooking);
-                if (responceGetBookingSate.IsSuccessStatusCode)
+                if (tokenData.CommResponse == null)
                 {
-                    string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
-                    var DataBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
-                    decimal Totalpayment = 0M;
-                    if (_responceGetBooking != null)
+                    _mongoDBHelper.UpdateCommitResponse(Guid, "Akasa","1");
+
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    HttpResponseMessage responceGetBookingSate = await client.GetAsync(AppUrlConstant.AkasaAirGetBooking);
+                    if (responceGetBookingSate.IsSuccessStatusCode)
                     {
-                        Totalpayment = DataBooking.data.breakdown.totalAmount;
-                    }
+                        string _responceGetBooking = responceGetBookingSate.Content.ReadAsStringAsync().Result;
+                        var DataBooking = JsonConvert.DeserializeObject<dynamic>(_responceGetBooking);
+                        decimal Totalpayment = 0M;
+                        if (_responceGetBooking != null)
+                        {
+                            Totalpayment = DataBooking.data.breakdown.totalAmount;
+                        }
 
                     //Logs logs = new Logs();
                     //logs.WriteLogs("Request: " + JsonConvert.SerializeObject("GetBookingStateRequest") + "Url: " + AppUrlConstant.URLAirasia + "/api/nsk/v1/booking" + "\n Response: " + JsonConvert.SerializeObject(_responceGetBooking), "GetBookingState", "AirAsiaOneWay");
@@ -151,14 +154,19 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 if (AkresponceCommit_Booking.IsSuccessStatusCode)
                 {
 
-                    var _responceCommit_Booking = AkresponceCommit_Booking.Content.ReadAsStringAsync().Result;
-                    logs.WriteLogs(jsonCommitBookingRequest, "15-CommitBookingRequest", "AkasaOneWay", "oneway");
-                    logs.WriteLogs(_responceCommit_Booking, "15-CommitBookingResponse", "AkasaOneWay", "oneway");
+                        var _responceCommit_Booking = AkresponceCommit_Booking.Content.ReadAsStringAsync().Result;
+                        logs.WriteLogs(jsonCommitBookingRequest, "15-CommitBookingRequest", "AkasaOneWay", "oneway");
+                        logs.WriteLogs(_responceCommit_Booking, "15-CommitBookingResponse", "AkasaOneWay", "oneway");
 
-                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + (AppUrlConstant.AkasaAirCommitBooking) + "\n Response: " + JsonConvert.SerializeObject(_responceCommit_Booking), "Commit", "AkasaOneWay", "oneway");
-                    //var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
+                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_Commit_BookingModel) + "Url: " + (AppUrlConstant.AkasaAirCommitBooking) + "\n Response: " + JsonConvert.SerializeObject(_responceCommit_Booking), "Commit", "AkasaOneWay", "oneway");
+                        //var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
+                    }
+
+                    HttpContext.Session.SetString("pnr", "123");
+
+                    #endregion
                 }
-                #endregion
+
                 #region AKBooking GET
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

@@ -45,274 +45,359 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 		Logs logs = new Logs();
 		private readonly IConfiguration _configuration;
 
-		public RoundAATripsellController(IConfiguration configuration)
-		{
-			_configuration = configuration;
-		}
+        public RoundAATripsellController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
-		public IActionResult RoundAATripsellView(string Guid)
-		{
+        public IActionResult RoundAATripsellView(string Guid, string Supp)
+        {
 
-			List<SelectListItem> Title = new()
+            List<SelectListItem> Title = new()
+            {
+                new SelectListItem { Text = "Mr", Value = "Mr" },
+                new SelectListItem { Text = "Ms" ,Value = "Ms" },
+                new SelectListItem { Text = "Mrs", Value = "Mrs"},
+
+            };
+            ViewBag.Title = Title;
+
+			MongoHelper objMongoHelper = new MongoHelper();
+
+			
+			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
+			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(Guid, "AirAsia").Result;
+
+
+			//	string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
+
+			string passengerInfant = "";
+			if (seatMealdetail != null && seatMealdetail.Infant != null)
 			{
-				new SelectListItem { Text = "Mr", Value = "Mr" },
-				new SelectListItem { Text = "Ms" ,Value = "Ms" },
-				new SelectListItem { Text = "Mrs", Value = "Mrs"},
+				passengerInfant = objMongoHelper.UnZip(seatMealdetail.Infant);
+			}
 
-			};
-			ViewBag.Title = Title;
-
-			string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
 			AirAsiaTripResponceModel passeengerlistItanary = null;
-			if (passengerInfant != null)
-			{
-				passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerInfant, typeof(AirAsiaTripResponceModel));
-			}
-			ViewModel vm = new ViewModel();
-			string test = string.Empty;
-			string Meals = string.Empty;
-			SSRAvailabiltyResponceModel Mealslist = null;
-			SeatMapResponceModel Seatmaplist = null;
-			string Seatmap = string.Empty;
-			string passenger = HttpContext.Session.GetString("keypassenger");
-			vm.SeatmaplistRT = new List<SeatMapResponceModel>();
-			vm.passeengerlistRT = new List<AirAsiaTripResponceModel>();
-			vm.MealslistRT = new List<SSRAvailabiltyResponceModel>();
-			vm.passeengerlistItanary = passeengerlistItanary;
-			string Passenegrtext = HttpContext.Session.GetString("Mainpassengervm");
-			string Seattext = HttpContext.Session.GetString("Mainseatmapvm");
-			string Mealtext = HttpContext.Session.GetString("Mainmealvm");
-			//string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
-			MongoHelper objMongoHelper = new MongoHelper();
-			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-			string passengerNamedetails = string.Empty;
+            if (passengerInfant != null)
+            {
+                passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passengerInfant, typeof(AirAsiaTripResponceModel));
+            }
+            ViewModel vm = new ViewModel();
+            string test = string.Empty;
+            string Meals = string.Empty;
+            SSRAvailabiltyResponceModel Mealslist = null;
+            SeatMapResponceModel Seatmaplist = null;
+            string Seatmap = string.Empty;
+			//  string passenger = HttpContext.Session.GetString("keypassenger");
 
-			if (Guid != null)
+			string passenger = "";
+
+			vm.SeatmaplistRT = new List<SeatMapResponceModel>();
+            vm.passeengerlistRT = new List<AirAsiaTripResponceModel>();
+            vm.MealslistRT = new List<SSRAvailabiltyResponceModel>();
+            vm.passeengerlistItanary = passeengerlistItanary;
+            //string Passenegrtext = HttpContext.Session.GetString("Mainpassengervm");
+            //string Seattext = HttpContext.Session.GetString("Mainseatmapvm");
+            //string Mealtext = HttpContext.Session.GetString("Mainmealvm");
+            string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+
+			string Passenegrtext ="";
+			string Seattext = "";
+			string Mealtext = "";
+
+			if (seatMealdetail != null && seatMealdetail.KPassenger != null)
 			{
-				tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
-				passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
+				passenger = objMongoHelper.UnZip(seatMealdetail.KPassenger);
 			}
+
+
+			if (seatMealdetail != null && seatMealdetail.ResultRequest != null)
+			{
+				Passenegrtext = objMongoHelper.UnZip(seatMealdetail.ResultRequest);
+			}
+
+			if (seatMealdetail != null && seatMealdetail.SeatMap != null)
+			{
+				Seattext = objMongoHelper.UnZip(seatMealdetail.SeatMap);
+			}
+
+			if (seatMealdetail != null && seatMealdetail.MainMeals != null)
+			{
+				Mealtext = objMongoHelper.UnZip(seatMealdetail.MainMeals);
+			}
+			
+		  // if (Guid != null)
+		//	{
+		//		tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
+		//		passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
+		//	}
+
 
 			#region 2
 
 
-			if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainpassengervm")))
-			{
-				test = HttpContext.Session.GetString("Mainpassengervm");
+			if (!string.IsNullOrEmpty(Passenegrtext))
+            {
+                test = Passenegrtext;
 
-				foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
-				{
-					passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-					if (passenger != null)
-					{
-						passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-						vm.passeengerlistRT.Add(passeengerlist);
-					}
-				}
-			}
-			if (!string.IsNullOrEmpty(passengerNamedetails))
-			{
-				List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
-				vm.passengerNamedetails = passengerNamedetailsdata;
-			}
-
-			if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainseatmapvm")))
-			{
-				test = HttpContext.Session.GetString("Mainseatmapvm");
-				Seatmap = string.Empty;
-				foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
-				{
-					Seatmap = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-                    //Seatmap = Regex.Replace(Seatmap, @",""htSeatlist"":(?<data>[\s\S]*?)""}", "");
-					if (Seatmap != null)
-					{
-						Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-						vm.SeatmaplistRT.Add(Seatmaplist);
-					}
-				}
-			}
-
-			Meals = string.Empty;
-			Mealslist = null;
-			if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainmealvm")))
-			{
-				test = HttpContext.Session.GetString("Mainmealvm");
-				foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
-				{
-					Meals = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-					if (Meals != null)
-					{
-						Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
-						vm.MealslistRT.Add(Mealslist);
-					}
-				}
-			}
-
-			#endregion
-
-			if (vm.passeengerlistRT.Count > 1)
-			{
-				//    ViewBag.ErrorMessage = "";
-				if (vm.passeengerlistRT[0].journeys.Count == 0 || vm.passeengerlistRT[1].journeys.Count == 0)
-				{
-					ViewBag.ErrorMessage = "";
-					return View("service-error-msg");
-				}
-				else
-				{
-					return View(vm);
-				}
+                foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
+                {
+                    passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
+                    if (passenger != null)
+                    {
+                        passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
+                        vm.passeengerlistRT.Add(passeengerlist);
+                    }
+                }
+            }
+            if (seatMealdetail != null)
+            {
+                if (!string.IsNullOrEmpty(passengerNamedetails))
+                {
+                    List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
+                    vm.passengerNamedetails = passengerNamedetailsdata;
+                }
+            }
+            else
+            {
+                passengerNamedetails = null;
 
 			}
-			else if (vm.passeengerlistRT.Count == 1)
-			{
-				ViewBag.ErrorMessage = "";
-				return View("service-error-msg");
-			}
-			else
-			{
-				return View(vm);
-			}
-			//return View(vm);
 
-
-		}
-		public IActionResult RTPostSeatMapModaldataView(string GUID)
-		{
-			ViewModel vm = new ViewModel();
-			string test = string.Empty;
-			string Meals = string.Empty;
-			SSRAvailabiltyResponceModel Mealslist = null;
-			SeatMapResponceModel Seatmaplist = null;
-			string Seatmap = string.Empty;
-			vm.SeatmaplistRT = new List<SeatMapResponceModel>();
-			vm.passeengerlistRT = new List<AirAsiaTripResponceModel>();
-			vm.MealslistRT = new List<SSRAvailabiltyResponceModel>();
-
-			List<SelectListItem> Title = new()
-			{
-				new SelectListItem { Text = "Mr", Value = "Mr" },
-				new SelectListItem { Text = "Ms" ,Value = "Ms" },
-				new SelectListItem { Text = "Mrs", Value = "Mrs"},
-
-			};
-			ViewBag.Title = Title;
-			var AirlineName = TempData["AirLineName"];
-			ViewData["name"] = AirlineName;
-
-			string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
-			string passenger = HttpContext.Session.GetString("keypassenger");
-			string Passenegrtext = HttpContext.Session.GetString("Mainpassengervm");
-			string Seattext = HttpContext.Session.GetString("Mainseatmapvm");
-			string Mealtext = HttpContext.Session.GetString("Mainmealvm");
-			//string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
-			string BaggageDataR = HttpContext.Session.GetString("BaggageDetails");
-
-			MongoHelper objMongoHelper = new MongoHelper();
-			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "GDS").Result;
-			string passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
-
-			if (string.IsNullOrEmpty(passengerNamedetails))
-			{
-				passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsSG");
-			}
-
-			if (string.IsNullOrEmpty(passengerNamedetails))
-			{
-				passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsIndigo");
-			}
-
-			#region 2
-			if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainpassengervm")))
-			{
-				test = HttpContext.Session.GetString("Mainpassengervm");
-
-				foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
-				{
-					passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-					if (passenger != null)
-					{
-						passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-						vm.passeengerlistRT.Add(passeengerlist);
-					}
-				}
-			}
-			if (!string.IsNullOrEmpty(BaggageDataR))
-			{
-				SSRAvailabiltyResponceModel RBaggageDataDetails = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(BaggageDataR, typeof(SSRAvailabiltyResponceModel));
-				vm.Baggage = RBaggageDataDetails;
-			}
-			if (!string.IsNullOrEmpty(passengerNamedetails))
-			{
-				List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
-				vm.passengerNamedetails = passengerNamedetailsdata;
-			}
-
-
-			if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainseatmapvm")))
-			{
-				test = HttpContext.Session.GetString("Mainseatmapvm");
-				Seatmap = string.Empty;
-				foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
-				{
-					Seatmap = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-                    //Seatmap = Regex.Replace(Seatmap, @",""htSeatlist"":(?<data>[\s\S]*?)""}", "");
+            if (!string.IsNullOrEmpty(Seattext))
+            {
+                test = Seattext;
+                Seatmap = string.Empty;
+                foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
+                {
+                    Seatmap = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
                     if (Seatmap != null)
-					{
-						Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
-						vm.SeatmaplistRT.Add(Seatmaplist);
-					}
-				}
-			}
+                    {
+                        Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
+                        vm.SeatmaplistRT.Add(Seatmaplist);
+                    }
+                }
+            }
 
-			Meals = string.Empty;
-			Mealslist = null;
-			if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainmealvm")))
-			{
-				test = HttpContext.Session.GetString("Mainmealvm");
-				foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
-				{
-					Meals = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-					if (Meals != null)
-					{
-						Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
-						vm.MealslistRT.Add(Mealslist);
-					}
-				}
-			}
+            Meals = string.Empty;
+            Mealslist = null;
+            if (!string.IsNullOrEmpty(Mealtext))
+            {
+                test = Mealtext;
+                foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
+                {
+                    Meals = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
+                    if (Meals != null)
+                    {
+                        Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                        vm.MealslistRT.Add(Mealslist);
+                    }
+                }
+            }
 
-			#endregion
+            #endregion
+
+            if (vm.passeengerlistRT.Count > 1)
+            {
+                //    ViewBag.ErrorMessage = "";
+                if (vm.passeengerlistRT[0].journeys.Count == 0 || vm.passeengerlistRT[1].journeys.Count == 0)
+                {
+                    ViewBag.ErrorMessage = "";
+                    return View("service-error-msg");
+                }
+                else
+                {
+                    return View(vm);
+                }
+
+            }
+            else if (vm.passeengerlistRT.Count == 1)
+            {
+                ViewBag.ErrorMessage = "";
+                return View("service-error-msg");
+            }
+            else
+            {
+                return View(vm);
+            }
+            //return View(vm);
 
 
-			return View(vm);
-		}
+        }
+        public IActionResult RTPostSeatMapModaldataView(string Guid)
+        {
+            ViewModel vm = new ViewModel();
+            string test = string.Empty;
+            string Meals = string.Empty;
+            SSRAvailabiltyResponceModel Mealslist = null;
+            SeatMapResponceModel Seatmaplist = null;
+            string Seatmap = string.Empty;
+            vm.SeatmaplistRT = new List<SeatMapResponceModel>();
+            vm.passeengerlistRT = new List<AirAsiaTripResponceModel>();
+            vm.MealslistRT = new List<SSRAvailabiltyResponceModel>();
 
-		public async Task<IActionResult> PostReturnContactData(ContactModel contactobject, AddGSTInformation addGSTInformation, string Guid)
-		{
+            List<SelectListItem> Title = new()
+            {
+                new SelectListItem { Text = "Mr", Value = "Mr" },
+                new SelectListItem { Text = "Ms" ,Value = "Ms" },
+                new SelectListItem { Text = "Mrs", Value = "Mrs"},
+
+            };
+            ViewBag.Title = Title;
+            var AirlineName = TempData["AirLineName"];
+            ViewData["name"] = AirlineName;
+
+		//	string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
+		//	string passenger = HttpContext.Session.GetString("keypassenger");
+		//	string Passenegrtext = HttpContext.Session.GetString("Mainpassengervm");
+		//	string Seattext = HttpContext.Session.GetString("Mainseatmapvm");
+		//	string Mealtext = HttpContext.Session.GetString("Mainmealvm");
+			//string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+		//	string BaggageDataR = HttpContext.Session.GetString("BaggageDetails");
 
 			MongoHelper objMongoHelper = new MongoHelper();
 			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
+			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(Guid, "AirAsia").Result;
+
+            string passengerInfant = "";
+            string passenger = "";
+            string Passenegrtext = "";
+			string Seattext = "";
+			string Mealtext = "";
+			string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+            string BaggageDataR = "";// HttpContext.Session.GetString("BaggageDetails");
+
+
+			if (seatMealdetail != null)
+			{
+				passengerInfant = objMongoHelper.UnZip(seatMealdetail.KPassenger); // todo
+				passenger = objMongoHelper.UnZip(seatMealdetail.KPassenger);
+				Passenegrtext = objMongoHelper.UnZip(seatMealdetail.ResultRequest);
+				Seattext = objMongoHelper.UnZip(seatMealdetail.SeatMap);
+				Mealtext = objMongoHelper.UnZip(seatMealdetail.MainMeals);
+				BaggageDataR = objMongoHelper.UnZip(seatMealdetail.Baggage);
+
+				if (string.IsNullOrEmpty(passengerNamedetails))
+				{
+                    if (seatMealdetail.PSupp == "SpiceJet")
+                    {
+                        passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsSG");
+                    }
+					else if(seatMealdetail.PSupp == "Indigo")
+					{
+						passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsIndigo");
+					}
+                    else if (seatMealdetail.PSupp == "GDS")
+                    {
+                        MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
+                        passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
+
+                    }
+                }
+				
+			}
+
+			//if (string.IsNullOrEmpty(passengerNamedetails))
+   //         {
+   //              passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsSG");
+   //         }
+
+            //if (string.IsNullOrEmpty(passengerNamedetails))
+            //{
+            //    passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsIndigo");
+            //}
+
+            #region 2
+            if (!string.IsNullOrEmpty(Passenegrtext))
+            {
+                test = Passenegrtext;
+
+                foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
+                {
+                    passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
+                    if (passenger != null)
+                    {
+                        passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
+                        vm.passeengerlistRT.Add(passeengerlist);
+                    }
+                }
+            }
+            if (!string.IsNullOrEmpty(BaggageDataR))
+            {
+                SSRAvailabiltyResponceModel RBaggageDataDetails = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(BaggageDataR, typeof(SSRAvailabiltyResponceModel));
+                vm.Baggage = RBaggageDataDetails;
+            }
+            if (!string.IsNullOrEmpty(passengerNamedetails))
+            {
+                List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
+                vm.passengerNamedetails = passengerNamedetailsdata;
+            }
+
+
+            if (!string.IsNullOrEmpty(Seattext))
+            {
+                test = Seattext;
+
+				Seatmap = string.Empty;
+                foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
+                {
+                    Seatmap = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
+                    if (Seatmap != null)
+                    {
+                        Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
+                        vm.SeatmaplistRT.Add(Seatmaplist);
+                    }
+                }
+            }
+
+            Meals = string.Empty;
+            Mealslist = null;
+            if (!string.IsNullOrEmpty(Mealtext))
+            {
+                test = Mealtext;
+                foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
+                {
+                    Meals = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
+                    if (Meals != null)
+                    {
+                        Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                        vm.MealslistRT.Add(Mealslist);
+                    }
+                }
+            }
+
+            #endregion
+
+
+            return View(vm);
+        }
+
+        public async Task<IActionResult> PostReturnContactData(ContactModel contactobject, AddGSTInformation addGSTInformation, string Guid)
+        {
+
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
 			string contobj = objMongoHelper.Zip(JsonConvert.SerializeObject(contactobject));
 			_mongoDBHelper.UpdateFlightTokenContact(Guid, "GDS", contobj);
 
-			//ttpContext.Session.SetString("GDSContactdetails", JsonConvert.SerializeObject(contactobject));
-			string SelectedAirlinedata = HttpContext.Session.GetString("SelectedAirlineName");
-			string[] dataArray = JsonConvert.DeserializeObject<string[]>(SelectedAirlinedata);
-			for (int i = 0; i < dataArray.Length; i++)
-			{
-				if (dataArray[i] == null)
-					continue;
-				string tokenview = string.Empty;
+           // HttpContext.Session.SetString("GDSContactdetails", JsonConvert.SerializeObject(contactobject));
+            string SelectedAirlinedata = HttpContext.Session.GetString("SelectedAirlineName");
+            string[] dataArray = JsonConvert.DeserializeObject<string[]>(SelectedAirlinedata);
+            for (int i = 0; i < dataArray.Length; i++)
+            {
+                if (dataArray[i] == null)
+                    continue;
+                string tokenview = string.Empty;
 
 
-				if (string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "airasia")
-				{
-					tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
+                if (string.IsNullOrEmpty(tokenview) && dataArray[i].ToLower() == "airasia")
+                {
+                    tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "AirAsia").Result;
 
 					if (i == 0)
 					{
@@ -706,35 +791,37 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             }
                         }
 
-					}
-				}
-			}
-			return RedirectToAction("RoundAATripsellView", "RoundAATripsell");
-		}
-		[HttpPost]
-		public async Task<IActionResult> PostReturnTravllerData(List<passkeytype> passengerdetails, List<Infanttype> infanttype, string Guid)
-		{
-			HttpContext.Session.SetString("newPassengerdetails", JsonConvert.SerializeObject(passengerdetails));
-			MongoHelper objMongoHelper = new MongoHelper();
-			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-			MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
-			SSRAvailabiltyResponceModel Mealslist = null;
+                    }
+                }
+            }
+            return RedirectToAction("RoundAATripsellView", "RoundAATripsell", new { Guid = contactobject.Guid });
+        }
+        [HttpPost]
+        public async Task<IActionResult> PostReturnTravllerData(List<passkeytype> passengerdetails, List<Infanttype> infanttype, string Guid)
+        {
+           // HttpContext.Session.SetString("newPassengerdetails", JsonConvert.SerializeObject(passengerdetails));
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
+
+
+
+            SSRAvailabiltyResponceModel Mealslist = null;
 			SSRAvailabiltyResponceModel Bagslist = null;
-			//Hashtable _htpaxwiseBaggage = new Hashtable();
-			SeatMapResponceModel Seatmaplist = null;
-			ViewModel vm = new ViewModel();
+            SeatMapResponceModel Seatmaplist = null;
+            ViewModel vm = new ViewModel();
 			List<passkeytype> passengerNamedetailsdataL = null;
 			List<passkeytype> passengerNamedetailsdataR = null;
 			List<passkeytype> passengerNamedetailsdata = null;
 			List<string> MainBaggagedata = new List<string>();
 			string passobj = string.Empty;
-			string SelectedAirlinedata = HttpContext.Session.GetString("SelectedAirlineName");
-			string[] dataArray = JsonConvert.DeserializeObject<string[]>(SelectedAirlinedata);
-			for (int i1 = 0; i1 < dataArray.Length; i1++)
-			{
-				string tokenview = "";
-				string _data = HttpContext.Session.GetString("newPassengerdetails");
-				List<passkeytype> _newPassengerdetailsSG = (List<passkeytype>)JsonConvert.DeserializeObject(_data, typeof(List<passkeytype>));
+            string SelectedAirlinedata = HttpContext.Session.GetString("SelectedAirlineName");
+            string[] dataArray = JsonConvert.DeserializeObject<string[]>(SelectedAirlinedata);
+            for (int i1 = 0; i1 < dataArray.Length; i1++)
+            {
+                string tokenview = "";
+                string _data = JsonConvert.SerializeObject(passengerdetails);
+                List<passkeytype> _newPassengerdetailsSG = (List<passkeytype>)JsonConvert.DeserializeObject(_data, typeof(List<passkeytype>));
 
                 if (dataArray[i1] == null)
                     continue;
@@ -1154,41 +1241,63 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         //_sell objsell = new _sell();
                         //IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(Signature, "");
 
-						//string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
-						#endregion
-					}
-					if (dataArray[i1].ToLower() == "vistara" || dataArray[i1].ToLower() == "airindia")
-					{
+                        //string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
+                        #endregion
+                    }
+                    if (dataArray[i1].ToLower() == "vistara" || dataArray[i1].ToLower() == "airindia")
+                    {
 						//HttpContext.Session.SetString("PassengerNameDetails", JsonConvert.SerializeObject(passengerdetails));
 						passobj = objMongoHelper.Zip(JsonConvert.SerializeObject(passengerdetails));
 						_mongoDBHelper.UpdateFlightTokenOldPassengerGDS(Guid, "GDS", passobj);
-						tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
-					}
-					vm.SeatmaplistRT = new List<SeatMapResponceModel>();
-					vm.passeengerlistRT = new List<AirAsiaTripResponceModel>();
-					vm.MealslistRT = new List<SSRAvailabiltyResponceModel>();
+						
+                    }
+                    vm.SeatmaplistRT = new List<SeatMapResponceModel>();
+                    vm.passeengerlistRT = new List<AirAsiaTripResponceModel>();
+                    vm.MealslistRT = new List<SSRAvailabiltyResponceModel>();
 					vm.BaggagelistRT = new List<SSRAvailabiltyResponceModel>();
-					string test = string.Empty;
-					string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
-					string passenger = HttpContext.Session.GetString("keypassenger");
-					string Passenegrtext = HttpContext.Session.GetString("Mainpassengervm");
-					string Seatmap = HttpContext.Session.GetString("Mainseatmapvm");
-					string Meals = HttpContext.Session.GetString("Mainmealvm");
-					//string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
-					string passengerNamedetails = string.Empty;// HttpContext.Session.GetString("PassengerNameDetails");
-					if (dataArray[i1].ToLower() == "spicejet")
-					{
-						passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsSG");
+                    string test = string.Empty;
+					//string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
+					//string passenger = HttpContext.Session.GetString("keypassenger");
+					//string Passenegrtext = HttpContext.Session.GetString("Mainpassengervm");
+					//string Seatmap = HttpContext.Session.GetString("Mainseatmapvm");
+					//string Meals = HttpContext.Session.GetString("Mainmealvm");
+
+					string passengerInfant = string.Empty;
+					string passenger = string.Empty;
+					string Passenegrtext = string.Empty;
+					string Seatmap = string.Empty;
+					string Meals = string.Empty;
+
+
+					MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
+					seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(Guid, "AirAsia").Result;
+
+                    if(seatMealdetail != null)
+                    {
+                        passengerInfant = objMongoHelper.UnZip(seatMealdetail.Infant);
+						passenger = objMongoHelper.UnZip(seatMealdetail.KPassenger);
+						Passenegrtext = objMongoHelper.UnZip(seatMealdetail.ResultRequest);
+						Seatmap = objMongoHelper.UnZip(seatMealdetail.SeatMap);
+						Meals = objMongoHelper.UnZip(seatMealdetail.MainMeals);
 
 					}
-					else if (dataArray[i1].ToLower() == "indigo")
-					{
-						passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsIndigo");
-					}
+
+					//string passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+					string passengerNamedetails = string.Empty;// HttpContext.Session.GetString("PassengerNameDetails");
+                    if (dataArray[i1].ToLower() == "spicejet")
+                    {
+                        passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsSG");
+
+                    }
+                    else if (dataArray[i1].ToLower() == "indigo")
+                    {
+                        passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetailsIndigo");
+                    }
 					else if (dataArray[i1].ToLower() == "airindia")
 					{
-						//MainBaggagedata = new List<string>();
-						passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
+                        //MainBaggagedata = new List<string>();
+                        tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
+                        passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
 						//Airmerchandisingoffer
 						string _pricesolution = string.Empty;
 						if (i1 == 0)
@@ -1214,25 +1323,26 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 						StringBuilder createPNRReq = new StringBuilder();
 						StringBuilder createAirmerchandReq = new StringBuilder();
 						string AdultTraveller = passengerNamedetails;
-						_data = HttpContext.Session.GetString("SGkeypassengerRT");
-						//string _Total = HttpContext.Session.GetString("Total");
+                        //_data = HttpContext.Session.GetString("SGkeypassengerRT");
+                        _data = passenger;
+                        //string _Total = HttpContext.Session.GetString("Total");
 
-						//string serializedUnitKey = HttpContext.Session.GetString("UnitKey");
-						//List<string> _unitkey = new List<string>();
-						//if (!string.IsNullOrEmpty(serializedUnitKey))
-						//{
-						//    // Deserialize the JSON string back into a List<string>
-						//    _unitkey = JsonConvert.DeserializeObject<List<string>>(serializedUnitKey);
-						//}
+                        //string serializedUnitKey = HttpContext.Session.GetString("UnitKey");
+                        //List<string> _unitkey = new List<string>();
+                        //if (!string.IsNullOrEmpty(serializedUnitKey))
+                        //{
+                        //    // Deserialize the JSON string back into a List<string>
+                        //    _unitkey = JsonConvert.DeserializeObject<List<string>>(serializedUnitKey);
+                        //}
 
-						//string serializedSSRKey = HttpContext.Session.GetString("ssrKey");
-						//List<string> _SSRkey = new List<string>();
-						//if (!string.IsNullOrEmpty(serializedSSRKey))
-						//{
-						//    // Deserialize the JSON string back into a List<string>
-						//    _SSRkey = JsonConvert.DeserializeObject<List<string>>(serializedSSRKey);
-						//}
-						string newGuid = tokenData.Token;
+                        //string serializedSSRKey = HttpContext.Session.GetString("ssrKey");
+                        //List<string> _SSRkey = new List<string>();
+                        //if (!string.IsNullOrEmpty(serializedSSRKey))
+                        //{
+                        //    // Deserialize the JSON string back into a List<string>
+                        //    _SSRkey = JsonConvert.DeserializeObject<List<string>>(serializedSSRKey);
+                        //}
+                        string newGuid = tokenData.Token;
 						string segmentdata = string.Empty;
 
 						foreach (Match item in Regex.Matches(_pricesolution.Replace("\\", ""), "<air:AirSegment Key=\"[\\s\\S]*?</air:AirSegment><air:AirPricingInfo", RegexOptions.IgnoreCase | RegexOptions.Multiline))
@@ -1404,37 +1514,40 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
 					}
 					else
-						passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+                        passengerNamedetails = HttpContext.Session.GetString("PassengerNameDetails");
+
+                    if (!string.IsNullOrEmpty(Passenegrtext))
+                    {
+                        test = Passenegrtext;
+
+                        foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
+                        {
+                            passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
+                            if (passenger != null)
+                            {
+                                passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
+                                vm.passeengerlistRT.Add(passeengerlist);
+                            }
+                        }
+                    }
+
+                    if (dataArray[i1].ToLower() != "airindia")
+                    {
+                        if (!string.IsNullOrEmpty(passengerNamedetails))
+                        {
+                            passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
+                            vm.passengerNamedetails = passengerNamedetailsdata;
+                        }
+                    }
 
 
-
-					if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainpassengervm")))
-					{
-						test = HttpContext.Session.GetString("Mainpassengervm");
-
-						foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
-						{
-							passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-							if (passenger != null)
-							{
-								passeengerlist = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-								vm.passeengerlistRT.Add(passeengerlist);
-							}
-						}
-					}
-					//if (!string.IsNullOrEmpty(passengerNamedetails))
-					//{
-					//	List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
-					//	vm.passengerNamedetails = passengerNamedetailsdata;
-					//}
-					if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainseatmapvm")))
-					{
-						test = HttpContext.Session.GetString("Mainseatmapvm");
-						Seatmap = string.Empty;
-						foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
-						{
-							Seatmap = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-                            //Seatmap = Regex.Replace(Seatmap, @",""htSeatlist"":(?<data>[\s\S]*?)""}", "");
+                    if (!string.IsNullOrEmpty(Seatmap))
+                    {
+                        test = Seatmap;
+                        Seatmap = string.Empty;
+                        foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
+                        {
+                            Seatmap = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
                             if (Seatmap != null)
                             {
                                 Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
@@ -1443,22 +1556,23 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         }
                     }
 
-					if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainmealvm")))
-					{
-						test = HttpContext.Session.GetString("Mainmealvm");
-						foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
-						{
-							Meals = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-							if (Meals != null)
-							{
-								Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
-								vm.MealslistRT.Add(Mealslist);
-							}
-						}
-					}
-				}
-				
-			}
+                   // Meals = string.Empty;
+                   // Mealslist = null;
+                    if (!string.IsNullOrEmpty(Meals))
+                    {
+                        test = Meals;
+                        foreach (Match item in Regex.Matches(test, @"<Start>(?<test>[\s\S]*?)<End>"))
+                        {
+                            Meals = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
+                            if (Meals != null)
+                            {
+                                Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
+                                vm.MealslistRT.Add(Mealslist);
+                            }
+                        }
+                    }
+                }
+            }
 			HttpContext.Session.SetString("MainBaggagevm", JsonConvert.SerializeObject(MainBaggagedata));
 			//To do
 			string Baggage = string.Empty;
@@ -1566,20 +1680,25 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             {
                 PPBGAddon = new List<string>();
             }
-            //Seat
+			//Seat
 
-            string Meals = string.Empty;
+
+			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
+			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(Guid, "AirAsia").Result;
+
+			string Meals = string.Empty;
             List<AirAsiaTripResponceModel> passeengerKeyListRT = new List<AirAsiaTripResponceModel>();
-            string passenger = HttpContext.Session.GetString("keypassenger");
+            string passenger = objMongoHelper.UnZip(seatMealdetail.KPassenger); // HttpContext.Session.GetString("keypassenger");
             AirAsiaTripResponceModel passeengerKeyList = null;
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("keypassenger")))
+            if (!string.IsNullOrEmpty(passenger))
             {
                 passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
 
                 passeengerKeyListRT.Add(passeengerKeyList);
             }
-            passenger = HttpContext.Session.GetString("SGkeypassengerRT");
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("SGkeypassengerRT")))
+            //    passenger = HttpContext.Session.GetString("SGkeypassengerRT");
+          //  passenger = seatMealdetail.Infant;
+			if (!string.IsNullOrEmpty(passenger))
             {
                 passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
                 passeengerKeyListRT.Add(passeengerKeyList);
@@ -1588,8 +1707,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
             List<SeatMapResponceModel> SeatmapListRT = new List<SeatMapResponceModel>();
             SeatMapResponceModel Seatmaplist = null;
-            string Seatmap = HttpContext.Session.GetString("Seatmap");
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Seatmap")))
+            string Seatmap = objMongoHelper.UnZip(seatMealdetail.SeatMap);// HttpContext.Session.GetString("Seatmap");
+            if (!string.IsNullOrEmpty(Seatmap) && (!Seatmap.ToLower().Contains("<start>")))
             {
                 Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
                 SeatmapListRT.Add(Seatmaplist);
@@ -1603,8 +1722,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
             List<SSRAvailabiltyResponceModel> mealListRT = new List<SSRAvailabiltyResponceModel>();
             SSRAvailabiltyResponceModel Mealslist = null;
-            Meals = HttpContext.Session.GetString("Meals");
-            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Meals")))
+            Meals = objMongoHelper.UnZip(seatMealdetail.Meals);// HttpContext.Session.GetString("Meals");
+            if (!string.IsNullOrEmpty(Meals) && (!Meals.ToLower().Contains("<start>")) )
             {
                 Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
                 mealListRT.Add(Mealslist);
@@ -1634,9 +1753,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     int journeyscount = 0;
                     int mealid = 0;
                     int bagid = 0;
-                    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainpassengervm")))
+                    if (!string.IsNullOrEmpty(objMongoHelper.UnZip(seatMealdetail.ResultRequest)))
                     {
-                        passenger = HttpContext.Session.GetString("Mainpassengervm");
+                        passenger = objMongoHelper.UnZip(seatMealdetail.ResultRequest);
                         int _a = 0;
                         foreach (Match item in Regex.Matches(passenger, @"<Start>(?<test>[\s\S]*?)<End>"))
                         {
@@ -3010,9 +3129,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     Logs _logs = new Logs();
                     int _index = 0;
                     int p = 0;
-                    if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainpassengervm")))
+                    if (!string.IsNullOrEmpty(seatMealdetail.ResultRequest))
                     {
-                        passenger = HttpContext.Session.GetString("Mainpassengervm");
+                        passenger = objMongoHelper.UnZip(seatMealdetail.ResultRequest);
                         foreach (Match item in Regex.Matches(passenger, @"<Start>(?<test>[\s\S]*?)<End>"))
                         {
                             passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
@@ -3616,9 +3735,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 			if (passeengerKeyList.journeys[0].Airlinename.ToLower() == "airindia")
 			{
 
-				if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Mainpassengervm")))
+				if (!string.IsNullOrEmpty(seatMealdetail.ResultRequest))
 				{
-					passenger = HttpContext.Session.GetString("Mainpassengervm");
+					passenger = objMongoHelper.UnZip(seatMealdetail.ResultRequest);
 					foreach (Match item in Regex.Matches(passenger, @"<Start>(?<test>[\s\S]*?)<End>"))
 					{
 						passenger = item.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
@@ -3664,7 +3783,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 										_password = "Q!f5-d7A3D";
 										StringBuilder createPNRReq = new StringBuilder();
 										string AdultTraveller = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
-										string _data = HttpContext.Session.GetString("SGkeypassengerRT");
+                                        string _data = objMongoHelper.UnZip(seatMealdetail.KPassenger); // HttpContext.Session.GetString("SGkeypassengerRT");
 										string _Total = HttpContext.Session.GetString("Total");
 										string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest); //HttpContext.Session.GetString("PassengerModel");
 										SimpleAvailabilityRequestModel availibiltyRQGDS = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(stravailibitilityrequest);

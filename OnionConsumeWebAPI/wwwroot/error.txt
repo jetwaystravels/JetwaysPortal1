@@ -97,4 +97,31 @@ Date :14-04-2025 17:10:50Microsoft.Data.SqlClient.SqlException (0x80131904): Cou
    at OnionConsumeWebAPI.ErrorHandling.Logger.WriteLog(Exception ex, String ErrorInformation, String ConnectionString) in D:\JetwaysPortal\OnionConsumeWebAPI\ErrorHandling\Logger.cs:line 29
 ClientConnectionId:bd4a4cd4-2777-4476-a4fc-57028962c5b4
 Error Number:2812,State:62,Class:16
-Date :14-04-2025 17:11:45
+Date :14-04-2025 17:11:45System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at OnionConsumeWebAPI.ErrorHandling.Logger.WriteLog(Exception ex, String ErrorInformation, String ConnectionString) in D:\JetwaysPortal\OnionConsumeWebAPI\ErrorHandling\Logger.cs:line 16
+Date :10-05-2025 18:45:58System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at OnionConsumeWebAPI.ErrorHandling.Logger.WriteLog(Exception ex, String ErrorInformation, String ConnectionString) in D:\JetwaysPortal\OnionConsumeWebAPI\ErrorHandling\Logger.cs:line 16
+Date :10-05-2025 18:46:51System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open()
+   at OnionConsumeWebAPI.ErrorHandling.Logger.WriteLog(Exception ex, String ErrorInformation, String ConnectionString) in D:\JetwaysPortal\OnionConsumeWebAPI\ErrorHandling\Logger.cs:line 16
+Date :10-05-2025 18:52:59
