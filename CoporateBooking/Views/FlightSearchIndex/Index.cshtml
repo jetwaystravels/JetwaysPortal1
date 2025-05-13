@@ -130,21 +130,62 @@
                                     <option value="2">USA</option>
                                 </select>
                             </li>
-                            <li class="dropdown">
+                            <li>
                                     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 
-                                    @if (HttpContextAccessor.HttpContext.Session.GetString("LoggedInEmail") != null)
-                                    {
-                                        var email = HttpContextAccessor.HttpContext.Session.GetString("LoggedInEmail");
+                                @if (HttpContextAccessor.HttpContext.Session.GetString("LoggedInEmail") != null)
+                                {
+                                    string[] parts = Array.Empty<string>(); // Proper declaration
+                                    var email = HttpContextAccessor.HttpContext.Session.GetString("LoggedInEmail");
+                                    var initials = "NA"; // Default
 
-                                        <span>Welcome, @email</span>
-                                    <a class="nav-link dropbtn" href="@Url.Action("Logout", "Login")" class="logout-button">Logout</a>
-                                    }
-                                    else
+                                    if (!string.IsNullOrEmpty(email))
                                     {
-                                    <a class="nav-link dropbtn" href="@Url.Action("UserLogin", "Login")">Login or Signup</a>
+                                        var username = email.Split('@')[0]; // e.g. "ashok.kumar"
+                                        parts = username.Split('.', StringSplitOptions.RemoveEmptyEntries); // string[]
+
+                                        // Build initials from each part's first letter
+                                        initials = string.Concat(parts.Select(p => p[0])).ToUpper(); // e.g. "AK"
                                     }
+
+                                    <div class="profile-initials">@initials</div>
+                                  
+
+
+
+                                    
+                                    <div class="profile-popup" style="display:none;">
+                                        <span>@email</span>
+                                        <div class="circle-initials">@initials</div>
+                                        <p class="greeting">Hi,@parts[0]</p>
+                                        <a class="nav-link dropbtn signOutBtn" href="@Url.Action("Logout", "Login")">Logout</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="dropdown">
+                                        <div style="padding-bottom:15px;"><a class="nav-link dropbtn" href="#" )">Login or Signup</a></div>
+                                        <div class="dropdown-content">
+                                            <a href="#" data-toggle="modal" data-target="#signUp-pop">
+                                                Customer Login
+                                                <span>Login &amp; check bookings</span>
+                                            </a>
+                                            <a asp-controller="Login" asp-action="UserLogin">
+                                                Corporate Travel
+                                                <span>Login corporate account</span>
+                                            </a>
+                                            <a href="#">
+                                                Agent Login
+                                                <span>Login your agent account</span>
+                                            </a>
+                                            <a asp-controller="FlightSearchIndex" asp-action="MyBooking">
+                                                My Booking
+                                                <span>Manage your bookings here</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
                                 
 
                                 <div class="dropdown-content">
@@ -1191,7 +1232,14 @@
         </script>
         <!--End show and hide box -->
 
+        <script>
+            document.querySelector('.profile-initials').addEventListener('click', function () {
+                const popup = document.querySelector('.profile-popup');
+                popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
+            });
+        </script>
 
     }
+   
 </body>
 

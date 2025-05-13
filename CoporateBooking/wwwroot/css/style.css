@@ -3032,6 +3032,7 @@ FOOTER AREA CSS
     border-radius: 28px;
     padding: 3px 13px;
     margin-right: 12px;
+    margin-top: 14px;
 }
 
 #top-navbar-nav option:not(:checked) {
@@ -3062,15 +3063,26 @@ FOOTER AREA CSS
     min-width: 235px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    top: 15px;
+    top: 10px;
     box-shadow: rgba(0, 0, 0, .5) 0 0 6px;
     -webkit-box-shadow: rgba(0, 0, 0, .5) 0 0 6px;
     border-radius: 5px;
-    top: 43px;
+    top: 51px;
     right: 8px;
     transition: max-height .2s ease-in;
     padding: 8px;
 }
+
+    .dropdown-content:before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        right: 50px;
+        width: 10px;
+        height: 10px;
+        background-color: white;
+        transform: rotate(45deg);
+    }
 
     .dropdown-content a {
         color: black;
@@ -3093,6 +3105,88 @@ FOOTER AREA CSS
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+
+#profile-initials {
+    margin-top: 10px;
+}
+
+.profile-initials {
+    border: 2px solid #fff;
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.profile-popup {
+    position: absolute;
+    top: 56px;
+    right: 0;
+    background: #fff;
+    color: white;
+    padding: 15px 25px;
+    -webkit-box-shadow: rgba(0, 0, 0, .5) 0 0 6px;
+    border-radius: 16px;
+    z-index: 10;
+}
+
+.profile-popupt:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 50px;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    transform: rotate(45deg);
+}
+
+.profile-popup span {
+    color: #111111;
+}
+
+
+#top-navbar-nav .dropbtn.signOutBtn {
+    background: #085AC0;
+    color: white;
+    padding: 6px;
+    border: none;
+    font-size: 14px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.circle-initials {
+    background: #04263C;
+    color: #fff;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    font-weight: 300;
+    margin: 10px auto;
+    font-size: 22px;
+}
+
+.greeting {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111111;
+    text-align: center;
 }
 
 /*Slect box end section */

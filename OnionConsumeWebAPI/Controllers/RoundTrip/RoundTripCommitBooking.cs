@@ -1396,7 +1396,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             _bookingpaymentRequest.addPaymentToBookingReqData.Expiration = Convert.ToDateTime("0001-01-01T00:00:00");
                             _BookingPaymentResponse = await objSpiceJet.Addpayment(_bookingpaymentRequest);
                             string payment = JsonConvert.SerializeObject(_BookingPaymentResponse);
-                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_bookingpaymentRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingPaymentResponse), "BookingPayment", "SpiceJetOneway");
+                            logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_bookingpaymentRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingPaymentResponse), "BookingPayment", "SpiceJetRT");
 
 
                             #endregion
@@ -1443,10 +1443,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                 objSpiceJet = new SpiceJetApiController();
                                 _BookingCommitResponse = await objSpiceJet.BookingCommit(_bookingCommitRequest);
+                                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_bookingCommitRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingCommitResponse), "BookingCommit", "SpiceJetRT");
+
                                 if (_BookingCommitResponse != null && _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator != null)
                                 {
                                     string Str3 = JsonConvert.SerializeObject(_BookingCommitResponse);
-                                    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_bookingCommitRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingCommitResponse), "BookingCommit", "SpiceJetRT");
 
                                     GetBookingRequest getBookingRequest = new GetBookingRequest();
                                     GetBookingResponse _getBookingResponse = new GetBookingResponse();
@@ -1922,7 +1923,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 if (passkeytypeobj.passengerTypeCode == passeengerlist[i].passengertypecode && passkeytypeobj.name.first.ToLower().Trim() == passeengerlist[i].first.ToLower().Trim() && passkeytypeobj.name.last.ToLower().Trim() == passeengerlist[i].last.ToLower().Trim())
                                                 {
                                                     passkeytypeobj.MobNumber = passeengerlist[i].mobile;
-                                                    string[] splitStr = passeengerlist[i].passengerkey.Split('@');
+                                                    string[] splitStr = passeengerlist[i].passengercombinedkey.Split('@');
                                                     for (int ia = 0; ia < splitStr.Length; ia++)
                                                     {
                                                         if (splitStr[ia].ToLower().Trim().Contains("spicejet"))
@@ -2441,7 +2442,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 if (passkeytypeobj.passengerTypeCode == passeengerlist[i].passengertypecode && passkeytypeobj.name.first.ToLower() == passeengerlist[i].first.ToLower() && passkeytypeobj.name.last.ToLower() == passeengerlist[i].last.ToLower())
                                                 {
                                                     passkeytypeobj.MobNumber = passeengerlist[i].mobile;
-                                                    string[] splitStr = passeengerlist[i].passengerkey.Split('@');
+                                                    string[] splitStr = passeengerlist[i].passengercombinedkey.Split('@');
                                                     for (int ia = 0; ia < splitStr.Length; ia++)
                                                     {
                                                         if (splitStr[ia].ToLower().Trim().Contains("indigo"))
