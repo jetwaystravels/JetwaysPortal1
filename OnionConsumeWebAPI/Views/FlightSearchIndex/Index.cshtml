@@ -459,14 +459,14 @@
 																	<input type="hidden" value="ADT" asp-for="@Model.passengercount.adulttype" />
 																	<div class="text-13 fw-500">Aged 12+ yrs</div>
 																</div>
-																<div class="btn-increase">
-																	<div class="decrement sub btn_sub">-</div>
+																<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
+																	<div class="decrement sub btn_sub" style=" border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
-																	<input type="number" id="field_adult" class="input-field" value="1" asp-for="@Model.passengercount.adultcount" min="1" max="9">
-																	<div class="increment add btn_sub">+</div>
+																	<input type="number" id="field_adult" class="input-field" value="1" asp-for="@Model.passengercount.adultcount" min="1" max="9" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important;   border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
+																	<div class="increment add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 																</div>
 															</div>
-															<div class="border-top-light mt-24 mb-24"></div>
+															<div class="border-top-light mt-10 mb-10"></div>
 															<div class="d-flex y-gap-10 justify-between items-center">
 																<div class="btn-incr-chld">
 																	<div class="text-13 fw-600">
@@ -477,14 +477,14 @@
 																		Aged 2-12 yrs
 																	</div>
 																</div>
-																<div class="btn-increase">
-																	<div class="decrement1 sub btn_sub">-</div>
-																	<input type="number" id="field_child" class="input-field" value="0" asp-for="@Model.passengercount.childcount" min="0" max="6">
-																	<div class="increment1 add btn_sub">+</div>
+																<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
+																	<div class="decrement1 sub btn_sub" style=" border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
+																	<input type="number" id="field_child" class="input-field" value="0" asp-for="@Model.passengercount.childcount" min="0" max="6" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
+																	<div class="increment1 add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
 																</div>
 															</div>
-															<div class="border-top-light mt-24 mb-24"></div>
+															<div class="border-top-light mt-10 mb-10"></div>
 															<div class="d-flex y-gap-10 justify-between items-center">
 																<div class="infant-area">
 																	<div class="text-13 fw-600">Infants</div>
@@ -493,16 +493,35 @@
 																		Below 2 yrs
 																	</div>
 																</div>
-																<div class="btn-increase">
-																	<div class="decrement2 sub btn_sub">-</div>
+																<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
+																	<div class="decrement2 sub btn_sub" style=" border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
-																	<input type="number" id="field_infant" class="input-field" value="0" asp-for="@Model.passengercount.infantcount" min="0" max="6">
-																	<div class="increment2 add btn_sub">+</div>
+																	<input type="number" id="field_infant" class="input-field" value="0" asp-for="@Model.passengercount.infantcount" min="0" max="6" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important;   border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
+																	<div class="increment2 add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
 																</div>
 															</div>
 
-															<div class="border-top-light mt-24 mb-24"></div>
+															<div>
+																<label style="margin: 11px 0 4px;width: 100%; padding: 7px 0 0; border-top: 1px solid #dddddd;">Choose Travel Class</label>
+																<label id="lbEconomy" class="mt-5" style="font-weight: 500;">
+																	<input type="radio" id="rbEconomy" name="flightclass" checked value="E" style="vertical-align: sub; margin-right: 5px;">
+																	Economy
+																</label>
+																<label id="lbBusiness" class="mt-5" style="font-weight: 500;">
+																	<input type="radio" name="flightclass" value="B" id="rbBusiness" style="vertical-align: sub; margin-right: 5px;">
+																	Business
+																</label>
+																<label id="lbFirstClass" class="mt-5" style="font-weight: 500;">
+																	<input type="radio" name="flightclass" value="F" id="rbFirst" style="vertical-align: sub; margin-right: 5px;">
+																	First Class
+																</label>
+																<label id="lbPremiumEconomy" class="mt-5" style="font-weight: 500;">
+																	<input type="radio" name="flightclass" value="P" id="rbpEconomy" style="vertical-align: sub; margin-right: 5px;">
+																	Premium Economy
+																</label>
+
+															</div>
 
 														</div>
 													</div>

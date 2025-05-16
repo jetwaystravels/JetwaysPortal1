@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -22,11 +26,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\FlightSearchIndex\\Index.cshtml",
+              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Views\\FlightSearchIndex\\Index.cshtml",
+              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Views\\FlightSearchIndex\\Index.cshtml",
+              "RelativeToolTip": "OnionConsumeWebAPI\\Views\\FlightSearchIndex\\Index.cshtml",
+              "ViewState": "AgIAAFkBAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-16T05:00:39.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "style.css",
               "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\wwwroot\\css\\style.css",
               "RelativeDocumentMoniker": "CoporateBooking\\wwwroot\\css\\style.css",
@@ -38,7 +55,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "FlightSearchIndexController.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
               "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
@@ -51,13 +68,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
               "RelativeDocumentMoniker": "CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
               "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
               "RelativeToolTip": "CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYCAABkAAAAAAAAAA==",
+              "ViewState": "AgIAACICAAAAAAAAAAAkwDQCAABkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-05-15T10:23:44.169Z",
               "EditorCaption": ""
