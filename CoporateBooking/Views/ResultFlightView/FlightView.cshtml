@@ -23,8 +23,8 @@
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/daterangepicker.css"> 
     <link rel="stylesheet" href="/css/style.min.css" />
-    @*  <link href="~/css/roundviewpage.css" rel="stylesheet" />
-    <link href="~/css/indexvny.css" rel="stylesheet" /> *@
+    @*  <link href="~/css/roundviewpage.css" rel="stylesheet" />*@
+    <link href="~/css/indexvny.css" rel="stylesheet" /> 
 
 </head>
 <body>
@@ -264,14 +264,14 @@
 													<input type="hidden" id="adulttype" name="adulttype" value="ADT" asp-for="@AdultCount" />
 													<div class="text-13 fw-500">Aged 12+ yrs</div>
 												</div>
-												<div class="btn-increase">
-													<div class="decrement sub btn_sub">-</div>
+													<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
+													<div class="decrement sub btn_sub" style="border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
-													<input type="number" id="field_adult" name="adultcount" class="input-field" value="@AdultCount" asp-for="@AdultCount" min="1" max="9">
-													<div class="increment add btn_sub">+</div>
+													<input type="number" id="field_adult" name="adultcount" class="input-field" value="@AdultCount" asp-for="@AdultCount" min="1" max="9" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
+													<div class="increment add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 												</div>
 												</div>
-												<div class="border-top-light mt-24 mb-24"></div>
+												<div class="border-top-light mt-10 mb-10"></div>
 												<div class="d-flex y-gap-10 justify-between items-center">
 												<div class="btn-incr-chld  text-dark">
 													<div class="text-13 fw-600">
@@ -282,14 +282,14 @@
 													Aged 2-12 yrs
 													</div>
 												</div>
-												<div class="btn-increase">
-													<div class="decrement1 sub btn_sub">-</div>
-													<input type="number" id="field_child" name="childcount" class="input-field" value="@ChildCount" asp-for="@ChildCount" min="0" max="6">
-													<div class="increment1 add btn_sub">+</div>
+													<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
+													<div class="decrement1 sub btn_sub" style="border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
+													<input type="number" id="field_child" name="childcount" class="input-field" value="@ChildCount" asp-for="@ChildCount" min="0" max="6" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
+													<div class="increment1 add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
 												</div>
 												</div>
-												<div class="border-top-light mt-24 mb-24"></div>
+												<div class="border-top-light mt-10 mb-10"></div>
 												<div class="d-flex y-gap-10 justify-between items-center">
 												<div class="infant-area  text-dark">
 													<div class="text-13 fw-600">Infants</div>
@@ -298,16 +298,34 @@
 													Below 2 yrs
 													</div>
 												</div>
-												<div class="btn-increase">
-													<div class="decrement2 sub btn_sub">-</div>
-
-													<input type="number" id="field_infant" name="infantcount" class="input-field" value="@InfantCount" asp-for="@InfantCount" min="0" max="6">
-													<div class="increment2 add btn_sub">+</div>
+													<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
+													<div class="decrement2 sub btn_sub" style="border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
+													<input type="number" id="field_infant" name="infantcount" class="input-field" value="@InfantCount" asp-for="@InfantCount" min="0" max="6" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
+													<div class="increment2 add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
 												</div>
 												</div>
 
-												<div class="border-top-light mt-24 mb-24"></div>
+												<div class="travel-class-C">
+													<label style="margin: 11px 0 4px;width: 100%; padding: 7px 0 0; border-top: 1px solid #dddddd;">Choose Travel Class</label>
+													<label id="lbEconomy" class="mt-5" style="font-weight: 500; margin-right: 8px;">
+														<input type="radio" id="rbEconomy" name="flightclass" checked value="E" style="vertical-align: sub; margin-right: 5px;">
+														Economy
+													</label>
+													<label id="lbBusiness" class="mt-5" style="font-weight: 500; margin-right: 8px;">
+														<input type="radio" name="flightclass" value="B" id="rbBusiness" style="vertical-align: sub; margin-right: 5px;">
+														Business
+													</label>
+													<label id="lbFirstClass" class="mt-5" style="font-weight: 500; margin-right: 8px;">
+														<input type="radio" name="flightclass" value="F" id="rbFirst" style="vertical-align: sub; margin-right: 5px;">
+														First Class
+													</label>
+													<label id="lbPremiumEconomy" class="mt-5" style="font-weight: 500; margin-right: 8px;">
+														<input type="radio" name="flightclass" value="P" id="rbpEconomy" style="vertical-align: sub; margin-right: 5px;">
+														Premium Economy
+													</label>
+
+												</div>
 
 											</div>
 											</div>
@@ -331,60 +349,12 @@
 										</div>
 						}
 						<div class="col-12 col-md-10 col-lg-2"><button style="margin-top:0px;" type="submit" class="btn btn-lg btn-block" onclick="validateInputs()"><i class="fa fa-search mr-10" aria-hidden="true"></i>Modify Search</button></div>
-
 						<div class="col-12 col-md-12 col-lg-12 search-bottom"></div>
-						<div class="col-12 col-md-10 col-lg-9 pl-0">
-						    <div class="form-group pt-2">
-							<div class="dropdown js-dropdown js-economy-active" style="display:inline-block;">
-							    <div class="dropdown__button d-flex items-center  text-15" data-el-toggle=".js-economy-toggle" data-el-toggle-active=".js-economy-active">
-								<span class="js-dropdown-title">Show Class </span>
-								<i class="fa fa-angle-down ml-1 icon icon-chevron-sm-down" aria-hidden="true"></i>
-							    </div>
-							    <div class="toggle-element -dropdown  js-click-dropdown js-economy-toggle">
-								<div class="text-14 y-gap-8 js-dropdown-list">
-								    <a href="#" class="d-block js-dropdown-link" onclick="toggleRadio(event, 'radioid1')">
-									<input class="m-2 form-radio-input d-none" type="radio" name="flightclass" value="E" id="radioid1">
-									Economic
-								    </a>
-								    <a href="#" class="d-block js-dropdown-link" onclick="toggleRadio(event, 'radioid2')">
-									<input class="m-2 form-radio-input d-none" type="radio" name="flightclass" value="P" id="radioid2">
-									Premium
-								    </a>
-								    <a href="#" class="d-block js-dropdown-link" onclick="toggleRadio(event, 'radioid3')">
-									<input class="m-2 form-radio-input d-none" type="radio" name="flightclass" value="B" id="radioid3">
-									Business
-								    </a>
-								    <a href="#" class="d-block js-dropdown-link" onclick="toggleRadio(event, 'radioid4')">
-									<input class="m-2 form-radio-input d-none" type="radio" name="flightclass" value="F" id="radioid4">
-									First
-								    </a>
-								</div>
-
-							    </div>
-							</div>
-							<div class="custom-control custom-checkbox custom-control-inline">
-							    <input type="checkbox" class="custom-control-input" name="farecheck" id="defaultInline3" onclick="checkOnlyThis(this)">
-							    <label class="custom-control-label" for="defaultInline3">Senior Citizen</label>
-							</div>
-							<div class="custom-control custom-checkbox custom-control-inline">
-							    <input type="checkbox" class="custom-control-input" name="farecheck" id="defaultInline4" onclick="checkOnlyThis(this)">
-							    <label class="custom-control-label" for="defaultInline4">Defence Fare</label>
-							</div>
-							<div class="custom-control custom-checkbox custom-control-inline">
-							    <input type="checkbox" class="custom-control-input" name="farecheck" id="defaultInline5" onclick="checkOnlyThis(this)">
-							    <label class="custom-control-label" for="defaultInline5">Student Fare</label>
-							</div>
-						    </div>
-						</div>
-
 					    </div>
 					</div>
 				    </form>
-
 				</div>
-
 			    </div>
-
 			</div>
 		    </div>
 		</div>

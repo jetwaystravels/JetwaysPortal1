@@ -169,6 +169,31 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     string RecordLocator = HttpContext.Session.GetString("PNR").Split("@@")[1];
                     strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, "GDSOneWay");
 
+                    /*
+		            string EmdBagResponsedata = string.Empty;
+                    string EmdSeatResponsedata = string.Empty;
+                    string ProviderLocatorCode = Regex.Match(strResponse, "ProviderReservationInfo\\s*Key=\"[\\s\\S]*?LocatorCode=\"(?<LocatorCode>[\\s\\S]*?)\"").Groups["LocatorCode"].Value.Trim();
+                    string UniversalLocatorCode = Regex.Match(strResponse, "UniversalRecord LocatorCode=\"(?<UniLocatorCode>[\\s\\S]*?)\"").Groups["UniLocatorCode"].Value.Trim();
+                    string Segmentkey = string.Empty;
+                    foreach (Match mitem in Regex.Matches(strResponse, "AirSegment Key=\"(?<Segmentkey>[\\s\\S]*?)\""))
+                    {
+                        Segmentkey += " " + mitem.Groups["Segmentkey"].Value.Trim();
+                    }
+                    string Ticketnum = string.Empty;
+                    string EndUrl= AppUrlConstant.GDSEmdURL;
+                    string strEmdBagResponse = string.Empty;
+                    string strEmdSeatResponse = string.Empty;
+                    foreach (DictionaryEntry entry in htTicketdata)
+                    {
+                        Ticketnum = entry.Value.ToString();
+                        strEmdBagResponse = _objAvail.RetriveEmdIssuranceBag(EndUrl, newGuid.ToString(), _targetBranch, _userName, _password, ProviderLocatorCode, UniversalLocatorCode, Ticketnum, Segmentkey, "GDSOneWay");
+                        EmdBagResponsedata += "\n" + strEmdBagResponse;
+                        strEmdSeatResponse = _objAvail.RetriveEmdIssuranceSeat(EndUrl, newGuid.ToString(), _targetBranch, _userName, _password, ProviderLocatorCode, UniversalLocatorCode, Ticketnum, Segmentkey, "GDSOneWay");
+                        EmdBagResponsedata += "\n" + strEmdSeatResponse;
+
+                    } */
+
+
                     GDSResModel.PnrResponseDetails pnrResDetail = new GDSResModel.PnrResponseDetails();
                     if (!string.IsNullOrEmpty(strResponse) && !string.IsNullOrEmpty(RecordLocator))
                     {
@@ -195,9 +220,9 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                             //int adultcount = Convert.ToInt32(HttpContext.Session.GetString("adultCount"));
                             //int childcount = Convert.ToInt32(HttpContext.Session.GetString("childCount"));
                             //int infantcount = Convert.ToInt32(HttpContext.Session.GetString("infantCount"));
-							int adultcount = searchLog.Adults;
-							int childcount = searchLog.Children;
-							int infantcount = searchLog.Infants;
+                            int adultcount = searchLog.Adults;
+                            int childcount = searchLog.Children;
+                            int infantcount = searchLog.Infants;
                             int TotalCount = adultcount + childcount;
                             //string _responceGetBooking = JsonConvert.SerializeObject(_getBookingResponse);
                             ReturnTicketBooking returnTicketBooking = new ReturnTicketBooking();
@@ -543,7 +568,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                     }
 
                                     //baggage
-                                    
+
                                     foreach (Match mitem in Regex.Matches(strResponse, @"PassengerTypeCode=""(?<PaxType>[\s\S]*?)""[\s\S]*?BaggageAllowance[\s\S]*?MaxWeight Value=""(?<Weight>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                     {
                                         if (!htPaxbag.Contains(mitem.Groups["PaxType"].Value.Trim()))
@@ -552,66 +577,66 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                         }
                                     }
 
-                                        //}
+                                    //}
 
-                                        //            //vivek
-                                        //            //vivek
-                                        //            foreach (var item1 in _getBookingResponse.Booking.Journeys[i].Segments[j].PaxSeats)
-                                        //            {
-                                        //                try
-                                        //                {
-                                        //                    if (!htseatdata.Contains(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
-                                        //                    {
-                                        //                        htseatdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.UnitDesignator);
-                                        //                        returnSeats.unitDesignator += item1.PassengerNumber + "_" + item1.UnitDesignator + ",";
-                                        //                    }
-                                        //                }
-                                        //                catch (Exception ex)
-                                        //                {
+                                    //            //vivek
+                                    //            //vivek
+                                    //            foreach (var item1 in _getBookingResponse.Booking.Journeys[i].Segments[j].PaxSeats)
+                                    //            {
+                                    //                try
+                                    //                {
+                                    //                    if (!htseatdata.Contains(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
+                                    //                    {
+                                    //                        htseatdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.UnitDesignator);
+                                    //                        returnSeats.unitDesignator += item1.PassengerNumber + "_" + item1.UnitDesignator + ",";
+                                    //                    }
+                                    //                }
+                                    //                catch (Exception ex)
+                                    //                {
 
-                                        //                }
-                                        //            }
-                                        //            //SSR
-                                        //            foreach (var item1 in _getBookingResponse.Booking.Journeys[i].Segments[j].PaxSSRs)
-                                        //            {
-                                        //                try
-                                        //                {
-                                        //                    if (!htmealdata.Contains(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
-                                        //                    {
-                                        //                        if (item1.SSRCode != "INFT" && item1.SSRCode != "FFWD")
-                                        //                        {
-                                        //                            htmealdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
-                                        //                        }
-                                        //                        returnSeats.SSRCode += item1.SSRCode + ",";
-                                        //                    }
+                                    //                }
+                                    //            }
+                                    //            //SSR
+                                    //            foreach (var item1 in _getBookingResponse.Booking.Journeys[i].Segments[j].PaxSSRs)
+                                    //            {
+                                    //                try
+                                    //                {
+                                    //                    if (!htmealdata.Contains(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
+                                    //                    {
+                                    //                        if (item1.SSRCode != "INFT" && item1.SSRCode != "FFWD")
+                                    //                        {
+                                    //                            htmealdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
+                                    //                        }
+                                    //                        returnSeats.SSRCode += item1.SSRCode + ",";
+                                    //                    }
 
-                                        //                    else if (!htbagdata.Contains(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
-                                        //                    {
-                                        //                        if (item1.SSRCode != "INFT" && item1.SSRCode != "FFWD")
-                                        //                        {
-                                        //                            htbagdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
-                                        //                        }
-                                        //                        returnSeats.SSRCode += item1.SSRCode + ",";
-                                        //                    }
-                                        //                }
-                                        //                catch (Exception ex)
-                                        //                {
+                                    //                    else if (!htbagdata.Contains(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation))
+                                    //                    {
+                                    //                        if (item1.SSRCode != "INFT" && item1.SSRCode != "FFWD")
+                                    //                        {
+                                    //                            htbagdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
+                                    //                        }
+                                    //                        returnSeats.SSRCode += item1.SSRCode + ",";
+                                    //                    }
+                                    //                }
+                                    //                catch (Exception ex)
+                                    //                {
 
-                                        //                }
-                                        //            }
+                                    //                }
+                                    //            }
 
 
-                                        //            //foreach (var item1 in _getBookingResponse.Booking.Journeys[i].Segments[j].PaxSeats)
-                                        //            //{
-                                        //            //    returnSeats.unitDesignator += item1.UnitDesignator + ",";
-                                        //            //}
+                                    //            //foreach (var item1 in _getBookingResponse.Booking.Journeys[i].Segments[j].PaxSeats)
+                                    //            //{
+                                    //            //    returnSeats.unitDesignator += item1.UnitDesignator + ",";
+                                    //            //}
 
-                                        //            //foreach (var item1 in _getBookingResponse.Booking.Journeys[i].Segments[j].PaxSSRs)
-                                        //            //{
-                                        //            //    returnSeats.SSRCode += item1.SSRCode + ",";
-                                        //            //}
-                                        //            //
-                                        AASegmentobj.unitdesignator = returnSeats.unitDesignator;
+                                    //            //foreach (var item1 in _getBookingResponse.Booking.Journeys[i].Segments[j].PaxSSRs)
+                                    //            //{
+                                    //            //    returnSeats.SSRCode += item1.SSRCode + ",";
+                                    //            //}
+                                    //            //
+                                    AASegmentobj.unitdesignator = returnSeats.unitDesignator;
                                     AASegmentobj.SSRCode = returnSeats.SSRCode;
                                     AASegmentobj.legs = AALeglist;
                                     AASegmentlist.Add(AASegmentobj);

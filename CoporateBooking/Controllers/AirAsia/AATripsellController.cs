@@ -65,10 +65,17 @@ namespace OnionConsumeWebAPI.Controllers
 
             //Start:Coprate GST AND EMPLOYEE DETAIL
            
-            string employeeCode = "EO0001";
+            string employeeCode = "3";
             string legalEntityCode = "23E008";
-           
+            int? airlineId = 6;
+
+
             string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={employeeCode}&legalEntityCode={legalEntityCode}";
+
+            if (airlineId.HasValue)
+            {
+                apiUrl += $"&airlineId={airlineId.Value}";
+            }
             List<CompanyEmployeeGSTDetails> gstList = new();
             try
             {

@@ -3232,6 +3232,7 @@ FOOTER AREA CSS
     width: 100%;
     z-index: 99;
     background: #000;
+    padding-bottom:22px;
 }
 
 .search-result .sidebar.bg-white {

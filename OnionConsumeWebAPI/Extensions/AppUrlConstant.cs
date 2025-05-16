@@ -9,6 +9,7 @@
         public static string GDSSeatURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/AirService";
         public static string GDSSSRURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/ReferenceDataLookupService";
         public static string GDSUniversalRecordURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/UniversalRecordService";
+        public static string GDSEmdURL = "https://apac.universal-api.pp.travelport.com/B2BGateway/connect/uAPI/AirService";
         public static string URLAirasia = "https://dotrezapi.test.I5.navitaire.com";
         public static string URLAkasaAir = "https://tbnk-reyalrb.qp.akasaair.com";
         public static string Corporatelogin = BaseURL + "api/Admin/LogIn";

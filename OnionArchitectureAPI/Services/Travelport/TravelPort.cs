@@ -4571,7 +4571,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                             //for DEFAULT DOB
                             createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN/01Jan00/F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
                             createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"/////01Jan00/F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
-                            
+
                             //for Hardcoded DOB
                             //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"P/IN/G67567/IN//F/10Oct30/" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
                             //createPNRReq.Append("<SSR Type=\"DOCS\" Status=\"HK\" FreeText=\"//////F//" + passengerdetails[i].last.ToUpper() + "/" + passengerdetails[i].first.ToUpper() + "\" Carrier=\"" + Getdetails.journeys[0].segments[0].identifier.carrierCode + "\"/>");
@@ -5244,6 +5244,115 @@ namespace OnionArchitectureAPI.Services.Travelport
                 logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(retrivePnrReq) + "\n\n Response: " + JsonConvert.SerializeObject(pnrretriveRes), "RetrivePnr", "GDSRT");
             }
             return pnrretriveRes;
+        }
+
+        public string RetriveEmdIssuranceBag(string EndUrl, string newGuid, string _targetBranch, string _userName, string _password, string _ProviderLocatorCode, string _UniversalLocatorCode, string _TktNum, string _Segmentkey, string _AirlineWay)
+        {
+            StringBuilder retriveEmdReq = null;
+            string EmdretriveRes = string.Empty;
+            try
+            {
+                //RFIC= C(Baggage) ,A(PaidSeat)
+                retriveEmdReq = new StringBuilder();
+                retriveEmdReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">");
+                retriveEmdReq.Append("<soap:Body>");
+                retriveEmdReq.Append("<air:EMDIssuanceReq xmlns:air=\"http://www.travelport.com/schema/air_v51_0\" xmlns:com=\"http://www.travelport.com/schema/common_v51_0\" TraceId =\"" + newGuid + "\" AuthorizedBy=\"Travelport\" ShowDetails=\"true\" TargetBranch=\"" + _targetBranch + "\" UniversalRecordLocatorCode=\"" + _UniversalLocatorCode + "\">");
+                retriveEmdReq.Append("<com:BillingPointOfSaleInfo OriginApplication=\"UAPI\"/>");
+                retriveEmdReq.Append("<com:ProviderReservationDetail ProviderCode=\"1G\" ProviderLocatorCode=\"" + _ProviderLocatorCode + "\" />");
+                retriveEmdReq.Append("<com:TicketNumber>" + _TktNum.Trim() + "</com:TicketNumber>");
+                retriveEmdReq.Append("<air:IssuanceModifiers>");
+                retriveEmdReq.Append("<com:FormOfPayment Type=\"Cash\"/>");
+                retriveEmdReq.Append("</air:IssuanceModifiers>");
+                retriveEmdReq.Append("<air:SelectionModifiers RFIC=\"C\" SupplierCode=\"AI\">");
+                int a = _Segmentkey.Split(' ').Length;
+                if (a > 1)
+                {
+                    retriveEmdReq.Append("<air:AirSegmentRef Key=\"" + _Segmentkey.Split(' ')[0].Trim() + "\" />");
+                    retriveEmdReq.Append("<air:AirSegmentRef Key=\"" + _Segmentkey.Split(' ')[1].Trim() + "\" />");
+
+                }
+                else
+                {
+                    retriveEmdReq.Append("<air:AirSegmentRef Key=\"" + _Segmentkey.Trim() + "\" />");
+                }
+                retriveEmdReq.Append("</air:SelectionModifiers></air:EMDIssuanceReq>");
+                retriveEmdReq.Append("</soap:Body>");
+                retriveEmdReq.Append("</soap:Envelope>");
+
+
+                EmdretriveRes = Methodshit.HttpPost(EndUrl, retriveEmdReq.ToString(), _userName, _password);
+            }
+            catch (SystemException ex_)
+            {
+                //Utility.BookingTracker.LogTrackBooking(TransactionId, "[Cloud][TravelPortAPI][PnrRetriveResErr]", pnrretriveRes + "_" + sex_.Message + "_" + sex_.StackTrace, false, "", "");
+            }
+
+            if (_AirlineWay.ToLower() == "gdsoneway")
+            {
+                logs.WriteLogs(retriveEmdReq.ToString(), "4-GetRetrieveEmdBagReq", "GDSOneWay", "oneway");
+                logs.WriteLogs(EmdretriveRes, "4-GetRetrieveEmdBages", "GDSOneWay", "oneway");
+
+                //logs.WriteLogs("URL: " + _testURL + "\n\n Request: " + retrivePnrReq + "\n\n Response: " + pnrretriveRes, "RetrivePnr", "GDSOneWay");
+            }
+            else
+            {
+                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(retriveEmdReq) + "\n\n Response: " + JsonConvert.SerializeObject(EmdretriveRes), "RetrivePnr", "GDSRT");
+            }
+            return EmdretriveRes;
+        }
+        public string RetriveEmdIssuranceSeat(string EndUrl, string newGuid, string _targetBranch, string _userName, string _password, string _ProviderLocatorCode, string _UniversalLocatorCode, string _TktNum, string _Segmentkey, string _AirlineWay)
+        {
+            StringBuilder retriveEmdReq = null;
+            string EmdretriveRes = string.Empty;
+            try
+            {
+                //RFIC= C(Baggage) ,A(PaidSeat)
+                retriveEmdReq = new StringBuilder();
+                retriveEmdReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">");
+                retriveEmdReq.Append("<soap:Body>");
+                retriveEmdReq.Append("<air:EMDIssuanceReq xmlns:air=\"http://www.travelport.com/schema/air_v51_0\" xmlns:com=\"http://www.travelport.com/schema/common_v51_0\" TraceId =\"" + newGuid + "\" AuthorizedBy=\"Travelport\" ShowDetails=\"true\" TargetBranch=\"" + _targetBranch + "\" UniversalRecordLocatorCode=\"" + _UniversalLocatorCode + "\">");
+                retriveEmdReq.Append("<com:BillingPointOfSaleInfo OriginApplication=\"UAPI\"/>");
+                retriveEmdReq.Append("<com:ProviderReservationDetail ProviderCode=\"1G\" ProviderLocatorCode=\"" + _ProviderLocatorCode + "\" />");
+                retriveEmdReq.Append("<com:TicketNumber>" + _TktNum.Trim() + "</com:TicketNumber>");
+                retriveEmdReq.Append("<air:IssuanceModifiers>");
+                retriveEmdReq.Append("<com:FormOfPayment Type=\"Cash\"/>");
+                retriveEmdReq.Append("</air:IssuanceModifiers>");
+                retriveEmdReq.Append("<air:SelectionModifiers RFIC=\"A\" SupplierCode=\"AI\">");
+                int a = _Segmentkey.Split(' ').Length;
+                if (a > 1)
+                {
+                    retriveEmdReq.Append("<air:AirSegmentRef Key=\"" + _Segmentkey.Split(' ')[0].Trim() + "\" />");
+                    retriveEmdReq.Append("<air:AirSegmentRef Key=\"" + _Segmentkey.Split(' ')[1].Trim() + "\" />");
+
+                }
+                else
+                {
+                    retriveEmdReq.Append("<air:AirSegmentRef Key=\"" + _Segmentkey.Trim() + "\" />");
+                }
+                retriveEmdReq.Append("</air:SelectionModifiers></air:EMDIssuanceReq>");
+                retriveEmdReq.Append("</soap:Body>");
+                retriveEmdReq.Append("</soap:Envelope>");
+
+
+                EmdretriveRes = Methodshit.HttpPost(EndUrl, retriveEmdReq.ToString(), _userName, _password);
+            }
+            catch (SystemException ex_)
+            {
+                //Utility.BookingTracker.LogTrackBooking(TransactionId, "[Cloud][TravelPortAPI][PnrRetriveResErr]", pnrretriveRes + "_" + sex_.Message + "_" + sex_.StackTrace, false, "", "");
+            }
+
+            if (_AirlineWay.ToLower() == "gdsoneway")
+            {
+                logs.WriteLogs(retriveEmdReq.ToString(), "4-GetRetrieveEmdSeatReq", "GDSOneWay", "oneway");
+                logs.WriteLogs(EmdretriveRes, "4-GetRetrieveEmdSeatRes", "GDSOneWay", "oneway");
+
+                //logs.WriteLogs("URL: " + _testURL + "\n\n Request: " + retrivePnrReq + "\n\n Response: " + pnrretriveRes, "RetrivePnr", "GDSOneWay");
+            }
+            else
+            {
+                logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(retriveEmdReq) + "\n\n Response: " + JsonConvert.SerializeObject(EmdretriveRes), "RetrivePnr", "GDSRT");
+            }
+            return EmdretriveRes;
         }
 
         public string GetTicketdata(string universalRlcode_, string _testURL, string newGuid, string _targetBranch, string _userName, string _password, string _AirlineWay)
