@@ -16,7 +16,7 @@
 						<option value="MRS">Mrs.</option>
 						<option value="MS">Ms.</option>
 					</select>
-					<input type="text" name="first" maxlength="16" value="@item.FirstName" oninput="validateInput(event)" id="first" class="firstNClass" style='text-transform:uppercase' placeholder="First Name" readonly>
+					<input type="text" name="first" maxlength="16" value="@item.FirstName" oninput="validateInput(event)" id="first" class="firstNClass" style='text-transform:uppercase' placeholder="First Name" >
 				</div>
 				<p id="error-message1" class="error-message" style="display:none">Enter first name</p>
 				<p id="errorMessage" style="color: red;font-size:13px;"></p>
@@ -24,7 +24,7 @@
 
 			<div class="col-md-3">
 				<div class="form-input ">
-					<input type="text" name="last" maxlength="16" value="@item.LastName" id="last" oninput="validateInput2(event)" style='text-transform:uppercase' class="lastNClass" placeholder="Last Name" readonly>
+					<input type="text" name="last" maxlength="16" value="@item.LastName" id="last" oninput="validateInput2(event)" style='text-transform:uppercase' class="lastNClass" placeholder="Last Name" >
 				</div>
 				<p id="error-message2" class="error-message" style="display:none">Enter last name</p>
 				<p id="errorMessage2" style="color: red;font-size:13px;"></p>
@@ -32,7 +32,7 @@
 
 			<div class="col-md-3">
 				<div class="form-input">
-					<input type="text" name="emailAddress" maxlength="30" value="@item.BusinessEmail" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID" readonly>
+					<input type="text" name="emailAddress" maxlength="30" value="@item.BusinessEmail" oninput="validateEmail(event)" class="emailNClass" id="emailAddress" placeholder="Email ID" >
 				</div>
 				<p id="emailErrorMessage" style="color: red; font-size:13px;"></p>
 				<p id="error-message7" class="error-message" style="display:none">Enter a valid email address.</p>
@@ -275,14 +275,14 @@
 		} else {
 			debugger;
 			//alert("Checkbox is unchecked");
-			var firstLeadPass = "";
-			var lastLeadPass = "";
-			var emaiLeadPass = "";
-			var phoneLeadPass = "";
-			localStorage.setItem('Leadpassenger1', firstLeadPass);
-			localStorage.setItem('Leadpassenger2', lastLeadPass);
-			localStorage.setItem('Leadpassenger3', emaiLeadPass);
-			localStorage.setItem('Leadpassenger4', phoneLeadPass);
+			// var firstLeadPass = "";
+			// var lastLeadPass = "";
+			// var emaiLeadPass = "";
+			// var phoneLeadPass = "";
+			// localStorage.setItem('Leadpassenger1', firstLeadPass);
+			// localStorage.setItem('Leadpassenger2', lastLeadPass);
+			// localStorage.setItem('Leadpassenger3', emaiLeadPass);
+			// localStorage.setItem('Leadpassenger4', phoneLeadPass);
 		}
 	});
 	//GST Checkbox Function
@@ -327,6 +327,7 @@
 				var value = localStorage.getItem(localStorageKey);
 				var inputElement = document.querySelector(inputSelector);
 				inputElement.value = value;
+
 				if (value) {
 					removeError(inputElement);
 				}
@@ -340,10 +341,10 @@
 				element.classList.remove("error-input");
 			}
 
-			setInputValueAndRemoveError(".contactFname", 'Leadpassenger1');
-			setInputValueAndRemoveError(".contactLname", 'Leadpassenger2');
-			setInputValueAndRemoveError(".contactemail", 'Leadpassenger3');
-			setInputValueAndRemoveError(".contactphone", 'Leadpassenger4');
+			// setInputValueAndRemoveError(".contactFname", 'Leadpassenger1');
+			// setInputValueAndRemoveError(".contactLname", 'Leadpassenger2');
+			// setInputValueAndRemoveError(".contactemail", 'Leadpassenger3');
+			// setInputValueAndRemoveError(".contactphone", 'Leadpassenger4');
 			var firstfocus = document.getElementById("first").value;
 			if (firstfocus == "") {
 				//alert("Enter Origin Name");
@@ -353,6 +354,7 @@
 				return false;
 			}
 			else {
+				
 				var firstToDisplay = document.getElementById("error-message1");
 				firstToDisplay.style.display = "none";
 			}

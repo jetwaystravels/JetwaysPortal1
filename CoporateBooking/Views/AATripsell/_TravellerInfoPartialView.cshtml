@@ -96,99 +96,105 @@
 			</div>
 		}
 	}
-    
 
-    <form asp-action="TravllerDetails" asp-controller="AATripsell" method="post" id="passengerForm">
-	@{
-	    int inafantIdx = 0;
-	}
-	@for (var i = 0; i < Model.passeengerlist.passengers.Count; i++)
-	{
-	    <input type="hidden" name="passengers[@i].origin" value="@Model.passeengerlist.journeys[0].designator.origin" />
-	    <input type="hidden" name="passengers[@i].departure" value="@Model.passeengerlist.journeys[0].designator.departure" />
-	    <input type="hidden" name="passengers[@i].destination" value="@Model.passeengerlist.journeys[0].designator.destination" />
-	    <input type="hidden" name="passengers[@i].identifier" value="@Model.passeengerlist.journeys[0].segments[0].identifier.identifier" />
-	    <input type="hidden" name="passengers[@i].carrierCode" value="@Model.passeengerlist.journeys[0].segments[0].identifier.carrierCode" />
 
-	    <div class="mt-10"><label class="text-16 fw-600">@Model.passeengerlist.passengers[i].passengerTypeCode</label></div>
-	    <input type="hidden" name="passengerdetails[@i].passengertypecode" value="@Model.passeengerlist.passengers[i].passengerTypeCode" />
-	    <div class="row">
+	<form asp-action="TravllerDetails" asp-controller="AATripsell" method="post" id="passengerForm">
 		@{
-		    <div class="col-md-1">
-
-			@if (Model.passeengerlist.passengers[i].passengerTypeCode == "ADT")
-			{
-			    <select name="passengerdetails[@i].Title" class="form-control text-center"  style="border: 1px solid var(--color-border);">
-				<option value="Mr">MR</option>
-				<option value="Ms">MS</option>
-				<option value="Mrs">Mrs.</option>
-			       
-			    </select>
-			}
-			else if (Model.passeengerlist.passengers[i].passengerTypeCode == "CHD" || Model.passeengerlist.passengers[i].passengerTypeCode == "INFT")
-			{
-			    <select name="passengerdetails[@i].Title" class="form-control text-center" style="border: 1px solid var(--color-border);">
-				<option value="MSTR">Master</option>
-				<option value="Miss">Miss</option>
-
-			    </select>
-			}
-		    </div>
+			int inafantIdx = 0;
 		}
-		<div class="col-md-3">
+		@for (var i = 0; i < Model.passeengerlist.passengers.Count; i++)
+		{
+			<input type="hidden" name="passengers[@i].origin" value="@Model.passeengerlist.journeys[0].designator.origin" />
+			<input type="hidden" name="passengers[@i].departure" value="@Model.passeengerlist.journeys[0].designator.departure" />
+			<input type="hidden" name="passengers[@i].destination" value="@Model.passeengerlist.journeys[0].designator.destination" />
+			<input type="hidden" name="passengers[@i].identifier" value="@Model.passeengerlist.journeys[0].segments[0].identifier.identifier" />
+			<input type="hidden" name="passengers[@i].carrierCode" value="@Model.passeengerlist.journeys[0].segments[0].identifier.carrierCode" />
 
-		    <div class="form-input">
-			@{
-			    if (Model.passeengerlist.passengers[i].passengerKey == "0")
-			    {
-					<input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" required />
-			    }
-			    else
-			    {
-					<input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" required />
-			    }
-			}
-			
-			<input type="text" class="contactFname validate-field" data-validate="name" maxlength="16" oninput="validateInputT(event ,@i)" id="LeadPass1" placeholder="First & middle name" value="@gstData[0].FirstName" name="passengerdetails[@i].First" style='text-transform:uppercase' required />
+			<div class="mt-10"><label class="text-16 fw-600">@Model.passeengerlist.passengers[i].passengerTypeCode</label></div>
+			<input type="hidden" name="passengerdetails[@i].passengertypecode" value="@Model.passeengerlist.passengers[i].passengerTypeCode" />
+			<div class="row">
+				@{
+					<div class="col-md-1">
 
-		    </div>
-		    <p id="error-Fname" class="error-message  error-CFname" style="display: none;"></p>
-		    <p class="error-message-val " style="display:none"></p>
-		</div>
-		<div class="col-md-2">
+						@if (Model.passeengerlist.passengers[i].passengerTypeCode == "ADT")
+						{
+							<select name="passengerdetails[@i].Title" class="form-control text-center"  style="border: 1px solid var(--color-border);">
+								<option value="Mr">MR</option>
+								<option value="Ms">MS</option>
+								<option value="Mrs">Mrs.</option>
 
-		    <div class="form-input">
-						<input type="text" class="contactLname validate-field" data-validate="last" oninput="validateInputT(event,@i)" maxlength="16" placeholder="Last name" name="passengerdetails[@i].Last" value="@gstData[0].LastName" style='text-transform:uppercase' required />
+							</select>
+						}
+						else if (Model.passeengerlist.passengers[i].passengerTypeCode == "CHD" || Model.passeengerlist.passengers[i].passengerTypeCode == "INFT")
+						{
+							<select name="passengerdetails[@i].Title" class="form-control text-center" style="border: 1px solid var(--color-border);">
+								<option value="MSTR">Master</option>
+								<option value="Miss">Miss</option>
 
-		    </div>
-		    <p id="error-Lname" class="error-message error-CLname" style="display:none"></p>
-
-		</div>
-		@{
-		    if (Model.passeengerlist.passengers[i].passengerTypeCode == "ADT" || Model.passeengerlist.passengers[i].passengerTypeCode == "CHD")
-		    {
+							</select>
+						}
+					</div>
+				}
 				<div class="col-md-3">
+
+					<div class="form-input">
+						@{
+							if (Model.passeengerlist.passengers[i].passengerKey == "0")
+							{
+								<input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" required />
+							}
+							else
+							{
+								<input type="hidden" name="passengerdetails[@i].passengerkey" value="@Model.passeengerlist.passengers[i].passengerKey" required />
+							}
+						}
+
+						<input type="text" class="contactFname validate-field" data-validate="name" maxlength="16" oninput="validateInputT(event ,@i)" value="@gstData[0].FirstName"  placeholder="First & middle name" name="passengerdetails[@i].First" style='text-transform:uppercase' required />
+
+					</div>
+					<p id="error-Fname" class="error-message  error-CFname" style="display: none;"></p>
+					<p class="error-message-val " style="display:none"></p>
+				</div>
+				<div class="col-md-2">
+
+					<div class="form-input">
+						<input type="text" class="contactLname validate-field" data-validate="last" oninput="validateInputT(event,@i)" maxlength="16" value="@gstData[0].LastName" placeholder="Last name" name="passengerdetails[@i].Last" style='text-transform:uppercase' required />
+
+					</div>
+					<p id="error-Lname" class="error-message error-CLname" style="display:none"></p>
+
+				</div>
+				@{
+					if (Model.passeengerlist.passengers[i].passengerTypeCode == "ADT" || Model.passeengerlist.passengers[i].passengerTypeCode == "CHD")
+					{
+						<div class="col-md-3">
 							<div class="form-input"><input type="text" data-validate="email" class="contactemail validate-field" maxlength="50" oninput="validateInputT(event,@i)" value="@gstData[0].BusinessEmail" id="contactemailID" placeholder="email" name="" required /></div>
-				</div>
-				<p class="error-message error-emailname" style="display:none"></p>
-				<p class="error-message-val " style="display:none"></p>
-			<div class="col-md-1 phone-code">
-			    <select name="passengerdetails[@i].countrycode" class="form-control form-control-lg">
-				<option value="+91">+91 (India)</option>
-				<option value="+1">+1 (USA)</option>
-				<option value="+44">+44 (UK)</option>
-				<option value="+61">+61 (Australia)</option>
-				<option value="+81">+81 (Japan)</option>
-			    </select>
-			</div>
-				<div class="col-md-2 ">
-							<div class="form-input"><input type="text" data-validate="phone" id="contactphoneID" maxlength="10" class="contactphone validate-field" oninput="validateInputT(event,@i)" placeholder="phone" value="@gstData[0].MobileNumber" name="passengerdetails[@i].mobile" required /></div>
-				</div>
+						</div>
+						<p class="error-message error-emailname" style="display:none"></p>
+						<p class="error-message-val " style="display:none"></p>
+						<div class="col-md-1 phone-code">
+							<select name="passengerdetails[@i].countrycode" class="form-control form-control-lg">
+								<option value="+91">+91 (India)</option>
+								<option value="+1">+1 (USA)</option>
+								<option value="+44">+44 (UK)</option>
+								<option value="+61">+61 (Australia)</option>
+								<option value="+81">+81 (Japan)</option>
+							</select>
+						</div>
+						<div class="col-md-2 ">
+							
+							<div class="form-input">
+
+								<input type="text" data-validate="phone" id="contactphoneID" maxlength="20" class="contactphone validate-field" oninput="validateInputT(event,@i)" placeholder="phone" value="@gstData[0].MobileNumber" name="passengerdetails[@i].mobile" required />
+								</div>
+							
+							
+						</div>
 				<p class="error-message error-phoneN" style="display:none"></p>
 				<p class="error-message-val" style="display:none"></p>
 
-						<div class="col-md-3 mt-10">
-							<div class="form-input"><input type="text" data-validate="ff" id="FFID" maxlength="30" class="contactphone validate-field" oninput="validateInputT(event,@i)" placeholder="FrequentFlyerNumbers" value="@gstData[0].FrequentFlyerNumbers" readonly /></div>
+						<div class="col-md-3 ml-10 mt-10">
+						<div class="form-input"><input type="text" data-validate="ff" id="FFID" maxlength="15" class="contactphone validate-field" oninput="validateInputT(event,@i)" placeholder="FrequentFlyerNumbers" value="@gstData[0].FrequentFlyerNumbers" required /></div>
 						
 					</div>
 		    }
@@ -367,21 +373,7 @@
 	} else {
 	   // alert("Checkbox is unchecked");
 	    debugger;
-	    // var emaiLeadPass = "";
-	    // var phoneLeadPass = "";
-	    // var emailInputsT = document.querySelectorAll(".contactemail");
-	    // emailInputsT.forEach(function (input) {
-	    //     input.value = emaiLeadPass;
-	    // });
-	    // var phoneInputsT = document.querySelectorAll(".contactphone");
-	    // phoneInputsT.forEach(function (input) {
-	    //     input.value = phoneLeadPass;
-	    // });
-
-	    // var emaiLeadPassenger = localStorage.getItem('Leadpassenger3');
-	    // var phoneLeadPassenger = localStorage.getItem('Leadpassenger4');
-	    // document.querySelector("#contactemailID").value = emaiLeadPassenger;
-	    // document.querySelector("#contactphoneID").value = phoneLeadPassenger;
+	
 
 	    var firstEmail = document.querySelector(".contactemail").value;
 	    var firstPhone = document.querySelector(".contactphone").value;
@@ -402,10 +394,7 @@
 		}
 	    });
 
-	   //var emaiLeadPassenger = localStorage.getItem('Leadpassenger3');
-	    //var phoneLeadPassenger = localStorage.getItem('Leadpassenger4');
-	    //document.querySelector("#contactemailID").value = emaiLeadPassenger;
-	     //document.querySelector("#contactphoneID").value = phoneLeadPassenger;
+	  
 	}
     });
 
@@ -425,6 +414,9 @@
 	});
       //
 
+
+
+
 	$("#showReviewPopup").click(function (e) {
 	    e.preventDefault();
 	    
@@ -432,7 +424,6 @@
 	    const fieldsToValidate = [
 		{ className: 'contactFname', errorMessage: 'First name is required', validationdata: /^[A-Za-z]{1,32}$/ },
 		{ className: 'contactLname', errorMessage: 'Last name is required', validationdata: /^[A-Za-z]{1,32}$/ },
-		//{ className: 'contactemail', errorMessage: 'Email is invalid', validationdata: /^(?!.*\.\.)[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/ },
 		{ className: 'contactemail', errorMessage: 'Email is invalid', validationdata: /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
 		{ className: 'contactphone', errorMessage: 'Enter valid phone number', validationdata: /^\d{10,}$/ }
 	    ];

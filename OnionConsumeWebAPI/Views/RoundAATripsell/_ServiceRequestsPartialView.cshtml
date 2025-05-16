@@ -989,16 +989,23 @@
 														string weight = "";
 														bagkey = "";
 														string Bagname = "";
-
+														string Sssrcode = "";
 														for (int i = 0; i < Model.BaggagelistRT[0].legSsrs.Count; i++)
 														{
 															string ssrprice = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-															string Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[0] + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-															Bagname = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-														    bagkey = Sssrcode;
-														    if (bagkey != null)
+															if(Model.passengerNamedetails[pas].passengerkey.Contains("**"))
 															{
-															  BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
+																Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[0] + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+															}
+															else
+															{
+																Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+															}
+															Bagname = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+															bagkey = Sssrcode;
+															if (bagkey != null)
+															{
+																BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
 															}
 
 														}
@@ -1192,11 +1199,14 @@
 											</div>
 											<div class="servc-content select-option2">
 												@{
-													if (Model.MealslistRT[0] != null && Model.MealslistRT[0].legSsrs.Count > 1)
+													if (Model.MealslistRT != null && Model.MealslistRT.Count > 0 && Model.MealslistRT[0] != null)
 													{
-														if (Model.MealslistRT[0].legSsrs[1].legssrs.Count > 0)
+														if (Model.MealslistRT[0] != null && Model.MealslistRT[0].legSsrs.Count > 1)
 														{
-															AirLine = Model.MealslistRT[0].legSsrs[1].legssrs[0].legpassengers[0].Airline.ToString();
+															if (Model.MealslistRT[0].legSsrs[1].legssrs.Count > 0)
+															{
+																AirLine = Model.MealslistRT[0].legSsrs[1].legssrs[0].legpassengers[0].Airline.ToString();
+															}
 														}
 													}
 
@@ -1843,12 +1853,20 @@
 															string weight = "";
 															//var bagkey = "";
 															string Bagname = "";
+															string Sssrcode = "";
 
 															for (int i = 0; i < Model.BaggagelistRT[1].legSsrs.Count; i++)
 															{
 																string ssrprice = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-																string Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[1] + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-																Bagname = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																if(Model.passengerNamedetails[pas].passengerkey.Contains("**"))
+																{
+																	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[1] + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																}
+																else
+																{
+																	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																}
+															    Bagname = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																bagkeyAA = Sssrcode;
 																if (bagkeyAA != null)
 																{

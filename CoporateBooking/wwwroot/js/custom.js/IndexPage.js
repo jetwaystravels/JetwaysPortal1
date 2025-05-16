@@ -6,16 +6,22 @@ localStorage.clear();
 
 function validateForm() {
     $('#multipleValuesForm').submit(function (event) {
-        
-        var empselect = document.getElementById("empid").value;
-        if (empselect == "") {
-            debugger;
-            var ToDisplay = document.getElementById("emltoggle");
-            ToDisplay.style.display = "block";
-            document.getElementById("empid").focus();
-            return false;
-            event.preventDefault();
+        var legalEntity = document.getElementById("legalEntitySelect").value;
+        var employee = document.getElementById("employeeSelect").value;
+       
+        // Check if Legal Entity and Employee are selected
+        if (legalEntity === "") {
+           alert("Please select a company.");
+            return false; // Prevent form submission
         }
+
+        if (employee === "") {
+            alert("Please select an employee.");
+            return false; // Prevent form submission
+        }
+
+        // If both fields are valid, the form will be submitted
+   
 
         var originfocus = document.getElementById("myInput").value;
         if (originfocus == "") {
