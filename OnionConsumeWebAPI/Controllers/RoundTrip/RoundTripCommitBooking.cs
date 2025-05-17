@@ -1777,7 +1777,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                         }
                                         #endregion
-                                        string stravailibitilityrequest = HttpContext.Session.GetString("IndigoAvailibilityRequest");
+                                        // string stravailibitilityrequest = HttpContext.Session.GetString("IndigoAvailibilityRequest");
+                                        string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest);
                                         GetAvailabilityRequest availibiltyRQ = JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
 
                                         var passanger = _getBookingResponse.Booking.Passengers;
@@ -2370,7 +2371,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                         #endregion
 
-                                        string stravailibitilityrequest = HttpContext.Session.GetString("IndigoAvailibilityRequest");
+                                        // string stravailibitilityrequest = HttpContext.Session.GetString("IndigoAvailibilityRequest");
+
+
+                                        string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest);
                                         GetAvailabilityRequest availibiltyRQ = JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
 
                                         var passanger = _getBookingResponse.Booking.Passengers;

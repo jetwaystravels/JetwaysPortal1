@@ -203,11 +203,7 @@ namespace OnionConsumeWebAPI.Models
                     mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
                 }
 
-                if (supp == "Indigo")
-                {
-                    var updatepass = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, "");
-                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, updatepass);
-                }
+                
 
 
             }

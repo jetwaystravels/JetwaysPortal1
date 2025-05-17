@@ -269,7 +269,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 airlineLogin login = new airlineLogin();
                 login.credentials = _credentialsAirasia;
 
-              //  TempData["AirAsiaLogin"] = login.credentials.Image;
+                //  TempData["AirAsiaLogin"] = login.credentials.Image;
                 AirasiaTokan AirasiaTokan = new AirasiaTokan();
                 var AirasialoginRequest = JsonConvert.SerializeObject(login, Formatting.Indented);
                 if (SaveLogs)
@@ -1533,7 +1533,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         uniqueidx++;
                         SimpleAvailibilityaAddResponcelist.Add(_SimpleAvailibilityaAddResponceobj);
                     }
-                 //   HttpContext.Session.SetString("IndigoSignature", JsonConvert.SerializeObject(_IndigologonResponseobj.Signature));
+                    //   HttpContext.Session.SetString("IndigoSignature", JsonConvert.SerializeObject(_IndigologonResponseobj.Signature));
                 }
                 #endregion
 
@@ -3248,7 +3248,9 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (mongoSpiceToken.Token != "")
                     {
 
-                        mongoSpiceToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_getAvailabilityRQ));
+                        // mongoSpiceToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_getAvailabilityRQ));
+                        mongoSpiceToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("SpicejetAvailibilityRequest"));
+
                         mongoSpiceToken.Guid = SearchGuid;
                         mongoSpiceToken.Supp = "SpiceJet";
                         _mongoDBHelper.SaveMongoFlightToken(mongoSpiceToken);
@@ -3257,7 +3259,10 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (mongoIndigoToken.Token != "")
                     {
 
-                        mongoIndigoToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                        // mongoIndigoToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                        mongoIndigoToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("IndigoAvailibilityRequest"));
+
+
                         mongoIndigoToken.Guid = SearchGuid;
                         mongoIndigoToken.Supp = "Indigo";
 
@@ -3292,7 +3297,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (mongoSpiceToken.Token != "")
                     {
 
-                        mongoSpiceToken.PassRequest = "";
+                        mongoSpiceToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("SpicejetAvailibilityRequest")); ;
                         mongoSpiceToken.Guid = SearchGuid;
                         mongoSpiceToken.Supp = "SpiceJet";
                         _mongoDBHelper.SaveMongoFlightToken(mongoSpiceToken);
@@ -3301,7 +3306,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (mongoIndigoToken.Token != "")
                     {
 
-                        mongoIndigoToken.PassRequest = "";
+                        //  mongoIndigoToken.PassRequest = "";
+                        mongoIndigoToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("IndigoAvailibilityRequest"));
                         mongoIndigoToken.Guid = SearchGuid;
                         mongoIndigoToken.Supp = "Indigo";
                         _mongoDBHelper.SaveMongoFlightToken(mongoIndigoToken);
