@@ -129,7 +129,8 @@ namespace OnionConsumeWebAPI.Controllers
                     return RedirectToAction("Index");
                 }
                 //var Signature = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(token);
-                string stravailibitilityrequest = HttpContext.Session.GetString("IndigoAvailibilityRequest");
+                //string stravailibitilityrequest = HttpContext.Session.GetString("IndigoAvailibilityRequest");
+                string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest);
                 GetAvailabilityRequest availibiltyRQ = Newtonsoft.Json.JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
 
                 #region IndigoSellRequest

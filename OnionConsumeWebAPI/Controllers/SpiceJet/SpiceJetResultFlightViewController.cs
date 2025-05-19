@@ -191,7 +191,8 @@ namespace OnionConsumeWebAPI.Controllers
 
                 var Signature = token;
 
-                string stravailibitilityrequest = HttpContext.Session.GetString("SpicejetAvailibilityRequest");
+                //string stravailibitilityrequest = HttpContext.Session.GetString("SpicejetAvailibilityRequest");
+                string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest);
                 GetAvailabilityRequest availibiltyRQ = Newtonsoft.Json.JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
                 SellKeyList _getSellKeyList = new SellKeyList();
                 _getSellKeyList.JourneySellKey = journeyKey;

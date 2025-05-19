@@ -3248,7 +3248,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (mongoSpiceToken.Token != "")
                     {
 
-                        // mongoSpiceToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_getAvailabilityRQ));
+                        mongoSpiceToken.PassengerRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_getAvailabilityRQ));
                         mongoSpiceToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("SpicejetAvailibilityRequest"));
 
                         mongoSpiceToken.Guid = SearchGuid;
@@ -3259,7 +3259,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (mongoIndigoToken.Token != "")
                     {
 
-                        // mongoIndigoToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                        mongoIndigoToken.PassengerRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
                         mongoIndigoToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("IndigoAvailibilityRequest"));
 
 
