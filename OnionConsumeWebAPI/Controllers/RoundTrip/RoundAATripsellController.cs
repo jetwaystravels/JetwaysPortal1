@@ -203,7 +203,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 //    ViewBag.ErrorMessage = "";
                 if (vm.passeengerlistRT[0].journeys.Count == 0 || vm.passeengerlistRT[1].journeys.Count == 0)
                 {
-                    ViewBag.ErrorMessage = "";
+                    if (!string.IsNullOrEmpty(vm.passeengerlistRT[0].ErrorMsg))
+                    {
+                        ViewBag.ErrorMessage = vm.passeengerlistRT[0].ErrorMsg;
+                    }
+                    else if (!string.IsNullOrEmpty(vm.passeengerlistRT[1].ErrorMsg))
+                    {
+                        ViewBag.ErrorMessage = vm.passeengerlistRT[1].ErrorMsg;
+                    }
                     return View("service-error-msg");
                 }
                 else
@@ -214,7 +221,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             }
             else if (vm.passeengerlistRT.Count == 1)
             {
-                ViewBag.ErrorMessage = "";
+                if (!string.IsNullOrEmpty(vm.passeengerlistRT[0].ErrorMsg))
+                {
+                    ViewBag.ErrorMessage = vm.passeengerlistRT[0].ErrorMsg;
+                }
                 return View("service-error-msg");
             }
             else
@@ -1543,7 +1553,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 }
 
                             }
-                            if (passengerNamedetailsdataL!=null)
+                            if (passengerNamedetailsdataL != null)
                             {
                                 passengerNamedetailsdata = passengerNamedetailsdataL;
                             }
@@ -1668,7 +1678,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                         //if (_bags != null)
                         //{
-                            vm.BaggagelistRT.Add(_bags);
+                        vm.BaggagelistRT.Add(_bags);
                         //}
                     }
                 }
@@ -3821,119 +3831,119 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             flagGDSSSR = true;
                             //if (!string.IsNullOrEmpty(seatMealdetail.ResultRequest))
                             //{
-                                //passenger = objMongoHelper.UnZip(seatMealdetail.ResultRequest);
-                                
-                                //foreach (Match mitem in Regex.Matches(passenger, @"<Start>(?<test>[\s\S]*?)<End>"))
-                                //{
-                                    //passenger = mitem.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
-                                    //if (passenger != null)
-                                    //{
-                                        //passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
-                                        //if (passeengerKeyList.journeys[0].Airlinename.ToLower() == "airindia")
-                                        //{
-                                            token = string.Empty;
-                                            string tokenview = string.Empty;
-                                            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
-                                            if (k1 == 0)
-                                            {
-                                                tokenview = tokenData.Token;
-                                            }
-                                            else
-                                            {
-                                                tokenview = tokenData.RToken;
-                                            }
+                            //passenger = objMongoHelper.UnZip(seatMealdetail.ResultRequest);
 
-                                            if (!string.IsNullOrEmpty(tokenview))
-                                            {
-                                                if (tokenview == null) { tokenview = ""; }
-                                                string newGuid = token = tokenview.Replace(@"""", string.Empty);
-                                                using (HttpClient client1 = new HttpClient())
-                                                {
-                                                    #region Commit Booking
-                                                    TravelPort _objAvail = null;
-                                                    HttpContextAccessor httpContextAccessorInstance = new HttpContextAccessor();
-                                                    _objAvail = new TravelPort(httpContextAccessorInstance);
-                                                    string _UniversalRecordURL = AppUrlConstant.GDSUniversalRecordURL;
-                                                    string _testURL = AppUrlConstant.GDSURL;
-                                                    string _targetBranch = string.Empty;
-                                                    string Logfolder = string.Empty;
-                                                    string _userName = string.Empty;
-                                                    string _password = string.Empty;
-                                                    _targetBranch = "P7027135";
-                                                    _userName = "Universal API/uAPI5098257106-beb65aec";
-                                                    _password = "Q!f5-d7A3D";
-                                                    StringBuilder createPNRReq = new StringBuilder();
-                                                    string AdultTraveller = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
-                                                    string _data = objMongoHelper.UnZip(seatMealdetail.KPassenger); // HttpContext.Session.GetString("SGkeypassengerRT");
-                                                    string _Total = HttpContext.Session.GetString("Total");
-                                                    string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest); //HttpContext.Session.GetString("PassengerModel");
-                                                    SimpleAvailabilityRequestModel availibiltyRQGDS = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(stravailibitilityrequest);
+                            //foreach (Match mitem in Regex.Matches(passenger, @"<Start>(?<test>[\s\S]*?)<End>"))
+                            //{
+                            //passenger = mitem.Groups["test"].Value.ToString().Replace("/\"", "\"").Replace("\\\"", "\"").Replace("\\\\", "");
+                            //if (passenger != null)
+                            //{
+                            //passeengerKeyList = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(passenger, typeof(AirAsiaTripResponceModel));
+                            //if (passeengerKeyList.journeys[0].Airlinename.ToLower() == "airindia")
+                            //{
+                            token = string.Empty;
+                            string tokenview = string.Empty;
+                            tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(Guid, "GDS").Result;
+                            if (k1 == 0)
+                            {
+                                tokenview = tokenData.Token;
+                            }
+                            else
+                            {
+                                tokenview = tokenData.RToken;
+                            }
 
-                                                    //retrive PNR
-                                                    string _pricesolution = string.Empty;
-                                                    string _htbaggagedataStringL = string.Empty;
-                                                    string _htbaggagedataStringR = string.Empty;
-                                                    if (k1 == 0)
-                                                    {
-                                                        //Logfolder = "GDSOneWay";
-                                                        _pricesolution = HttpContext.Session.GetString("PricingSolutionValue_0");
-                                                        _htbaggagedataStringL = HttpContext.Session.GetString("PaxwiseBaggageLeft");
+                            if (!string.IsNullOrEmpty(tokenview))
+                            {
+                                if (tokenview == null) { tokenview = ""; }
+                                string newGuid = token = tokenview.Replace(@"""", string.Empty);
+                                using (HttpClient client1 = new HttpClient())
+                                {
+                                    #region Commit Booking
+                                    TravelPort _objAvail = null;
+                                    HttpContextAccessor httpContextAccessorInstance = new HttpContextAccessor();
+                                    _objAvail = new TravelPort(httpContextAccessorInstance);
+                                    string _UniversalRecordURL = AppUrlConstant.GDSUniversalRecordURL;
+                                    string _testURL = AppUrlConstant.GDSURL;
+                                    string _targetBranch = string.Empty;
+                                    string Logfolder = string.Empty;
+                                    string _userName = string.Empty;
+                                    string _password = string.Empty;
+                                    _targetBranch = "P7027135";
+                                    _userName = "Universal API/uAPI5098257106-beb65aec";
+                                    _password = "Q!f5-d7A3D";
+                                    StringBuilder createPNRReq = new StringBuilder();
+                                    string AdultTraveller = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
+                                    string _data = objMongoHelper.UnZip(seatMealdetail.KPassenger); // HttpContext.Session.GetString("SGkeypassengerRT");
+                                    string _Total = HttpContext.Session.GetString("Total");
+                                    string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest); //HttpContext.Session.GetString("PassengerModel");
+                                    SimpleAvailabilityRequestModel availibiltyRQGDS = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(stravailibitilityrequest);
 
-                                                    }
-                                                    else
-                                                    {
-                                                        //Logfolder = "GDSRT";
-                                                        _pricesolution = HttpContext.Session.GetString("PricingSolutionValue_1");
-                                                        _htbaggagedataStringR = HttpContext.Session.GetString("PaxwiseBaggageRight");
-                                                    }
+                                    //retrive PNR
+                                    string _pricesolution = string.Empty;
+                                    string _htbaggagedataStringL = string.Empty;
+                                    string _htbaggagedataStringR = string.Empty;
+                                    if (k1 == 0)
+                                    {
+                                        //Logfolder = "GDSOneWay";
+                                        _pricesolution = HttpContext.Session.GetString("PricingSolutionValue_0");
+                                        _htbaggagedataStringL = HttpContext.Session.GetString("PaxwiseBaggageLeft");
 
-                                                    string segmentdata = string.Empty;
-                                                    foreach (Match _item in Regex.Matches(_pricesolution.Replace("\\", ""), "<air:AirSegment Key=\"[\\s\\S]*?</air:AirSegment><air:AirPricingInfo", RegexOptions.IgnoreCase | RegexOptions.Multiline))
-                                                    {
-                                                        segmentdata += _item.Value.Replace("<air:AirPricingInfo", "");
-                                                    }
-                                                    string strAirTicket = string.Empty;
-                                                    StringBuilder createSSRReq = new StringBuilder();
-                                                    string strResponse = string.Empty;
-                                                    string segmentblock = string.Empty;
-                                                    string res = string.Empty;
-                                                    string RecordLocator = string.Empty;
-                                                    string _TicketRecordLocator = string.Empty;
-                                                    segmentblock = segmentdata;
-                                                    res = _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, k1, _unitkey, _ssrKey, _pricesolution);
-                                                    RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
-                                                    //getdetails
-                                                    strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
+                                    }
+                                    else
+                                    {
+                                        //Logfolder = "GDSRT";
+                                        _pricesolution = HttpContext.Session.GetString("PricingSolutionValue_1");
+                                        _htbaggagedataStringR = HttpContext.Session.GetString("PaxwiseBaggageRight");
+                                    }
 
-                                                    string ProvidelocatorCode = Regex.Match(strResponse, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<ProviderLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["ProviderLocatorCode"].Value.Trim();
-                                                    string supplierLocatorCode = Regex.Match(strResponse, @"SupplierLocatorCode=""(?<SupplierLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["SupplierLocatorCode"].Value.Trim();
-                                                    string UniversalLocatorCode = Regex.Match(strResponse, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
-                                                    segmentblock += "@" + ProvidelocatorCode + "@" + supplierLocatorCode + "@" + UniversalLocatorCode;
+                                    string segmentdata = string.Empty;
+                                    foreach (Match _item in Regex.Matches(_pricesolution.Replace("\\", ""), "<air:AirSegment Key=\"[\\s\\S]*?</air:AirSegment><air:AirPricingInfo", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                    {
+                                        segmentdata += _item.Value.Replace("<air:AirPricingInfo", "");
+                                    }
+                                    string strAirTicket = string.Empty;
+                                    StringBuilder createSSRReq = new StringBuilder();
+                                    string strResponse = string.Empty;
+                                    string segmentblock = string.Empty;
+                                    string res = string.Empty;
+                                    string RecordLocator = string.Empty;
+                                    string _TicketRecordLocator = string.Empty;
+                                    segmentblock = segmentdata;
+                                    res = _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, k1, _unitkey, _ssrKey, _pricesolution);
+                                    RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
+                                    //getdetails
+                                    strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
 
-                                                    var jsonDataObject = objMongoHelper.UnZip(tokenData.PassengerRequest); //HttpContext.Session.GetString("PassengerModel");
-                                                    List<passkeytype> passengerdetails = (List<passkeytype>)JsonConvert.DeserializeObject(jsonDataObject.ToString(), typeof(List<passkeytype>));
-                                                    string strSeatResponseleft = HttpContext.Session.GetString("SeatResponseleft");
-                                                    string strSeatResponseright = HttpContext.Session.GetString("SeatResponseright");
-                                                    res = _objAvail.AirMerchandisingFulfillmentReqRoundTrip(_testURL, createSSRReq, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder, unitKey, ssrKey, BaggageSSrkey, availibiltyRQGDS, passengerdetails, _htbaggagedataStringL, _htbaggagedataStringR, strSeatResponseleft, strSeatResponseright, k1, segmentblock);
+                                    string ProvidelocatorCode = Regex.Match(strResponse, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<ProviderLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["ProviderLocatorCode"].Value.Trim();
+                                    string supplierLocatorCode = Regex.Match(strResponse, @"SupplierLocatorCode=""(?<SupplierLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["SupplierLocatorCode"].Value.Trim();
+                                    string UniversalLocatorCode = Regex.Match(strResponse, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
+                                    segmentblock += "@" + ProvidelocatorCode + "@" + supplierLocatorCode + "@" + UniversalLocatorCode;
 
-                                                    UniversalLocatorCode = Regex.Match(res, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
-                                                    if (k1 == 0)
-                                                    {
-                                                        HttpContext.Session.SetString("PNRL", res + "@@" + UniversalLocatorCode);
-                                                    }
-                                                    else
-                                                    {
-                                                        HttpContext.Session.SetString("PNRR", res + "@@" + UniversalLocatorCode);
-                                                    }
-                                                    #endregion
-                                                }
+                                    var jsonDataObject = objMongoHelper.UnZip(tokenData.PassengerRequest); //HttpContext.Session.GetString("PassengerModel");
+                                    List<passkeytype> passengerdetails = (List<passkeytype>)JsonConvert.DeserializeObject(jsonDataObject.ToString(), typeof(List<passkeytype>));
+                                    string strSeatResponseleft = HttpContext.Session.GetString("SeatResponseleft");
+                                    string strSeatResponseright = HttpContext.Session.GetString("SeatResponseright");
+                                    res = _objAvail.AirMerchandisingFulfillmentReqRoundTrip(_testURL, createSSRReq, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder, unitKey, ssrKey, BaggageSSrkey, availibiltyRQGDS, passengerdetails, _htbaggagedataStringL, _htbaggagedataStringR, strSeatResponseleft, strSeatResponseright, k1, segmentblock);
+
+                                    UniversalLocatorCode = Regex.Match(res, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
+                                    if (k1 == 0)
+                                    {
+                                        HttpContext.Session.SetString("PNRL", res + "@@" + UniversalLocatorCode);
+                                    }
+                                    else
+                                    {
+                                        HttpContext.Session.SetString("PNRR", res + "@@" + UniversalLocatorCode);
+                                    }
+                                    #endregion
+                                }
 
 
-                                            }
-                                        //}
-                                        //k1++;
-                                    //}
-                                //}
+                            }
+                            //}
+                            //k1++;
+                            //}
+                            //}
                             //}
                         }
                         k1++;

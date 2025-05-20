@@ -163,6 +163,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         else
                         {
                             token = tokenData.RToken;
+                            tokenData.PassRequest = tokenData.PassRequestR;
                         }
                         if (token == "" || token == null)
                         {
@@ -730,6 +731,21 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                         }
                                     }
+                                    else
+                                    {
+                                        var _responsePassengers = responsePassengers.Content.ReadAsStringAsync().Result;
+                                        if (p == 0)
+                                        {
+                                            logs.WriteLogsR(jsonPassengers, "4-ItenaryRequest_Left", "AirAsiaRT");
+                                            logs.WriteLogsR(_responsePassengers, "4-ItenaryResponse_Left", "AirAsiaRT");
+                                        }
+                                        else
+                                        {
+                                            logs.WriteLogsR(jsonPassengers, "4-ItenaryRequest_Right", "AirAsiaRT");
+                                            logs.WriteLogsR(_responsePassengers, "4-ItenaryResponse_Right", "AirAsiaRT");
+                                        }
+                                    }
+
                                 }
                             }
                             #endregion
@@ -1887,6 +1903,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         if (_GetBookingFromStateRS1 != null)
                         {
                             AirAsiaTripResponceobj = new AirAsiaTripResponceModel();
+
+                            if (_getSellRS.BookingUpdateResponseData.Error != null)
+                            {
+                                AirAsiaTripResponceobj.ErrorMsg = _getSellRS.BookingUpdateResponseData.Error.ErrorText;
+                            }
                             var totalAmount = _GetBookingFromStateRS1.BookingData.BookingSum.TotalCost;
                             var totalTax = "";
                             #region Itenary segment and legs

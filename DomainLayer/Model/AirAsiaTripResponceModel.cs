@@ -48,6 +48,8 @@ namespace DomainLayer.Model
         public List<AADesignator> designatorlegs { get; set; }
         public List<AASsr> Ssr { get; set; }
 
+        public string ErrorMsg { get; set; }
+
     }
 
     //public class Infant

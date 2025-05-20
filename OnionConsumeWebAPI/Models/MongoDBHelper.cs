@@ -203,7 +203,7 @@ namespace OnionConsumeWebAPI.Models
                     mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
                 }
 
-                
+
 
 
             }
@@ -214,7 +214,33 @@ namespace OnionConsumeWebAPI.Models
 
         }
 
+        public void UpdateMongoFlightPassRequest(string guid, string supp, string PassreqL, string PassReqR)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                if (string.IsNullOrEmpty(PassReqR))
+                {
+                    var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, PassreqL);
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+                }
+                else
+                {
+                    var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, PassreqL).Set(s => s.PassRequestR, PassReqR);
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+                }
 
+
+
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
+            }
+
+        }
         public void UpdatePassengerMongoFlightToken(string guid, string supp, string Passenger)
         {
             try
@@ -282,8 +308,8 @@ namespace OnionConsumeWebAPI.Models
             }
 
         }
-		
-		public void UpdateCommitResponse(string guid, string supp, string CommitValue)
+
+        public void UpdateCommitResponse(string guid, string supp, string CommitValue)
         {
             try
             {

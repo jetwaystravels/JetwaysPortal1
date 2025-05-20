@@ -581,6 +581,15 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 // Handling special condition for airasia
                 _SimpleAvailabilityobj.endDate = null;
 
+                if (AirasiaTokan.token != "")
+                {
+
+                    mongoAirAsiaToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                    mongoAirAsiaToken.Guid = SearchGuid;
+                    mongoAirAsiaToken.Supp = "AirAsia";
+                    _mongoDBHelper.SaveMongoFlightToken(mongoAirAsiaToken);
+                }
+
                 var json = JsonConvert.SerializeObject(_SimpleAvailabilityobj, Formatting.Indented);
                 if (SaveLogs)
                 {
@@ -854,6 +863,14 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         //uniqueidx = 0;
                         // Handling special condition for akasa
                         _SimpleAvailabilityobj.endDate = Convert.ToDateTime(searchLog.ArrivalDateTime).ToString("yyyy-MM-dd");
+                        if (AkasaTokan.token != "")
+                        {
+
+                            mongoAKashaToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                            mongoAKashaToken.Guid = SearchGuid;
+                            mongoAKashaToken.Supp = "Akasa";
+                            _mongoDBHelper.SaveMongoFlightToken(mongoAKashaToken);
+                        }
                         if (responceAkasaAir.IsSuccessStatusCode)
                         {
 
@@ -1832,6 +1849,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         }
                     }
                 }
+                //RoundTrip
                 if (_GetfligthModel.beginDate != null && _GetfligthModel.endDate != null && _GetfligthModel.endDate != "0001-01-01")
                 {
                     oriDes = searchLog.DestCode + "|" + searchLog.OrgCode;
@@ -3233,16 +3251,22 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (AirasiaTokan.token != "")
                     {
 
-                        mongoAirAsiaToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                        mongoAirAsiaToken.PassRequestR = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobjR));
                         mongoAirAsiaToken.Guid = SearchGuid;
                         mongoAirAsiaToken.Supp = "AirAsia";
                         _mongoDBHelper.SaveMongoFlightToken(mongoAirAsiaToken);
-                    }
+                        _mongoDBHelper.UpdateMongoFlightPassRequest(ResponseGuid, "AirAsia", mongoAirAsiaToken.PassRequest, mongoAirAsiaToken.PassRequestR);
 
-                    mongoAKashaToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
-                    mongoAKashaToken.Guid = SearchGuid;
-                    mongoAKashaToken.Supp = "Akasa";
-                    _mongoDBHelper.SaveMongoFlightToken(mongoAKashaToken);
+                    }
+                    if (AkasaTokan.token != "")
+                    {
+                        mongoAKashaToken.PassRequestR = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobjR));
+                        mongoAKashaToken.Guid = SearchGuid;
+                        mongoAKashaToken.Supp = "Akasa";
+                        //_mongoDBHelper.SaveMongoFlightToken(mongoAKashaToken);
+                        _mongoDBHelper.UpdateMongoFlightToken(ResponseGuid, "Akasa", mongoAKashaToken.Token, mongoAKashaToken.RToken);
+                        _mongoDBHelper.UpdateMongoFlightPassRequest(ResponseGuid, "Akasa", mongoAKashaToken.PassRequest, mongoAKashaToken.PassRequestR);
+                    }
 
 
                     if (mongoSpiceToken.Token != "")

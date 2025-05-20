@@ -26,7 +26,8 @@
         public MongoDB.Bson.ObjectId _id;
         public string Guid;
         public string PassRequest;
-		public string ContactRequest;
+        public string PassRequestR;
+        public string ContactRequest;
         public string Request;
         public string Token;
         public string RToken;
