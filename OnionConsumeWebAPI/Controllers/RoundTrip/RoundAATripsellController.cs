@@ -1429,7 +1429,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             Hashtable htSSr = new Hashtable();
                             _htpaxwiseBaggage = new Hashtable();
 
-                            foreach (Match item in Regex.Matches(res, @"<air:OptionalService Type=""Baggage""[\s\S]*?BasePrice=""(?<Price>[\s\S]*?)""[\s\S]*?</air:OptionalService>"))
+                            foreach (Match item in Regex.Matches(res, @"<air:OptionalService Type=""Baggage""[\s\S]*?TotalPrice=""(?<Price>[\s\S]*?)""[\s\S]*?</air:OptionalService>"))
                             {
                                 if (!item.Value.Contains("TotalWeight"))
                                     continue;

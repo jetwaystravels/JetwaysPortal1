@@ -666,6 +666,14 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                 //{
                                 breakdown.totalToCollect = Convert.ToDouble(breakdown.journeyfareTotals[0].totalAmount) + Convert.ToDouble(breakdown.journeyfareTotals[0].totalTax);
                                 //}
+                                if(breakdown.passengerTotals.baggage.total!=0)
+                                {
+                                    breakdown.totalToCollect += Convert.ToDouble(breakdown.passengerTotals.baggage.total);
+                                }
+                                if (breakdown.passengerTotals.seats.total != 0)
+                                {
+                                    breakdown.totalToCollect += Convert.ToDouble(breakdown.passengerTotals.seats.total);
+                                }
                                 returnTicketBooking.breakdown = breakdown;
                                 returnTicketBooking.journeys = AAJourneyList;
                                 //returnTicketBooking.passengers = passkeylist;

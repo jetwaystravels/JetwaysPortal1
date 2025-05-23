@@ -288,7 +288,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     }
                                     else
                                     {
-                                        TotaAmountBaggage += returnChargeobj.amount;
+                                        if (returnChargeobj.amount.ToString().Contains("-"))
+                                        {
+                                            TotaAmountBaggage -= returnChargeobj.amount;
+                                        }
+                                        else
+                                        {
+                                            TotaAmountBaggage += returnChargeobj.amount;
+                                        }
                                     }
 
                                     returnChargeList.Add(returnChargeobj);
@@ -3069,6 +3076,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             breakdown.journeyTotals.totalTax = Convert.ToDouble(BasefareTax);
                                             breakdown.totalAmount = breakdown.journeyTotals.totalAmount + breakdown.journeyTotals.totalTax;
                                             breakdown.totalToCollect = Convert.ToDouble(breakdown.journeyTotals.totalAmount) + Convert.ToDouble(breakdown.journeyTotals.totalTax);
+                                            if (breakdown.passengerTotals.baggage.total != 0)
+                                            {
+                                                breakdown.totalToCollect += Convert.ToDouble(breakdown.passengerTotals.baggage.total);
+                                            }
+                                            if (breakdown.passengerTotals.seats.total != 0)
+                                            {
+                                                breakdown.totalToCollect += Convert.ToDouble(breakdown.passengerTotals.seats.total);
+                                            }
                                             returnTicketBooking.breakdown = breakdown;
                                             returnTicketBooking.journeys = AAJourneyList;
                                             returnTicketBooking.passengerscount = passengercount;

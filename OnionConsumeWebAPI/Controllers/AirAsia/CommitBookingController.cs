@@ -318,7 +318,14 @@ namespace OnionConsumeWebAPI.Controllers
                             }
                             else
                             {
-                                TotaAmountBaggage += returnChargeobj.amount;
+                                if (returnChargeobj.amount.ToString().Contains("-"))
+                                {
+                                    TotaAmountBaggage -= returnChargeobj.amount;
+                                }
+                                else
+                                {
+                                    TotaAmountBaggage += returnChargeobj.amount;
+                                }
                             }
 
                             //totalMealTax = totalAmounttax + totalAmounttaxSGST;

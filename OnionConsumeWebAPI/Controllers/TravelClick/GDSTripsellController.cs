@@ -253,7 +253,12 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
             tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "GDS").Result;
             string passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
-
+            if(string.IsNullOrEmpty(passengerNamedetails))
+            {
+                _mongoDBHelper.UpdateFlightTokenOldPassengerGDS(GUID, "GDS", passobj);
+                tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "GDS").Result;
+                passengerNamedetails = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
+            }
             //Addcreate Reservation
             string _pricesolution = string.Empty;
             _pricesolution = HttpContext.Session.GetString("PricingSolutionValue_0");
@@ -350,7 +355,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                 string BookingTravellerref = "";
                 Hashtable htSSr = new Hashtable();
 
-                foreach (Match item in Regex.Matches(res, @"<air:OptionalService Type=""Baggage""[\s\S]*?BasePrice=""(?<Price>[\s\S]*?)""[\s\S]*?</air:OptionalService>"))
+                foreach (Match item in Regex.Matches(res, @"<air:OptionalService Type=""Baggage""[\s\S]*?TotalPrice=""(?<Price>[\s\S]*?)""[\s\S]*?</air:OptionalService>"))
                 {
                     if (!item.Value.Contains("TotalWeight"))
                         continue;

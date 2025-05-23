@@ -1524,8 +1524,10 @@
                                                                     SpicejetMealImageList.GetAllmeal(htSSr);
                                                                     if (!htbag.Contains(hashdata))
                                                                         continue;
-                                                                    var weight = htSSr[htbag[hashdata]];
-                                                                    <td>@htbag[hashdata] - @weight</td>
+                                                                   /* var weight = htSSr[htbag[hashdata]];
+                                                                    <td>@htbag[hashdata] - @weight</td>*/
+                                                                    var weight = htbag[hashdata];
+                                                                    <td>XBAG-@weight Kg</td>
                                                                 }
                                                                 else
                                                                 {

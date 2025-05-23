@@ -82,6 +82,10 @@ namespace OnionConsumeWebAPI.Controllers
             }
             catch (Exception ex)
             {
+                getSellResponse = new SellResponse();
+                getSellResponse.BookingUpdateResponseData = new BookingUpdateResponseData();
+                getSellResponse.BookingUpdateResponseData.Error = new Error();
+                getSellResponse.BookingUpdateResponseData.Error.ErrorText = ex.Message.ToString();
                 //return Ok(session);
             }
             return getSellResponse;
