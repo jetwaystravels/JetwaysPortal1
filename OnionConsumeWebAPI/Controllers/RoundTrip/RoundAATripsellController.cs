@@ -201,7 +201,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             if (vm.passeengerlistRT.Count > 1)
             {
                 //    ViewBag.ErrorMessage = "";
-                if (vm.passeengerlistRT[0].journeys.Count == 0 || vm.passeengerlistRT[1].journeys.Count == 0)
+                if (vm.passeengerlistRT[0].ErrorMsg != null || vm.passeengerlistRT[1].ErrorMsg!=null)
                 {
                     if (!string.IsNullOrEmpty(vm.passeengerlistRT[0].ErrorMsg))
                     {

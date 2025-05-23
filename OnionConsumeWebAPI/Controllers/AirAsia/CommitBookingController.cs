@@ -297,7 +297,7 @@ namespace OnionConsumeWebAPI.Controllers
                                 continue;
                                 //totalAmounttax += returnChargeobj.amount;
                             }
-                            if (returnChargeobj.code.StartsWith("SGST"))
+                            if (returnChargeobj.code.StartsWith("SGST") || returnChargeobj.code.Contains("GST"))
                             {
                                 continue;
                                 //totalAmounttaxSGST += returnChargeobj.amount;
@@ -357,7 +357,13 @@ namespace OnionConsumeWebAPI.Controllers
                         {
                             returnSeats.total = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.total;
                             returnSeats.taxes = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.taxes;
+                            returnSeats.adjustments = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments;
                             returnSeats.totalSeatAmount = returnSeats.total + returnSeats.taxes;
+                            if (returnSeats.adjustments != null)
+                            {
+                                returnSeats.totalSeatAmount += Convert.ToInt32(returnSeats.adjustments);
+                            }
+
 
                         }
                     }

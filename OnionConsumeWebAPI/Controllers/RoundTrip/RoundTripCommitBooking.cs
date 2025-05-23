@@ -268,7 +268,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     {
                                         continue;
                                     }
-                                    if (returnChargeobj.code.StartsWith("SGST"))
+                                    if (returnChargeobj.code.StartsWith("SGST") || returnChargeobj.code.Contains("GST"))
                                     {
                                         continue;
                                     }
@@ -305,7 +305,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     returnSeats.total = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.total;
                                     returnSeats.taxes = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.taxes;
                                     returnSeats.totalSeatAmount = returnSeats.total + returnSeats.taxes;
-
+                                    returnSeats.adjustments = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments;
+                                    if (returnSeats.adjustments != null)
+                                    {
+                                        returnSeats.totalSeatAmount +=  Convert.ToInt32(returnSeats.adjustments);
+                                    }
                                 }
                             }
                             SpecialServices specialServices = new SpecialServices();
