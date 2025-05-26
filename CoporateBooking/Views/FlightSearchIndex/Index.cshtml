@@ -352,79 +352,84 @@
                                     // 2) Serialize into a JS literal
                                     var jsonData = JsonConvert.SerializeObject(dataList);
                                 }
-                                @if (dataList.Any())
-{
-                                <div class="emulate-bx">
-                                    <h6>
-                                        Emulate to Company / Employee
-                                        <span class="toggle-arrow" style="cursor:pointer">
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                        </span>
-                                    </h6>
-
-                                    <div class="row d-flex" id="emltoggle"
-                                         style="display: none;
-              border-bottom: 1px solid #e8ecee;
-              background: linear-gradient(90deg, #f4f4f4 0%, #f4f4f4 35%, #fff 89%);
-              padding-bottom: 7px;">
-
-                                        <!-- Legal Entity Name -->
-                                        <div class="col-12 col-md-10 col-lg-3">
-                                            <label>Legal Entity Name</label>
-                                            <div class="select-container">
-                                                    <select class="select legalentity-select form-control" id="legalEntitySelect">
-                                                    <option value="">-- Select Company --</option>
-                                                    @foreach (var item in dataList)
-                                                    {
-                                                        <option value="@item.legalEntityName">
-                                                            @item.legalEntityName
-                                                        </option>
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Employee -->
-                                        <div class="col-12 col-md-10 col-lg-3">
-                                            <label>Employee</label>
-                                            <div class="select-container">
-                                                <select class="select employee-select form-control" id="employeeSelect">
-                                                    <option value="">-- Select Employee --</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Billing Entity Name -->
-                                        <div class="col-12 col-md-10 col-lg-3">
-                                            <label>Billing Entity Name</label>
-                                            <div class="select-container">
-                                                <select class="select billingentity-select form-control">
-                                                    <option value="">-- Select Billing Entity --</option>
-                                                    <option value="23E008">
-                                                        [23E008] EISAI PHARMACEUTICALS INDIA PVT LTD-MUM
-                                                    </option>
-                                                    @* …or generate these dynamically if you have the mapping… *@
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Balance Field -->
-                                        <div class="col-12 col-md-10 col-lg-2 mt-5">
-                                            <label>Balance</label>
-                                            <input type="text"
-                                                   name="balance"
-                                                   class="form-control balance-input"
-                                                   placeholder="₹ 0.00"
-                                                   readonly />
-                                        </div>
-                                    </div>
-                                </div>
-                                }
+                                
                                
                                 <!-- ***** Emulate to Company / Employee End ***** -->
 
 
                                 <form asp-action="SearchResultFlight" asp-controller="FlightSearchIndex" method="post" id="multipleValuesForm">
+
+                                    @if (dataList.Any())
+                                    {
+                                        <div class="emulate-bx">
+                                            <h6>
+                                                Emulate to Company / Employee
+                                                <span class="toggle-arrow" style="cursor:pointer">
+                                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                                </span>
+                                            </h6>
+
+                                            <div class="row d-flex" id="emltoggle"
+                                                 style="display: none;
+              border-bottom: 1px solid #e8ecee;
+              background: linear-gradient(90deg, #f4f4f4 0%, #f4f4f4 35%, #fff 89%);
+              padding-bottom: 7px;">
+
+                                                <!-- Legal Entity Name -->
+                                                <div class="col-12 col-md-10 col-lg-3">
+                                                    <label>Legal Entity Name</label>
+                                                    <div class="select-container">
+                                                        <select class="select legalentity-select form-control" name="legalEntitySelect" id="legalEntitySelect">
+                                                            <option value="">-- Select Company --</option>
+                                                            @foreach (var item in dataList)
+                                                            {
+                                                                <option value="@item.legalEntityName">
+                                                                    @item.legalEntityName
+                                                                </option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Employee -->
+                                                <div class="col-12 col-md-10 col-lg-3">
+                                                    <label>Employee</label>
+                                                    <div class="select-container">
+                                                        <select class="select employee-select form-control" name="employeeSelect" id="employeeSelect">
+                                                            <option value="">-- Select Employee --</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Billing Entity Name -->
+                                                <div class="col-12 col-md-10 col-lg-3">
+                                                    <label>Billing Entity Name</label>
+                                                    <div class="select-container">
+                                                        <select class="select billingentity-select form-control" name="billing">
+                                                            <option value="">-- Select Billing Entity --</option>
+                                                            <option value="23E008">
+                                                                [23E008] EISAI PHARMACEUTICALS INDIA PVT LTD-MUM
+                                                            </option>
+                                                            @* …or generate these dynamically if you have the mapping… *@
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Balance Field -->
+                                                <div class="col-12 col-md-10 col-lg-2 mt-5">
+                                                    <label>Balance</label>
+                                                    <input type="text"
+                                                           name="balance"
+                                                           class="form-control balance-input"
+                                                           placeholder="₹ 0.00"
+                                                           readonly />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+
+
                                     <div class="S-option">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="SameAirlineRT" value="OneWay" id="one-wayid" checked>
@@ -1182,7 +1187,7 @@
                   .map(function(e){ return e.trim(); })
                   .forEach(function(name){
                     $('.employee-select')
-                      .append($('<option>').val(name).text(name));
+                                .append($('<option>').val(name.split('|')[0]).text(name.split('|')[1]));
                   });
 
                 // bind balance

@@ -7,6 +7,8 @@ using System.Xml.Serialization;
 using OnionConsumeWebAPI.ErrorHandling;
 using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
+using CoporateBooking.Models;
+using System;
 
 namespace OnionConsumeWebAPI.Models
 {
@@ -490,6 +492,64 @@ namespace OnionConsumeWebAPI.Models
 			return seatMeal;
 		}
 
+        public async void SaveUpdateLegalEntity(LegalEntity legalEntity)
+        {
+            try
+            {
+                LegalEntity legal = new LegalEntity();
 
-	}
+
+                 legal = await mDB.GetCollection<LegalEntity>("LegalBill").Find(Builders<LegalEntity>.Filter.Eq("Guid", legalEntity.Guid)).Sort(Builders<LegalEntity>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
+                 if (legal == null)
+                 {
+                    legalEntity.CreatedDate = DateTime.UtcNow;
+                    await  mDB.GetCollection<LegalEntity>("LegalBill").InsertOneAsync(legalEntity);
+                 }
+                else
+                {
+               //     var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+               //Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+               //     var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.ContactRequest, Contact);
+               //     mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "SaveLegalEntity methhod", _connectionString);
+            }
+        }
+
+        public async Task<LegalEntity> GetlegalEntityByGUID(string guid)
+        {
+            LegalEntity legal = new LegalEntity();
+            try
+            {
+                legal = await mDB.GetCollection<LegalEntity>("LegalBill").Find(Builders<LegalEntity>.Filter.Eq("Guid", guid)).Sort(Builders<LegalEntity>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "GetlegalEntityByGUID methhod", _connectionString);
+            }
+            return legal;
+        }
+
+        public void UpdateSuppLegalEntity(string guid, string supp)
+        {
+            try
+            {
+                var filter = Builders<LegalEntity>.Filter.And(Builders<LegalEntity>.Filter.Eq(emp => emp.Guid, guid));
+                var update = Builders<LegalEntity>.Update.Set(s => s.SuppId, supp);
+                mDB.GetCollection<LegalEntity>("LegalBill").UpdateOneAsync(filter, update);
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateSuppLegalEntity methhod", _connectionString);
+            }
+
+        }
+
+
+    }
 }

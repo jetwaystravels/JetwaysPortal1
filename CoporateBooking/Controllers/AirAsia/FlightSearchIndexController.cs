@@ -45,6 +45,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 using static System.Net.WebRequestMethods;
 using CoporateBooking.Models;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System.Security.Claims;
 
 namespace OnionConsumeWebAPI.Controllers.AirAsia
 {
@@ -63,14 +64,16 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
         public readonly IDistributedCache _distributedCache;
         private readonly CredentialService _credentialService;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private bool SaveLogs;
 
-        public FlightSearchIndexController(IDistributedCache distributedcache, CredentialService credentialService, IConfiguration configuration)
+        public FlightSearchIndexController(IDistributedCache distributedcache, CredentialService credentialService, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _distributedCache = distributedcache;
             _credentialService = credentialService;
             _configuration = configuration;
             SaveLogs = Convert.ToBoolean(_configuration["IsDev"]);
+            _httpContextAccessor = httpContextAccessor;
 
 
         }
@@ -122,9 +125,11 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             return View();
         }
 
+        //, FormCollection formCollection
+
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> SearchResultFlight(SimpleAvailabilityRequestModel _GetfligthModel, string flightclass, string SameAirlineRT, string email, string returnUrl)
+        public async Task<IActionResult> SearchResultFlight(SimpleAvailabilityRequestModel _GetfligthModel, string flightclass, string SameAirlineRT, string email, string returnUrl, IFormCollection formCollection)
         {
             if (SameAirlineRT.ToLower() == "airlinert")
             {
@@ -362,9 +367,27 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     AkasaTokan.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
                 }
 
+                if (HttpContext.User.Identity.IsAuthenticated)
+                {
+
+                    string ac = "";
+                  
+                }
+
+                LegalEntity legalEntity = new LegalEntity();
+                legalEntity.Guid = SearchGuid;
+                legalEntity.BillingEntityName = Convert.ToString(formCollection["legalEntitySelect"]);
+                legalEntity.Employee = Convert.ToString(formCollection["employeeSelect"]);
+                legalEntity.LegalName = Convert.ToString(formCollection["billing"]);
+                legalEntity.Balance = Convert.ToDouble( Convert.ToString(formCollection["balance"]).Replace("₹","").Trim());
+
+                legalEntity.Username = HttpContext.User.Identity.Name;  
+                legalEntity.Password = HttpContext.User.Identity.Name;
+                legalEntity.Email = HttpContext.User.Identity.Name;
 
 
 
+                _mongoDBHelper.SaveUpdateLegalEntity(legalEntity);
 
                 // Akasa End
 

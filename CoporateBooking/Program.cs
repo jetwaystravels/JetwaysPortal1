@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using OnionConsumeWebAPI.ApiService;
 using OnionConsumeWebAPI.Comman;
 using OnionConsumeWebAPI.ErrorHandling;
+using System.Security.Claims;
 //using OnionConsumeWebAPI.Models.DbSettings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,8 +54,34 @@ builder.Services.AddDistributedRedisCache(option =>
 });
 
 
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("CustomClaimPolicy", policy =>
+//        policy.RequireClaim(ClaimTypes.NameIdentifier, "CustomClaimValue"));
+//});
+
+//builder.Services.AddAuthentication(options =>
+//{
+//	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+//});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromHours(10);
+                options.LoginPath = "/FlightSearchIndex/Index";
+                //o.Cookie.Name = options.CookieName;
+                //o.Cookie.Domain = options.CookieDomain;
+                //o.SlidingExpiration = true;
+                //o.ExpireTimeSpan = options.CookieLifetime;
+                //o.TicketDataFormat = ticketFormat;
+                //o.CookieManager = new CustomChunkingCookieManager();
+            });
+
 builder.Services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
 builder.Services.AddSession();
+
 
 var app = builder.Build();
 
@@ -67,6 +96,7 @@ app.UseStaticFiles();
 //app.UseMiddleware<ExceptionHandling>();
 app.UseSession();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 //app.UseMiddleware<RedirectToLogin>();
 app.MapControllerRoute(

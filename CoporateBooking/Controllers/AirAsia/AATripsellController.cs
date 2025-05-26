@@ -50,6 +50,8 @@ namespace OnionConsumeWebAPI.Controllers
         }
         public async Task<IActionResult> TripsellAsync(string Guid)
         {
+            MongoHelper objMongoHelper = new MongoHelper();
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
 
             List<SelectListItem> Title = new()
             {
@@ -69,6 +71,12 @@ namespace OnionConsumeWebAPI.Controllers
             string legalEntityCode = "23E008";
             int? airlineId = 6;
 
+            _mongoDBHelper.UpdateSuppLegalEntity(Guid, "6");
+
+            LegalEntity legal = new LegalEntity();
+            legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
+
+           
 
             string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={employeeCode}&legalEntityCode={legalEntityCode}";
 
@@ -116,8 +124,7 @@ namespace OnionConsumeWebAPI.Controllers
 
             //End:Coprate GST AND EMPLOYEE DETAIL
 
-            MongoHelper objMongoHelper = new MongoHelper();
-			MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+           
 			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
 			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(Guid, "AirAsia").Result;
 
@@ -175,13 +182,16 @@ namespace OnionConsumeWebAPI.Controllers
 			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
 			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(GUID, "AirAsia").Result;
 
-			//string passenger = HttpContext.Session.GetString("keypassenger");
-   //         string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
-   //         string Seatmap = HttpContext.Session.GetString("Seatmap");
-   //         string Meals = HttpContext.Session.GetString("Meals");
-   //         string BaggageData = HttpContext.Session.GetString("BaggageDetails");
+            LegalEntity legal = new LegalEntity();
+            legal = _mongoDBHelper.GetlegalEntityByGUID(GUID).Result;
 
-			MongoHelper objMongoHelper = new MongoHelper();
+            //string passenger = HttpContext.Session.GetString("keypassenger");
+            //         string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");
+            //         string Seatmap = HttpContext.Session.GetString("Seatmap");
+            //         string Meals = HttpContext.Session.GetString("Meals");
+            //         string BaggageData = HttpContext.Session.GetString("BaggageDetails");
+
+            MongoHelper objMongoHelper = new MongoHelper();
 			// string PassengerData = HttpContext.Session.GetString("PassengerName");
 			string PassengerData = objMongoHelper.UnZip(tokenData.PassengerRequest);
 
@@ -209,6 +219,9 @@ namespace OnionConsumeWebAPI.Controllers
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
             tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "AirAsia").Result;
+
+            LegalEntity legal = new LegalEntity();
+            legal = _mongoDBHelper.GetlegalEntityByGUID(GUID).Result;
 
             token = tokenData.Token;
 
@@ -266,10 +279,13 @@ namespace OnionConsumeWebAPI.Controllers
 
             // string token = "";
 
-            //MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             //MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
             //tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID("", "AirAsia").Result;
+
+            LegalEntity legal = new LegalEntity();
+            legal = _mongoDBHelper.GetlegalEntityByGUID(contactobject.Guid).Result;
 
             token = contactobject.notificationPreference;
 
@@ -333,6 +349,9 @@ namespace OnionConsumeWebAPI.Controllers
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 			MongoHelper objMongoHelper = new MongoHelper();
 			tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "AirAsia").Result;
+
+            LegalEntity legal = new LegalEntity();
+            legal = _mongoDBHelper.GetlegalEntityByGUID(GUID).Result;
 
             string tokenview = tokenData.Token;
 
@@ -625,6 +644,9 @@ namespace OnionConsumeWebAPI.Controllers
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
 
             tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "AirAsia").Result;
+
+            LegalEntity legal = new LegalEntity();
+            legal = _mongoDBHelper.GetlegalEntityByGUID(GUID).Result;
 
             token = tokenData.Token;
 

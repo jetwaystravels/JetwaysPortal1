@@ -1,27 +1,42 @@
 ﻿using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using DomainLayer.Model;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OnionConsumeWebAPI.Extensions;
+using ServiceLayer.Service.Interface;
 using static System.Net.WebRequestMethods;
 
 namespace OnionConsumeWebAPI.Controllers.Admin
 {
+
    
     public class LoginController : Controller
     {
-              
+
         //public IActionResult Index()
         //{
         //    return View();
         //}
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public LoginController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+
         public async Task<IActionResult> UserLogin(string returnUrl = null)
         {
-            if(returnUrl == null)
+            
+            if (returnUrl == null)
             {
                 HttpContext.Session.Clear();
             }
@@ -49,6 +64,20 @@ namespace OnionConsumeWebAPI.Controllers.Admin
 
                     // ✅ Save to session
                     HttpContext.Session.SetString("LoggedInEmail", email);
+
+
+                      var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, username),
+                        new Claim(ClaimTypes.Email, email),
+                        new Claim(ClaimTypes.Authentication, password)
+                    };
+
+                    var identity = new ClaimsIdentity(claims, "Password");
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
                         TempData["Email"] = email;
