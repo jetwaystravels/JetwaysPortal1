@@ -554,7 +554,14 @@
                                                                     if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "CHD")
                                                                         Model.AirlinePNR[a].passengers[i2].passengerTypeCode = "CNN";
                                                                     var weight = htbag[hashdata];
-                                                                    <td>XBAG-@weight Kg</td>
+                                                                    if (weight == "")
+                                                                    {
+                                                                        <td></td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>XBAG-@weight Kg</td>
+                                                                    }
                                                                 }
                                                             }
                                                             else

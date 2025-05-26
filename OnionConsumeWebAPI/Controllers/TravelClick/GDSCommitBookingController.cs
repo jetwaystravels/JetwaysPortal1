@@ -167,7 +167,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     }
                     //getdetails
                     string RecordLocator = HttpContext.Session.GetString("PNR").Split("@@")[1];
-                    strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, "GDSOneWay");
+                    string strResponseretriv = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, "GDSOneWay");
 
                     /*
 		            string EmdBagResponsedata = string.Empty;
@@ -203,9 +203,9 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                         SimpleAvailabilityRequestModel availibiltyRQGDS = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(stravailibitilityrequest);
 
                         List<GDSResModel.Segment> getPnrPriceRes = new List<GDSResModel.Segment>();
-                        if (strResponse != null && !strResponse.Contains("Bad Request") && !strResponse.Contains("Internal Server Error"))
+                        if (strResponseretriv != null && !strResponseretriv.Contains("Bad Request") && !strResponseretriv.Contains("Internal Server Error"))
                         {
-                            pnrResDetail = _objP.ParsePNRRsp(strResponse, "OneWay", availibiltyRQGDS);
+                            pnrResDetail = _objP.ParsePNRRsp(strResponseretriv, "OneWay", availibiltyRQGDS);
                         }
                         if (pnrResDetail != null)
                         {
