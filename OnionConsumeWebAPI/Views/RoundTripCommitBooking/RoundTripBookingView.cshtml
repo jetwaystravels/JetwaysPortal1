@@ -1539,7 +1539,7 @@
                                                                     {
                                                                         if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "CHD")
                                                                             Model.AirlinePNR[a].passengers[i2].passengerTypeCode = "CNN";
-                                                                        var weight = htbag[Model.AirlinePNR[a].passengers[i2].passengerTypeCode.Replace("\"", "")];
+                                                                        var weight = htbag[hashdata];
                                                                         <td>XBAG-@weight Kg</td>
                                                                     }
                                                                 }
@@ -1635,7 +1635,7 @@
                                                             <tr>
                                                                 <td>Addon Bagg Amount:</td>
                                                                 @{
-                                                                    if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("akasaair") || Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("vistara") || Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("airindia") || Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("hahnair"))
+                                                                    if (Model.AirlinePNR[a].airLines.ToString().ToLower().Equals("akasaair"))
                                                                     {
                                                                         <td>Rs. 0</td>
                                                                     }

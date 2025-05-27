@@ -236,13 +236,13 @@ function arrivalSelection() {
 //**********Chosen Departure Code Start ****************//
 //*****************************************************//
 $(document).ready(function () {
-    debugger;
+    
     $('#selectedItemId').chosen();
     $('.chosen-drop').hide();
     $('#selectedItemId').trigger('chosen:open');
 
     $('#myInputbx').on('click', function (event) {
-        debugger;
+     
         event.stopPropagation();
         $('#selectedItemId').trigger('chosen:open');
         $('.chosen-drop').show();

@@ -9,7 +9,7 @@ namespace CoporateBooking.Models
         public string LegalName;
         public string Employee;
         public string BillingEntityName;
-        public double Balance;
+        public double? Balance;
         public string SuppId;
         public string Guid;
 

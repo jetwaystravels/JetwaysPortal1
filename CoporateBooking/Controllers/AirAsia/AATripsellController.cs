@@ -67,8 +67,8 @@ namespace OnionConsumeWebAPI.Controllers
 
             //Start:Coprate GST AND EMPLOYEE DETAIL
            
-            string employeeCode = "3";
-            string legalEntityCode = "23E008";
+            //string employeeCode = "3";
+            //string legalEntityCode = "23E008";
             int? airlineId = 6;
 
             _mongoDBHelper.UpdateSuppLegalEntity(Guid, "6");
@@ -76,9 +76,9 @@ namespace OnionConsumeWebAPI.Controllers
             LegalEntity legal = new LegalEntity();
             legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
 
-           
+            //string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={employeeCode}&legalEntityCode={legalEntityCode}";
 
-            string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={employeeCode}&legalEntityCode={legalEntityCode}";
+            string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.LegalName}";
 
             if (airlineId.HasValue)
             {

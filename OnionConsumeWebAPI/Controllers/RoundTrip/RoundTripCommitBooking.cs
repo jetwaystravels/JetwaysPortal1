@@ -2680,7 +2680,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 }
                                 //getdetails
 
-                                strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
+                                string strResponseretriv = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
 
                                 //_TicketRecordLocator = Regex.Match(strResponse, @"AirReservation[\s\S]*?LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
 
@@ -2694,9 +2694,9 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     SimpleAvailabilityRequestModel availibiltyRQGDS = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(stravailibitilityrequest);
 
                                     List<GDSResModel.Segment> getPnrPriceRes = new List<GDSResModel.Segment>();
-                                    if (strResponse != null && !strResponse.Contains("Bad Request") && !strResponse.Contains("Internal Server Error"))
+                                    if (strResponseretriv != null && !strResponseretriv.Contains("Bad Request") && !strResponseretriv.Contains("Internal Server Error"))
                                     {
-                                        pnrResDetail = _objP.ParsePNRRsp(strResponse, "oneway", availibiltyRQGDS);
+                                        pnrResDetail = _objP.ParsePNRRsp(strResponseretriv, "oneway", availibiltyRQGDS);
                                     }
                                     if (pnrResDetail != null)
                                     {
@@ -2930,6 +2930,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                 //Seat
                                                 foreach (Match mitem in Regex.Matches(strResponse, @"common_v52_0:BookingTraveler Key=""(?<passengerKey>[\s\S]*?)""[\s\S]*?BookingTravelerName[\s\S]*?First=""(?<First>[\s\S]*?)""\s*Last=""(?<Last>[\s\S]*?)""(?<data>[\s\S]*?)</common_v52_0:BookingTraveler>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                                 {
+                                                    if (mitem.Value.Contains("TravelerType=\"INF\""))
+                                                    {
+                                                        continue;
+                                                    }
+
                                                     foreach (Match item in Regex.Matches(mitem.Groups["data"].Value, @"AirSeatAssignment Key=""[\s\S]*?Seat=""(?<unitKey>[\s\S]*?)""\s*SegmentRef=""(?<segmentkey>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                                     {
                                                         try
@@ -3005,6 +3010,26 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                     }
 
                                                 }
+
+                                                foreach (Match mitem in Regex.Matches(strResponse, @"common_v52_0:BookingTraveler Key=""(?<passengerKey>[\s\S]*?)""[\s\S]*?BookingTravelerName[\s\S]*?First=""(?<First>[\s\S]*?)""\s*Last=""(?<Last>[\s\S]*?)""(?<data>[\s\S]*?)</common_v52_0:BookingTraveler>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                                {
+                                                    foreach (Match item in Regex.Matches(mitem.Groups["data"].Value, @"SegmentRef=""(?<segmentkey>[\s\S]*?)""[\s\S]*?Type=""XBAG"" FreeText=""TTL(?<BagWeight>[\s\S]*?)KG", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                                    {
+                                                        try
+                                                        {
+                                                            if (!htbagdata.Contains(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString()))
+                                                            {
+                                                                htbagdata.Add(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString(), item.Groups["BagWeight"].Value.Trim());
+
+                                                            }
+
+                                                        }
+                                                        catch (Exception ex)
+                                                        {
+
+                                                        }
+                                                    }
+                                                }
                                                 AASegmentobj.unitdesignator = returnSeats.unitDesignator;
                                                 AASegmentobj.SSRCode = returnSeats.SSRCode;
                                                 AASegmentobj.legs = AALeglist;
@@ -3017,12 +3042,22 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             //}
                                             //baggage
 
-                                            foreach (Match mitem in Regex.Matches(strResponse, @"PassengerTypeCode=""(?<PaxType>[\s\S]*?)""[\s\S]*?BaggageAllowance[\s\S]*?MaxWeight Value=""(?<Weight>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                            /*foreach (Match mitem in Regex.Matches(strResponse, @"PassengerTypeCode=""(?<PaxType>[\s\S]*?)""[\s\S]*?BaggageAllowance[\s\S]*?MaxWeight Value=""(?<Weight>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                             {
                                                 if (!htPaxbag.Contains(mitem.Groups["PaxType"].Value.Trim()))
                                                 {
                                                     htPaxbag.Add(mitem.Groups["PaxType"].Value.Trim(), mitem.Groups["Weight"].Value.Trim());
                                                 }
+                                            }*/
+
+                                            foreach (Match bagitem in Regex.Matches(strResponse, @"OptionalService Type=""Baggage""\s*TotalPrice=""INR(?<BagPrice>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                            {
+                                                passengerTotals.baggage.total += Convert.ToInt32(bagitem.Groups["BagPrice"].Value.Trim());
+                                            }
+
+                                            foreach (Match bagitem in Regex.Matches(strResponse, @"OptionalService Type=""PreReservedSeatAssignment""\s*TotalPrice=""INR(?<SeatPrice>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                            {
+                                                returnSeats.total += Convert.ToInt32(bagitem.Groups["SeatPrice"].Value.Trim());
                                             }
 
                                             #endregion
@@ -3090,8 +3125,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             returnTicketBooking.contacts = _contact;
                                             returnTicketBooking.Seatdata = htseatdata;
                                             returnTicketBooking.Mealdata = htmealdata;
-                                            returnTicketBooking.Bagdata = htPaxbag;
-                                            //returnTicketBooking.Bagdata = htbagdata;
+                                            //returnTicketBooking.Bagdata = htPaxbag;
+                                            returnTicketBooking.Bagdata = htbagdata;
                                             returnTicketBooking.htTicketnumber = htTicketdata;
                                             returnTicketBooking.htname = htname;
                                             returnTicketBooking.htnameempty = htnameempty;

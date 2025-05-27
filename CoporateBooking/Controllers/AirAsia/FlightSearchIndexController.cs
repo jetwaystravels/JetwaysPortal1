@@ -379,7 +379,17 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 legalEntity.BillingEntityName = Convert.ToString(formCollection["legalEntitySelect"]);
                 legalEntity.Employee = Convert.ToString(formCollection["employeeSelect"]);
                 legalEntity.LegalName = Convert.ToString(formCollection["billing"]);
-                legalEntity.Balance = Convert.ToDouble( Convert.ToString(formCollection["balance"]).Replace("₹","").Trim());
+                //legalEntity.Balance = Convert.ToDouble( Convert.ToString(formCollection["balance"]).Replace("₹","").Trim());
+                string balanceInput = Convert.ToString(formCollection["balance"])?.Replace("₹", "").Trim();
+
+                if (string.IsNullOrWhiteSpace(balanceInput) || balanceInput.ToLower() == "null")
+                {
+                    legalEntity.Balance = null; // Works only if Balance is nullable: double?
+                }
+                else
+                {
+                    legalEntity.Balance = Convert.ToDouble(balanceInput);
+                }
 
                 legalEntity.Username = HttpContext.User.Identity.Name;  
                 legalEntity.Password = HttpContext.User.Identity.Name;

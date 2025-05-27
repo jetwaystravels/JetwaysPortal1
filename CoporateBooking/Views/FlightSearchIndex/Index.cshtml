@@ -369,12 +369,7 @@
                                                 </span>
                                             </h6>
 
-                                            <div class="row d-flex" id="emltoggle"
-                                                 style="display: none;
-              border-bottom: 1px solid #e8ecee;
-              background: linear-gradient(90deg, #f4f4f4 0%, #f4f4f4 35%, #fff 89%);
-              padding-bottom: 7px;">
-
+                                            <div class="row d-flex" id="emltoggle" style="display: none; border-bottom: 1px solid #e8ecee; background: linear-gradient(90deg, #f4f4f4 0%, #f4f4f4 35%, #fff 89%); padding-bottom: 7px;">
                                                 <!-- Legal Entity Name -->
                                                 <div class="col-12 col-md-10 col-lg-3">
                                                     <label>Legal Entity Name</label>
@@ -383,9 +378,7 @@
                                                             <option value="">-- Select Company --</option>
                                                             @foreach (var item in dataList)
                                                             {
-                                                                <option value="@item.legalEntityName">
-                                                                    @item.legalEntityName
-                                                                </option>
+                                                                <option value="@item.legalEntityName">@item.legalEntityName</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -407,22 +400,15 @@
                                                     <div class="select-container">
                                                         <select class="select billingentity-select form-control" name="billing">
                                                             <option value="">-- Select Billing Entity --</option>
-                                                            <option value="23E008">
-                                                                [23E008] EISAI PHARMACEUTICALS INDIA PVT LTD-MUM
-                                                            </option>
-                                                            @* …or generate these dynamically if you have the mapping… *@
+                                                            <option value="23E008">[23E008] EISAI PHARMACEUTICALS INDIA PVT LTD-MUM</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                <!-- Balance Field -->
+                                                <!-- Balance -->
                                                 <div class="col-12 col-md-10 col-lg-2 mt-5">
                                                     <label>Balance</label>
-                                                    <input type="text"
-                                                           name="balance"
-                                                           class="form-control balance-input"
-                                                           placeholder="₹ 0.00"
-                                                           readonly />
+                                                    <input type="text" name="balance" class="form-control balance-input" placeholder="₹ 0.00" readonly />
                                                 </div>
                                             </div>
                                         </div>
@@ -1084,6 +1070,11 @@
             <link rel="stylesheet" href="/resources/demos/style.css">
             <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
             <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <!-- Select2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
             <!-- Bootstrap js -->
             <script src="~/js/bootstrap/popper.min.js"></script>
             <script src="~/js/bootstrap/bootstrap.min.js"></script>
@@ -1095,6 +1086,77 @@
             <script src="~/js/custom.js/indexpage.js"></script>
             <script src="~/lib/jquery/chosen.jquery.js"></script>
             <script src="~/lib/jquery/chosen.jquery.min.js"></script>
+        <!-- Select2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <!-- Initialize Select2 and manage remove icon -->
+        <script>
+            $(document).ready(function () {
+                $('.select').each(function () {
+                    $(this).select2({
+                        placeholder: "Select an option",
+                        allowClear: false,
+                        width: '100%'
+                    });
+
+                    let removeIcon = $('<span class="remove-icon">x</span>').hide();
+                    $(this).parent().append(removeIcon);
+
+                    $(this).on('select2:select', function () {
+                        $(this).siblings('.remove-icon').show();
+                    });
+
+                    removeIcon.on('click', function () {
+                        let selectElement = $(this).siblings('.select');
+                        selectElement.val(null).trigger('change');
+                        $(this).hide();
+                    });
+
+                    $(this).on('select2:clear', function () {
+                        $(this).siblings('.remove-icon').hide();
+                    });
+                });
+            });
+        </script>
+
+        <!-- Show/hide emulate box -->
+        <script>
+            $(function () {
+                $('.toggle-arrow').on('click', function () {
+                    $('#emltoggle').slideToggle();
+                    $(this).find('i').toggleClass('fa-angle-down fa-angle-up');
+                });
+
+                var data = @Html.Raw(jsonData);
+
+                function bindFor(companyName) {
+                    var item = data.find(function (x) {
+                        return x.legalEntityName === companyName;
+                    });
+
+                    $('.employee-select').empty().append('<option value="">-- Select Employee --</option>');
+                    $('.balance-input').val('');
+
+                    if (!item) return;
+
+                    item.employeeNames.split(',').map(function (e) {
+                        return e.trim();
+                    }).forEach(function (name) {
+                        $('.employee-select').append($('<option>').val(name.split('|')[0]).text(name.split('|')[1]));
+                    });
+
+                    $('.balance-input').val('₹ ' + item.presentBalance);
+                }
+
+                $('.legalentity-select').on('change', function () {
+                    bindFor(this.value);
+                });
+
+                if (data.length > 0) {
+                    $('.legalentity-select').val(data[0].legalEntityName).trigger('change');
+                    bindFor(data[0].legalEntityName);
+                }
+            });
+        </script>
         <script>
             $(function () {
                 $(".select").select2();

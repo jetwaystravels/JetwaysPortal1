@@ -220,7 +220,7 @@
 	if (selectedValue) {
 	debugger;
 	var price_value = selectedValue.split('_');
-	var BagPrice = parseFloat(price_value[1]);
+	var BagPrice = parseFloat(price_value[2]);
 
 	selectedBaggage.push(selectedValue + "_OneWay0");
 	baggagePrice += BagPrice;
@@ -310,7 +310,7 @@
 	if (selectedValue) {
 	debugger;
 	var price_value = selectedValue.split('_');
-	var BagPrice = parseFloat(price_value[1]);
+	var BagPrice = parseFloat(price_value[2]);
 
 	selectedBaggage.push(selectedValue + "_RT0");
 	baggagePrice += BagPrice;
