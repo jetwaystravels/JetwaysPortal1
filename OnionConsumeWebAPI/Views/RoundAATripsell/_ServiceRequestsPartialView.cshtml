@@ -992,21 +992,27 @@
 														string Sssrcode = "";
 														for (int i = 0; i < Model.BaggagelistRT[0].legSsrs.Count; i++)
 														{
-															string ssrprice = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-															if(Model.passengerNamedetails[pas].passengerkey.Contains("**"))
+															if (Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode.Contains(Model.passengerNamedetails[pas].passengerkey.Split("**")[0]))
 															{
-																Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[0] + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																string ssrprice = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																// if (Model.passengerNamedetails[pas].passengerkey.Contains("**"))
+																// {
+																// 	Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[0] + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																// }
+																// else
+																// {
+																// 	Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																// }
+																Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode;
+																Bagname = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																bagkey = Bagname;
+																if (bagkey != null)
+																{
+																	BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
+																}
 															}
 															else
-															{
-																Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-															}
-															Bagname = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-															bagkey = Sssrcode;
-															if (bagkey != null)
-															{
-																BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
-															}
+																continue;
 
 														}
 													}
@@ -1086,7 +1092,7 @@
 															foreach (var option in BaggageOptions)
 															{
 																<option value="@option.Value" data-bagkey=@bagkey>
-																	@option.Text.Split('*')[0].ToString()
+																	@option.Text.Split('_')[0].ToString() ₹  @option.Text.Split('_')[2].ToString().Split('₹')[0]
 																</option>
 															}
 														}
@@ -1857,21 +1863,27 @@
 
 															for (int i = 0; i < Model.BaggagelistRT[1].legSsrs.Count; i++)
 															{
-																string ssrprice = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-																if(Model.passengerNamedetails[pas].passengerkey.Contains("**"))
+																if (Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode.Contains(Model.passengerNamedetails[pas].passengerkey.Split("**")[1]))
 																{
-																	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[1] + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																	string ssrprice = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																	// if (Model.passengerNamedetails[pas].passengerkey.Contains("**"))
+																	// {
+																	// 	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey.Split("**")[1] + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																	// }
+																	// else
+																	// {
+																	// 	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																	// }
+																	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode;
+																	Bagname = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+																	bagkeyAA = Bagname;
+																	if (bagkeyAA != null)
+																	{
+																		BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
+																	}
 																}
 																else
-																{
-																	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-																}
-															    Bagname = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-																bagkeyAA = Sssrcode;
-																if (bagkeyAA != null)
-																{
-																	BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode });
-																}
+																	continue;
 
 															}
 														}
@@ -1959,7 +1971,9 @@
 																@foreach (var option in BaggageOptions)
 																{
 																	<option value="@option.Value" data-bagkey=@bagkeyAA>
-																		@option.Text.Split('*')[0].ToString()
+																		@*option.Text.Split('*')[0].ToString()*@
+																		@option.Text.Split('_')[0].ToString() ₹  @option.Text.Split('_')[2].ToString().Split('₹')[0]
+
 																	</option>
 																}
 															}

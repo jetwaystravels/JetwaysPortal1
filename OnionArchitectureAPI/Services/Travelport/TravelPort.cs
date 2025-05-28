@@ -3694,7 +3694,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                 //Baggage
                 for (int i = 0; i < BaggageSSrkey.Count; i++)
                 {
-                    string _data = BaggageSSrkey[i].ToString().Split('@')[0].ToString();
+                    string _data = BaggageSSrkey[i].ToString().Split('₹')[0].ToString().Trim();
                     //_data = _data.Split('*')[0].ToString();
                     referencekey = htbaggagedata[_data].ToString().Replace("common_v52_0", "com");
                     BookingTravellerref = Regex.Match(referencekey, "BookingTravelerRef=\"(?<Travellerref>[\\s\\S]*?)\"").Groups["Travellerref"].Value.Trim();
@@ -3898,7 +3898,12 @@ namespace OnionArchitectureAPI.Services.Travelport
                     if (p1 == 0 && (BaggageSSrkey[i].ToString().Contains("_OneWay0") || BaggageSSrkey[i].ToString().Contains("_OneWay1")))
                     {
                         htbaggagedata = JsonConvert.DeserializeObject<Hashtable>(_htbaggagedataStringL);
-                        string _data = BaggageSSrkey[i].ToString().Split('*')[0].ToString();
+                        //string[] parts = BaggageSSrkey[i].ToString().Split('_');
+                        //string result = parts.Length >= 3
+                        //    ? string.Join("_", parts[0], parts[1])
+                        //    : BaggageSSrkey[i].ToString();
+
+                        string _data = BaggageSSrkey[i].ToString().Replace("_OneWay0", "").Replace("_OneWay1", "").Trim(); ;
                         //_data = _data.Split('*')[0].ToString();
                         //_data= 
                         int index = _data.IndexOf('_');
@@ -3919,8 +3924,14 @@ namespace OnionArchitectureAPI.Services.Travelport
                         if (p1 == 1 && BaggageSSrkey[i].ToString().Contains("_RT0") || BaggageSSrkey[i].ToString().Contains("_RT1"))
                         {
                             htbaggagedata = JsonConvert.DeserializeObject<Hashtable>(_htbaggagedataStringR);
-                            string _data = BaggageSSrkey[i].ToString().Split('@')[0].ToString();
-                            _data = _data.Split('*')[0].ToString();
+                            //string _data = BaggageSSrkey[i].ToString().Split('@')[0].ToString();
+                            //_data = _data.Split('*')[0].ToString();
+                            //string[] parts = BaggageSSrkey[i].ToString().Split('_');
+                            //string result = parts.Length >= 3
+                            //    ? string.Join("_", parts[0], parts[1])
+                            //    : BaggageSSrkey[i].ToString();
+
+                            string _data = BaggageSSrkey[i].ToString().Replace("_RT0", "").Replace("_RT1", "").Trim(); ; ;
                             referencekey = htbaggagedata[_data].ToString().Replace("common_v52_0", "com");
                             BookingTravellerref = Regex.Match(referencekey, "BookingTravelerRef=\"(?<Travellerref>[\\s\\S]*?)\"").Groups["Travellerref"].Value.Trim();
                             AirSegmentref = Regex.Match(referencekey, "AirSegmentRef=\"(?<Airsegmentref>[\\s\\S]*?)\"").Groups["Airsegmentref"].Value.Trim();

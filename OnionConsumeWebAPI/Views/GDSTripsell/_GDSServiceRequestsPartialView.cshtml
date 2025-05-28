@@ -803,23 +803,31 @@
 					    </div>
 					    <div class="servc-content select-baggage">
 
-                                                @{
-                                                    List<SelectListItem> BaggageOptions = new List<SelectListItem>();
-                                                    string weight = "";
-                                                    var bagkey = "";
-                                                    string Bagname = "";
-                                                    for (int i = 0; i < Model.Baggage.legSsrs.Count; i++)
-                                                    {
-                                                        string ssrprice = Model.Baggage.legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR","");
-                                                        string Sssrcode = Model.Baggage.legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey+ "_" + Model.Baggage.legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-                                                        Bagname = Model.Baggage.legSsrs[i].legssrs[0].name + " ₹" + @Model.Baggage.legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
-                                                        bagkey = Sssrcode;
-                                                        if (bagkey != null)
-                                                        {
-                                                            BaggageOptions.Add(new SelectListItem { Text = Bagname, Value = Sssrcode
-                                                        });
-                                                        }
-                                                    }
+												@{
+													List<SelectListItem> BaggageOptions = new List<SelectListItem>();
+													string weight = "";
+													var bagkey = "";
+													string Bagname = "";
+													for (int i = 0; i < Model.Baggage.legSsrs.Count; i++)
+													{
+														if (Model.Baggage.legSsrs[i].legssrs[0].ssrCode.Contains(Model.passengerNamedetails[pas].passengerkey))
+														{
+															string ssrprice = Model.Baggage.legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+															string Sssrcode = Model.Baggage.legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.Baggage.legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+															Bagname = Model.Baggage.legSsrs[i].legssrs[0].name + " ₹" + @Model.Baggage.legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
+															bagkey = Bagname;
+															if (bagkey != null)
+															{
+																BaggageOptions.Add(new SelectListItem
+																{
+																	Text = Bagname,
+																	Value = Sssrcode
+																});
+															}
+														}
+														else
+															continue;
+													}
 
                                                 }
                                                 <div class="d-flex">
@@ -827,10 +835,10 @@
                                                     <select id="ddlbagOptions" class="servc-bordr servc-bordrbaggage">
                                                         <option selected="selected" value="">Please Select</option>
                                                         @foreach (var option in BaggageOptions)
-                                                        {
-                                                            <option value="@option.Value" data-bagkey=@bagkey>
-                                                                @option.Text.Split('@')[0].ToString()
-                                                            </option>
+                                                        { 
+                                                            <option value="@option.Text" data-bagkey=@bagkey>
+																@option.Text.Split('_')[0].ToString() ₹  @option.Text.Split('_')[2].ToString().Split('₹')[0]
+															</option>
                                                         }
                                                     </select>
                                                     <input type="hidden" id="hiddenbagKey" name="bagkey" value="" />

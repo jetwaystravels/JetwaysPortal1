@@ -3013,10 +3013,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                                 foreach (Match mitem in Regex.Matches(strResponse, @"common_v52_0:BookingTraveler Key=""(?<passengerKey>[\s\S]*?)""[\s\S]*?BookingTravelerName[\s\S]*?First=""(?<First>[\s\S]*?)""\s*Last=""(?<Last>[\s\S]*?)""(?<data>[\s\S]*?)</common_v52_0:BookingTraveler>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                                 {
+                                                    int segcounter = 0;
                                                     foreach (Match item in Regex.Matches(mitem.Groups["data"].Value, @"SegmentRef=""(?<segmentkey>[\s\S]*?)""[\s\S]*?Type=""XBAG"" FreeText=""TTL(?<BagWeight>[\s\S]*?)KG", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                                     {
                                                         try
                                                         {
+                                                            if (segcounter == 1) continue;
                                                             if (!htbagdata.Contains(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString()))
                                                             {
                                                                 htbagdata.Add(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString(), item.Groups["BagWeight"].Value.Trim());
@@ -3028,6 +3030,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                         {
 
                                                         }
+                                                        segcounter++;
                                                     }
                                                 }
                                                 AASegmentobj.unitdesignator = returnSeats.unitDesignator;

@@ -1217,58 +1217,7 @@
                 });
             });
         </script>
-
-        <script>
-            $(function(){
-              // slide‐toggle on header click
-              $('.toggle-arrow').on('click', function(){
-                $('#emltoggle').slideToggle();
-                $(this).find('i').toggleClass('fa-angle-down fa-angle-up');
-              });
-
-              // 3) our data array in JS
-              var data = @Html.Raw(jsonData);
-
-              // helper to bind employees + balance
-              function bindFor(companyName) {
-                var item = data.find(function(x){
-                  return x.legalEntityName === companyName;
-                });
-
-                // clear old values
-                $('.employee-select')
-                  .empty()
-                  .append('<option value="">-- Select Employee --</option>');
-                $('.balance-input').val('');
-
-                if (!item) return;
-
-                // populate employees
-                item.employeeNames
-                  .split(',')
-                  .map(function(e){ return e.trim(); })
-                  .forEach(function(name){
-                    $('.employee-select')
-                                .append($('<option>').val(name.split('|')[0]).text(name.split('|')[1]));
-                  });
-
-                // bind balance
-                $('.balance-input').val('₹ ' + item.presentBalance);
-              }
-
-              // 4) when user picks a company
-              $('.legalentity-select').on('change', function(){
-                bindFor(this.value);
-              });
-
-              // 5) immediately bind the first entry if present
-              if (data.length > 0) {
-                // select the first option in the dropdown
-                $('.legalentity-select').val(data[0].legalEntityName);
-                bindFor(data[0].legalEntityName);
-              }
-            });
-        </script>
+       
         <!--End show and hide box -->
         <!--Start login popup -->
         <script>

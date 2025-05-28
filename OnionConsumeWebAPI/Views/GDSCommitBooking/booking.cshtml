@@ -529,11 +529,15 @@
                                                             .FirstOrDefault();
 
 
-                                                            if (Mealcode != null)
+                                                            if (Mealcode != null && MealName!=null)
                                                             {
 
                                                                 <td>@Mealcode-@MealName</td>
 
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>NA</td>
                                                             }
                                                         }
                                                         else
@@ -541,7 +545,7 @@
                                                             <td>NA</td>
                                                         }
 
-                                                        if (htbag != null)
+                                                        if (htbag != null && htbag.Count > 0)
                                                         {
                                                             if (i3 == 0)
                                                             {

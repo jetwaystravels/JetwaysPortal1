@@ -1454,7 +1454,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 legSsrs SSRAvailabiltyLegssrobj = new legSsrs();
                                 legDetails legDetailsobj = null;
                                 List<childlegssrs> legssrslist = new List<childlegssrs>();
-                                foreach (DictionaryEntry entry in htSSr)
+                                foreach (DictionaryEntry entry in _htpaxwiseBaggage)
                                 {
                                     legssrslist = new List<childlegssrs>();
                                     try
@@ -1480,7 +1480,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                                         passengersdetail.passengerKey = "";// _res.SSRAvailabilityForBookingResponse.SSRSegmentList[i1].AvailablePaxSSRList[j].PaxSSRPriceList[0].PassengerNumberList.ToString();
                                         passengersdetail.ssrKey = ""; //_res.SSRAvailabilityForBookingResponse.SSRSegmentList[i1].AvailablePaxSSRList[j].SSRCode;
-                                        passengersdetail.price = htSSr[legssrs.ssrCode].ToString();
+                                        passengersdetail.price = _htpaxwiseBaggage[legssrs.ssrCode].ToString();
                                         passengersdetail.Airline = Airlines.AirIndia;
                                         legpassengerslist.Add(passengersdetail);
                                         legssrs.legpassengers = legpassengerslist;
