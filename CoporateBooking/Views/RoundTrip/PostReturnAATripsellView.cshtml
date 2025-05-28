@@ -446,14 +446,9 @@
 						    Faretype = "Stretch";
 						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("BC"))
 						    Faretype = "Stretch+";
-						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("F"))
-						 Faretype = "Corporate Fare F";
-						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("M"))
-						Faretype = "Corporate Fare M";
 						else
 						    Faretype = "Saver Fare";
 					    }
-
 					    else if (Model.SimpleAvailibilityaAddResponcelist[j].Airline == Airlines.Spicejet)
 					    {
 
@@ -465,10 +460,7 @@
 						    Faretype = "Spice max";
 						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("SS"))
 						    Faretype = "Saver Fare";
-						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("CP"))
-						Faretype = "Corporate Fare CP";
-						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("PC"))
-						Faretype = "Corporate Fare PC";
+
 					    }
 					    //AkasaAir
 					    else if (Model.SimpleAvailibilityaAddResponcelist[j].Airline == Airlines.AkasaAir)
@@ -480,8 +472,7 @@
 						    Faretype = "Flexi";
 						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("SP"))
 						    Faretype = "Special Fares";
-                         else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("CP"))
-						    Faretype = "Corporate CP";
+
 
 					    }
 					    //Airindia GDS
@@ -538,10 +529,6 @@
 						    Faretype = "Xpress lite";
 						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("VV"))
 						    Faretype = "Xpress Bizz";
-						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("SM"))
-						    Faretype = "Corporate Value";
-						else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass.Equals("FS"))
-						    Faretype = "Corporate Flex";
 						else
 						    Faretype = "";
 					    }
@@ -596,7 +583,7 @@
 							}
 							else
 							{
-							    <span>@Faretype (@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass) </span>
+							    <span>@Faretype @Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass </span>
 							}
 						    }
 						   @* <span>@Faretype @Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass </span>*@
@@ -1033,75 +1020,6 @@
 							</ul>
 						    }
 
-								//Corporate Frae details
-								if (@Faretype == "Corporate Value")
-								{
-									<ul>
-										<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 k.g</li>
-										<li><img src="~/img/included.png" alt="icon">Check in 15 k.g </li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation Rs 1500 (1 day before to departure)</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change Rs 500 (Upto 2 hrs before departure)</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- Chargeable</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- Chargeable</li>
-									</ul>
-								}
-								if (@Faretype == "Corporate Flex")
-								{
-									<ul>
-										<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 k.g</li>
-										<li><img src="~/img/included.png" alt="icon">Check in 15 k.g </li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation Rs 500 (Upto 2 hrs before departure)</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change  Free</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- Standard seats free</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- Free</li>
-
-									</ul>
-								}
-								if (@Faretype == "Corporate Fare M")
-								{
-									<ul>
-										<li><img src="~/img/included.png" alt="icon">Cabin Bag:- NA</li>
-										<li><img src="~/img/included.png" alt="icon">Check in NA</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation:- NA</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change:-  NA</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- NA</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- NA</li>
-
-									</ul>
-								}
-								if (@Faretype == "Corporate Fare F")
-								{
-									<ul>
-										<li><img src="~/img/included.png" alt="icon">Cabin Bag:- 10 (kg)</li>
-										<li><img src="~/img/included.png" alt="icon">Check in 15Kg.</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation:- Change charges upto 499</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change:-  Change charges upto 0</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- NA</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- Limited Free Seat</li>
-									</ul>
-								}
-								if (@Faretype == "Corporate Fare CP")
-								{
-									<ul>
-										<li><img src="~/img/included.png" alt="icon">Cabin Bag:- 7 (kg)</li>
-										<li><img src="~/img/included.png" alt="icon">Check in 15Kg.</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation:- (3150) Before 96 Hrs from departure</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change:-  (2250 + Fare Difference) Before 96 Hrs from departure</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
-									</ul>
-								}
-								if (@Faretype == "Corporate Fare PC")
-								{
-									<ul>
-										<li><img src="~/img/included.png" alt="icon">Cabin Bag:- 7 (kg)</li>
-										<li><img src="~/img/included.png" alt="icon">Check in 15Kg.</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation:- (3150) Before 96 Hrs from departure</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change:-  (2250 + Fare Difference) Before 96 Hrs from departure</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
-										<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
-									</ul>
-								}
 
 
 						}
@@ -1261,10 +1179,6 @@
 						    Faretype = "Stretch";
 						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("BC"))
 						    Faretype = "Stretch+";
-						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("F"))
-						  Faretype = "Corporate Fare F";
-						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("M"))
-						 Faretype = "Corporate Fare M";
 						else
 						    Faretype = "Saver Fare";
 					    }
@@ -1280,15 +1194,8 @@
 
 						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("SS"))
 						    Faretype = "Saver Fare";
-						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("CP"))
-						 Faretype = "Corporate Fare CP";
-						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("PC"))
-						Faretype = "Corporate Fare PC";
 
 					    }
-						
-
-					    
 					    // Akasa fair Details
 					    //AkasaAir
 					    else if (Model.SimpleAvailibilityaAddResponcelistR[j].Airline == Airlines.AkasaAir)
@@ -1300,8 +1207,7 @@
 						    Faretype = "Flexi";
 						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("SP"))
 						    Faretype = "Special Fares";
-                        else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("CP"))
-						Faretype = "Corporate CP";
+
 
 					    }
 
@@ -1316,10 +1222,6 @@
 						    Faretype = "Xpress lite";
 						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("VV"))
 						    Faretype = "Xpress Bizz";
-						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("SM"))
-						    Faretype = "Corporate Value";
-						else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass.Equals("FS"))
-						    Faretype = "Corporate Flex";
 						else
 						    Faretype = "Saver Fare";
 
@@ -1405,7 +1307,7 @@
 							}
 							else
 							{
-							    <span>@Faretype  (@Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass) </span>
+							    <span>@Faretype  @Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[k].procuctclass  </span>
 							}
 
 						    }
@@ -1851,76 +1753,6 @@
 							</ul>
 						    }
 
-
-							//Corporate Frae details
-							if (@Faretype == "Corporate Value")
-							{
-								<ul>
-									<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 k.g</li>
-									<li><img src="~/img/included.png" alt="icon">Check in 15 k.g </li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation Rs 1500 (1 day before to departure)</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change Rs 500 (Upto 2 hrs before departure)</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- Chargeable</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- Chargeable</li>
-								</ul>
-							}
-							if (@Faretype == "Corporate Flex")
-							{
-									<ul>
-									<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 k.g</li>
-									<li><img src="~/img/included.png" alt="icon">Check in 15 k.g </li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation Rs 500 (Upto 2 hrs before departure)</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change  Free</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- Standard seats free</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- Free</li>
-								
-								</ul>
-							}
-							if (@Faretype == "Corporate Fare M")
-							{
-								<ul>
-									<li><img src="~/img/included.png" alt="icon">Cabin Bag:- NA</li>
-									<li><img src="~/img/included.png" alt="icon">Check in NA</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation:- NA</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change:-  NA</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- NA</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- NA</li>
-
-								</ul>
-							}
-							if (@Faretype == "Corporate Fare F")
-							{
-								<ul>
-									<li><img src="~/img/included.png" alt="icon">Cabin Bag:- 10 (kg)</li>
-									<li><img src="~/img/included.png" alt="icon">Check in 15Kg.</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation:- Change charges upto 499</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change:-  Change charges upto 0</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- NA</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- Limited Free Seat</li>
-								</ul>
-							}
-							if (@Faretype == "Corporate Fare CP")
-							{
-								<ul>
-									<li><img src="~/img/included.png" alt="icon">Cabin Bag:- 7 (kg)</li>
-									<li><img src="~/img/included.png" alt="icon">Check in 15Kg.</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation:- (3150) Before 96 Hrs from departure</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change:-  (2250 + Fare Difference) Before 96 Hrs from departure</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
-									<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
-								</ul>
-							}
-							if (@Faretype == "Corporate Fare PC")
-							{
-							<ul>
-								<li><img src="~/img/included.png" alt="icon">Cabin Bag:- 7 (kg)</li>
-								<li><img src="~/img/included.png" alt="icon">Check in 15Kg.</li>
-								<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation:- (3150) Before 96 Hrs from departure</li>
-								<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change:-  (2250 + Fare Difference) Before 96 Hrs from departure</li>
-								<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
-								<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
-							</ul>
-							}
 
 
 						}

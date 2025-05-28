@@ -144,53 +144,77 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                 using (HttpClient client = new HttpClient())
                 {
-
                     BookingCommitRequest _bookingCommitRequest = new BookingCommitRequest();
                     BookingCommitResponse _BookingCommitResponse = new BookingCommitResponse();
-                    _bookingCommitRequest.Signature = token;
-                    _bookingCommitRequest.ContractVersion = 420;
-                    _bookingCommitRequest.BookingCommitRequestData = new BookingCommitRequestData();
-                    _bookingCommitRequest.BookingCommitRequestData.SourcePOS = GetPointOfSale();
-                    _bookingCommitRequest.BookingCommitRequestData.CurrencyCode = "INR";
-                    _bookingCommitRequest.BookingCommitRequestData.PaxCount = Convert.ToInt16(passeengerlist.Count);
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts = new BookingContact[1];
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0] = new BookingContact();
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].TypeCode = "P";
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names = new BookingName[1];
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0] = new BookingName();
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].State = MessageState.New;
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].FirstName = passeengerlist[0].first;
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].MiddleName = passeengerlist[0].middle;
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].LastName = passeengerlist[0].last;
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].Title = passeengerlist[0].title;
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].EmailAddress = contactList.updateContactsRequestData.BookingContactList[0].EmailAddress; //"vinay.ks@gmail.com"; //passeengerlist.Email;
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].HomePhone = "9457000000"; //contactList.updateContactsRequestData.BookingContactList[0].HomePhone; //"9457000000"; //passeengerlist.mobile;
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].AddressLine1 = "A";
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].AddressLine2 = "B";
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].City = "Delhi";
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].CountryCode = "IN";
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].CultureCode = "en-GB";
-                    _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].DistributionOption = DistributionOption.Email;
-
-                     objSpiceJet = new SpiceJetApiController();
-                    _BookingCommitResponse = await objSpiceJet.BookingCommit(_bookingCommitRequest);
-
-                    //string Str3 = JsonConvert.SerializeObject(_BookingCommitResponse);
-                    logs.WriteLogs(JsonConvert.SerializeObject(_bookingCommitRequest), "15-BookingCommitRequest", "SpicejetOneWay", "oneway");
-                    logs.WriteLogs(JsonConvert.SerializeObject(_BookingCommitResponse), "15-BookingCommitResponse", "SpicejetOneWay", "oneway");
-                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_bookingCommitRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingCommitResponse), "BookingCommit", "SpicejetOneWay", "oneway");
-                    if (_BookingCommitResponse != null)
+                    if (tokenData.CommResponse == null)
                     {
+                       
+                        _bookingCommitRequest.Signature = token;
+                        _bookingCommitRequest.ContractVersion = 420;
+                        _bookingCommitRequest.BookingCommitRequestData = new BookingCommitRequestData();
+                        _bookingCommitRequest.BookingCommitRequestData.SourcePOS = GetPointOfSale();
+                        _bookingCommitRequest.BookingCommitRequestData.CurrencyCode = "INR";
+                        _bookingCommitRequest.BookingCommitRequestData.PaxCount = Convert.ToInt16(passeengerlist.Count);
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts = new BookingContact[1];
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0] = new BookingContact();
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].TypeCode = "P";
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names = new BookingName[1];
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0] = new BookingName();
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].State = MessageState.New;
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].FirstName = passeengerlist[0].first;
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].MiddleName = passeengerlist[0].middle;
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].LastName = passeengerlist[0].last;
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].Names[0].Title = passeengerlist[0].title;
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].EmailAddress = contactList.updateContactsRequestData.BookingContactList[0].EmailAddress; //"vinay.ks@gmail.com"; //passeengerlist.Email;
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].HomePhone = "9457000000"; //contactList.updateContactsRequestData.BookingContactList[0].HomePhone; //"9457000000"; //passeengerlist.mobile;
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].AddressLine1 = "A";
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].AddressLine2 = "B";
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].City = "Delhi";
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].CountryCode = "IN";
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].CultureCode = "en-GB";
+                        _bookingCommitRequest.BookingCommitRequestData.BookingContacts[0].DistributionOption = DistributionOption.Email;
+
+                        objSpiceJet = new SpiceJetApiController();
+                        _BookingCommitResponse = await objSpiceJet.BookingCommit(_bookingCommitRequest);
+
+                        //string Str3 = JsonConvert.SerializeObject(_BookingCommitResponse);
+                        logs.WriteLogs(JsonConvert.SerializeObject(_bookingCommitRequest), "15-BookingCommitRequest", "SpicejetOneWay", "oneway");
+                        logs.WriteLogs(JsonConvert.SerializeObject(_BookingCommitResponse), "15-BookingCommitResponse", "SpicejetOneWay", "oneway");
+                    }
+                    //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_bookingCommitRequest) + "\n\n Response: " + JsonConvert.SerializeObject(_BookingCommitResponse), "BookingCommit", "SpicejetOneWay", "oneway");
+                    if (_BookingCommitResponse != null || tokenData.CommResponse != null)
+                    {
+
+                        
+
                         GetBookingRequest getBookingRequest = new GetBookingRequest();
                         GetBookingResponse _getBookingResponse = new GetBookingResponse();
-                        getBookingRequest.Signature = token;
-                        getBookingRequest.ContractVersion = 420;
-                        getBookingRequest.GetBookingReqData = new GetBookingRequestData();
-                        getBookingRequest.GetBookingReqData.GetBookingBy = GetBookingBy.RecordLocator;
-                        getBookingRequest.GetBookingReqData.GetByRecordLocator = new GetByRecordLocator();
-                        getBookingRequest.GetBookingReqData.GetByRecordLocator.RecordLocator = _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator;
+                       
+                      
 
-                        _getBookingResponse = await objSpiceJet.GetBookingdetails(getBookingRequest);
+                        
+
+                        if (tokenData.CommResponse == null)
+                        {
+
+                            getBookingRequest.Signature = token;
+                            getBookingRequest.ContractVersion = 420;
+                            getBookingRequest.GetBookingReqData = new GetBookingRequestData();
+                            getBookingRequest.GetBookingReqData.GetBookingBy = GetBookingBy.RecordLocator;
+                            getBookingRequest.GetBookingReqData.GetByRecordLocator = new GetByRecordLocator();
+                            getBookingRequest.GetBookingReqData.GetByRecordLocator.RecordLocator = _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator;
+
+                            _getBookingResponse = await objSpiceJet.GetBookingdetails(getBookingRequest);
+                            
+                            _mongoDBHelper.UpdateCommitResponse(Guid, "SpiceJet", objMongoHelper.Zip(JsonConvert.SerializeObject(_getBookingResponse)));
+
+
+                        }
+                        else
+                        {
+                            _getBookingResponse = (GetBookingResponse)JsonConvert.DeserializeObject(objMongoHelper.UnZip(tokenData.CommResponse), typeof(GetBookingResponse)); 
+                        }
+
                         string _responceGetBooking = JsonConvert.SerializeObject(_getBookingResponse);
                         logs.WriteLogs(JsonConvert.SerializeObject(getBookingRequest), "16-GetBookingDetailsRequest", "SpicejetOneWay", "oneway");
                         logs.WriteLogs(JsonConvert.SerializeObject(_getBookingResponse), "16-GetBookingDetailsResponse", "SpicejetOneWay", "oneway");

@@ -62,7 +62,7 @@ namespace OnionConsumeWebAPI.Controllers
            
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
             tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "SpiceJet").Result;
-            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassengerRequest);
 
 
             ViewModel vm = new ViewModel();

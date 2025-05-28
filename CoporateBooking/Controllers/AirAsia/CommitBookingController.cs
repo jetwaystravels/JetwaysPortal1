@@ -92,8 +92,11 @@ namespace OnionConsumeWebAPI.Controllers
             using (HttpClient client = new HttpClient())
             {
 
-                //GetBOoking FRom State
-                // STRAT Get INFO
+                if (tokenData.CommResponse == null)
+                {
+                    _mongoDBHelper.UpdateCommitResponse(Guid, "AirAsia","1");
+                    //GetBOoking FRom State
+                    // STRAT Get INFO
 
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -169,10 +172,13 @@ namespace OnionConsumeWebAPI.Controllers
                     logs.WriteLogs(jsonCommitBookingRequest, "18-CommitBookingRequest", "AirAsiaOneWay", "oneway");
                     logs.WriteLogs(_responceCommit_Booking, "18-CommitBookingResponse", "AirAsiaOneWay", "oneway");
 
-                    //var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
+                        //var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
+                    }
+                    var _responceCommit_Booking1 = responceCommit_Booking.Content.ReadAsStringAsync().Result;
+
+                   
+                    #endregion
                 }
-                var _responceCommit_Booking1 = responceCommit_Booking.Content.ReadAsStringAsync().Result;
-                #endregion
                 #region Booking GET
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -291,7 +297,7 @@ namespace OnionConsumeWebAPI.Controllers
                                 continue;
                                 //totalAmounttax += returnChargeobj.amount;
                             }
-                            if (returnChargeobj.code.StartsWith("SGST"))
+                            if (returnChargeobj.code.StartsWith("SGST") || returnChargeobj.code.Contains("GST"))
                             {
                                 continue;
                                 //totalAmounttaxSGST += returnChargeobj.amount;
@@ -312,7 +318,14 @@ namespace OnionConsumeWebAPI.Controllers
                             }
                             else
                             {
-                                TotaAmountBaggage += returnChargeobj.amount;
+                                if (returnChargeobj.amount.ToString().Contains("-"))
+                                {
+                                    TotaAmountBaggage -= returnChargeobj.amount;
+                                }
+                                else
+                                {
+                                    TotaAmountBaggage += returnChargeobj.amount;
+                                }
                             }
 
                             //totalMealTax = totalAmounttax + totalAmounttaxSGST;
@@ -351,7 +364,13 @@ namespace OnionConsumeWebAPI.Controllers
                         {
                             returnSeats.total = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.total;
                             returnSeats.taxes = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.taxes;
+                            returnSeats.adjustments = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments;
                             returnSeats.totalSeatAmount = returnSeats.total + returnSeats.taxes;
+                            if (returnSeats.adjustments != null)
+                            {
+                                returnSeats.totalSeatAmount += Convert.ToInt32(returnSeats.adjustments);
+                            }
+
 
                         }
                     }

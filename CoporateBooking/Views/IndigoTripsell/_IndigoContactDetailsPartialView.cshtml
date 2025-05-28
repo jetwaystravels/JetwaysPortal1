@@ -57,9 +57,8 @@
 		<div class="kk">
 		    Same as lead passenger <button id="leadpassengerButton2" class="checkbox-button ms-2"></button>
 		</div>
-		<div class="ms-3 hidden">
-		    Do you have GST 
-			<input type="checkbox" id="GSTButton2" class="checkbox-button ms-2" checked>
+		<div class="ms-3">
+		    Do you have GST  <button id="GSTButton2" class="checkbox-button ms-2"></button>
 
 		</div>
 	    </div>
@@ -67,7 +66,7 @@
 
 	</div>
 
-	<div class="col-md-12 hid-block">
+	<div class="col-md-12 hid-block hidden">
 	    <div class="text-16 fw-600">
 		Fill your's GST details below !
 	    </div>
@@ -75,14 +74,14 @@
 	<div class="col-md-3">
 	    <div class="form-input">
 
-		<input type="text" id="gstname" maxlength="32" name="companyName" oninput="validateInputgst(event)" class="companyName hid-block" placeholder="Company Name">
+		<input type="text" id="gstname" maxlength="32" name="companyName" oninput="validateInputgst(event)" class="companyName hid-block hidden" placeholder="Company Name">
 	    </div>
 	    <p id="errorMessagegst" style="color: red;font-size:13px;"></p>
 	    <p id="error-message9" class="error-message" style="display:none">Enter Company Name</p>
 	</div>
 	<div class="col-md-3">
 	    <div class="form-input">
-		<input type="text" id="gstnumber" maxlength="15" name="customerNumber" oninput="validateGST(event)" class="companyName hid-block" placeholder="GST Number">
+		<input type="text" id="gstnumber" maxlength="15" name="customerNumber" oninput="validateGST(event)" class="companyName hid-block hidden" placeholder="GST Number">
 	    </div>
 	    <p id="gstErrorMessage" style="color: red;font-size:13px;"></p>
 	    <p id="error-message10" class="error-message" style="display:none">Enter GST Number</p>
@@ -91,10 +90,9 @@
 
 	<div class="col-md-3">
 	    <div class="form-input">
-		<input type="text" name="emailAddressgst" maxlength="30" oninput="validateEmailGST(event)" class="gstemail hid-block" id="emailAddressGST" placeholder="Email ID">
+		<input type="text" name="emailAddressgst" maxlength="30" oninput="validateEmailGST(event)" class="gstemail hid-block hidden" id="emailAddressGST" placeholder="Email ID">
 	    </div>
 	    <p id="emailErrorMessageGST" style="color: red; font-size:13px;"></p>
-			<p id="error-message11" class="error-message" style="display:none">Enter GST email</p>
 	</div>
 
 
@@ -259,6 +257,19 @@
 	    setInputValueAndRemoveError(".contactemail", 'Leadpassenger3');
 	    setInputValueAndRemoveError(".contactphone", 'Leadpassenger4');
 
+	    //alert("Test");
+	    // var laedpas = localStorage.getItem('Leadpassenger1');
+	    // document.querySelector(".contactFname").value = laedpas;
+	    // var laedpasLast = localStorage.getItem('Leadpassenger2');
+	    // document.querySelector(".contactLname").value = laedpasLast;
+
+	    // var laedpasemail = localStorage.getItem('Leadpassenger3');
+	    // document.querySelector(".contactemail").value = laedpasemail;
+	    // //document.querySelectorAll(".contactemail").value = laedpasemail;
+	    // var laedpasphone = localStorage.getItem('Leadpassenger4');
+	    // document.querySelector(".contactphone").value = laedpasphone;
+
+
 	    //first
 	    var firstfocus = document.getElementById("first").value;
 	    if (firstfocus == "") {
@@ -380,17 +391,8 @@
 		var emailRegex = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 		if (gstemailfocus == "") {
-					var gstnoToDisplay = document.getElementById("error-message11");
-					gstnoToDisplay.style.display = "block";
-					document.getElementById("emailAddressGST").focus();
-					return false;
-		} 
-		else {
-					var gstnoToDisplay = document.getElementById("error-message11");
-					gstnoToDisplay.style.display = "none";
-		}
-		
-		if (!emailRegex.test(gstemailfocus)) {
+		   
+		} else if (!emailRegex.test(gstemailfocus)) {
 		    document.getElementById('gstEmailErrorMessage').innerText = "Enter a valid email address.";
 		    return false;
 		} else {
@@ -628,3 +630,6 @@
 	});
     });
 </script>
+
+
+

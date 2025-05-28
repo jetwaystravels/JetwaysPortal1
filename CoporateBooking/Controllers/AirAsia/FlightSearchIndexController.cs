@@ -313,7 +313,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 airlineLogin login = new airlineLogin();
                 login.credentials = _credentialsAirasia;
 
-                TempData["AirAsiaLogin"] = login.credentials.Image;
+                //  TempData["AirAsiaLogin"] = login.credentials.Image;
                 AirasiaTokan AirasiaTokan = new AirasiaTokan();
                 var AirasialoginRequest = JsonConvert.SerializeObject(login, Formatting.Indented);
                 if (SaveLogs)
@@ -653,6 +653,15 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 // Handling special condition for airasia
                 _SimpleAvailabilityobj.endDate = null;
 
+                if (AirasiaTokan.token != "")
+                {
+
+                    mongoAirAsiaToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                    mongoAirAsiaToken.Guid = SearchGuid;
+                    mongoAirAsiaToken.Supp = "AirAsia";
+                    _mongoDBHelper.SaveMongoFlightToken(mongoAirAsiaToken);
+                }
+
                 var json = JsonConvert.SerializeObject(_SimpleAvailabilityobj, Formatting.Indented);
                 if (SaveLogs)
                 {
@@ -927,6 +936,14 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         //uniqueidx = 0;
                         // Handling special condition for akasa
                         _SimpleAvailabilityobj.endDate = Convert.ToDateTime(searchLog.ArrivalDateTime).ToString("yyyy-MM-dd");
+                        if (AkasaTokan.token != "")
+                        {
+
+                            mongoAKashaToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                            mongoAKashaToken.Guid = SearchGuid;
+                            mongoAKashaToken.Supp = "Akasa";
+                            _mongoDBHelper.SaveMongoFlightToken(mongoAKashaToken);
+                        }
                         if (responceAkasaAir.IsSuccessStatusCode)
                         {
 
@@ -1629,7 +1646,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 TravelPort _objAvail = null;
                 _objAvail = new TravelPort(httpContextAccessorInstance);
                 //   mongoGDSToken.Token = Convert.ToString(newGuid);
-                mongoGDSToken.PassRequest = "";
+                mongoGDSToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_GetfligthModel)); ;
                 mongoGDSToken.Guid = SearchGuid;
                 mongoGDSToken.Supp = "GDS";
                 res = _objAvail.GetAvailabilty(_testURL, sbReq, _objAvail, _GetfligthModel, newGuid.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, SameAirlineRT, "GDSOneWay");
@@ -3310,22 +3327,30 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (AirasiaTokan.token != "")
                     {
 
-                        mongoAirAsiaToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                        mongoAirAsiaToken.PassRequestR = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobjR));
                         mongoAirAsiaToken.Guid = SearchGuid;
                         mongoAirAsiaToken.Supp = "AirAsia";
                         _mongoDBHelper.SaveMongoFlightToken(mongoAirAsiaToken);
-                    }
+                        _mongoDBHelper.UpdateMongoFlightPassRequest(ResponseGuid, "AirAsia", mongoAirAsiaToken.PassRequest, mongoAirAsiaToken.PassRequestR);
 
-                    mongoAKashaToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
-                    mongoAKashaToken.Guid = SearchGuid;
-                    mongoAKashaToken.Supp = "Akasa";
-                    _mongoDBHelper.SaveMongoFlightToken(mongoAKashaToken);
+                    }
+                    if (AkasaTokan.token != "")
+                    {
+                        mongoAKashaToken.PassRequestR = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobjR));
+                        mongoAKashaToken.Guid = SearchGuid;
+                        mongoAKashaToken.Supp = "Akasa";
+                        //_mongoDBHelper.SaveMongoFlightToken(mongoAKashaToken);
+                        _mongoDBHelper.UpdateMongoFlightToken(ResponseGuid, "Akasa", mongoAKashaToken.Token, mongoAKashaToken.RToken);
+                        _mongoDBHelper.UpdateMongoFlightPassRequest(ResponseGuid, "Akasa", mongoAKashaToken.PassRequest, mongoAKashaToken.PassRequestR);
+                    }
 
 
                     if (mongoSpiceToken.Token != "")
                     {
 
-                        mongoSpiceToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_getAvailabilityRQ));
+                        mongoSpiceToken.PassengerRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_getAvailabilityRQ));
+                        mongoSpiceToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("SpicejetAvailibilityRequest"));
+
                         mongoSpiceToken.Guid = SearchGuid;
                         mongoSpiceToken.Supp = "SpiceJet";
                         _mongoDBHelper.SaveMongoFlightToken(mongoSpiceToken);
@@ -3334,7 +3359,10 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (mongoIndigoToken.Token != "")
                     {
 
-                        mongoIndigoToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                        mongoIndigoToken.PassengerRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                        mongoIndigoToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("IndigoAvailibilityRequest"));
+
+
                         mongoIndigoToken.Guid = SearchGuid;
                         mongoIndigoToken.Supp = "Indigo";
 
@@ -3369,7 +3397,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (mongoSpiceToken.Token != "")
                     {
 
-                        mongoSpiceToken.PassRequest = "";
+                        mongoSpiceToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("SpicejetAvailibilityRequest")); ;
                         mongoSpiceToken.Guid = SearchGuid;
                         mongoSpiceToken.Supp = "SpiceJet";
                         _mongoDBHelper.SaveMongoFlightToken(mongoSpiceToken);
@@ -3378,11 +3406,18 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     if (mongoIndigoToken.Token != "")
                     {
 
-                        mongoIndigoToken.PassRequest = "";
+                        //  mongoIndigoToken.PassRequest = "";
+                        mongoIndigoToken.PassRequest = objMongoHelper.Zip(HttpContext.Session.GetString("IndigoAvailibilityRequest"));
                         mongoIndigoToken.Guid = SearchGuid;
                         mongoIndigoToken.Supp = "Indigo";
                         _mongoDBHelper.SaveMongoFlightToken(mongoIndigoToken);
                     }
+                    //if (mongoGDSToken.Token != "")
+                    //{
+
+                    //    mongoGDSToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_SimpleAvailabilityobj));
+                    //    _mongoDBHelper.SaveMongoFlightToken(mongoGDSToken);
+                    //}
                     _mongoDBHelper.SaveMongoFlightToken(mongoGDSToken);
                     return RedirectToAction("FlightView", "ResultFlightView", new { Guid = SearchGuid, TripType = SameAirlineRT, Origin = searchLog.Origin.Trim(), OriginCode = searchLog.OrgCode.Trim(), Destination = searchLog.Destination.Trim(), DestinationCode = searchLog.DestCode.Trim(), BeginDate = _GetfligthModel.beginDate, EndDate = _GetfligthModel.endDate, AdultCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.adultcount : _GetfligthModel.adultcount, ChildCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.childcount : _GetfligthModel.childcount, InfantCount = _GetfligthModel.passengercount != null ? _GetfligthModel.passengercount.infantcount : _GetfligthModel.infantcount, FlightClass = flightclass });
 

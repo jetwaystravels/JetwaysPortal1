@@ -205,11 +205,35 @@ namespace OnionConsumeWebAPI.Models
                     mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
                 }
 
-                if (supp == "Indigo")
+
+
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateMongoFlightToken methhod", _connectionString);
+            }
+
+        }
+
+        public void UpdateMongoFlightPassRequest(string guid, string supp, string PassreqL, string PassReqR)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                if (string.IsNullOrEmpty(PassReqR))
                 {
-                    var updatepass = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, "");
-                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, updatepass);
+                    var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, PassreqL);
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
                 }
+                else
+                {
+                    var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassRequest, PassreqL).Set(s => s.PassRequestR, PassReqR);
+                    mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+                }
+
+
 
 
             }
@@ -289,6 +313,58 @@ namespace OnionConsumeWebAPI.Models
 
         }
 
+        public void UpdateCommitResponse(string guid, string supp, string CommitValue)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.CommResponse, CommitValue);
+                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
+            }
+
+        }
+
+        public void UpdateFlightTokenPassengerGDS(string guid, string supp, string Passenger)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassengerRequest, Passenger);
+                //var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.OldPassengerRequest, Passenger);
+                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
+            }
+
+        }
+
+        public void UpdateFlightTokenOldPassengerGDS(string guid, string supp, string Passenger)
+        {
+            try
+            {
+                var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+                Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+                //var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.PassengerRequest, Passenger);
+                var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.OldPassengerRequest, Passenger);
+                mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "UpdateFlightTokenPassenger methhod", _connectionString);
+            }
+
+        }
         public void UpdateFlightTokenContact(string guid, string supp, string Contact)
         {
             try

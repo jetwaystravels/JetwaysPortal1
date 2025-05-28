@@ -529,11 +529,15 @@
                                                             .FirstOrDefault();
 
 
-                                                            if (Mealcode != null)
+                                                            if (Mealcode != null && MealName!=null)
                                                             {
 
                                                                 <td>@Mealcode-@MealName</td>
 
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>NA</td>
                                                             }
                                                         }
                                                         else
@@ -541,23 +545,37 @@
                                                             <td>NA</td>
                                                         }
 
-                                                        if (htbag != null)
+                                                        if (htbag != null && htbag.Count > 0)
                                                         {
-                                                            //Hashtable htSSr = new Hashtable();
-                                                            //SpicejetMealImageList.GetAllmeal(htSSr);
-                                                            //if (!htbag.Contains(hashdata))
-                                                            //continue;
-                                                            if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "INF")
+                                                            if (i3 == 0)
                                                             {
-                                                                <td>NA</td>
+                                                                if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "INF")
+                                                                {
+                                                                    <td>NA</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "CHD")
+                                                                        Model.AirlinePNR[a].passengers[i2].passengerTypeCode = "CNN";
+                                                                    var weight = htbag[hashdata];
+                                                                    if (weight == "")
+                                                                    {
+                                                                        <td></td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>XBAG-@weight Kg</td>
+                                                                    }
+                                                                }
                                                             }
                                                             else
                                                             {
-                                                                if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "CHD")
-                                                                    Model.AirlinePNR[a].passengers[i2].passengerTypeCode = "CNN";
-                                                                var weight = htbag[Model.AirlinePNR[a].passengers[i2].passengerTypeCode.Replace("\"", "")];
-                                                                <td>XBAG-@weight Kg</td>
+                                                                <td></td>
                                                             }
+                                                        }
+                                                        else
+                                                        {
+                                                            <td></td>
                                                         }
 
 

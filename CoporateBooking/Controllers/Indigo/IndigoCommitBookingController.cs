@@ -98,11 +98,14 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                 IndigoBookingManager_.UpdateContactsRequest contactList = (IndigoBookingManager_.UpdateContactsRequest)JsonConvert.DeserializeObject(contactdata, typeof(IndigoBookingManager_.UpdateContactsRequest));
                 using (HttpClient client1 = new HttpClient())
                 {
-
+                    IndigoBookingManager_.BookingCommitResponse _BookingCommitResponse = null;
                     _commit objcommit = new _commit();
-                    #region GetState
-                    _sell objsell = new _sell();
-                    IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(token, 0, "");
+                    if (tokenData.CommResponse == null)
+                    {
+                       
+                        #region GetState
+                        _sell objsell = new _sell();
+                        IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(token, 0, "");
 
                     string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
                     decimal Totalpayment = 0M;
@@ -121,11 +124,25 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
 
                     #region Commit Booking
 
-                    IndigoBookingManager_.BookingCommitResponse _BookingCommitResponse = await objcommit.commit(token, contactList, passeengerlist, "OneWay");
 
-                        if (_BookingCommitResponse != null && _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator != null)
+
+                         _BookingCommitResponse = await objcommit.commit(token, contactList, passeengerlist, "OneWay");
+                    }
+
+                        if ((_BookingCommitResponse != null && _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator != null) || (tokenData.CommResponse != null))
                         {
-                            IndigoBookingManager_.GetBookingResponse _getBookingResponse = await objcommit.GetBookingdetails(token, _BookingCommitResponse, "OneWay");
+                        IndigoBookingManager_.GetBookingResponse _getBookingResponse = null;
+                            if (tokenData.CommResponse == null)
+                            {
+                                 _getBookingResponse = await objcommit.GetBookingdetails(token, _BookingCommitResponse, "OneWay");
+
+                                _mongoDBHelper.UpdateCommitResponse(Guid, "Indigo", objMongoHelper.Zip(JsonConvert.SerializeObject(_getBookingResponse)));
+                            }
+                            else
+                            {
+                              _getBookingResponse = (IndigoBookingManager_.GetBookingResponse)JsonConvert.DeserializeObject(objMongoHelper.UnZip(tokenData.CommResponse), typeof(IndigoBookingManager_.GetBookingResponse));
+                        }
+
 
                         if (_getBookingResponse != null)
                         {

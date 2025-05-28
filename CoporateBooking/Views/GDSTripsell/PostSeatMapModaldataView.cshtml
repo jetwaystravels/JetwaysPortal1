@@ -323,6 +323,7 @@
 <div class="journey-box">
     <ul class="nav nav-pills mb-3">
         @{
+            Hashtable htseat = Model.Seatmaplist.htSeatlist;
             int passengerdata = @Model.passeengerlist.passengerscount;
 
         }
@@ -560,7 +561,7 @@
                                                             if (!ht0.Contains(data))
                                                             {
                                                                 <li class="seat-li chkbox tooltip">
-                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                    <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
                                                                     <span class="tooltiptext">Sorry, seat is occupied.</span>
                                                                 </li>
                                                             }
@@ -568,11 +569,16 @@
                                                             {
                                                                 string[] arrayofseat = ht0[data].ToString().Split("_");
                                                                 string feeamountF1 = string.Empty;
+                                                                string againtfeeamountData = string.Empty;
                                                                 string seatavailability = string.Empty;
                                                                 if (arrayofseat.Length > 1)
                                                                 {
                                                                     feeamountF1 = arrayofseat[0].Trim();
                                                                     seatavailability = arrayofseat[1].Trim();
+                                                                    if (seatavailability == "100")
+                                                                    {
+                                                                        againtfeeamountData = htseat[feeamountF1].ToString();
+                                                                    }
                                                                 }
 
                                                                 // if (seatavailability != "5" && seatavailability == "1")
@@ -584,9 +590,10 @@
                                                                 // }
                                                                 if (seatavailability == "100")
                                                                 {
-                                                                    <li class="seat-li chkbox tooltip">
-                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
-                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                    <li class="seat-li midcomfort tooltip">
+                                                                        <!--<input type="checkbox" name="unitKey" value="" class="chkbox" />-->
+                                                                        <input type="checkbox" class="mycheck" name="unitKey" value="@feeamountF1 _@data _OneWay0 _@l _@Model.passeengerlist.journeys[0].segments[0].externalIdentifier __@againtfeeamountData" id="unitKey" />
+                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span>
                                                                     </li>
                                                                 }
                                                                 else if (seatavailability == "10")
@@ -599,7 +606,7 @@
                                                                 else if (seatavailability == "5")
                                                                 {
                                                                     <li class="seat-li chkbox tooltip">
-                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
+                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox d-none"  disabled />
                                                                         <span class="tooltiptext">Sorry, seat is occupied.</span>
                                                                     </li>
                                                                 }
@@ -607,7 +614,7 @@
                                                                 {
                                                                     <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
-                                                                        <span class="tooltiptext">No Seat Available.</span>
+                                                                        <span class="tooltiptext">No Seat Available. </span>
                                                                     </li>
                                                                 }
                                                                 else
@@ -653,7 +660,7 @@
                                             if (countcolumnseg_0 == 0)
                                             {
                                                 <div class="text-center" style="position: relative;top: -110px;">
-                                                    <h6 class="text-danger" style="margin-left: 45px;">Seats are not Available</h6>
+                                                    <h6 class="text-danger" style="margin-left: 45px;">Seats are not Available </h6>
                                                 </div>
                                             }
                                         }
@@ -714,18 +721,24 @@
                                                             {
                                                                 string[] arrayofseat = ht1[data].ToString().Split("_");
                                                                 string feeamountF1 = string.Empty;
+                                                                string againtfeeamountData1 = string.Empty;
                                                                 string seatavailability = string.Empty;
                                                                 if (arrayofseat.Length > 1)
                                                                 {
                                                                     feeamountF1 = arrayofseat[0].Trim();
                                                                     seatavailability = arrayofseat[1].Trim();
+                                                                    if (seatavailability == "100")
+                                                                    {
+                                                                        againtfeeamountData1 = htseat[feeamountF1].ToString();
+                                                                    }
                                                                 }
                                                                 //string feeamountF1 = ht1[data].ToString();
                                                                 if (seatavailability == "100")
                                                                 {
-                                                                    <li class="seat-li chkbox tooltip">
-                                                                        <input type="checkbox" name="unitKey" value="" class="chkbox" disabled />
-                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.</span>
+                                                                    <li class="seat-li midcomfort chkbox tooltip">
+                                                                        <input type="checkbox" class="mycheck2" name="unitKey" value="@feeamountF1 _@data _OneWay1 _@l  _@Model.passeengerlist.journeys[0].segments[1].externalIdentifier __@againtfeeamountData1" id="unitKey" />
+                                                                        <!--<input type="checkbox" name="unitKey" value="" class="chkbox" />-->
+                                                                        <span class="tooltiptext">Paid Seat: Available After Reservation.<span>&#8377; @feeamountF1</span>
                                                                     </li>
                                                                 }
                                                                 else if (seatavailability == "10")
@@ -746,7 +759,7 @@
                                                                 {
                                                                     <li class="seat-li chkbox tooltip" style="background: #fff;border: none;">
                                                                         <input type="checkbox" name="unitKey" value="" class="chkbox d-none" disabled />
-                                                                        <span class="tooltiptext">No Seat Available.</span>
+                                                                        <span class="tooltiptext">No Seat Available. </span>
                                                                     </li>
                                                                 }
                                                                 else

@@ -131,10 +131,15 @@
                 }
 
                 @{
-                    if (@Model.passeengerlistItanary != null)
-                    {
-                        inftbasefare = Model.passeengerlistItanary.inftbasefare;
-                    }
+                    //if ((@Model.passeengerlistRT[a].journeys[0].Airlinename.ToLower() == "akasaair" || @Model.passeengerlistRT[a].journeys[0].Airlinename.ToLower() == "airasia") && @Model.passeengerlistRT[a].inftbasefare != null)
+                    //{
+                        //inftbasefare = Model.passeengerlistItanary.inftbasefare;
+                        
+                    //}
+                    //else
+                    //{
+                        inftbasefare = @Model.passeengerlistRT[a].inftbasefare;
+                    //}
 
                     toatlinftbasefare = infcount * inftbasefare;
                     basefare = (peradtamount * adtcount) + (perchdtamount * chdcount) + (toatlinftbasefare);
@@ -142,7 +147,8 @@
                     basefaretax = @Model.passeengerlistRT[a].basefaretax;
                     if ((@Model.passeengerlistRT[a].journeys[0].Airlinename.ToLower() == "akasaair" || @Model.passeengerlistRT[a].journeys[0].Airlinename.ToLower() == "airasia") && (Model.passeengerlistItanary!=null &&  Model.passeengerlistItanary.infttax != null))
                     {
-                        totaltax = @Model.passeengerlistRT[a].basefaretax + @Model.passeengerlistItanary.infttax * infcount;
+                        //totaltax = @Model.passeengerlistRT[a].basefaretax + @Model.passeengerlistItanary.infttax * infcount;
+                        totaltax = @Model.passeengerlistRT[a].basefaretax + @Model.passeengerlistRT[a].infttax * infcount;
                     }
                     else
                     {
