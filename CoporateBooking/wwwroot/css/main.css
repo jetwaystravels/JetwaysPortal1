@@ -14218,34 +14218,33 @@ Emulate section Start
     width: 104%;
 }
 
-.ui-widget.ui-widget-content {
+.ui-widget.ui-widget-content.ui-autocomplete.ui-front {
     border: #eee 1px solid !important;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
-    font-size: 15px;
+    font-size: 14px;
     min-height: auto;
     max-height: 250px;
     overflow-y: auto;
-    flex: 0 0 17.2%;
-    max-width: 17.2%;
+    max-width: 326px;
     overflow-x: hidden;
-    padding: 0 8px 8px;
+    padding: 0;
 }
 
-.ui-menu-item-wrapper.ui-state-active {
-    background: #f2f2f2 !important;
-    color: #111111 !important;
-    border-top: 1px solid #DDDDDD !important;
-    border-bottom: 1px solid #DDDDDD !important;
-    border-right: 1px solid #fff !important;
-    border-left: 1px solid #fff !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
+    .ui-widget.ui-widget-content.ui-autocomplete.ui-front .ui-menu-item-wrapper.ui-state-active {
+        background: #f2f2f2 !important;
+        color: #111111 !important;
+        border-top: 1px solid #DDDDDD !important;
+        border-bottom: 1px solid #DDDDDD !important;
+        border-right: 1px solid #fff !important;
+        border-left: 1px solid #fff !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
 
-.ui-menu .ui-menu-item {
-    border-bottom: 1px solid #DDDDDD;
-    line-height: 32px;
-}
+  .ui-menu .ui-menu-item {
+        border-bottom: 1px solid #DDDDDD;
+        line-height: 32px;
+    }
 
 .emulate-bx .toggle-arrow svg {
     position: relative;
@@ -14271,6 +14270,7 @@ Emulate section Start
     font-weight: 600;
     font-size: 14px;
     margin-bottom: .1rem;
+    margin-left: 8px;
 }
 
 .emulate-bx .select2-container {
@@ -14278,12 +14278,14 @@ Emulate section Start
 }
 
 .emulate-bx input {
-    border: #DDDDDD 1px solid;
+    border: #DDDDDD 1px solid !important;
     height: 33px;
     padding-left: 10px;
     border-radius: 3px;
     margin-top: 6px;
-    width: 100%
+    width: 100%;
+    font-weight: 500;
+    color: #111111;
 }
 
     .emulate-bx input:focus {
@@ -14303,18 +14305,18 @@ Emulate section Start
 
 .emulate-bx .remove-icon {
     position: absolute;
-    top: 69%;
-    right: 16px;
+    top: 72%;
+    right: 8px;
     transform: translateY(-50%);
     cursor: pointer;
     color: #fff;
     background: #ff4d54;
-    font-size: 13px;
+    font-size: 12px;
     display: none;
     font-weight: 600;
-    height: 14px;
-    width: 14px;
-    line-height: 11px;
+    height: 13px;
+    width: 13px;
+    line-height: 9px;
     padding: 0;
     border-radius: 30px;
     text-align: center;

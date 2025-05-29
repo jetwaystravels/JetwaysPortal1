@@ -9,14 +9,13 @@
 <style>
 
     .Radiohide input {
-    display: none;
+        display: none;
     }
 
     .endselect {
-    cursor: pointer;
+        cursor: pointer;
     }
 
-   
 </style>
 
 
@@ -111,16 +110,16 @@
                     <nav>
                         <ul class="navbar-nav" id="top-navbar-nav">
                             <li class="nav-item">
-                                <li class="nav-item">
-                                    <small>Language</small>
-                                    <select aria-label="Default">
-                                        <option>English</option>
-                                        <option value="1">French</option>
-                                        <option value="2">Russian </option>
-                                        <option value="3">Spanish</option>
-                                        <option value="3">Arabic</option>
-                                    </select>
-                                </li>
+                            <li class="nav-item">
+                                <small>Language</small>
+                                <select aria-label="Default">
+                                    <option>English</option>
+                                    <option value="1">French</option>
+                                    <option value="2">Russian </option>
+                                    <option value="3">Spanish</option>
+                                    <option value="3">Arabic</option>
+                                </select>
+                            </li>
                             </li>
                             <li class="nav-item">
                                 <small>Country</small>
@@ -131,7 +130,7 @@
                                 </select>
                             </li>
                             <li>
-                                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                                @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 
                                 @if (HttpContextAccessor.HttpContext.Session.GetString("LoggedInEmail") != null)
@@ -150,11 +149,11 @@
                                     }
 
                                     <div class="profile-initials">@initials</div>
-                                  
 
 
 
-                                    
+
+
                                     <div class="profile-popup" style="display:none;">
                                         <span>@email</span>
                                         <div class="circle-initials">@initials</div>
@@ -186,7 +185,7 @@
                                         </div>
                                     </div>
                                 }
-                                
+
 
                                 <div class="dropdown-content">
                                     <a href="#" data-toggle="modal" data-target="#signUp-pop">
@@ -352,8 +351,8 @@
                                     // 2) Serialize into a JS literal
                                     var jsonData = JsonConvert.SerializeObject(dataList);
                                 }
-                                
-                               
+
+
                                 <!-- ***** Emulate to Company / Employee End ***** -->
 
 
@@ -382,10 +381,9 @@
                                                 <!-- Employee -->
                                                 <div class="col-12 col-md-10 col-lg-3">
                                                     <label>Employee</label>
-                                                     <div class="select-container">
-                                                        <select class="select employee-select form-control" name="employeeSelect" id="employeeSelect">
-                                                            <option value="">-- Select Employee --</option>
-                                                        </select>
+                                                    <div class="autocomplete-wrapper">
+                                                        <input type="text" name="employee" id="employeeSelect" placeholder="Enter Employee name" class="autocomplete-input employee" required autocomplete="off">
+                                                        <span class="remove-icon">×</span>
                                                     </div>
                                                 </div>
 
@@ -416,14 +414,14 @@
                                             <input class="form-check-input" type="radio" name="SameAirlineRT" value="OneWay" id="one-wayid" checked>
                                             <label class="form-check-label">One way</label>
                                         </div>
-                                         <div class="form-check form-check-inline">
-											<input class="form-check-input" type="radio" name="SameAirlineRT" value="RoundTrip" id="round-tripid">
-											<label class="form-check-label">Round Trip</label>
-										</div>
-										<div class="form-check form-check-inline d-none">
-											<input class="form-check-input" type="radio" name="SameAirlineRT" value="AirlineRT" id="multi-cityid">
-											<label class="form-check-label">Same Airline Roundtrip</label>
-										</div> 
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="SameAirlineRT" value="RoundTrip" id="round-tripid">
+                                            <label class="form-check-label">Round Trip</label>
+                                        </div>
+                                        <div class="form-check form-check-inline d-none">
+                                            <input class="form-check-input" type="radio" name="SameAirlineRT" value="AirlineRT" id="multi-cityid">
+                                            <label class="form-check-label">Same Airline Roundtrip</label>
+                                        </div>
                                         <div class="custom-control-inline float-right"><h5 style="font-weight:600;">Corporate Booking</h5></div>
                                     </div>
                                     <div class="col-lg-12">
@@ -601,7 +599,7 @@
                                                                     <input type="radio" name="flightclass" value="P" id="rbpEconomy" style="vertical-align: sub; margin-right: 5px;">
                                                                     Premium Economy
                                                                 </label>
-                                                               
+
                                                             </div>
 
                                                         </div>
@@ -718,10 +716,6 @@
             </div>
         </section>
         <!-- ***** Search History End ***** -->
-
-
-
-
         <!-- ***** SPECIAL OFFER Area Start ***** -->
         <section id="special-offer" class="section features-area style-two overflow-hidden pt_50">
             <div class="container">
@@ -1060,11 +1054,11 @@
     <!-- Social media js -->
     <!-- Clander js -->
     @section scripts {
-            <link href="~/css/indexvny.css" rel="stylesheet" />
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-            <link rel="stylesheet" href="/resources/demos/style.css">
-            <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <link href="~/css/indexvny.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -1075,159 +1069,126 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-            <!-- Bootstrap js -->
-            <script src="~/js/bootstrap/popper.min.js"></script>
-            <script src="~/js/bootstrap/bootstrap.min.js"></script>
-            <!-- Travellers js -->
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM"></script>
-            <script src="~/js/vendors.js"></script>
-            <script src="~/js/main.js"></script>
-            <!-- Active js -->
-            <script src="~/js/custom.js/indexpage.js"></script>
-            <script src="~/lib/jquery/chosen.jquery.js"></script>
-            <script src="~/lib/jquery/chosen.jquery.min.js"></script>
+        <!-- Bootstrap js -->
+        <script src="~/js/bootstrap/popper.min.js"></script>
+        <script src="~/js/bootstrap/bootstrap.min.js"></script>
+        <!-- Travellers js -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM"></script>
+        <script src="~/js/vendors.js"></script>
+        <script src="~/js/main.js"></script>
+        <!-- Active js -->
+        <script src="~/js/custom.js/indexpage.js"></script>
+        <script src="~/lib/jquery/chosen.jquery.js"></script>
+        <script src="~/lib/jquery/chosen.jquery.min.js"></script>
         <!-- Select2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
         <script>
+            // 1. Legal Entity List
             var legalEntities = [
             @foreach (var item in dataList)
             {
                 @Html.Raw($"\"{item.legalEntityName}\",")
             }
             ];
+
+            // 2. Full JSON Data for Mapping Legal Entity -> Employees & Balance
+            var legalEntitiesData = @Html.Raw(jsonData);
         </script>
 
-        <script>
-            $(function () {
-                $(".autocomplete-input.legal-entity").autocomplete({
-                    source: legalEntities,
-                    minLength: 1
-                });
-            });
-        </script>
-        <!-- Initialize Select2 and manage remove icon -->
+        <!--Start Emulate section -->
         <script>
             $(document).ready(function () {
-                $('.select').each(function () {
-                    $(this).select2({
-                        placeholder: "Select an option",
-                        allowClear: false,
-                        width: '100%'
-                    });
+                // Prepare legal entity list for autocomplete
+                const legalEntities = legalEntitiesData.map(e => e.legalEntityName);
 
-                    let removeIcon = $('<span class="remove-icon">x</span>').hide();
-                    $(this).parent().append(removeIcon);
-
-                    $(this).on('select2:select', function () {
-                        $(this).siblings('.remove-icon').show();
-                    });
-
-                    removeIcon.on('click', function () {
-                        let selectElement = $(this).siblings('.select');
-                        selectElement.val(null).trigger('change');
-                        $(this).hide();
-                    });
-
-                    $(this).on('select2:clear', function () {
-                        $(this).siblings('.remove-icon').hide();
-                    });
-                });
-            });
-        </script>
-
-        <!-- Show/hide emulate box -->
-        <script>
-            $(function () {
-                $('.toggle-arrow').on('click', function () {
-                    $('#emltoggle').slideToggle();
-                    $(this).find('i').toggleClass('fa-angle-down fa-angle-up');
-                });
-
-                var data = @Html.Raw(jsonData);
-
+                // Bind Employees & Balance when Legal Entity changes
                 function bindFor(companyName) {
-                    var item = data.find(function (x) {
-                        return x.legalEntityName === companyName;
+                    const item = legalEntitiesData.find(x => x.legalEntityName === companyName);
+
+                    // Reset employee input field and remove icon
+                    const $employeeInput = $('#employeeSelect');
+                    $employeeInput.val('');
+                    $employeeInput.siblings('.remove-icon').hide();
+
+                    // Set balance
+                    $('.balance-input').val('₹ 0.00');
+                    if (item?.presentBalance) {
+                        $('.balance-input').val('₹ ' + item.presentBalance);
+                    }
+
+                    // Update employee autocomplete source
+                    const names = item?.employeeNames
+                        ? item.employeeNames.split(',').map(e => e.trim().split('|')[1])
+                        : [];
+
+                    $employeeInput.autocomplete('option', 'source', function (request, response) {
+                        response($.ui.autocomplete.filter(names, request.term));
                     });
-
-                    $('.employee-select').empty().append('<option value="">-- Select Employee --</option>');
-                    $('.balance-input').val('');
-
-                    if (!item) return;
-
-                    item.employeeNames.split(',').map(function (e) {
-                        return e.trim();
-                    }).forEach(function (name) {
-                        $('.employee-select').append($('<option>').val(name.split('|')[0]).text(name.split('|')[1]));
-                    });
-
-                    $('.balance-input').val('₹ ' + item.presentBalance);
                 }
 
-                $('.legalentity-select').on('change', function () {
-                    bindFor(this.value);
-                });
-
-                if (data.length > 0) {
-                    $('.legalentity-select').val(data[0].legalEntityName).trigger('change');
-                    bindFor(data[0].legalEntityName);
-                }
-            });
-        </script>
-        <script>
-            $(function () {
-                $(".select").select2();
-            });
-        </script>
-        <!--input close function start -->
-        <script>
-            $(document).ready(function () {
-                // // Autocomplete data sources
-                // const legalEntities = ["[3] DR OETKER", "[2] FIREFOX BIKES PRIVATE LIMITED", "[19D007] DEMO ACCOUNT", "[16S007] SIEGWERK INDIA PVT. LTD", "[S00014] SHARDUL AMARCHAND MANGALDAS & CO -DEL", "[21H005] HAIIER APPLIANCES INDIA PVT LTD NOIDA", "[000019] FERRERO INDIA PVT LTD", "[FE0001] FERRERO INDIA PVT. LTD.", "[FE0002] FERRERO INDIA P LTD", "[T054] YAZAKI INDIA PVT LIMITED"];
-                // const employees = ["John Doe", "Jane Smith", "Emily Davis", "Michael Brown"];
-                // const billingEntities = ["Jetways Billing Hub", "Billing Co One", "XYZ Billing Solutions"];
-
-                $('.autocomplete-input').each(function () {
-                    const $input = $(this);
-                    const $wrapper = $input.closest('.autocomplete-wrapper');
-                    const $removeIcon = $wrapper.find('.remove-icon');
-
-                    // Set autocomplete source by input class
-                    let sourceData = [];
-                    if ($input.hasClass('legal-entity')) sourceData = legalEntities;
-                    if ($input.hasClass('employee')) sourceData = employees;
-                    if ($input.hasClass('billing-entity')) sourceData = billingEntities;
-
-                    // Initialize autocomplete
-                    $input.autocomplete({
-                        source: sourceData,
+                // Initialize Legal Entity autocomplete
+                $('#legalEntitySelect')
+                    .val('') // Start empty
+                    .attr('placeholder', 'Enter Legal Entity name')
+                    .autocomplete({
+                        source: legalEntities,
                         minLength: 0,
                         select: function (event, ui) {
-                            $input.val(ui.item.value);     // Set value manually
-                            $removeIcon.show();            // Show ❌ icon
-                            $input.blur();                 // Remove focus so cursor disappears
+                            $(this).val(ui.item.value);
+                            bindFor(ui.item.value);
+                            $(this).blur();
+                            $(this).siblings('.remove-icon').show();
+                            return false;
                         }
-                    });
-
-                    // Trigger autocomplete on click/focus
-                    $input.on('focus click', function () {
+                    })
+                    .on('focus click', function () {
                         $(this).autocomplete('search', '');
+                    })
+                    .on('input', function () {
+                        $(this).siblings('.remove-icon').toggle(!!$(this).val());
                     });
 
-                    // Toggle ❌ icon on input change
-                    $input.on('input', function () {
-                        $removeIcon.toggle(!!$input.val());
-                    });
+                // Remove icon for Legal Entity input
+                $('#legalEntitySelect').siblings('.remove-icon').on('click', function () {
+                    $('#legalEntitySelect').val('').focus();
+                    $(this).hide();
 
-                    // ❌ icon clears input
-                    $removeIcon.on('click', function () {
-                        $input.val('').focus(); // Focus again to allow re-selection
-                        $removeIcon.hide();
-                    });
+                    // Also reset employee and balance when legal entity is cleared
+                    $('#employeeSelect').val('');
+                    $('#employeeSelect').siblings('.remove-icon').hide();
+                    $('.balance-input').val('₹ 0.00');
                 });
+
+                // Initialize Employee Autocomplete
+                function initEmployeeAutocomplete() {
+                    const $employeeInput = $('#employeeSelect');
+
+                    $employeeInput.autocomplete({
+                        source: [],
+                        minLength: 0,
+                        select: function (event, ui) {
+                            $(this).val(ui.item.value);
+                            $(this).blur();
+                            $(this).siblings('.remove-icon').show();
+                            return false;
+                        }
+                    })
+                        .on('focus click', function () {
+                            $(this).autocomplete('search', '');
+                        })
+                        .on('input', function () {
+                            $(this).siblings('.remove-icon').toggle(!!$(this).val());
+                        });
+
+                    // Remove icon behavior for Employee input
+                    $employeeInput.siblings('.remove-icon').on('click', function () {
+                        $employeeInput.val('').focus();
+                        $(this).hide();
+                    });
+                }
 
                 // Form validation
                 $('#myForm').on('submit', function (e) {
@@ -1247,9 +1208,14 @@
                         alert('Please fill out all required fields.');
                     }
                 });
+
+                // Initial setup
+                initEmployeeAutocomplete();
+                // No pre-selected Legal Entity here!
             });
         </script>
-        <!--input close function End -->
+
+        <!--End Emulate section -->
         <!--Start show and hide box -->
         <script>
             document.addEventListener("DOMContentLoaded", function () {
@@ -1271,7 +1237,7 @@
                 });
             });
         </script>
-       
+
         <!--End show and hide box -->
         <!--Start login popup -->
         <script>
@@ -1296,8 +1262,7 @@
             });
         </script>
         <!--End login popup -->
-
     }
-   
+
 </body>
 

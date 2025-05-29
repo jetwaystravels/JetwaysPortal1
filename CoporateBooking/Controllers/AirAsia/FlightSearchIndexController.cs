@@ -376,8 +376,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                 LegalEntity legalEntity = new LegalEntity();
                 legalEntity.Guid = SearchGuid;
-                legalEntity.BillingEntityName = Convert.ToString(formCollection["legalEntitySelect"]);
-                legalEntity.Employee = Convert.ToString(formCollection["employeeSelect"]);
+                legalEntity.BillingEntityName = Convert.ToString(formCollection["legal_entity"]);
+                legalEntity.Employee = Convert.ToString(formCollection["employee"]);
                 legalEntity.LegalName = Convert.ToString(formCollection["billing"]);
                 //legalEntity.Balance = Convert.ToDouble( Convert.ToString(formCollection["balance"]).Replace("₹","").Trim());
                 string balanceInput = Convert.ToString(formCollection["balance"])?.Replace("₹", "").Trim();
