@@ -3566,52 +3566,7 @@ namespace OnionArchitectureAPI.Services.Travelport
 
         public string AirMerchandisingFulfillmentReq(string _testURL, StringBuilder createSSRReq, string newGuid, string _targetBranch, string _userName, string _password, string _AirlineWay, List<string> _unitkey, List<string> _SSRkey, List<string> BaggageSSrkey, SimpleAvailabilityRequestModel _GetfligthModel, List<passkeytype> passengerdetails, Hashtable htbaggagedata,string strSeatResponseleft, string? Segmentblock = null)
         {
-            /*<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-             <soapenv:Body>
-              <univ:AirMerchandisingFulfillmentReq xmlns:air="http://www.travelport.com/schema/air_v51_0" xmlns:com="http://www.travelport.com/schema/common_v51_0" xmlns:univ="http://www.travelport.com/schema/universal_v51_0" TargetBranch="P1922840">
-               <com:BillingPointOfSaleInfo OriginApplication="UAPI"/>
-               <air:HostReservation Carrier="EY" CarrierLocatorCode="LFSPTP" ProviderCode="1G" ProviderLocatorCode="26FGGJ" UniversalLocatorCode="VDS7YV"/>
-               <air:AirSolution xmlns='http://www.travelport.com/schema/air_v51_0' >
-                <air:SearchTraveler Key="5DT0VJzxnDKALuu29HAAAA==" Code="ADT">
-                 <com:Name Prefix="MR" First="AM" Last="KUMAR"/>
-                </air:SearchTraveler>
-             <air:AirSegment Key="zdpBWJ+znDKAaMSH3HAAAA==" Group="0" Carrier="EY" CabinClass="Economy" FlightNumber="211" ProviderCode="1G" Origin="DEL" Destination="AUH" DepartureTime="2022-08-20T04:45:00.000+05:30" ArrivalTime="2022-08-20T07:00:00.000+04:00" ClassOfService="Q" ETicketability="Yes" Equipment="351" Status="HK" ChangeOfPlane="false" GuaranteedPaymentCarrier="No" ProviderReservationInfoRef="5DT0VJzxnDKA6xs29HAAAA==" TravelOrder="1" ProviderSegmentOrder="1" OptionalServicesIndicator="false" ElStat="A">
-                 </air:AirSegment>
-              </air:AirSolution>
-              <air:OptionalServices>
-                <air:OptionalServicesTotal/>
-               <air:OptionalService Type="PreReservedSeatAssignment" TotalPrice="INR3323" SupplierCode="EY" CreateDate="2022-08-03T05:27:50.802+00:00" ServiceStatus="Offered" SequenceNumber="292630" ServiceSubCode="0B5" SSRCode="SEAT" IssuanceReason="A" Key="xHrBWJB0nDKAfVnk0HAAAA==" AssessIndicator="MileageOrCurrency" InclusiveOfTax="false" InterlineSettlementAllowed="false" GeographySpecification="Sector" Source="MCE" ViewableOnly="false" ProviderCode="1G" Quantity="1" BasePrice="INR3164" ApproximateTotalPrice="INR3323" ApproximateBasePrice="INR3164" Taxes="INR159" IsRepriceRequired="false">
-                  <com:ServiceData BookingTravelerRef="5DT0VJzxnDKALuu29HAAAA==" AirSegmentRef="zdpBWJ+znDKAaMSH3HAAAA==" TravelerType="ADT" Data="22-B"/>
-                  <com:ServiceInfo>
-                    <com:Description>PRE RESERVED SEAT ASSIGNMENT</com:Description>
-                  </com:ServiceInfo>
-                  <com:Remark>EY 211 - INR3323 PER PASSENGER PRE RESERVED SEAT ASSIGNMENT</com:Remark>
-                  <air:TaxInfo Category="K3" Amount="INR159" Key="xHrBWJB0nDKAlVnk0HAAAA==" />
-                  <air:EMD FulfillmentType="2" AssociatedItem="Flight" RefundReissueIndicator="Reuse" Commissionable="false" Booking="SSR" FulfillmentTypeDescription="Associated to a flight coupon of a ticket" />
-                  <air:AdditionalInfo Category="S7" />
-                  <air:FeeApplication Code="4">Per travel</air:FeeApplication>
-                  <air:BrandingInfo Key="1" CommercialName="PRE RESERVED SEAT ASSIGNMENT">
-                    <air:Title Type="External" LanguageCode="EN">PRE RESERVED SEAT ASSIGNMENT</air:Title>
-                    <air:AirSegmentRef Key="zdpBWJ+znDKAaMSH3HAAAA==" />
-                  </air:BrandingInfo>
-                </air:OptionalService>
-                <air:OptionalService Type="Baggage" TotalPrice="INR28399" SupplierCode="EY" CreateDate="2022-08-03T05:27:50.804+00:00" ServiceStatus="Offered" SequenceNumber="6687" ServiceSubCode="0C1" SSRCode="ASVC" IssuanceReason="C" Key="xHrBWJB0nDKAmVnk0HAAAA==" AssessIndicator="MileageOrCurrency" InclusiveOfTax="false" InterlineSettlementAllowed="false" GeographySpecification="Portion" Source="MCE" ViewableOnly="false" TotalWeight="15KG" ProviderCode="1G" Quantity="1" BasePrice="INR27046" ApproximateTotalPrice="INR28399" ApproximateBasePrice="INR27046" Taxes="INR1353" IsRepriceRequired="false">
-                  <com:ServiceData BookingTravelerRef="5DT0VJzxnDKALuu29HAAAA==" AirSegmentRef="zdpBWJ+znDKAaMSH3HAAAA==" TravelerType="ADT" />
-                  <com:ServiceInfo>
-                    <com:Description>UPTO33LB 15KG BAGGAGE</com:Description>
-                  </com:ServiceInfo>
-                  <air:TaxInfo Category="K3" Amount="INR1353" Key="xHrBWJB0nDKArVnk0HAAAA==" />
-                  <air:EMD FulfillmentType="2" AssociatedItem="Flight" RefundReissueIndicator="Reuse" Commissionable="false" Booking="SSR" FulfillmentTypeDescription="Associated to a flight coupon of a ticket" />
-                  <air:FeeApplication Code="4">Per travel</air:FeeApplication>
-                  <air:BrandingInfo Key="2" CommercialName="UPTO33LB 15KG BAGGAGE">
-                    <air:Title Type="External" LanguageCode="EN">UPTO33LB 15KG BAGGAGE</air:Title>
-                    <air:AirSegmentRef Key="zdpBWJ+znDKAaMSH3HAAAA==" />
-                  </air:BrandingInfo>
-                </air:OptionalService>
-               </air:OptionalServices>
-              </univ:AirMerchandisingFulfillmentReq>
-             </soapenv:Body>
-            </soapenv:Envelope>*/
+            
             int count = 0;
             int icount = 100;
 
@@ -3623,14 +3578,6 @@ namespace OnionArchitectureAPI.Services.Travelport
             UniversallocatorCode = Segmentblock.Split('@')[3];
             supplierLocatorCode = Segmentblock.Split('@')[2];
             ProvidelocatorCode = Segmentblock.Split('@')[1];
-            if (BaggageSSrkey.Count > 0)
-            {
-                //UniversallocatorCode = BaggageSSrkey[0].ToString().Split('@')[2];
-                //supplierLocatorCode = BaggageSSrkey[0].ToString().Split('@')[3];
-                //ProvidelocatorCode = BaggageSSrkey[0].ToString().Split('@')[4];
-                ////Segmentblock = BaggageSSrkey[0].ToString().Split('@')[5];
-                //BookingRefkey = BaggageSSrkey[0].ToString().Split('@')[6].Split('_')[0];
-            }
 
             createSSRReq = new StringBuilder();
             createSSRReq.Append("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">");
@@ -3658,31 +3605,6 @@ namespace OnionArchitectureAPI.Services.Travelport
                         createSSRReq.Append("<Name xmlns=\"http://www.travelport.com/schema/common_v52_0\" First=\"" + passengerdetails[i].first + "\"  Last=\"" + passengerdetails[i].last + "\" Prefix=\"" + passengerdetails[i].title.ToUpper().Replace(".", "") + "\"/>");
                         createSSRReq.Append("</SearchTraveler>");
                     }
-                    //else if (passengerdetails[i].passengertypecode == "INF" || passengerdetails[i].passengertypecode == "INFT")
-                    //{
-                    //    createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey + "\" TravelerType=\"INF\">");
-                    //}
-                    //else
-                    //{
-                    //    createPNRReq.Append("<BookingTraveler xmlns=\"http://www.travelport.com/schema/common_v52_0\" Key=\"" + passengerdetails[i].passengerkey + "\"  TravelerType=\"ADT\">");
-                    //}
-                    //if (passengerdetails[i].passengertypecode == "ADT")
-                    //{
-                    //    passengerdetails[i].title = "MR";
-                    //}
-                    //else
-                    //{
-                    //    passengerdetails[i].title = "MSTR";
-                    //}
-                    //if (!string.IsNullOrEmpty(passengerdetails[i].middle))
-                    //{
-                    //    createPNRReq.Append("<BookingTravelerName  First=\"" + passengerdetails[i].first.ToUpper() + "\" Last=\"" + passengerdetails[i].last.ToUpper() + "\" Middle=\"" + passengerdetails[i].middle.ToUpper() + "\" Prefix=\"" + passengerdetails[i].title.ToUpper().Replace(".", "") + "\" />");
-                    //}
-                    //else
-                    //{
-                    //    createPNRReq.Append("<BookingTravelerName  First=\"" + passengerdetails[i].first.ToUpper() + "\" Last=\"" + passengerdetails[i].last.ToUpper() + "\" Prefix=\"" + passengerdetails[i].title.ToUpper().Replace(".", "") + "\" />");
-                    //}
-
                     count++;
                 }
                 createSSRReq.Append(Segmentblock.Split('@')[0].Replace("common_v52_0", "com"));
@@ -3730,10 +3652,11 @@ namespace OnionArchitectureAPI.Services.Travelport
                         //string NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey + "\" AirSegmentRef=\"" + AirSegmentref + "\">";
                         _data = _data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim());
                         _data = Regex.Replace(_data, "Key=\"", "Key=\"" + a + "");
+                        _data = Regex.Replace(_data, "<air:TaxInfo Category=[\\s\\S]*?/>", "");
                         createSSRReq.Append(Regex.Replace(_data, "<com:ServiceData[\\s\\S]*?>", NewValue));
                     }
                 }
-                int paxcounter = 0;
+                int paxcounter = oneway0List.Count+1;
                 for (int a = 0; a < oneway1List.Count; a++)
                 {
                     if (oneway1List[a].ToString().Split("_")[0].ToString().Trim() == "0")
@@ -3746,7 +3669,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                         //_data=_data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim() + );
                         string NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey + "\" AirSegmentRef=\"" + oneway1List[a].Split("_")[4].ToString().Trim() + "\">";
                         _data = _data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim());
-                        _data = Regex.Replace(_data, "Key=\"", "Key=\"" + a + "");
+                        _data = Regex.Replace(_data, "Key=\"", "Key=\"" + paxcounter + "");
+                        _data = Regex.Replace(_data, "<air:TaxInfo Category=[\\s\\S]*?/>", "");
                         createSSRReq.Append(Regex.Replace(_data, "<com:ServiceData[\\s\\S]*?>", NewValue));
                         paxcounter++;
                     }
@@ -3998,10 +3922,11 @@ namespace OnionArchitectureAPI.Services.Travelport
                             AirSegmentref = lstsegment[0].Trim();
                             _data = _data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim());
                             _data = Regex.Replace(_data, "Key=\"", "Key=\"" + a + "");
+                            _data = Regex.Replace(_data, "<air:TaxInfo Category=[\\s\\S]*?/>", "");
                             createSSRReq.Append(Regex.Replace(_data, "<com:ServiceData[\\s\\S]*?>", NewValue));
                         }
                     }
-                    int paxcounter = 0;
+                    int paxcounter = oneway0List.Count + 1;
                     for (int a = 0; a < oneway1List.Count; a++)
                     {
                         if (oneway1List[a].ToString().Split("_")[0].ToString().Trim() == "0")
@@ -4015,15 +3940,16 @@ namespace OnionArchitectureAPI.Services.Travelport
                             string NewValue = "";
                             if (passengerdetails[a].passengerkey.Contains("**"))
                             {
-                                NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey.Split("**")[0].Trim() + "\" AirSegmentRef=\"" + oneway1List[a].Split("_")[4].ToString().Trim() + "\">";
+                                NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey.Split("**")[0].Trim() + "\" AirSegmentRef=\"" + AirSegmentref + "\">";
                             }
                             else
                             {
-                                NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey.Trim() + "\" AirSegmentRef=\"" + oneway1List[a].Split("_")[4].ToString().Trim() + "\">";
+                                NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey.Trim() + "\" AirSegmentRef=\"" + AirSegmentref + "\">";
                             }
                             AirSegmentref = lstsegment[1].Trim();
                             _data = _data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim());
-                            _data = Regex.Replace(_data, "Key=\"", "Key=\"" + a + "");
+                            _data = Regex.Replace(_data, "Key=\"", "Key=\"" + paxcounter + "");
+                            _data = Regex.Replace(_data, "<air:TaxInfo Category=[\\s\\S]*?/>", "");
                             createSSRReq.Append(Regex.Replace(_data, "<com:ServiceData[\\s\\S]*?>", NewValue));
                             paxcounter++;
                         }
@@ -4071,10 +3997,11 @@ namespace OnionArchitectureAPI.Services.Travelport
                             }
                             _data = _data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim());
                             _data = Regex.Replace(_data, "Key=\"", "Key=\"" + a + "");
+                            _data = Regex.Replace(_data, "<air:TaxInfo Category=[\\s\\S]*?/>", "");
                             createSSRReq.Append(Regex.Replace(_data, "<com:ServiceData[\\s\\S]*?>", NewValue));
                         }
                     }
-                    int paxcounter = 0;
+                    int paxcounter = rt0List.Count + 1;
                     for (int a = 0; a < rt1List.Count; a++)
                     {
                         if (rt1List[a].ToString().Split("_")[0].ToString().Trim() == "0")
@@ -4096,7 +4023,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                                 NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey.Trim() + "\" AirSegmentRef=\"" + AirSegmentref + "\">";
                             }
                             _data = _data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim());
-                            _data = Regex.Replace(_data, "Key=\"", "Key=\"" + a + "");
+                            _data = Regex.Replace(_data, "Key=\"", "Key=\"" + paxcounter + "");
+                            _data = Regex.Replace(_data, "<air:TaxInfo Category=[\\s\\S]*?/>", "");
                             createSSRReq.Append(Regex.Replace(_data, "<com:ServiceData[\\s\\S]*?>", NewValue));
                             paxcounter++;
                         }
