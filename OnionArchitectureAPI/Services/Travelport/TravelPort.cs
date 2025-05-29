@@ -3564,7 +3564,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             return res;
         }
 
-        public string AirMerchandisingFulfillmentReq(string _testURL, StringBuilder createSSRReq, string newGuid, string _targetBranch, string _userName, string _password, string _AirlineWay, List<string> _unitkey, List<string> _SSRkey, List<string> BaggageSSrkey, SimpleAvailabilityRequestModel _GetfligthModel, List<passkeytype> passengerdetails, Hashtable htbaggagedata, string? Segmentblock = null)
+        public string AirMerchandisingFulfillmentReq(string _testURL, StringBuilder createSSRReq, string newGuid, string _targetBranch, string _userName, string _password, string _AirlineWay, List<string> _unitkey, List<string> _SSRkey, List<string> BaggageSSrkey, SimpleAvailabilityRequestModel _GetfligthModel, List<passkeytype> passengerdetails, Hashtable htbaggagedata,string strSeatResponseleft, string? Segmentblock = null)
         {
             /*<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
              <soapenv:Body>
@@ -3705,7 +3705,16 @@ namespace OnionArchitectureAPI.Services.Travelport
 
                 List<string> oneway0List = _unitkey.Where(x => x.Contains("_OneWay0")).ToList();
                 List<string> oneway1List = _unitkey.Where(x => x.Contains("_OneWay1")).ToList();
+                Hashtable htseat = new Hashtable();
+                strSeatResponseleft = strSeatResponseleft.Replace("\\\"", "\"");
+                foreach (Match mSeat in Regex.Matches(strSeatResponseleft, @"<air:OptionalService Type=""PreReservedSeatAssignment[\s\S]*?TotalPrice=""(?<Price>[\s\S]*?)""[\s\S]*?Key=""(?<Key>[\s\S]*?)""[\s\S]*?</air:OptionalService>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                {
 
+                    if (!htseat.Contains(mSeat.Groups["Price"].Value.Trim().Replace("INR", "")))
+                    {
+                        htseat.Add(mSeat.Groups["Price"].Value.Trim().Replace("INR", ""), mSeat.Value.Trim());
+                    }
+                }
                 //Seat
                 for (int a = 0; a < oneway0List.Count; a++)
                 {
@@ -3714,7 +3723,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                     if (oneway0List[a].ToString().Contains("_OneWay0"))
                     {
                         string SeatNum = "Data=\"" + oneway0List[a].ToString().Split("_")[1].ToString() + "\"";
-                        string _data = oneway0List[a].ToString().Split("__")[1].ToString().Replace("common_v52_0", "com");
+                        //string _data = oneway0List[a].ToString().Split("__")[1].ToString().Replace("common_v52_0", "com");
+                        string _data = htseat[oneway0List[a].ToString().Split("_")[0].Trim()].ToString().Replace("common_v52_0", "com");
                         //_data=_data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim() + );
                         string NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey + "\" AirSegmentRef=\"" + oneway0List[a].Split("_")[4].ToString().Trim() + "\">";
                         //string NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey + "\" AirSegmentRef=\"" + AirSegmentref + "\">";
@@ -3731,7 +3741,8 @@ namespace OnionArchitectureAPI.Services.Travelport
                     if (oneway1List[a].ToString().Contains("_OneWay1"))
                     {
                         string SeatNum = "Data=\"" + oneway1List[a].ToString().Split("_")[1].ToString() + "\"";
-                        string _data = oneway1List[a].ToString().Split("__")[1].ToString().Replace("common_v52_0", "com");
+                        //string _data = oneway1List[a].ToString().Split("__")[1].ToString().Replace("common_v52_0", "com");
+                        string _data = htseat[oneway1List[a].ToString().Split("_")[0].Trim()].ToString().Replace("common_v52_0", "com");
                         //_data=_data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim() + );
                         string NewValue = "<com:ServiceData " + SeatNum.Trim() + " BookingTravelerRef=\"" + passengerdetails[a].passengerkey + "\" AirSegmentRef=\"" + oneway1List[a].Split("_")[4].ToString().Trim() + "\">";
                         _data = _data.Replace("<com:ServiceData", "<com:ServiceData " + SeatNum.Trim());

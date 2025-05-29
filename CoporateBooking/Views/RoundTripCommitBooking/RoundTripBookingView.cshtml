@@ -376,7 +376,7 @@
                                                                 }
                                                                 // else
                                                                 // {
-                                    //     <td></td>
+                                                                //     <td></td>
                                                                 // }
 
 
@@ -602,7 +602,7 @@
                                                                 //         continue;
                                                                 //     var weight = htSSr[htbag[hashdata]];
                                                                 //     <td>@htbag[hashdata] - @weight</td>
-                                    // }
+                                                                // }
 
 
                                                             }
@@ -843,7 +843,7 @@
                                                                 }
                                                                 // else
                                                                 // {
-                                    //     <td></td>
+                                                                //     <td></td>
                                                                 // }
 
 
@@ -1010,7 +1010,7 @@
                                                                     .FirstOrDefault();
 
 
-                                                                    if (Mealcode != null && MealName!=null)
+                                                                    if (Mealcode != null && MealName != null)
                                                                     {
 
                                                                         <td>@Mealcode-@MealName</td>
@@ -1060,7 +1060,7 @@
                                                                 // if (htbag != null)
                                                                 // {
                                                                 //     <td>@htbag[hashBagdata]</td>
-                                    // }
+                                                                // }
 
 
                                                             }
@@ -1513,7 +1513,7 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                       <td>NA</td>
+                                                                        <td>NA</td>
                                                                     }
 
 
@@ -1536,7 +1536,7 @@
                                                                     SpicejetMealImageList.GetAllmeal(htSSr);
                                                                     if (!htbag.Contains(hashdata))
                                                                         continue;
-                                                                   /* var weight = htSSr[htbag[hashdata]];
+                                                                    /* var weight = htSSr[htbag[hashdata]];
                                                                     <td>@htbag[hashdata] - @weight</td>*/
                                                                     var weight = htbag[hashdata];
                                                                     <td>XBAG-@weight Kg</td>
@@ -1549,10 +1549,17 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                        if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "CHD")
-                                                                            Model.AirlinePNR[a].passengers[i2].passengerTypeCode = "CNN";
-                                                                        var weight = htbag[hashdata];
-                                                                        <td>XBAG-@weight Kg</td>
+                                                                        if (htbag.Count > 0)
+                                                                        {
+                                                                            if (Model.AirlinePNR[a].passengers[i2].passengerTypeCode == "CHD")
+                                                                                Model.AirlinePNR[a].passengers[i2].passengerTypeCode = "CNN";
+                                                                            var weight = htbag[hashdata];
+                                                                            <td>XBAG-@weight Kg</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>NA</td>
+                                                                        }
                                                                     }
                                                                 }
 

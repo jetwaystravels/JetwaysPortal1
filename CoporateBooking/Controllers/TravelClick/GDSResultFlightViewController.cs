@@ -1019,7 +1019,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                         }
                         string strseat = JsonConvert.SerializeObject(SeatMapResponceModel);
                         HttpContext.Session.SetString("Seatmap", JsonConvert.SerializeObject(SeatMapResponceModel));
-
+                        HttpContext.Session.SetString("SeatResponseleft", JsonConvert.SerializeObject(SeatMapres));
                     }
                     #endregion
                 }

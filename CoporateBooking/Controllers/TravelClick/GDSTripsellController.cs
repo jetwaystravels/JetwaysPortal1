@@ -380,7 +380,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     legSsrs SSRAvailabiltyLegssrobj = new legSsrs();
                     legDetails legDetailsobj = null;
                     List<childlegssrs> legssrslist = new List<childlegssrs>();
-                    foreach (DictionaryEntry entry in htSSr)
+                    foreach (DictionaryEntry entry in _htpaxwiseBaggage)
                     {
                         legssrslist = new List<childlegssrs>();
                         try
@@ -406,7 +406,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
                             passengersdetail.passengerKey = "";// _res.SSRAvailabilityForBookingResponse.SSRSegmentList[i1].AvailablePaxSSRList[j].PaxSSRPriceList[0].PassengerNumberList.ToString();
                             passengersdetail.ssrKey = ""; //_res.SSRAvailabilityForBookingResponse.SSRSegmentList[i1].AvailablePaxSSRList[j].SSRCode;
-                            passengersdetail.price = htSSr[legssrs.ssrCode].ToString();
+                            passengersdetail.price = _htpaxwiseBaggage[legssrs.ssrCode].ToString();
                             passengersdetail.Airline = Airlines.AirIndia;
                             legpassengerslist.Add(passengersdetail);
                             legssrs.legpassengers = legpassengerslist;
@@ -569,7 +569,8 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
             jsonDataObject = objMongoHelper.UnZip(tokenData.PassengerRequest); //HttpContext.Session.GetString("PassengerModel");
             passengerdetails = (List<passkeytype>)JsonConvert.DeserializeObject(jsonDataObject.ToString(), typeof(List<passkeytype>));
-            res = _objAvail.AirMerchandisingFulfillmentReq(_testURL, createSSRReq, newGuid.ToString(), _targetBranch, _userName, _password, "GDSOneWay", unitKey, ssrKey, BaggageSSrkey, availibiltyRQGDS, passengerdetails, htbaggagedata, segmentblock);
+            string strSeatResponseleft = HttpContext.Session.GetString("SeatResponseleft");
+            res = _objAvail.AirMerchandisingFulfillmentReq(_testURL, createSSRReq, newGuid.ToString(), _targetBranch, _userName, _password, "GDSOneWay", unitKey, ssrKey, BaggageSSrkey, availibiltyRQGDS, passengerdetails, htbaggagedata, strSeatResponseleft, segmentblock);
             
             UniversalLocatorCode = Regex.Match(res, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
 

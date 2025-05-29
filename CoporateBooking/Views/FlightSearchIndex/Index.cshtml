@@ -373,21 +373,16 @@
                                                 <!-- Legal Entity Name -->
                                                 <div class="col-12 col-md-10 col-lg-3">
                                                     <label>Legal Entity Name</label>
-                                                    <div class="select-container">
-                                                        <select class="select legalentity-select form-control" name="legalEntitySelect" id="legalEntitySelect">
-                                                            <option value="">-- Select Company --</option>
-                                                            @foreach (var item in dataList)
-                                                            {
-                                                                <option value="@item.legalEntityName">@item.legalEntityName</option>
-                                                            }
-                                                        </select>
+                                                    <div class="autocomplete-wrapper">
+                                                        <input type="text" name="legal_entity" id="legalEntitySelect" placeholder="Enter legal entity name" class="autocomplete-input legal-entity" required autocomplete="off">
+                                                        <span class="remove-icon">×</span>
                                                     </div>
                                                 </div>
 
                                                 <!-- Employee -->
                                                 <div class="col-12 col-md-10 col-lg-3">
                                                     <label>Employee</label>
-                                                    <div class="select-container">
+                                                     <div class="select-container">
                                                         <select class="select employee-select form-control" name="employeeSelect" id="employeeSelect">
                                                             <option value="">-- Select Employee --</option>
                                                         </select>
@@ -1070,6 +1065,11 @@
             <link rel="stylesheet" href="/resources/demos/style.css">
             <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
             <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
         <!-- Select2 CSS -->
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -1088,6 +1088,26 @@
             <script src="~/lib/jquery/chosen.jquery.min.js"></script>
         <!-- Select2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+        <script>
+            var legalEntities = [
+            @foreach (var item in dataList)
+            {
+                @Html.Raw($"\"{item.legalEntityName}\",")
+            }
+            ];
+        </script>
+
+        <script>
+            $(function () {
+                $(".autocomplete-input.legal-entity").autocomplete({
+                    source: legalEntities,
+                    minLength: 1
+                });
+            });
+        </script>
         <!-- Initialize Select2 and manage remove icon -->
         <script>
             $(document).ready(function () {
@@ -1165,33 +1185,67 @@
         <!--input close function start -->
         <script>
             $(document).ready(function () {
-                // Initialize all select elements with Select2
-                $('.select').each(function () {
-                    $(this).select2({
-                        placeholder: "Select an option",
-                        allowClear: false
+                // // Autocomplete data sources
+                // const legalEntities = ["[3] DR OETKER", "[2] FIREFOX BIKES PRIVATE LIMITED", "[19D007] DEMO ACCOUNT", "[16S007] SIEGWERK INDIA PVT. LTD", "[S00014] SHARDUL AMARCHAND MANGALDAS & CO -DEL", "[21H005] HAIIER APPLIANCES INDIA PVT LTD NOIDA", "[000019] FERRERO INDIA PVT LTD", "[FE0001] FERRERO INDIA PVT. LTD.", "[FE0002] FERRERO INDIA P LTD", "[T054] YAZAKI INDIA PVT LIMITED"];
+                // const employees = ["John Doe", "Jane Smith", "Emily Davis", "Michael Brown"];
+                // const billingEntities = ["Jetways Billing Hub", "Billing Co One", "XYZ Billing Solutions"];
+
+                $('.autocomplete-input').each(function () {
+                    const $input = $(this);
+                    const $wrapper = $input.closest('.autocomplete-wrapper');
+                    const $removeIcon = $wrapper.find('.remove-icon');
+
+                    // Set autocomplete source by input class
+                    let sourceData = [];
+                    if ($input.hasClass('legal-entity')) sourceData = legalEntities;
+                    if ($input.hasClass('employee')) sourceData = employees;
+                    if ($input.hasClass('billing-entity')) sourceData = billingEntities;
+
+                    // Initialize autocomplete
+                    $input.autocomplete({
+                        source: sourceData,
+                        minLength: 0,
+                        select: function (event, ui) {
+                            $input.val(ui.item.value);     // Set value manually
+                            $removeIcon.show();            // Show ❌ icon
+                            $input.blur();                 // Remove focus so cursor disappears
+                        }
                     });
 
-                    // Add a unique remove icon inside each select container
-                    let removeIcon = $('<span class="remove-icon">x</span>').hide();
-                    $(this).parent().append(removeIcon);
-
-                    // Show remove icon when an option is selected
-                    $(this).on('select2:select', function () {
-                        $(this).siblings('.remove-icon').show();
+                    // Trigger autocomplete on click/focus
+                    $input.on('focus click', function () {
+                        $(this).autocomplete('search', '');
                     });
 
-                    // Remove selection when clicking the ❌ icon
-                    removeIcon.on('click', function () {
-                        let selectElement = $(this).siblings('.select');
-                        selectElement.val(null).trigger('change');
-                        $(this).hide(); // Hide ❌ icon after clearing
+                    // Toggle ❌ icon on input change
+                    $input.on('input', function () {
+                        $removeIcon.toggle(!!$input.val());
                     });
 
-                    // Hide remove icon when selection is cleared
-                    $(this).on('select2:clear', function () {
-                        $(this).siblings('.remove-icon').hide();
+                    // ❌ icon clears input
+                    $removeIcon.on('click', function () {
+                        $input.val('').focus(); // Focus again to allow re-selection
+                        $removeIcon.hide();
                     });
+                });
+
+                // Form validation
+                $('#myForm').on('submit', function (e) {
+                    let isValid = true;
+                    $('.autocomplete-input[required]').each(function () {
+                        const $input = $(this);
+                        if (!$input.val().trim()) {
+                            $input.addClass('error');
+                            isValid = false;
+                        } else {
+                            $input.removeClass('error');
+                        }
+                    });
+
+                    if (!isValid) {
+                        e.preventDefault();
+                        alert('Please fill out all required fields.');
+                    }
                 });
             });
         </script>
