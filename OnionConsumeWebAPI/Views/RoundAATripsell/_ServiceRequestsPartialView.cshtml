@@ -216,11 +216,19 @@
 
 	$('.servc-bordrbaggage').each(function () {
 	debugger;
+	var BagPrice=null;
 	var selectedValue = $(this).val();
 	if (selectedValue) {
 	debugger;
 	var price_value = selectedValue.split('_');
-	var BagPrice = parseFloat(price_value[2]);
+	if (price_value.indexOf("AirIndia") === -1)
+		{
+		 BagPrice = parseFloat(price_value[1]);
+		}
+		else
+		{
+		 BagPrice = parseFloat(price_value[2]);
+		}
 
 	selectedBaggage.push(selectedValue + "_OneWay0");
 	baggagePrice += BagPrice;
@@ -310,8 +318,15 @@
 	if (selectedValue) {
 	debugger;
 	var price_value = selectedValue.split('_');
-	var BagPrice = parseFloat(price_value[2]);
-
+	var BagPrice = null;
+	if (price_value.indexOf("AirIndia") === -1)
+	{
+	 BagPrice = parseFloat(price_value[1]);
+	}
+	else
+	{
+	 BagPrice = parseFloat(price_value[2]);
+	}
 	selectedBaggage.push(selectedValue + "_RT0");
 	baggagePrice += BagPrice;
 
@@ -1003,7 +1018,7 @@
 																// {
 																// 	Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																// }
-																Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode;
+																Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + AirLine;
 																Bagname = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																bagkey = Bagname;
 																if (bagkey != null)
@@ -1874,7 +1889,7 @@
 																	// {
 																	// 	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																	// }
-																	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode;
+																	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + AirLine;
 																	Bagname = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																	bagkeyAA = Bagname;
 																	if (bagkeyAA != null)

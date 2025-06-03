@@ -77,10 +77,16 @@ namespace OnionArchitectureAPI.Services.Indigo
                 string[] productclassesreturn = { "BR", "BC" };
                 _getAvailabilityReturnRQ.TripAvailabilityRequest.AvailabilityRequests[0].ProductClasses = productclassesreturn;
             }
-            else //Retails
+            else if (flightclass == "E")  //Retails
             {
                 //string[] productclassesreturn = { "R", "J", "A", "O", "S", "N", "B", "T" };
-                string[] productclassesreturn = { "R", "J", "O", "S", "N", "B", "T", "A" };
+                string[] productclassesreturn = { "R", "J", "O", "S", "N", "B", "T", "A"};
+                _getAvailabilityReturnRQ.TripAvailabilityRequest.AvailabilityRequests[0].ProductClasses = productclassesreturn;
+            }
+            else //Corporate
+            {
+                //string[] productclassesreturn = { "R", "J", "A", "O", "S", "N", "B", "T" };
+                string[] productclassesreturn = { "R", "J", "O", "S", "N", "B", "T", "A", "F", "M", "C" };
                 _getAvailabilityReturnRQ.TripAvailabilityRequest.AvailabilityRequests[0].ProductClasses = productclassesreturn;
             }
             _getAvailabilityReturnRQ.TripAvailabilityRequest.AvailabilityRequests[0].MaximumConnectingFlights = 20;

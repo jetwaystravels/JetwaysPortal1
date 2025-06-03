@@ -36,5 +36,6 @@ namespace DomainLayer.Model
         public string ModifyBy { get; set; }
         public string BookingDoc { get; set; }
         public string Status { get; set; }
+        public string paidStatus { get; set; }
     }
 }

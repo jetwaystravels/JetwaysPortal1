@@ -84,44 +84,57 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
         string token = string.Empty;
         int TotalCount = 0;
 
- 
+
 
 
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            
-           // var email = HttpContext.Session.GetString("LoggedInEmail");
 
-           // string emaillogin1 = "kanpur.ashok@gmail.com";
+            // var email = HttpContext.Session.GetString("LoggedInEmail");
 
-            var emaillogin1 = HttpContext.Session.GetString("LoggedInEmail");
+            // string emaillogin1 = "kanpur.ashok@gmail.com";
 
-            string apiUrl = $"{AppUrlConstant.CustomerDetailsByEmail}?email={emaillogin1}";
-            try
+
+            if (HttpContext.User.Identity.IsAuthenticated)
             {
-                using (HttpClient client = new HttpClient())
+                var identity = (ClaimsIdentity)User.Identity;
+                IEnumerable<Claim> claims = identity.Claims;
+
+                var userEmail = claims.Where(c => c.Type == ClaimTypes.Email).ToList()[0].Value;
+
+
+
+
+                string apiUrl = $"{AppUrlConstant.CustomerDetailsByEmail}?email={userEmail}";
+                try
                 {
-                    client.DefaultRequestHeaders.Accept.Add(
-                        new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                    HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                    if (response.IsSuccessStatusCode)
+                    using (HttpClient client = new HttpClient())
                     {
-                        string jsonData = await response.Content.ReadAsStringAsync();
+                        client.DefaultRequestHeaders.Accept.Add(
+                            new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                        // Optional: Deserialize JSON if you have a model
-                       // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
-                         ViewBag.CustomerData = jsonData;
+                        HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string jsonData = await response.Content.ReadAsStringAsync();
+
+                            // Optional: Deserialize JSON if you have a model
+                            // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
+                            ViewBag.CustomerData = jsonData;
+                        }
+
                     }
+                }
+                catch
+                {
 
                 }
-            }
-            catch
-            {
 
             }
+
+
             return View();
         }
 
@@ -139,7 +152,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             string SearchGuid = Guid.NewGuid().ToString().ToUpper();
             string ResponseGuid = string.Empty;
             string getguid = string.Empty;
-           // HttpContext.Session.Clear();
+            // HttpContext.Session.Clear();
             string userEmail = HttpContext.Session.GetString("LoggedInEmail");
             //string emaillogin = "kanpur.ashok@gmail.com";
             string emaillogin = userEmail;
@@ -367,18 +380,12 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     AkasaTokan.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
                 }
 
-                if (HttpContext.User.Identity.IsAuthenticated)
-                {
-
-                    string ac = "";
-                  
-                }
 
                 LegalEntity legalEntity = new LegalEntity();
                 legalEntity.Guid = SearchGuid;
-                legalEntity.BillingEntityName = Convert.ToString(formCollection["legal_entity"]);
-                legalEntity.Employee = Convert.ToString(formCollection["employee"]);
-                legalEntity.LegalName = Convert.ToString(formCollection["billing"]);
+                legalEntity.BillingEntityName = Convert.ToString(formCollection["legal_entity"]).Split('-')[0].Trim();
+                legalEntity.Employee = Convert.ToString(formCollection["hdnempid"]);
+                legalEntity.LegalName = Convert.ToString(formCollection["billing"]).Split('-')[0].Trim();
                 //legalEntity.Balance = Convert.ToDouble( Convert.ToString(formCollection["balance"]).Replace("₹","").Trim());
                 string balanceInput = Convert.ToString(formCollection["balance"])?.Replace("₹", "").Trim();
 
@@ -391,7 +398,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     legalEntity.Balance = Convert.ToDouble(balanceInput);
                 }
 
-                legalEntity.Username = HttpContext.User.Identity.Name;  
+                legalEntity.Username = HttpContext.User.Identity.Name;
                 legalEntity.Password = HttpContext.User.Identity.Name;
                 legalEntity.Email = HttpContext.User.Identity.Name;
 
@@ -631,8 +638,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 }
                 else
                 {
-                    Filters.fareTypes = new[] { "R", "M" };
-                    Filters.productClasses = new[] { "EC", "EP", "HF" };
+                    Filters.fareTypes = new[] { "R", "M", "SC", "MC" };
+                    Filters.productClasses = new[] { "EC", "EP", "HF", "SM", "FS" };
                 }
                 Filters.exclusionType = "Default";
                 Filters.loyalty = "MonetaryOnly";
@@ -907,14 +914,16 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         _SimpleAvailabilityobj.codes = _codes;
                         sortOptions = new string[1];
                         sortOptions[0] = "NoSort";
-                        string[] fareTypes = new string[3];
+                        string[] fareTypes = new string[4];
                         fareTypes[0] = "R";
                         fareTypes[1] = "V";
                         fareTypes[2] = "S";
-                        string[] productClasses = new string[3];
+                        fareTypes[3] = "C";
+                        string[] productClasses = new string[4];
                         productClasses[0] = "EC";
                         productClasses[1] = "AV";
                         productClasses[2] = "SP";
+                        productClasses[3] = "CP";
                         Filters = new Filters();
                         Filters.compressionType = "1";
                         Filters.groupByDate = false;
@@ -1152,7 +1161,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     OnionArchitectureAPI.Services.Spicejet._GetAvailability objspicejetgetAvail_ = new OnionArchitectureAPI.Services.Spicejet._GetAvailability(httpContextAccessorInstance);
                     if (_SpicejetlogonResponseobj != null)
                     {
-                        _getAvailabilityVer2Response = await objspicejetgetAvail_.GetTripAvailability(_GetfligthModel, _SpicejetlogonResponseobj, TotalCount, searchLog.Adults, searchLog.Children, searchLog.Infants, flightclass, SameAirlineRT, "SpicejetOneWay", SearchGuid);
+                        _getAvailabilityVer2Response = await objspicejetgetAvail_.GetTripAvailabilityCorporate(_GetfligthModel, _SpicejetlogonResponseobj, TotalCount, searchLog.Adults, searchLog.Children, searchLog.Infants, flightclass, SameAirlineRT, "SpicejetOneWay", SearchGuid);
                         int count1 = 0;
                         if (_getAvailabilityVer2Response != null && _getAvailabilityVer2Response.GetTripAvailabilityVer2Response.Schedules[0].Length > 0)
                         {
@@ -1626,7 +1635,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         uniqueidx++;
                         SimpleAvailibilityaAddResponcelist.Add(_SimpleAvailibilityaAddResponceobj);
                     }
-                 //   HttpContext.Session.SetString("IndigoSignature", JsonConvert.SerializeObject(_IndigologonResponseobj.Signature));
+                    //   HttpContext.Session.SetString("IndigoSignature", JsonConvert.SerializeObject(_IndigologonResponseobj.Signature));
                 }
                 #endregion
 
@@ -1973,14 +1982,18 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     }
                     else
                     {
-                        string[] fareTypesR = new string[2];
+                        string[] fareTypesR = new string[4];
                         fareTypesR[0] = "R";
                         fareTypesR[1] = "M";
+                        fareTypesR[2] = "SC";
+                        fareTypesR[3] = "MC";
 
-                        string[] productClassesR = new string[3];
+                        string[] productClassesR = new string[5];
                         productClassesR[0] = "EC";
                         productClassesR[1] = "HF";
                         productClassesR[2] = "EP";
+                        productClassesR[3] = "SM";
+                        productClassesR[4] = "FS";
                         FiltersR.fareTypes = fareTypesR;
                         FiltersR.productClasses = productClassesR;
                     }
@@ -2214,29 +2227,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         #region Akasa
                         // Login Token Genrate
 
-                        //airlineLogin loginAkasaR = new airlineLogin();
-                        //loginAkasaR.credentials = _CredentialsAkasha;
-                        //AirasiaTokan AkasaTokanR = new AirasiaTokan();
-                        //var AkasaloginRequestdataR = JsonConvert.SerializeObject(loginAkasaR, Formatting.Indented);
-                        //if (SaveLogs)
-                        //{
-                        //    logs.WriteLogsR(AkasaloginRequestdataR, "1-Tokan_Request", "AkasaRT");
-                        //}
-                        //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                        //HttpResponseMessage responceAkasaR = await client.PostAsJsonAsync(AppUrlConstant.AkasaTokan, loginAkasaR);
-                        //if (responceAkasaR.IsSuccessStatusCode)
-                        //{
-                        //    var results = responceAkasaR.Content.ReadAsStringAsync().Result;
-                        //    if (SaveLogs)
-                        //    {
-                        //        logs.WriteLogsR(results, "1-Token_Responce", "AkasaRT");
-                        //    }
-                        //    //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject("") + "\n Response: " + results, "Login", "AkasaRT");
-                        //    var JsonObj = JsonConvert.DeserializeObject<dynamic>(results);
-                        //    AkasaTokanR.token = JsonObj.data.token;
-                        //    AkasaTokanR.idleTimeoutInMinutes = JsonObj.data.idleTimeoutInMinutes;
 
-                        //}
                         mongoAKashaToken.RToken = AkasaTokanR.token;
                         _SimpleAvailabilityobjR = new DomainLayer.Model.SimpleAvailabilityRequestModel();
                         _SimpleAvailabilityobjR = _GetfligthModel;
@@ -2254,14 +2245,16 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         _SimpleAvailabilityobjR.codes = _codes;
                         sortOptionsR = new string[1];
                         sortOptionsR[0] = "NoSort";
-                        string[] fareTypesR = new string[3];
+                        string[] fareTypesR = new string[4];
                         fareTypesR[0] = "R";
                         fareTypesR[1] = "V";
                         fareTypesR[2] = "S";
-                        string[] productClassesR = new string[3];
+                        fareTypesR[3] = "C";
+                        string[] productClassesR = new string[4];
                         productClassesR[0] = "EC";
                         productClassesR[1] = "AV";
                         productClassesR[2] = "SP";
+                        productClassesR[3] = "CP";
                         FiltersR = new Filters();
                         FiltersR.compressionType = "1";
                         FiltersR.groupByDate = false;
@@ -2493,7 +2486,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             _GetfligthModel.destination = searchLog.DestCode;
                             _GetfligthModel.beginDate = searchLog.ArrivalDateTime;
                             _GetfligthModel.endDate = searchLog.ArrivalDateTime;
-                            _getAvailabilityVer2ReturnResponse = await objspicejetgetAvail_.GetTripAvailability(_GetfligthModel, _SpicejetlogonResponseobjR, TotalCount, searchLog.Adults, searchLog.Children, searchLog.Infants, flightclass, SameAirlineRT, "SpicejetRT");
+                            _getAvailabilityVer2ReturnResponse = await objspicejetgetAvail_.GetTripAvailabilityCorporate(_GetfligthModel, _SpicejetlogonResponseobjR, TotalCount, searchLog.Adults, searchLog.Children, searchLog.Infants, flightclass, SameAirlineRT, "SpicejetRT");
                             count2 = 0;
                             if (_getAvailabilityVer2ReturnResponse != null && _getAvailabilityVer2ReturnResponse.GetTripAvailabilityVer2Response.Schedules[0].Length > 0)
                             {

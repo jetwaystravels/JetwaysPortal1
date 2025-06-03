@@ -13252,11 +13252,13 @@ Start Seat Map section
 
 .service-section .journey-box .nav-link {
     font-size: 1rem;
+    cursor: pointer;
 }
 
 .service-section .journey-box .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #E93329;
     border-bottom: #E93329 1px solid;
+    cursor: pointer;
 }
 
 .service-section .x-gap-10 > * {

@@ -19,8 +19,11 @@
     }
 
 </style>
+@if (User.Identity.IsAuthenticated)
+{
 <script>
     function handleBooking(isLoggedIn) {
+        alert(1);
         if (!isLoggedIn) {
             const confirmLogin = confirm("Please login to book your flight.");
             if (confirmLogin) {
@@ -32,6 +35,16 @@
         return true; // Allow submission if logged in
     }
 </script>
+}
+else
+{
+<script>
+    function handleBooking(isLoggedIn) {
+        alert(2);
+       return true; // Allow submission if logged in 
+    }
+</script>
+}
 
 
 @for (var j = 0; j < Model.SimpleAvailibilityaAddResponcelist.Count; j++)
@@ -1655,7 +1668,7 @@
 
                                     @{
                                         bool isLoggedIn = !string.IsNullOrEmpty(@Model.SimpleAvailibilityaAddResponcelist[j].Loginstatus);
-                                        var isLoggedInJs = isLoggedIn.ToString().ToLower(); // Pass to JS as "true"/"false"
+                                        var isLoggedInJs = User.Identity.IsAuthenticated; //  isLoggedIn.ToString().ToLower(); // Pass to JS as "true"/"false"
                                         if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SG"))
 
                                         {

@@ -17,7 +17,7 @@ using static System.Net.WebRequestMethods;
 namespace OnionConsumeWebAPI.Controllers.Admin
 {
 
-   
+
     public class LoginController : Controller
     {
 
@@ -35,18 +35,18 @@ namespace OnionConsumeWebAPI.Controllers.Admin
 
         public async Task<IActionResult> UserLogin(string returnUrl = null)
         {
-            
+
             if (returnUrl == null)
             {
                 HttpContext.Session.Clear();
             }
-            
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
-            
+
         }
 
-         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> UserLogin(string username, string password, string returnUrl = null)
         {
             using (HttpClient client = new HttpClient())
@@ -59,18 +59,18 @@ namespace OnionConsumeWebAPI.Controllers.Admin
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
-                    var jsonResult = JObject.Parse(result);
-                    var email = username; // or "email" if that's the correct key
+                    JObject jsonResult = JObject.Parse(result);
+                    // var email = username; // or "email" if that's the correct key
 
                     // ✅ Save to session
-                    HttpContext.Session.SetString("LoggedInEmail", email);
+                    // HttpContext.Session.SetString("LoggedInEmail", email);
+                    //new Claim(ClaimTypes.Authentication, password)
 
-
-                      var claims = new List<Claim>
+                    var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, username),
-                        new Claim(ClaimTypes.Email, email),
-                        new Claim(ClaimTypes.Authentication, password)
+                        new Claim(ClaimTypes.Name, Convert.ToString(jsonResult["name"])),
+                        new Claim(ClaimTypes.Email, username ),
+                        new Claim(ClaimTypes.Authentication, Convert.ToString(jsonResult["id"]))
                     };
 
                     var identity = new ClaimsIdentity(claims, "Password");
@@ -78,15 +78,16 @@ namespace OnionConsumeWebAPI.Controllers.Admin
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
 
+
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
-                        TempData["Email"] = email;
+                        // TempData["Email"] = email;
                         return RedirectToAction("Index", "FlightSearchIndex");
-                       // return Redirect(returnUrl);
+                        // return Redirect(returnUrl);
                     }
                     else
                     {
-                        TempData["Email"] = email;
+                        // TempData["Email"] = email;
                         return RedirectToAction("Index", "FlightSearchIndex");
 
 
@@ -95,8 +96,10 @@ namespace OnionConsumeWebAPI.Controllers.Admin
 
 
                 }
-
-                ViewBag.ErrorMessage = "Invalid login credentials";
+                else
+                {
+                    ViewBag.ErrorMessage = "Invalid login credentials";
+                }
                 return View();
             }
 
@@ -111,13 +114,38 @@ namespace OnionConsumeWebAPI.Controllers.Admin
         public IActionResult Logout()
         {
 
-            // Clear the session
-            HttpContext.Session.Remove("LoggedInEmail");
-
-            // Optionally, clear TempData if you need
-            TempData.Remove("Email");
-
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "FlightSearchIndex");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetEmpId(string legalEntityCode, string employeeCode)
+        {
+            bool isAdmin = false;
+            //TODO: Check the user if it is admin or normal user, (true-Admin, false- Normal user)
+            string output = isAdmin ? "Welcome to the Admin User" : "Welcome to the User";
+
+            string apiUrl = $"{AppUrlConstant.GetBillingEntity}?legalEntityCode={legalEntityCode}&employeeCode={employeeCode}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(
+                    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonData = await response.Content.ReadAsStringAsync();
+
+                    // Optional: Deserialize JSON if you have a model
+                    // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
+                    return Json(jsonData);
+                }
+
+            }
+
+            return Json(output);
         }
 
 

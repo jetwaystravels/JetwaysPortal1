@@ -1,4 +1,6 @@
-﻿@* @model DomainLayer.Model.GetfligthModel *@
+﻿@using System.Security.Claims;
+   @using Newtonsoft.Json;
+@* @model DomainLayer.Model.GetfligthModel *@
 @model DomainLayer.Model.SimpleAvailabilityRequestModel
 
 @{
@@ -130,41 +132,31 @@
                                 </select>
                             </li>
                             <li>
-                                @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 
-                                @if (HttpContextAccessor.HttpContext.Session.GetString("LoggedInEmail") != null)
+
+                                @if (User.Identity.IsAuthenticated)
                                 {
-                                    string[] parts = Array.Empty<string>(); // Proper declaration
-                                    var email = HttpContextAccessor.HttpContext.Session.GetString("LoggedInEmail");
-                                    var initials = "NA"; // Default
 
-                                    if (!string.IsNullOrEmpty(email))
-                                    {
-                                        var username = email.Split('@')[0]; // e.g. "ashok.kumar"
-                                        parts = username.Split('.', StringSplitOptions.RemoveEmptyEntries); // string[]
+                                    var identity = (ClaimsIdentity)User.Identity;
+                                    IEnumerable<Claim> claims = identity.Claims;
 
-                                        // Build initials from each part's first letter
-                                        initials = string.Concat(parts.Select(p => p[0])).ToUpper(); // e.g. "AK"
-                                    }
+                                    var userName = claims.Where(c => c.Type == ClaimTypes.Name).ToList()[0].Value;
+                                    var userEmail = claims.Where(c => c.Type == ClaimTypes.Email).ToList()[0].Value;
 
-                                    <div class="profile-initials">@initials</div>
-
-
-
-
+                                    <div class="profile-initials">@userName.Substring(0, 2)</div>
 
                                     <div class="profile-popup" style="display:none;">
-                                        <span>@email</span>
-                                        <div class="circle-initials">@initials</div>
-                                        <p class="greeting">Hi,@parts[0]</p>
+                                        <span>@userEmail</span>
+                                        <div class="circle-initials">@userName.Substring(0, 2)</div>
+                                        <p class="greeting">Hi,@userName</p>
                                         <a class="nav-link dropbtn signOutBtn" href="@Url.Action("Logout", "Login")">Logout</a>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="dropdown">
-                                        <div style="padding-bottom:15px;"><a class="nav-link dropbtn" href="#" )">Login or Signup</a></div>
+                                        <div style="padding-bottom:15px;"><a class="nav-link dropbtn" href="#">Login or Signup</a></div>
                                         <div class="dropdown-content">
                                             <a href="#" data-toggle="modal" data-target="#signUp-pop">
                                                 Customer Login
@@ -187,7 +179,7 @@
                                 }
 
 
-                                <div class="dropdown-content">
+                                @* <div class="dropdown-content">
                                     <a href="#" data-toggle="modal" data-target="#signUp-pop">
                                         Customer Login
                                         <span>Login &amp; check bookings</span>
@@ -204,7 +196,7 @@
                                         My Booking
                                         <span>Manage your bookings here</span>
                                     </a>
-                                </div>
+                                </div> *@
                             </li>
                         </ul>
                     </nav>
@@ -340,16 +332,10 @@
 
                             <div class="search-box">
                                 <!-- ***** Emulate to Company / Employee Start ***** -->
-                                @using Newtonsoft.Json
                                 @{
-                                    // 1) Server‐side: parse your incoming JSON
-                                    string customerJson = ViewBag.CustomerData as string;
-                                    var dataList = !string.IsNullOrEmpty(customerJson)
-                                    ? JsonConvert.DeserializeObject<List<dynamic>>(customerJson)
-                                    : new List<dynamic>();
 
-                                    // 2) Serialize into a JS literal
-                                    var jsonData = JsonConvert.SerializeObject(dataList);
+                                    var jsonData = ViewBag.CustomerData;
+
                                 }
 
 
@@ -358,7 +344,7 @@
 
                                 <form asp-action="SearchResultFlight" asp-controller="FlightSearchIndex" method="post" id="multipleValuesForm">
 
-                                    @if (dataList.Any())
+                                    @if (User.Identity.IsAuthenticated)
                                     {
                                         <div class="emulate-bx">
                                             <h6>
@@ -373,7 +359,7 @@
                                                 <div class="col-12 col-md-10 col-lg-3">
                                                     <label>Legal Entity Name</label>
                                                     <div class="autocomplete-wrapper">
-                                                        <input type="text" name="legal_entity" id="legalEntitySelect" placeholder="Enter legal entity name" class="autocomplete-input legal-entity" required autocomplete="off" readonly>
+                                                        <input type="text" name="legal_entity" id="legalEntitySelect" placeholder="Enter legal entity name" class="autocomplete-input legal-entity" required autocomplete="off">
                                                         <span class="remove-icon">×</span>
                                                     </div>
                                                 </div>
@@ -382,7 +368,7 @@
                                                 <div class="col-12 col-md-10 col-lg-3">
                                                     <label>Employee</label>
                                                     <div class="autocomplete-wrapper">
-                                                        <input type="text" name="employee" id="employeeSelect" placeholder="Enter Employee name" class="autocomplete-input employee" required autocomplete="off" readonly>
+                                                        <input type="text" name="employee" id="employeeSelect" placeholder="Enter Employee name" class="autocomplete-input employee" required autocomplete="off">
                                                         <span class="remove-icon">×</span>
                                                     </div>
                                                 </div>
@@ -391,10 +377,8 @@
                                                 <div class="col-12 col-md-10 col-lg-3">
                                                     <label>Billing Entity Name</label>
                                                     <div class="select-container">
-                                                        <select class="select billingentity-select form-control" name="billing">
-                                                            <option value="">-- Select Billing Entity --</option>
-                                                            <option value="23E008">[23E008] EISAI PHARMACEUTICALS INDIA PVT LTD-MUM</option>
-                                                        </select>
+                                                        <input type="text" id="billingSelect" name="billing" placeholder="Enter Billing name" />
+                                                        <span class="remove-icon">×</span>
                                                     </div>
                                                 </div>
 
@@ -405,6 +389,9 @@
                                                 </div>
                                             </div>
                                         </div>
+
+
+                                        <input type="hidden" name="hdnempid" id="hdnempid" />
                                     }
 
 
@@ -668,45 +655,45 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Searched On</th>
-                                    <th>Corporate Name</th>
-                                    <th>Corporate Travel</th>
-                                    <th>Trip Type</th>
-                                    <th>Travel date</th>
+                                    <th>Legal Entity</th>
+                                    <th>Employee</th>
+                                    <th>Billing Entity Name</th>
                                     <th>Flying From</th>
                                     <th>Flying To</th>
+                                    <th>Departure</th>
+                                    <th>Return</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Lorem ipsum dolor sit amet</td>
-                                    <td>[2] FIREFOX BIKES PRIVATE LIMITED</td>
-                                    <td>Lorem ipsum dolor sit</td>
-                                    <td>Economic</td>
-                                    <td>03/30/2025 </td>
-                                    <td>Delhi DL</td>
+                                    <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
+                                    <td>Vinay kumar</td>
+                                    <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
+                                    <td>New DELHI</td>
                                     <td>Mumbai BOM</td>
+                                    <td>2025-03-12 </td>
+                                    <td>2025-03-18 </td>
                                     <td><button type="submit" class="btn btn-lg btn-block">Select</button></td>
                                 </tr>
                                 <tr>
-                                    <td>Lorem ipsum dolor sit amet</td>
-                                    <td>[2] FIREFOX BIKES PRIVATE LIMITED</td>
-                                    <td>Lorem ipsum dolor sit</td>
-                                    <td>Economic</td>
-                                    <td>03/30/2025 </td>
-                                    <td>Delhi DL</td>
+                                    <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
+                                    <td>Raja kumar</td>
+                                    <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
+                                    <td>New DELHI</td>
                                     <td>Mumbai BOM</td>
+                                    <td>2025-03-18 </td>
+                                    <td>2025-03-25 </td>
+                                   
                                     <td><button type="submit" class="btn btn-lg btn-block">Select</button></td>
                                 </tr>
                                 <tr>
-                                    <td>Lorem ipsum dolor sit amet</td>
-                                    <td>[2] FIREFOX BIKES PRIVATE LIMITED</td>
-                                    <td>Lorem ipsum dolor sit</td>
-                                    <td>Economic</td>
-                                    <td>03/30/2025 </td>
-                                    <td>Delhi DL</td>
+                                    <td>Jetways Travels Pvt</td>
+                                    <td>Menu kumari</td>
+                                    <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
+                                    <td>New DELHI</td>
                                     <td>Mumbai BOM</td>
-                                    <td><button type="submit" class="btn btn-lg btn-block">Select</button></td>
+                                    <td>2025-03-18 </td>
+                                    <td>2025-03-25 </td>
                                 </tr>
 
                             </tbody>
@@ -1057,6 +1044,7 @@
         <link href="~/css/indexvny.css" rel="stylesheet" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="/resources/demos/style.css">
+
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
@@ -1067,8 +1055,7 @@
         <!-- Select2 CSS -->
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
         <!-- Bootstrap js -->
         <script src="~/js/bootstrap/popper.min.js"></script>
         <script src="~/js/bootstrap/bootstrap.min.js"></script>
@@ -1086,16 +1073,22 @@
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
         <script>
-            // 1. Legal Entity List
-            var legalEntities = [
-            @foreach (var item in dataList)
-            {
-                @Html.Raw($"\"{item.legalEntityName}\",")
-            }
-            ];
 
-            // 2. Full JSON Data for Mapping Legal Entity -> Employees & Balance
-            var legalEntitiesData = @Html.Raw(jsonData);
+            // 1. Legal Entity List
+             var legalEntities = [
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                var dataList = JsonConvert.DeserializeObject<List<dynamic>>(ViewBag.CustomerData);
+                foreach (var item in dataList)
+                {
+                    @Html.Raw($"\"{item.legalEntityName}\",")
+                }
+            }
+             ];
+
+             // 2. Full JSON Data for Mapping Legal Entity -> Employees & Balance
+             var legalEntitiesData = @Html.Raw(jsonData);
         </script>
 
         <!--Start Emulate section -->
@@ -1119,14 +1112,52 @@
                         $('.balance-input').val('₹ ' + item.presentBalance);
                     }
 
-                    // Update employee autocomplete source
-                    const names = item?.employeeNames
-                        ? item.employeeNames.split(',').map(e => e.trim().split('|')[1])
-                        : [];
+                    //Start Update employee autocomplete source without moble number
+                    // // Update employee autocomplete source
+                    // const names = item?.employeeNames
+                    //     ? item.employeeNames.split(',').map(e => e.trim().split('|')[1])
+                    //     : [];
 
-                    $employeeInput.autocomplete('option', 'source', function (request, response) {
-                        response($.ui.autocomplete.filter(names, request.term));
-                    });
+                    // $employeeInput.autocomplete('option', 'source', function (request, response) {
+                    //     response($.ui.autocomplete.filter(names, request.term));
+                    // });
+
+
+                                let employees = [];
+            if (item?.employeeNames) {
+                employees = item.employeeNames.split(',').map(e => {
+                    const [id, name, mobile] = e.trim().split('|');
+                    return {
+                        label: `${name} (${mobile})`,
+                        value: name,
+                        name,
+                        mobile
+                    };
+                });
+            }
+
+            // Add Guest User if missing
+            if (!employees.some(emp => emp.name.toLowerCase() === 'guest user')) {
+                employees.push({ label: 'Guest User', value: 'Guest User', name: 'Guest User', mobile: '' });
+            }
+
+            // Set autocomplete source: allow searching by name or mobile
+            $employeeInput.autocomplete('option', 'source', function (request, response) {
+                const term = request.term.toLowerCase();
+                const matches = employees.filter(emp =>
+                    emp.name.toLowerCase().includes(term) || emp.mobile.includes(term)
+                );
+                response(matches);
+            });
+
+
+
+            //                 // Force add Guest User if missing
+            // if (!names.some(name => name.toLowerCase() === 'guest user')) {
+            //     names.push('Guest User');
+            // }
+
+           
                 }
 
                 // Initialize Legal Entity autocomplete
@@ -1173,6 +1204,7 @@
                             $(this).val(ui.item.value);
                             $(this).blur();
                             $(this).siblings('.remove-icon').show();
+                            GetEmpData();
                             return false;
                         }
                     })
@@ -1212,7 +1244,121 @@
                 // Initial setup
                 initEmployeeAutocomplete();
                 // No pre-selected Legal Entity here!
+
+
+
+
+
+
+
             });
+
+            function GetEmpData() {
+                const legalEntityInput = document.getElementById("legalEntitySelect").value;
+                if (!legalEntityInput) {
+                    alert("Please select a Legal Entity first.");
+                    return;
+                }
+
+
+                const inputName = document.getElementById("employeeSelect").value;
+               // alert(inputName);
+                const empId = getEmployeeIdByName(inputName, legalEntitiesData);
+               // alert(empId);
+
+               document.getElementById("hdnempid").value = empId|| 0; // Store employee ID or 0 if null
+
+                //console.log("Employee ID for", inputName, "is:", empId);
+
+                const legalEntityCode = legalEntityInput.split("-")[0].trim();
+
+                const employeeCode = empId || 0; // If empId is null, fallback to 0
+                // alert(employeeCode);
+
+                $.ajax({
+                    type: 'GET',
+                    url: `/Login/GetEmpId/?legalEntityCode=${legalEntityCode}&employeeCode=${employeeCode}`,
+                    async: true,
+                    dataType: 'json',
+                    success: function (data) {
+                        let parsedData;
+
+                        // Check if data is already an array
+                        if (Array.isArray(data)) {
+                            parsedData = data;
+                        } else {
+                            try {
+                                parsedData = JSON.parse(data);
+                                if (!Array.isArray(parsedData)) {
+                                    console.error("Expected an array but got:", parsedData);
+                                    alert("Unexpected data format received from server.");
+                                    return;
+                                }
+                            } catch (err) {
+                                console.error("Failed to parse JSON:", err, data);
+                                
+                                return;
+                            }
+                        }
+
+                        const bill = parsedData.map(item => ({
+                            label: item.billingEntityCode,
+                            value: item.billingEntityCode
+                        }));
+
+                        $('#billingSelect')
+                            .val('') // Clear field
+                            .attr('placeholder', 'Enter Billing name')
+                            .autocomplete({
+                                source: bill,
+                                minLength: 0,
+                                select: function (event, ui) {
+                                    $(this).val(ui.item.value);
+                                    bindFor(ui.item.value); // Ensure this function exists
+                                    $(this).siblings('.remove-icon').show();
+                                    return false;
+                                }
+                            })
+                            .on('focus click', function () {
+                                $(this).autocomplete('search', '');
+                            })
+                            .on('input', function () {
+                                $(this).siblings('.remove-icon').toggle(!!$(this).val());
+                            });
+
+                        $('#billingSelect').siblings('.remove-icon').on('click', function () {
+                            $('#billingSelect').val('').focus();
+                            $(this).hide();
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX error:", status, error);
+                        alert("Failed to fetch billing entity data.");
+                    }
+                });
+            }
+
+
+            function getEmployeeIdByName(employeeName, dataset) {
+                for (const item of dataset) {
+                    if (item.employeeNames) {
+                        // Split each employee: "3|A-VENKATRAMAN, 6|John-Doe"
+                        const employees = item.employeeNames.split(',').map(e => e.trim());
+
+                        for (const entry of employees) {
+                            const [id, name] = entry.split('|');
+
+                            if (name && name.trim().toLowerCase() === employeeName.trim().toLowerCase()) {
+                                return id;
+                            }
+                        }
+                    }
+                }
+
+                // Not found
+                return null;
+            }
+
         </script>
 
         <!--End Emulate section -->

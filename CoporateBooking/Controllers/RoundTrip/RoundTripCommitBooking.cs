@@ -313,7 +313,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     returnSeats.taxes = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.taxes;
                                     returnSeats.totalSeatAmount = returnSeats.total + returnSeats.taxes;
                                     returnSeats.adjustments = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments;
-                                    if (returnSeats.adjustments != null)
+                                    if (returnSeats.adjustments != null && returnSeats.adjustments != "{}")
                                     {
                                         returnSeats.totalSeatAmount +=  Convert.ToInt32(returnSeats.adjustments);
                                     }

@@ -1496,12 +1496,13 @@
                                                                 // {
                                                                 //     <td>@htmeal[hashdata]</td>
                                                                 // }
-
+                                                                var Mealcode = "";
+                                                                var MealName = "";
                                                                 if (htmeal != null && htmeal.ContainsKey(hashdata))
                                                                 {
 
-                                                                    var Mealcode = htmeal[hashdata].ToString();
-                                                                    var MealName = MealImageList.GetAllmeal()
+                                                                    Mealcode = htmeal[hashdata].ToString();
+                                                                    MealName = MealImageList.GetAllmeal()
                                                                     .Where(x => Mealcode.Contains(x.MealCode))
                                                                     .Select(x => x.MealImage)
                                                                     .FirstOrDefault();
@@ -1513,7 +1514,18 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                        <td>NA</td>
+                                                                        Hashtable htSSr = new Hashtable();
+                                                                        SpicejetMealImageList.GetAllmeal(htSSr);
+                                                                        MealName = htSSr[Mealcode].ToString();
+                                                                        if (Mealcode != null && MealName != null)
+                                                                        {
+
+                                                                            <td>@Mealcode-@MealName</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>NA</td>
+                                                                        }
                                                                     }
 
 
@@ -1538,8 +1550,13 @@
                                                                         continue;
                                                                     /* var weight = htSSr[htbag[hashdata]];
                                                                     <td>@htbag[hashdata] - @weight</td>*/
-                                                                    var weight = htbag[hashdata];
-                                                                    <td>XBAG-@weight Kg</td>
+                                                                                                                                                        var weight = htbag[hashdata];
+                                                                    var _weight = weight;
+                                                                    //if(_weight=="")
+                                                                    //{
+                                                                        _weight = htSSr[weight].ToString().Replace("Kg","");
+                                                                    //}
+                                                                    <td>XBAG-@_weight Kg</td>
                                                                 }
                                                                 else
                                                                 {
