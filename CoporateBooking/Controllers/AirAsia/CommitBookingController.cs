@@ -285,7 +285,7 @@ namespace OnionConsumeWebAPI.Controllers
                             returnSeats.taxes = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.taxes;
                             returnSeats.adjustments = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments;
                             returnSeats.totalSeatAmount = returnSeats.total + returnSeats.taxes;
-                            if (returnSeats.adjustments != null && returnSeats.adjustments!="{}")
+                            if (returnSeats.adjustments != null &&  returnSeats.adjustments.ToString() != "")
                             {
                                 returnSeats.totalSeatAmount += Convert.ToInt32(returnSeats.adjustments);
                             }
