@@ -383,28 +383,57 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                 LegalEntity legalEntity = new LegalEntity();
                 legalEntity.Guid = SearchGuid;
-                legalEntity.BillingEntityName = Convert.ToString(formCollection["legal_entity"]).Split('-')[0].Trim();
-                legalEntity.Employee = Convert.ToString(formCollection["hdnempid"]);
-                legalEntity.LegalName = Convert.ToString(formCollection["billing"]).Split('-')[0].Trim();
-                //legalEntity.Balance = Convert.ToDouble( Convert.ToString(formCollection["balance"]).Replace("₹","").Trim());
-                string balanceInput = Convert.ToString(formCollection["balance"])?.Replace("₹", "").Trim();
 
-                if (string.IsNullOrWhiteSpace(balanceInput) || balanceInput.ToLower() == "null")
+                string rawLegalEntity = Convert.ToString(formCollection["legal_entity"]);
+
+                if (!string.IsNullOrWhiteSpace(rawLegalEntity))
                 {
-                    legalEntity.Balance = null; // Works only if Balance is nullable: double?
+                    // Split and trim the legal entity name safely
+                    legalEntity.BillingEntityName = rawLegalEntity.Split('-')[0].Trim();
+
+                    // Employee ID
+                    legalEntity.Employee = Convert.ToString(formCollection["hdnempid"]);
+
+                    // Legal Name (from "billing")
+                    string rawBilling = Convert.ToString(formCollection["billing"]);
+                    legalEntity.LegalName = string.IsNullOrWhiteSpace(rawBilling)
+                        ? null
+                        : rawBilling.Split('-')[0].Trim();
+
+                    // Balance handling
+                    string balanceInput = Convert.ToString(formCollection["balance"])?.Replace("₹", "").Trim();
+
+                    if (string.IsNullOrWhiteSpace(balanceInput) || balanceInput.ToLower() == "null")
+                    {
+                        legalEntity.Balance = null;
+                    }
+                    else
+                    {
+                        if (double.TryParse(balanceInput, out double parsedBalance))
+                        {
+                            legalEntity.Balance = parsedBalance;
+                        }
+                        else
+                        {
+                            // Optionally log or handle invalid numeric input
+                            legalEntity.Balance = null;
+                        }
+                    }
+
+                    // Common identity-based fields
+                    string username = HttpContext.User.Identity.Name;
+                    legalEntity.Username = username;
+                    legalEntity.Password = username;  // Consider revising if not a placeholder
+                    legalEntity.Email = username;
+
+                    // Save to DB
+                    _mongoDBHelper.SaveUpdateLegalEntity(legalEntity);
                 }
-                else
-                {
-                    legalEntity.Balance = Convert.ToDouble(balanceInput);
-                }
-
-                legalEntity.Username = HttpContext.User.Identity.Name;
-                legalEntity.Password = HttpContext.User.Identity.Name;
-                legalEntity.Email = HttpContext.User.Identity.Name;
 
 
 
-                _mongoDBHelper.SaveUpdateLegalEntity(legalEntity);
+
+
 
                 // Akasa End
 
