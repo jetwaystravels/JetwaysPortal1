@@ -965,35 +965,39 @@
 													}
 													else if (AirLine.ToLower() == "akasaair")
 													{
-														for (int s = 0; s < Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr.Count; s++)
+														try
 														{
-
-															string priceBaggage = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price;
-															string Sssrcode = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].ssrCode;
-															string bagcode = Sssrcode.StartsWith("X", StringComparison.OrdinalIgnoreCase).ToString();
-															var bagname = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].name + "@" + Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price;
-															bagkey = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[pas].ssrKey + "_" + Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price + "_" + Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].Airline;
-															string passengerKey = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[pas].passengerKey;
-															if (bagcode != "False")
-															{
-																if (bagname.Contains("Xtra-Carry-On") || bagname.Contains(" Xcess Baggage"))
+														  for (int s = 0; s < Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr.Count; s++)
+														{
+																string priceBaggage = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price;
+																string Sssrcode = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].ssrCode;
+																string bagcode = Sssrcode.StartsWith("X", StringComparison.OrdinalIgnoreCase).ToString();
+																var bagname = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].name + "@" + Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price;
+																bagkey = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[pas].ssrKey + "_" + Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].price + "_" + Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[0].Airline;
+																string passengerKey = Model.MealslistRT[0].journeySsrsBaggage[0].baggageSsr[s].passengersAvailabilityBaggage[pas].passengerKey;
+																if (bagcode != "False")
 																{
-																	string[] parts = bagname.Split(new string[] { "Xtra-Carry-On", "Xcess Baggage" }, StringSplitOptions.RemoveEmptyEntries);
-																	string _desc = string.Empty;
-																	if (Sssrcode.Equals("PBCA", StringComparison.OrdinalIgnoreCase) || Sssrcode.Equals("PBCB", StringComparison.OrdinalIgnoreCase))
-																		_desc = "Cabin Baggage";
+																	if (bagname.Contains("Xtra-Carry-On") || bagname.Contains(" Xcess Baggage"))
+																	{
+																		string[] parts = bagname.Split(new string[] { "Xtra-Carry-On", "Xcess Baggage" }, StringSplitOptions.RemoveEmptyEntries);
+																		string _desc = string.Empty;
+																		if (Sssrcode.Equals("PBCA", StringComparison.OrdinalIgnoreCase) || Sssrcode.Equals("PBCB", StringComparison.OrdinalIgnoreCase))
+																			_desc = "Cabin Baggage";
+																		else
+																			_desc = "Check-In Baggage";
+																		string formattedName = string.Join(_desc, parts).Trim();
+																		BaggageOptions.Add(new SelectListItem { Text = formattedName, Value = bagkey });
+																	}
 																	else
-																		_desc = "Check-In Baggage";
-																	string formattedName = string.Join(_desc, parts).Trim();
-																	BaggageOptions.Add(new SelectListItem { Text = formattedName, Value = bagkey });
+																	{
+																		BaggageOptions.Add(new SelectListItem { Text = bagname, Value = bagkey });
+																	}
 																}
-																else
-																{
-																	BaggageOptions.Add(new SelectListItem { Text = bagname, Value = bagkey });
-																}
-															}
-
-
+				
+														}
+														}
+														catch (Exception ex)
+														{
 
 														}
 													}
@@ -1017,7 +1021,7 @@
 																// {
 																// 	Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																// }
-																Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode + "_" + AirLine;
+																Sssrcode = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].ssrCode;
 																Bagname = Model.BaggagelistRT[0].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[0].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																bagkey = Bagname;
 																if (bagkey != null)
@@ -1877,7 +1881,7 @@
 
 															for (int i = 0; i < Model.BaggagelistRT[1].legSsrs.Count; i++)
 															{
-																if (Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode.Contains(Model.passengerNamedetails[pas].passengerkey.Split("**")[1]))
+																if (Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode.Contains(Model.passengerNamedetails[pas].passengerkey.Split("**")[0]))
 																{
 																	string ssrprice = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																	// if (Model.passengerNamedetails[pas].passengerkey.Contains("**"))
@@ -1888,7 +1892,7 @@
 																	// {
 																	// 	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + Model.passengerNamedetails[pas].passengerkey + "_" + Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																	// }
-																	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode + "_" + AirLine;
+																	Sssrcode = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].ssrCode;
 																	Bagname = Model.BaggagelistRT[1].legSsrs[i].legssrs[0].name + " ₹" + @Model.BaggagelistRT[1].legSsrs[i].legssrs[0].legpassengers[0].price.Replace("INR", "");
 																	bagkeyAA = Bagname;
 																	if (bagkeyAA != null)

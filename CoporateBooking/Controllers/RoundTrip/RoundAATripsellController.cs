@@ -1443,7 +1443,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     //htSSr.Add(weight, item.Groups["Price"].Value.Trim() + "@" + item.Value.ToString() + "@" + UniversalLocatorCode + "@" + supplierLocatorCode + "@" + ProvidelocatorCode + "@" + strAirsegmenttext + "@" + Trvellerrefkey);
                                     htSSr.Add(weight, item.Groups["Price"].Value.Trim() + "*" + item.Value.ToString());
                                 }
-                                _htpaxwiseBaggage.Add(weight + "_" + BookingTravellerref + "_" + item.Groups["Price"].Value.Trim().Replace("INR", ""), item.Value.ToString());
+                                _htpaxwiseBaggage.Add(weight + "_" + BookingTravellerref + "_" + item.Groups["Price"].Value.Trim().Replace("INR", "")+"_AirIndia", item.Value.ToString());
                             }
 
 

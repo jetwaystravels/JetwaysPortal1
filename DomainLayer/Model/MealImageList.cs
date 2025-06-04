@@ -142,7 +142,21 @@
             new { MealCode = "PNKP", MealImage = "Kari Pan-tastic Chicken Pocket" },
             new { MealCode = "PDCP", MealImage = "Chocolate Pistachio Verrine" },
             new { MealCode = "PBBS", MealImage = "Borecha Basil Shikanji" },
-            new { MealCode = "PLUS", MealImage = "Snack + beverage choose on-board" },
+
+            new { MealCode = "CWAF", MealImage = "Wafers" },
+            new { MealCode = "CVTT", MealImage = "Triple Treat Nutella Sandwich" },
+            new { MealCode = "CVPP", MealImage = "Peppy Paneer Sandwich" },
+            new { MealCode = "CVNO", MealImage = "Veg Cup Noodles" },
+            new { MealCode = "CVMC", MealImage = "Mushroom &amp; Brie Croissant" },
+            new { MealCode = "CVJN", MealImage = "Three Bean Burrito Wrap (Jain Special)" },
+            new { MealCode = "CVHB", MealImage = "Yu Hyderabadi Veg Biryani" },
+            new { MealCode = "CVCB", MealImage = "Chaat-Buster Box" },
+            new { MealCode = "CVAL", MealImage = "Valentine's Special" },
+            new { MealCode = "CRPX", MealImage = "Snack &amp; Beverage (choose on-board)" },
+            new { MealCode = "CNKW", MealImage = "Kosha Chicken Malabari Wrapper" },
+            new { MealCode = "CNKS", MealImage = "WOW! Khow Suey Chicken" },
+            new { MealCode = "CNKP", MealImage = "Kari Pan-tastic Chicken Pocket" },
+            new { MealCode = "CDCP", MealImage = "Chocolate Pistachio Verrine" },
             
 
 

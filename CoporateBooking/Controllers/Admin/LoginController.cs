@@ -51,7 +51,7 @@ namespace OnionConsumeWebAPI.Controllers.Admin
         {
             using (HttpClient client = new HttpClient())
             {
-                var loginRequest = new { Username = username, Password = password };
+                var loginRequest = new { businessEmail = username, Password = password };
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(loginRequest);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(AppUrlConstant.Corporatelogin, content);
@@ -68,9 +68,10 @@ namespace OnionConsumeWebAPI.Controllers.Admin
 
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, Convert.ToString(jsonResult["name"])),
-                        new Claim(ClaimTypes.Email, username ),
-                        new Claim(ClaimTypes.Authentication, Convert.ToString(jsonResult["id"]))
+                        new Claim(ClaimTypes.NameIdentifier, Convert.ToString(jsonResult["userID"])),
+                        new Claim(ClaimTypes.Name, Convert.ToString(jsonResult["firstName"]) + " " + Convert.ToString(jsonResult["lastName"])),
+                        new Claim(ClaimTypes.Email, Convert.ToString(jsonResult["businessEmail"])),
+                        new Claim("UserType", Convert.ToString(jsonResult["userType"]))
                     };
 
                     var identity = new ClaimsIdentity(claims, "Password");

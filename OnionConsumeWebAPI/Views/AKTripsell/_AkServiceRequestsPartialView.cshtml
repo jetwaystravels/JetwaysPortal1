@@ -209,8 +209,8 @@
 	}
 
 	.border-service {
-	border: 1px solid #a5a2a2;
-	border-radius: 2px;
+		border-top: 1px solid #a5a2a2;
+		border-radius: 2px;
 	}
 
 	.bg-servc {
@@ -293,6 +293,10 @@
 	border-right: none;
 	}
 
+	#seattab1 {
+		margin: 0px 15px !important;
+	}
+
 	.servc-bordrwheelCon, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 	margin: 0;
 	}
@@ -310,8 +314,12 @@
 	}
 
 	.MWidth {
-	width: 1024px;
-	margin-left: -50%;
+		width: 1024px !important;
+		margin-left: -50%;
+	}
+
+	.btngry {
+		background-color: #808080 !important;
 	}
 
 	.select-width {
@@ -338,14 +346,6 @@
 	max-width: 150px;
 	}
 
-	.wdth-100 {
-	width: 100px;
-	}
-
-	.btngry {
-	background-color: #808080 !important;
-	}
-
 	.checkout .bg-white.service-section input {
 	max-width: 150px !important;
 	font-size: 0.9rem;
@@ -356,9 +356,10 @@
 	font-size: 0.9rem;
 	}
 
-	.checkout .bg-white.service-section .seat {
-	display: inline-flex;
-	}
+		.checkout .bg-white.service-section .seat {
+			display: inline-flex;
+			padding-left: 50px;
+		}
 
 	.checkout .bg-white.service-section .output-div-input {
 	margin: 3px;
@@ -373,7 +374,127 @@
 	}
 
 	.servc-bordrm1 option {
-	font-size: 12px;
+		font-size: 12px;
+	}
+
+	.dropdown-options {
+		display: none;
+		position: absolute;
+		top: 10%;
+		left: 0;
+		background-color: white;
+		border: 1px solid #ccc;
+		width: 328px;
+		z-index: 10;
+		height: 240px;
+		overflow: auto;
+	}
+
+
+	.dropdown-option {
+		padding: 3px;
+		cursor: pointer;
+		text-align: left;
+		padding: 7px 0 0 10px;
+		border-bottom: #eee 1px solid;
+	}
+
+		.dropdown-option:hover {
+			background-color: #f1f1f1;
+		}
+
+	.custom-dropdown {
+		position: relative;
+		display: inline-block;
+	}
+
+	.dropdown-btn {
+		display: inline-block;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		width: 158px;
+		text-align: left;
+	}
+
+
+	.mealImagePreview {
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		margin-left: 100px;
+		display: none;
+		z-index: 1;
+		/*  background: #fff;
+							border: 1px solid #ebd8d8; */
+	}
+
+
+	.svg-inline--fa.fa-w-14 {
+		width: .68em !important;
+		position: relative;
+		right: -23px !important;
+	}
+
+
+
+	.service-table {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		border-radius: 8px;
+	}
+
+	.table-row {
+		display: flex;
+		border-bottom: 1px solid #ddd;
+		align-items: center;
+	}
+
+		.table-row.header {
+			background: #f4f4f4;
+			font-weight: bold;
+			position: inherit;
+			height: auto;
+		}
+
+	.cell {
+		flex: 1;
+		padding: 10px 0;
+		text-align: center;
+		border-right: 1px solid #eee;
+		display: inline-block;
+		align-items: center;
+	}
+
+		.cell .lft-spc {
+			padding: 0 3px;
+			display: inline-flex;
+		}
+
+		.cell:last-child {
+			border-right: none;
+		}
+
+	.icon {
+		width: 20px;
+		height: 20px;
+		margin-right: 5px;
+		vertical-align: middle;
+	}
+
+	.service-select, .service-input {
+		width: 100%;
+		padding: 6px 8px;
+		font-size: 14px;
+	}
+
+	.traveller-cell {
+		width: 100px;
+		flex: 0 0 auto;
+		text-align: center;
+		padding-left: 16px;
+		font-weight: bold;
 	}
 </style>
 <section id="myContainer1">
@@ -506,12 +627,10 @@
 					</ul>
 				</div>
 
-				<div class="row" id="tabnew1">
-					<div class="col-lg-12">
-						<section class="container">
-							<div class="row border-service">
+				<div class="service-table" id="tabnew1">
+					<div class="border-service">
 
-								<div class="d-flex justify-content-between bg-servc py-2">
+								@* <div class="d-flex justify-content-between bg-servc py-2">
 									<div class="serv-header">
 										Traveller
 									</div>
@@ -527,7 +646,16 @@
 									<div class="serv-header">
 										Special Request
 									</div>
+								</div> *@
+
+								<div class="table-row header">
+									<div class="cell traveller-cell"><span class="lft-spc">Traveller</span></div>
+									<div class="cell"><span class="lft-spc"><img src="~/img/pmeal.png" class="icon"> Meal</span></div>
+									<div class="cell"><span class="lft-spc"><img src="~/img/pseat.png" class="icon"> Seat</span></div>
+									<div class="cell"><span class="lft-spc"><img src="~/img/pbaggage.png" class="icon"> Baggage</span></div>
+									<div class="cell"><span class="lft-spc">Special Request</span></div>
 								</div>
+
 								@{
 									int passengerdata = Model.AkPassenger.passengerscount;
 									int passengerDataValue = 0;
@@ -555,12 +683,12 @@
 									string bagkey = string.Empty;
 									string otherbagkey = string.Empty;
 									string ssrAvailable = string.Empty;
-									<div class="d-flex justify-content-between py-3">
-
-
-										<div class="servc-content">
+									<div class="table-row">
+									<div class="cell traveller-cell">
+									<div class="lft-spc">
 											@Model.passkeytype[pa].first
-										</div>
+									</div>	
+									</div>
 
 
 										@{
@@ -568,7 +696,8 @@
 											{
 												var legSSrcount = Model.AkMealslist.legSsrs.Count;
 
-												<div class="servc-content select-option">
+										<div class="cell">
+											<div class="lft-spc">
 
 													@{
 
@@ -595,7 +724,7 @@
 
 															}
 														}
-														<div class="d-flex">
+														<div>
 														@if (mealOptions.Count == 0)
 														{
 																<select style="background:#f0f0f0;" id="" class="servc-bordr servc-bordrm1" disabled>
@@ -623,6 +752,7 @@
 														</div>
 
 													}
+													</div>
 												</div>
 											}
 											else
@@ -633,14 +763,16 @@
 											}
 
 										}
-										<div class="servc-content seat">
-
+								<div class="cell">
+									<div class="lft-spc">
 											<input type="button" id="exampleModalSeat" value="Seat Map" class="button small-btn rtbtn exampleModalSeatdata" data-toggle="modal" data-target="#AKtexampleModal">
 
 											<div class="output-div-input" id="outputDiv_@pa"></div>
-										</div>
+									</div>
+								</div>
 										<!-- Output div for each passenger -->
-										<div class="servc-content select-baggage">
+								<div class="cell">
+									<div class="lft-spc">
 											@{
 												if (Model.AkBaggageDetails != null)
 												{
@@ -663,7 +795,7 @@
 														}
 
 													}
-													<div class="d-flex">
+													<div>
 														<select id="ddlbagOptions" class="servc-bordrbaggage">
 															<option value=""><b>Please select Baggage</b></option>
 															@{
@@ -689,9 +821,10 @@
 													</select>
 												}
 											}
+											</div>
 										</div>
-										<div class="servc-content">
-
+								<div class="cell">
+									<div class="lft-spc">
 											<select class="servc-bordr wdth-100">
 												<option></option>
 												<option>Meal1</option>
@@ -699,23 +832,19 @@
 												<option>Meal3</option>
 												<option>Meal4</option>
 											</select>
+											</div>
 										</div>
 									</div>
 
 								}
-							</div>
-						</section>
-					</div>
+							</div>					
 				</div>
 
 
-				<div class="row" id="tabnew2">
+				<div class="service-table" id="tabnew2">
+					<div class="border-service">
 
-					<div class="col-lg-12">
-						<section class="container">
-							<div class="row border-service">
-
-								<div class="d-flex justify-content-between bg-servc py-2">
+								@* <div class="d-flex justify-content-between bg-servc py-2">
 									<div class="serv-header">
 										Traveller
 									</div>
@@ -729,7 +858,17 @@
 									<div class="serv-header">
 										Special Request
 									</div>
+								</div> *@
+
+								<div class="table-row header">
+									<div class="cell traveller-cell"><span class="lft-spc">Traveller</span></div>
+									<div class="cell"><span class="lft-spc"><img src="~/img/pmeal.png" class="icon"> Meal</span></div>
+									<div class="cell"><span class="lft-spc"><img src="~/img/pseat.png" class="icon"> Seat</span></div>
+									<div class="cell"><span class="lft-spc"><img src="~/img/pbaggage.png" class="icon"> Baggage</span></div>
+									<div class="cell"><span class="lft-spc">Special Request</span></div>
 								</div>
+
+
 								@{
 									int passengerdataConnect = Model.passkeytype.Count;
 									int passengerDataValue1 = 0;
@@ -758,13 +897,15 @@
 										string bagkey = string.Empty;
 										string otherbagkey = string.Empty;
 										string ssrAvailable = string.Empty;
-										<div class="d-flex justify-content-between py-3">
+								<div class="table-row">
 
-											<div class="servc-content">
+									<div class="cell traveller-cell">
+										<div class="lft-spc">
 												@Model.passkeytype[pas].first 
+										</div>
 											</div>
-											<div class="servc-content select-option2">
-
+									<div class="cell">
+										<div class="lft-spc">
 												@{
 													if (Model.AkMealslist != null)
 													{
@@ -793,7 +934,7 @@
 
 
 															}
-															<div class="d-flex">
+															
 															@if (mealOptions.Count == 0)
 															{
 																	<select style="background:#f0f0f0;" id="" class="servc-bordr servc-bordrm1" disabled>
@@ -817,7 +958,8 @@
 																
 
 																<input type="hidden" id="hiddenSsrKey2" name="ssrKey" value="" />
-															</div>
+																
+															
 														}
 														else
 														{
@@ -833,19 +975,23 @@
 														</select>
 													}
 												}
-
 											</div>
-											<div class="servc-content seat">
-												<div class="d-flex">
+											</div>
+											
+											<div class="cell">
+										<div class="lft-spc">
 
 													<input type="button" id="exampleModalSeat" value="Seat Map" class="button small-btn rtbtn exampleModalSeatdata" data-toggle="modal" data-target="#AKtexampleModal">
-												</div>
-												<div class="output-div-input" id="outputDivConnect_@pas"></div>
+											<div class="output-div-input" id="outputDivConnect_@pas"></div>
+													</div>											
 
 											</div>
+											<div class="cell">
+												<div class="lft-spc">&nbsp;</div>
+											</div>
 
-											<div class="servc-content">
-
+											<div class="cell">
+											<div class="lft-spc">
 												<select class="servc-bordr wdth-100">
 													<option></option>
 													<option>Meal1</option>
@@ -853,14 +999,14 @@
 													<option>Meal3</option>
 													<option>Meal4</option>
 												</select>
+												</div>
 											</div>
 										</div>
-
+										
 									}
 
 								}
-							</div>
-						</section>
+						
 					</div>
 
 				</div>

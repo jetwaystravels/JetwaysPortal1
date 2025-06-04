@@ -69,9 +69,9 @@
 
         public static string CPGST = BaseURL + "api/CP_GST/GetGstDetail";
         #endregion
-
+        
         public static string AdminBaseURL = "http://localhost:7260";
-        public static string Corporatelogin = AdminBaseURL + "/api/Admin/LogIn";
+        public static string Corporatelogin = AdminBaseURL + "/api/Admin/CorporateLogIn";
         public static string CompanyEmployeeGST = AdminBaseURL + "/api/Customer/GetCompanyEmployeeGST";
         public static string CustomerDetailsByEmail = AdminBaseURL + "/api/Customer/GetCustomerDetailsByEmail";
         public static string GetBillingEntity = AdminBaseURL + "/api/Customer/GetBillingEntity";

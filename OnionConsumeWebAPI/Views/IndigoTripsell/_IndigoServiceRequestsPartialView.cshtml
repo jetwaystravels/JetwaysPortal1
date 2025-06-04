@@ -8,71 +8,139 @@
 }
 
 <style>
-    .chkbox {
-	background: #b1abab;
-	text-align: center;
-	cursor: not-allowed;
-	padding: 3px 0;
-    }
+	.chkbox {
+		background: #b1abab;
+		text-align: center;
+		cursor: not-allowed;
+		padding: 3px 0;
+	}
 
+	.border-service {
+		border-top: 1px solid #a5a2a2;
+		border-radius: 2px;
+	}
 
-    .border-service {
-	border: 1px solid #a5a2a2;
-	border-radius: 2px;
-    }
+	.bg-servc {
+		background-color: #f4f5f7;
+	}
 
-    .bg-servc {
-	background-color: #f4f5f7;
-    }
+	.servc-bordr {
+		max-width: 150px;
+		border-bottom: 1px solid #000;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+	}
 
-    .servc-bordr {
-	border-bottom: 1px solid #000;
-	border-top: none;
-	border-left: none;
-	border-right: none;
-    }
+	.servc-bordr, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+		/*  -webkit-appearance: none; */
+		margin: 0;
+	}
 
-    .servc-bordr, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-	/*  -webkit-appearance: none; */
-	margin: 0;
-    }
+	.servc-bordr, textarea:focus, input:focus {
+		outline: none;
+	}
+	/*baggage*/
+	.servc-bordrbaggage {
+		max-width: 150px;
+		border-bottom: 1px solid #000;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+	}
 
-    .servc-bordr, textarea:focus, input:focus {
-	outline: none;
-    }
+	.servc-bordrbaggage, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+		margin: 0;
+	}
 
-    .seatmap-btn {
-	border: none;
-	padding: 4px 7px;
-	border-radius: 4px;
-	background: #b5cbe7;
-    }
+	.servc-bordrbaggage, textarea:focus, input:focus {
+		outline: none;
+	}
+	/*  end; */
+	/*otherService*/
+	.servc-bordrwheel {
+		max-width: 150px;
+		border-bottom: 1px solid #000;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+	}
 
-    .select-width {
-	max-width: 120px;
-    }
+	.servc-bordrwheel, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+		margin: 0;
+	}
+
+	.servc-bordrwheel, textarea:focus, input:focus {
+		outline: none;
+	}
+	/*End other service*/
+	/*Connected Meal*/
+	.servc-bordrCon {
+		max-width: 150px;
+		border-bottom: 1px solid #000;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+	}
+
+	.servc-bordrCon, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+		margin: 0;
+	}
+
+	.servc-bordrCon, textarea:focus, input:focus {
+		outline: none;
+	}
+	/*End connected Meal*/
+	/*wheel Connected*/
+	.servc-bordrwheelCon {
+		max-width: 150px;
+		border-bottom: 1px solid #000;
+		border-top: none;
+		border-left: none;
+		border-right: none;
+	}
+
+	#seattab1 {
+		margin: 0px 15px !important;
+	}
+
+	.servc-bordrwheelCon, input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+		margin: 0;
+	}
+
+	.servc-bordrwheelCon, textarea:focus, input:focus {
+		outline: none;
+	}
+	/*wheelconnected End*/
+
+	.seatmap-btn {
+		border: none;
+		padding: 4px 7px;
+		border-radius: 4px;
+		background: #b5cbe7;
+	}
 
     .MWidth {
 	width: 1024px !important;
 	margin-left: -50%;
     }
 
-    .btngry {
-	background-color: #808080 !important;
-    }
-
-    /* .active {
-		color: #E93329 !important;
-		border-bottom: 1px solid #E93329 !important;
-	    } */
-
-    .select-option {
-	max-width: 120px;
-    }
-
-	.select-option .servc-bordr {
-	    max-width: 150px;
+	.btngry {
+		background-color: #808080 !important;
 	}
+
+	.select-width {
+		max-width: 120px;
+	}
+
+
+	.select-option {
+		max-width: 120px;
+	}
+
+		.select-option .servc-bordr {
+			max-width: 150px;
+		}
 
     .width-90 {
 	width: 60px;
@@ -86,48 +154,156 @@
 	    max-width: 150px;
 	}
 
-    .wdth-100 {
-	width: 100px;
-    }
-
-    .btngry {
-	background-color: #808080 !important;
-    }
-
-    #seattab1 {
-	margin: 0px 15px !important;
-    }
-
-    .checkout .bg-white.service-section input {
-	max-width: 150px !important;
-	font-size: 0.9rem;
-	padding: 3px;
-    }
-
-    .checkout .bg-white.service-section {
-	font-size: 0.9rem;
-    }
-
-	.checkout .bg-white.service-section .seat {
-	    display: inline-flex;
+	.checkout .bg-white.service-section input {
+		max-width: 150px !important;
+		font-size: 0.9rem;
+		padding: 3px;
 	}
 
-	.checkout .bg-white.service-section .output-div-input {
-	    margin: 3px;
-	    font-weight: 600;
-	    color: #085AC0;
-	    width: 26px;
+	.checkout .bg-white.service-section {
+		font-size: 0.9rem;
 	}
 
-	.checkout .bg-white.service-section .servc-content span {
-	    font-weight: 600;
-	    text-transform: capitalize;
+		.checkout .bg-white.service-section .seat {
+			display: inline-flex;
+			padding-left: 50px;
+		}
+
+		.checkout .bg-white.service-section .output-div-input {
+			margin: 3px;
+			font-weight: 600;
+			color: #085AC0;
+			width: 26px;
+		}
+
+		.checkout .bg-white.service-section .servc-content span {
+			font-weight: 600;
+			text-transform: capitalize;
+		}
+
+	.servc-bordrm1 option {
+		font-size: 12px;
 	}
 
-    .servc-bordrm1 option {
-	font-size: 12px;
-    }
+	.dropdown-options {
+		display: none;
+		position: absolute;
+		top: 10%;
+		left: 0;
+		background-color: white;
+		border: 1px solid #ccc;
+		width: 328px;
+		z-index: 10;
+		height: 240px;
+		overflow: auto;
+	}
 
+
+	.dropdown-option {
+		padding: 3px;
+		cursor: pointer;
+		text-align: left;
+		padding: 7px 0 0 10px;
+		border-bottom: #eee 1px solid;
+	}
+
+		.dropdown-option:hover {
+			background-color: #f1f1f1;
+		}
+
+	.custom-dropdown {
+		position: relative;
+		display: inline-block;
+	}
+
+	.dropdown-btn {
+		display: inline-block;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		width: 158px;
+		text-align: left;
+	}
+
+
+	.mealImagePreview {
+		position: absolute;
+		width: 100px;
+		height: 100px;
+		margin-left: 100px;
+		display: none;
+		z-index: 1;
+		/*  background: #fff;
+					border: 1px solid #ebd8d8; */
+	}
+
+
+	.svg-inline--fa.fa-w-14 {
+		width: .68em !important;
+		position: relative;
+		right: -23px !important;
+	}
+
+
+
+	.service-table {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		border-radius: 8px;
+	}
+
+	.table-row {
+		display: flex;
+		border-bottom: 1px solid #ddd;
+		align-items: center;
+	}
+
+		.table-row.header {
+			background: #f4f4f4;
+			font-weight: bold;
+			position: inherit;
+			height: auto;
+		}
+
+	.cell {
+		flex: 1;
+		padding: 10px 0;
+		text-align: center;
+		border-right: 1px solid #eee;
+		display: inline-block;
+		align-items: center;
+	}
+
+		.cell .lft-spc {
+			padding: 0 3px;
+			display: inline-flex;
+		}
+
+		.cell:last-child {
+			border-right: none;
+		}
+
+	.icon {
+		width: 20px;
+		height: 20px;
+		margin-right: 5px;
+		vertical-align: middle;
+	}
+
+	.service-select, .service-input {
+		width: 100%;
+		padding: 6px 8px;
+		font-size: 14px;
+	}
+
+	.traveller-cell {
+		width: 100px;
+		flex: 0 0 auto;
+		text-align: center;
+		padding-left: 16px;
+		font-weight: bold;
+	}
 </style>
 <script type="text/javascript">
     /*********seatmap_tab_select_function_ServiceRequest_PartialView_Page***********/
@@ -541,13 +717,10 @@
 			</li> *@
 		    </ul>
 		</div>
-		<div class="row" id="tabnew1">
+				<div class="service-table" id="tabnew1">
+					<div class="border-service">
 
-		    <div class="col-lg-12">
-			<section class="container">
-			    <div class="row border-service">
-
-				<div class="d-flex justify-content-between bg-servc py-2">
+				@* <div class="d-flex justify-content-between bg-servc py-2">
 				    <div class="serv-header">
 					Traveller
 				    </div>
@@ -563,7 +736,16 @@
 				    <div class="serv-header">
 					Special Request
 				    </div>
+				</div> *@
+
+				<div class="table-row header">
+					<div class="cell traveller-cell"><span class="lft-spc">Traveller</span></div>
+					<div class="cell"><span class="lft-spc"><img src="~/img/pmeal.png" class="icon"> Meal</span></div>
+					<div class="cell"><span class="lft-spc"><img src="~/img/pseat.png" class="icon"> Seat</span></div>
+					<div class="cell"><span class="lft-spc"><img src="~/img/pbaggage.png" class="icon"> Baggage</span></div>
+					<div class="cell"><span class="lft-spc">Special Request</span></div>
 				</div>
+
 				@{
 				    passengerdata2 = @Model.passeengerlist.passengerscount;
 				}
@@ -587,8 +769,9 @@
 				    for (int pas = 0; pas < passengerdata2; pas++)
 				    {
 					string ssrkey = string.Empty;
-					<div class="d-flex justify-content-between py-3">
-					    <div class="servc-content width-90">
+						<div class="table-row">
+						<div class="cell traveller-cell">
+						<div class="lft-spc">
 						<!--Travellor @pas-->
 						@if (Model.passengerNamedetails != null)
 						{
@@ -599,11 +782,10 @@
 							}
 						    <span>@name</span>
 						}
+						</div>
 					    </div>
-					    <div class="servc-content select-option">
-
-
-
+						<div class="cell">
+						<div class="lft-spc">
 						@{
 						    List<SelectListItem> mealOptions = new List<SelectListItem>();
 
@@ -649,7 +831,7 @@
 
 						    }
 						}
-						<div class="d-flex">
+						<div>
 
 
 						    @if (mealOptions.Count > 0)
@@ -675,18 +857,16 @@
 						    <input type="hidden" id="fastfwdprice" name="ssrKey" value="@fastfwdprice" />
 						</div>
 						@*<select id="mealid" class="servc-bordr select-width" asp-items="@mealOptions"></select>*@
-
-					    </div>
-					    <div class="servc-content seat">
-						<div class="d-flex">
-
-						    <input type="button" id="exampleModalSeat" value="Seat Map" class="button small-btn rtbtn exampleModalCSeat" data-toggle="modal" data-target="#sgexampleModal">
-
 						</div>
-						<div class="output-div-input" id="outputDiv_@pas"></div>
 					    </div>
-					    <div class="servc-content select-baggage">
-
+						<div class="cell">
+						<div class="lft-spc">
+						    <input type="button" id="exampleModalSeat" value="Seat Map" class="button small-btn rtbtn exampleModalCSeat" data-toggle="modal" data-target="#sgexampleModal">
+							<div class="output-div-input" id="outputDiv_@pas"></div>
+						</div>						
+					    </div>
+						<div class="cell">
+						<div class="lft-spc">
 						@{
 						   // List<SelectListItem> BaggageOptions = new List<SelectListItem>();
 						    var baggageOptions = new List<SelectListItem>();
@@ -744,8 +924,10 @@
 						    </select>
 						    <input type="hidden" id="hiddenbagKey" name="bagkey" value="" />
 						</div>
+						</div>
 					    </div>
-					    <div class="servc-content">
+					    <div class="cell">
+						<div class="lft-spc">
 						<select class="servc-bordr wdth-100">
 						    <option></option>
 						    <option>Meal1</option>
@@ -753,30 +935,19 @@
 						    <option>Meal3</option>
 						    <option>Meal4</option>
 						</select>
+						</div>
 					    </div>
 					</div>
 
 				    }
 				}
-
-
-
-
-
-
-			    </div>
-			</section>
 		    </div>
 		</div>
 
 		<!----Connceting new design Code start---->
-		<div class="row" id="tabnew2">
-
-		    <div class="col-lg-12">
-			<section class="container">
-			    <div class="row border-service">
-
-				<div class="d-flex justify-content-between bg-servc py-2">
+				<div class="service-table" id="tabnew2">
+					<div class="border-service">
+					@*<div class="d-flex justify-content-between bg-servc py-2">
 				    <div class="serv-header">
 					Traveller
 				    </div>
@@ -790,7 +961,16 @@
 				    <div class="serv-header">
 					Special Request
 				    </div>
+					</div>*@
+
+				<div class="table-row header">
+					<div class="cell traveller-cell"><span class="lft-spc">Traveller</span></div>
+					<div class="cell"><span class="lft-spc"><img src="~/img/pmeal.png" class="icon"> Meal</span></div>
+					<div class="cell"><span class="lft-spc"><img src="~/img/pseat.png" class="icon"> Seat</span></div>
+					<div class="cell"><span class="lft-spc"><img src="~/img/pbaggage.png" class="icon"> Baggage</span></div>
+					<div class="cell"><span class="lft-spc">Special Request</span></div>
 				</div>
+
 				@{
 				    passengerdata2 = @Model.passeengerlist.passengerscount;
 				}
@@ -810,9 +990,9 @@
 				    for (int pas = 0; pas < passengerdata2; pas++)
 				    {
 					string ssrkey = string.Empty;
-					<div class="d-flex justify-content-between py-3">
-
-					    <div class="servc-content width-90">
+					<div class="table-row">
+					<div class="cell traveller-cell">
+					<div class="lft-spc">
 						<!--Travellor @pas-->
 						@if (Model.passengerNamedetails != null)
 						{
@@ -823,10 +1003,10 @@
 							}
 						    <span>@name</span>
 						}
-					    </div>
-					    <div class="servc-content select-option2">
-
-
+						</div>
+						</div>					    
+						<div class="cell">
+						<div class="lft-spc">
 
 						@{
 						    List<SelectListItem> mealOptions = new List<SelectListItem>();
@@ -871,7 +1051,7 @@
 
 						    }
 						}
-						<div class="d-flex">
+						<div>
 						    @if (mealOptions.Count > 0)
 						    {
 							<select id="ddlMealOptions2" class="servc-bordr servc-bordrCon">
@@ -893,18 +1073,21 @@
 						    <input type="hidden" id="hiddenSsrKey2" name="ssrKey" value="" />
 						</div>
 						@*<select id="mealid" class="servc-bordr select-width" asp-items="@mealOptions"></select>*@
-
-					    </div>
-					    <div class="servc-content seat">
-						<div class="d-flex">
-
-						    <input type="button" id="exampleModalSeat" value="Seat Map" class="button small-btn rtbtn exampleModalCSeat" data-toggle="modal" data-target="#sgexampleModal">
 						</div>
-						<div class="output-div-input" id="outputDivConnect_@pas"></div>
+					    </div>
+						<div class="cell">
+						<div class="lft-spc">
+						    <input type="button" id="exampleModalSeat" value="Seat Map" class="button small-btn rtbtn exampleModalCSeat" data-toggle="modal" data-target="#sgexampleModal">
+							<div class="output-div-input" id="outputDivConnect_@pas"></div>
+						</div>						
 					    </div>
 
-					    <div class="servc-content">
+								<div class="cell">
+									<div class="lft-spc">&nbsp;</div>
+								</div>
 
+					<div class="cell">
+						<div class="lft-spc">
 						<select class="servc-bordr wdth-100">
 						    <option></option>
 						    <option>Meal1</option>
@@ -912,9 +1095,10 @@
 						    <option>Meal3</option>
 						    <option>Meal4</option>
 						</select>
+						</div>
 					    </div>
 					</div>
-
+					
 				    }
 				}
 
@@ -946,9 +1130,7 @@
 
 				</div> -->
 
-			    </div>
-			</section>
-		    </div>
+			    </div>			
 		</div>
 		<!------------Code End---------------------->
 
