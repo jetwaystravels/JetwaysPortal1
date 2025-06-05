@@ -311,6 +311,7 @@ namespace OnionArchitectureAPI.Services.Travelport
             //sbReq.Append("<AccountCode xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"-\" />");
             //sbReq.Append("</AccountCodes>");
             sbReq.Append("<FlightType TripleInterlineCon=\"false\" DoubleInterlineCon=\"false\" SingleInterlineCon=\"true\" TripleOnlineCon=\"false\" DoubleOnlineCon=\"false\" SingleOnlineCon=\"true\" StopDirects=\"true\" NonStopDirects=\"true\" />");
+            //sbReq.Append("<air:AccountCodes><com:AccountCode Code=\"SME2\" /></air:AccountCodes>");
             sbReq.Append("</air:AirPricingModifiers>");
             sbReq.Append("</air:LowFareSearchReq></soap:Body></soap:Envelope>");
 

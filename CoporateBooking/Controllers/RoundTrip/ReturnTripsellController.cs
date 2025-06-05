@@ -2175,12 +2175,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             SimpleAvailabilityRequestModel _SimpleAvailabilityobj = new SimpleAvailabilityRequestModel();
                             var jsonData = objMongoHelper.UnZip(tokenData.PassRequest);
                             _SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
+                            IndigoBookingManager_.SellResponse sellSsrResponse = null;
                             if (_getPriceItineraryRS != null)
                             {
                                 #region SellSSrInfant
                                 if (infantcount > 0)
                                 {
-                                    IndigoBookingManager_.SellResponse sellSsrResponse = null;
                                     sellSsrResponse = await objsell.sellssrInft(Signature, _getPriceItineraryRS, infantcount, 0, p, "");
                                     str3 = JsonConvert.SerializeObject(sellSsrResponse);
                                     if (sellSsrResponse != null)
@@ -2190,37 +2190,44 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                 }
                                 #endregion
                             }
-                            #region GetBookingFromState
-                            IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS = await objsell.GetBookingFromState(Signature, p, "");
-                            if (_GetBookingFromStateRS != null)
+                            if (JsonConvert.SerializeObject(sellSsrResponse).ToLower().Contains("ssr inft is not available"))
                             {
-                                var JsonSellSSrInfant = _GetBookingFromStateRS;
-                                int Inftbasefare = 0;
-                                int Inftcount = 0;
-                                int infttax = 0;
-                                if (_GetBookingFromStateRS.BookingData.Passengers.Length > 0 && _GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees.Length > 0)
-                                {
-                                    for (int i = 0; i < _GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges.Length; i++)
-                                    {
-                                        if (i == 0)
-                                        {
-                                            Inftbasefare = Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges[0].Amount);
-                                            Inftcount += Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers.Length);
-                                            AirAsiaTripResponceobj.inftcount = Inftcount;
-                                            AirAsiaTripResponceobj.inftbasefare = Inftbasefare;
-                                        }
-                                        else
-                                        {
-                                            infttax += Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges[i].Amount);
-                                        }
-
-                                    }
-                                    AirAsiaTripResponceobj.inftbasefare = AirAsiaTripResponceobj.inftbasefare - infttax;
-                                    AirAsiaTripResponceobj.infttax = infttax * infantcount;
-                                }
+                                AirAsiaTripResponceobj.ErrorMsg = Regex.Match(JsonConvert.SerializeObject(sellSsrResponse), "\"Text\":\"(?<msg>[\\s\\S]*?)\"", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["msg"].Value.Trim();
                             }
-                            #endregion
-                            AirAsiaTripResponceobj.basefaretax += AirAsiaTripResponceobj.infttax;
+                            else
+                            {
+                                #region GetBookingFromState
+                                IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS = await objsell.GetBookingFromState(Signature, p, "");
+                                if (_GetBookingFromStateRS != null)
+                                {
+                                    var JsonSellSSrInfant = _GetBookingFromStateRS;
+                                    int Inftbasefare = 0;
+                                    int Inftcount = 0;
+                                    int infttax = 0;
+                                    if (_GetBookingFromStateRS.BookingData.Passengers.Length > 0 && _GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees.Length > 0)
+                                    {
+                                        for (int i = 0; i < _GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges.Length; i++)
+                                        {
+                                            if (i == 0)
+                                            {
+                                                Inftbasefare = Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges[0].Amount);
+                                                Inftcount += Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers.Length);
+                                                AirAsiaTripResponceobj.inftcount = Inftcount;
+                                                AirAsiaTripResponceobj.inftbasefare = Inftbasefare;
+                                            }
+                                            else
+                                            {
+                                                infttax += Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges[i].Amount);
+                                            }
+
+                                        }
+                                        AirAsiaTripResponceobj.inftbasefare = AirAsiaTripResponceobj.inftbasefare - infttax;
+                                        AirAsiaTripResponceobj.infttax = infttax * infantcount;
+                                    }
+                                }
+                                #endregion
+                                AirAsiaTripResponceobj.basefaretax += AirAsiaTripResponceobj.infttax;
+                            }
 
                             Passengerdata = new List<string>();
                             Passengerdata.Add("<Start>" + JsonConvert.SerializeObject(AirAsiaTripResponceobj) + "<End>");

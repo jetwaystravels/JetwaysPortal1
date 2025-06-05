@@ -18,6 +18,22 @@
         cursor: pointer;
     }
 
+
+    .custom-tooltip {
+        position: absolute;
+        display: none;
+        background: #fff; /* White background */
+        color: #666; /* Gray text */
+        border: 1px solid #ccc;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 13px;
+        white-space: nowrap;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+        pointer-events: none;
+    }
+
 </style>
 
 
@@ -347,13 +363,7 @@
                                     @if (User.Identity.IsAuthenticated)
                                     {
                                         <div class="emulate-bx">
-                                            <h6>
-                                                Emulate to Company / Employee
-                                                <span class="toggle-arrow" style="cursor:pointer">
-                                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                                </span>
-                                            </h6>
-
+                                            <h6>Emulate to Company / Employee</h6>
                                             <div class="row d-flex" id="emltoggle" style="display: none; border-bottom: 1px solid #e8ecee; background: linear-gradient(90deg, #f4f4f4 0%, #f4f4f4 35%, #fff 89%); padding-bottom: 7px;">
                                                 <!-- Legal Entity Name -->
                                                 <div class="col-12 col-md-10 col-lg-3">
@@ -376,8 +386,8 @@
                                                 <!-- Billing Entity Name -->
                                                 <div class="col-12 col-md-10 col-lg-3">
                                                     <label>Billing Entity Name</label>
-                                                    <div class="select-container">
-                                                        <input type="text" id="billingSelect" name="billing" placeholder="Enter Billing name" />
+                                                    <div class="autocomplete-wrapper">
+                                                        <input type="text" id="billingSelect" placeholder="Enter Billing name" class="autocomplete-input billing" required autocomplete="off" />
                                                         <span class="remove-icon">×</span>
                                                     </div>
                                                 </div>
@@ -1094,84 +1104,110 @@
         <!--Start Emulate section -->
         <script>
             $(document).ready(function () {
-                // Prepare legal entity list for autocomplete
+                // Append the tooltip box if not exists
+                if (!$('#customTooltip').length) {
+                    $('body').append('<div id="customTooltip" class="custom-tooltip"></div>');
+                }
+                const tooltipBox = $('#customTooltip');
+
+                // Custom tooltip binding function
+                function bindCustomTooltip($input) {
+                    $input.off('mouseenter mouseleave mousemove');
+
+                    $input.on('mouseenter', function (e) {
+                        const text = $(this).val();
+                        if (text) {
+                            tooltipBox.text(text).fadeIn(100);
+                        }
+                    });
+
+                    $input.on('mousemove', function (e) {
+                        tooltipBox.css({
+                            top: e.pageY + 12 + 'px',
+                            left: e.pageX + 12 + 'px'
+                        });
+                    });
+
+                    $input.on('mouseleave', function () {
+                        tooltipBox.fadeOut(100);
+                    });
+                }
+
+                // Remove title attribute logic - do nothing to prevent native tooltip
+                function updateTitle($input) {
+                    // Intentionally empty to prevent setting title attribute
+                }
+
                 const legalEntities = legalEntitiesData.map(e => e.legalEntityName);
 
-                // Bind Employees & Balance when Legal Entity changes
                 function bindFor(companyName) {
                     const item = legalEntitiesData.find(x => x.legalEntityName === companyName);
 
-                    // Reset employee input field and remove icon
                     const $employeeInput = $('#employeeSelect');
                     $employeeInput.val('');
                     $employeeInput.siblings('.remove-icon').hide();
+                    updateTitle($employeeInput);
 
-                    // Set balance
+                    const $billingInput = $('#billingSelect');
+                    $billingInput.val('');
+                    $billingInput.siblings('.remove-icon').hide();
+                    updateTitle($billingInput);
+
                     $('.balance-input').val('₹ 0.00');
                     if (item?.presentBalance) {
                         $('.balance-input').val('₹ ' + item.presentBalance);
                     }
 
-                    //Start Update employee autocomplete source without moble number
-                    // // Update employee autocomplete source
-                    // const names = item?.employeeNames
-                    //     ? item.employeeNames.split(',').map(e => e.trim().split('|')[1])
-                    //     : [];
+                    let employees = [];
+                    if (item?.employeeNames) {
+                        employees = item.employeeNames.split(',').map(e => {
+                            const [id, name, mobile] = e.trim().split('|');
+                            return {
+                                label: `${name} (${mobile})`,
+                                value: name,
+                                name,
+                                mobile,
+                                id
+                            };
+                        });
+                    }
 
-                    // $employeeInput.autocomplete('option', 'source', function (request, response) {
-                    //     response($.ui.autocomplete.filter(names, request.term));
-                    // });
+                    if (!employees.some(emp => emp.name.toLowerCase() === 'guest user')) {
+                        employees.push({ label: 'Guest User', value: 'Guest User', name: 'Guest User', mobile: '', id: '0' });
+                    }
 
+                    $employeeInput.autocomplete('option', 'source', function (request, response) {
+                        const term = request.term.toLowerCase();
+                        const matches = employees.filter(emp =>
+                            emp.name.toLowerCase().includes(term) || emp.mobile.includes(term)
+                        );
+                        response(matches);
+                    });
 
-                                let employees = [];
-            if (item?.employeeNames) {
-                employees = item.employeeNames.split(',').map(e => {
-                    const [id, name, mobile] = e.trim().split('|');
-                    return {
-                        label: `${name} (${mobile})`,
-                        value: name,
-                        name,
-                        mobile
-                    };
-                });
-            }
-
-            // Add Guest User if missing
-            if (!employees.some(emp => emp.name.toLowerCase() === 'guest user')) {
-                employees.push({ label: 'Guest User', value: 'Guest User', name: 'Guest User', mobile: '' });
-            }
-
-            // Set autocomplete source: allow searching by name or mobile
-            $employeeInput.autocomplete('option', 'source', function (request, response) {
-                const term = request.term.toLowerCase();
-                const matches = employees.filter(emp =>
-                    emp.name.toLowerCase().includes(term) || emp.mobile.includes(term)
-                );
-                response(matches);
-            });
-
-
-
-            //                 // Force add Guest User if missing
-            // if (!names.some(name => name.toLowerCase() === 'guest user')) {
-            //     names.push('Guest User');
-            // }
-
-           
+                    $('#hdnempid').val('0');
                 }
 
-                // Initialize Legal Entity autocomplete
                 $('#legalEntitySelect')
-                    .val('') // Start empty
+                    .val('')
                     .attr('placeholder', 'Enter Legal Entity name')
                     .autocomplete({
                         source: legalEntities,
                         minLength: 0,
                         select: function (event, ui) {
                             $(this).val(ui.item.value);
+                            updateTitle($(this));
                             bindFor(ui.item.value);
                             $(this).blur();
                             $(this).siblings('.remove-icon').show();
+
+                            $('#employeeSelect').val('');
+                            $('#employeeSelect').siblings('.remove-icon').hide();
+                            updateTitle($('#employeeSelect'));
+
+                            $('#billingSelect').val('');
+                            $('#billingSelect').siblings('.remove-icon').hide();
+                            updateTitle($('#billingSelect'));
+
                             return false;
                         }
                     })
@@ -1180,20 +1216,26 @@
                     })
                     .on('input', function () {
                         $(this).siblings('.remove-icon').toggle(!!$(this).val());
+                        updateTitle($(this));
                     });
 
-                // Remove icon for Legal Entity input
                 $('#legalEntitySelect').siblings('.remove-icon').on('click', function () {
                     $('#legalEntitySelect').val('').focus();
+                    updateTitle($('#legalEntitySelect'));
                     $(this).hide();
 
-                    // Also reset employee and balance when legal entity is cleared
                     $('#employeeSelect').val('');
                     $('#employeeSelect').siblings('.remove-icon').hide();
+                    updateTitle($('#employeeSelect'));
+
+                    $('#billingSelect').val('');
+                    $('#billingSelect').siblings('.remove-icon').hide();
+                    updateTitle($('#billingSelect'));
+
                     $('.balance-input').val('₹ 0.00');
+                    $('#hdnempid').val('0');
                 });
 
-                // Initialize Employee Autocomplete
                 function initEmployeeAutocomplete() {
                     const $employeeInput = $('#employeeSelect');
 
@@ -1202,9 +1244,12 @@
                         minLength: 0,
                         select: function (event, ui) {
                             $(this).val(ui.item.value);
+                            updateTitle($(this));
                             $(this).blur();
                             $(this).siblings('.remove-icon').show();
-                            GetEmpData();
+
+                            $('#hdnempid').val(ui.item.id || '0');
+                            fetchBillingEntities();
                             return false;
                         }
                     })
@@ -1213,16 +1258,135 @@
                         })
                         .on('input', function () {
                             $(this).siblings('.remove-icon').toggle(!!$(this).val());
+                            updateTitle($(this));
+
+                            if (!$(this).val()) {
+                                $('#billingSelect').val('');
+                                $('#billingSelect').siblings('.remove-icon').hide();
+                                updateTitle($('#billingSelect'));
+                                $('#hdnempid').val('0');
+                            }
                         });
 
-                    // Remove icon behavior for Employee input
                     $employeeInput.siblings('.remove-icon').on('click', function () {
                         $employeeInput.val('').focus();
+                        updateTitle($employeeInput);
+                        $(this).hide();
+
+                        $('#billingSelect').val('');
+                        $('#billingSelect').siblings('.remove-icon').hide();
+                        updateTitle($('#billingSelect'));
+
+                        $('#hdnempid').val('0');
+                    });
+                }
+
+                function initBillingAutocomplete(billingEntities) {
+                    const $billingInput = $('#billingSelect');
+
+                    $billingInput
+                        .val('')
+                        .attr('placeholder', 'Enter Billing Entity name')
+                        .autocomplete({
+                            source: billingEntities,
+                            minLength: 0,
+                            select: function (event, ui) {
+                                $(this).val(ui.item.value);
+                                updateTitle($(this));
+                                $(this).blur();
+                                $(this).siblings('.remove-icon').show();
+                                return false;
+                            }
+                        })
+                        .on('focus click', function () {
+                            $(this).autocomplete('search', '');
+                        })
+                        .on('input', function () {
+                            $(this).siblings('.remove-icon').toggle(!!$(this).val());
+                            updateTitle($(this));
+                        });
+
+                    $billingInput.siblings('.remove-icon').off('click').on('click', function () {
+                        $billingInput.val('').focus();
+                        updateTitle($billingInput);
                         $(this).hide();
                     });
                 }
 
-                // Form validation
+                function fetchBillingEntities() {
+                    const legalEntityInput = $('#legalEntitySelect').val();
+                    if (!legalEntityInput) {
+                        alert("Please select a Legal Entity first.");
+                        return;
+                    }
+
+                    const inputName = $('#employeeSelect').val();
+                    const empId = getEmployeeIdByName(inputName, legalEntitiesData);
+
+                    $('#hdnempid').val(empId || '0');
+
+                    const legalEntityCode = legalEntityInput.split("-")[0].trim();
+                    const employeeCode = empId || '0';
+
+                    $.ajax({
+                        type: 'GET',
+                        url: `/Login/GetEmpId/?legalEntityCode=${legalEntityCode}&employeeCode=${employeeCode}`,
+                        async: true,
+                        dataType: 'json',
+                        success: function (data) {
+                            let parsedData;
+
+                            if (Array.isArray(data)) {
+                                parsedData = data;
+                            } else {
+                                try {
+                                    parsedData = JSON.parse(data);
+                                    if (!Array.isArray(parsedData)) {
+                                        alert("Unexpected data format received from server.");
+                                        return;
+                                    }
+                                } catch (err) {
+                                    console.error("Failed to parse JSON:", err, data);
+                                    return;
+                                }
+                            }
+
+                            const billingEntities = parsedData.map(item => item.billingEntityCode);
+
+                            initBillingAutocomplete(billingEntities);
+
+                            if (billingEntities.length === 1) {
+                                $('#billingSelect').val(billingEntities[0]);
+                                updateTitle($('#billingSelect'));
+                                $('#billingSelect').siblings('.remove-icon').show();
+                            } else {
+                                $('#billingSelect').val('');
+                                updateTitle($('#billingSelect'));
+                                $('#billingSelect').siblings('.remove-icon').hide();
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("AJAX error:", status, error);
+                            alert("Failed to fetch billing entity data.");
+                        }
+                    });
+                }
+
+                function getEmployeeIdByName(employeeName, dataset) {
+                    for (const item of dataset) {
+                        if (item.employeeNames) {
+                            const employees = item.employeeNames.split(',').map(e => e.trim());
+                            for (const entry of employees) {
+                                const [id, name] = entry.split('|');
+                                if (name && name.trim().toLowerCase() === employeeName.trim().toLowerCase()) {
+                                    return id;
+                                }
+                            }
+                        }
+                    }
+                    return null;
+                }
+
                 $('#myForm').on('submit', function (e) {
                     let isValid = true;
                     $('.autocomplete-input[required]').each(function () {
@@ -1241,123 +1405,14 @@
                     }
                 });
 
-                // Initial setup
+                // Initialize
                 initEmployeeAutocomplete();
-                // No pre-selected Legal Entity here!
-
-
-
-
-
-
-
+                bindCustomTooltip($('#legalEntitySelect'));
+                bindCustomTooltip($('#employeeSelect'));
+                bindCustomTooltip($('#billingSelect'));
             });
 
-            function GetEmpData() {
-                const legalEntityInput = document.getElementById("legalEntitySelect").value;
-                if (!legalEntityInput) {
-                    alert("Please select a Legal Entity first.");
-                    return;
-                }
 
-
-                const inputName = document.getElementById("employeeSelect").value;
-               // alert(inputName);
-                const empId = getEmployeeIdByName(inputName, legalEntitiesData);
-               // alert(empId);
-
-               document.getElementById("hdnempid").value = empId|| 0; // Store employee ID or 0 if null
-
-                //console.log("Employee ID for", inputName, "is:", empId);
-
-                const legalEntityCode = legalEntityInput.split("-")[0].trim();
-
-                const employeeCode = empId || 0; // If empId is null, fallback to 0
-                // alert(employeeCode);
-
-                $.ajax({
-                    type: 'GET',
-                    url: `/Login/GetEmpId/?legalEntityCode=${legalEntityCode}&employeeCode=${employeeCode}`,
-                    async: true,
-                    dataType: 'json',
-                    success: function (data) {
-                        let parsedData;
-
-                        // Check if data is already an array
-                        if (Array.isArray(data)) {
-                            parsedData = data;
-                        } else {
-                            try {
-                                parsedData = JSON.parse(data);
-                                if (!Array.isArray(parsedData)) {
-                                    console.error("Expected an array but got:", parsedData);
-                                    alert("Unexpected data format received from server.");
-                                    return;
-                                }
-                            } catch (err) {
-                                console.error("Failed to parse JSON:", err, data);
-                                
-                                return;
-                            }
-                        }
-
-                        const bill = parsedData.map(item => ({
-                            label: item.billingEntityCode,
-                            value: item.billingEntityCode
-                        }));
-
-                        $('#billingSelect')
-                            .val('') // Clear field
-                            .attr('placeholder', 'Enter Billing name')
-                            .autocomplete({
-                                source: bill,
-                                minLength: 0,
-                                select: function (event, ui) {
-                                    $(this).val(ui.item.value);
-                                    bindFor(ui.item.value); // Ensure this function exists
-                                    $(this).siblings('.remove-icon').show();
-                                    return false;
-                                }
-                            })
-                            .on('focus click', function () {
-                                $(this).autocomplete('search', '');
-                            })
-                            .on('input', function () {
-                                $(this).siblings('.remove-icon').toggle(!!$(this).val());
-                            });
-
-                        $('#billingSelect').siblings('.remove-icon').on('click', function () {
-                            $('#billingSelect').val('').focus();
-                            $(this).hide();
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("AJAX error:", status, error);
-                        alert("Failed to fetch billing entity data.");
-                    }
-                });
-            }
-
-
-            function getEmployeeIdByName(employeeName, dataset) {
-                for (const item of dataset) {
-                    if (item.employeeNames) {
-                        // Split each employee: "3|A-VENKATRAMAN, 6|John-Doe"
-                        const employees = item.employeeNames.split(',').map(e => e.trim());
-
-                        for (const entry of employees) {
-                            const [id, name] = entry.split('|');
-
-                            if (name && name.trim().toLowerCase() === employeeName.trim().toLowerCase()) {
-                                return id;
-                            }
-                        }
-                    }
-                }
-
-                // Not found
-                return null;
-            }
 
         </script>
 
