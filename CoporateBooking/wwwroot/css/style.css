@@ -3433,6 +3433,11 @@ FOOTER AREA CSS
     font-size: 0.9rem;
 }
 
+.search-area .search-box .searchMenu-guests__field label {
+    color: #000 !important;
+    font-weight: 600;
+}
+
 .inner-search .search-area .search-box .S-option {
     border-bottom: none;
     padding-bottom: 0;

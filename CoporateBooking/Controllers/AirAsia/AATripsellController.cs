@@ -76,9 +76,9 @@ namespace OnionConsumeWebAPI.Controllers
             LegalEntity legal = new LegalEntity();
             legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
 
-            //string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={employeeCode}&legalEntityCode={legalEntityCode}";
+            //string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.LegalName}";
 
-            string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.LegalName}";
+            string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.BillingEntityName}";
 
             if (airlineId.HasValue)
             {

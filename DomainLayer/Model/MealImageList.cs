@@ -46,6 +46,7 @@
             new { MealCode = "VMFF", MealImage = "Vegetable Manchurian with Fried Rice " },
             new { MealCode = "VMGB", MealImage = "Mushroom Ghee Roast with Sriracha Fried Rice" },
             new { MealCode = "VKDB", MealImage = "Kaju Katli white chocolate Mousse" },
+            new { MealCode = "VMGF", MealImage = "Mushroom Ghee Roast with Sriracha Fried Rice" },
            // new { MealCode = "VIGB", MealImage = "Dry Fruits Gujiya" },
 
             new { MealCode = "MMFD", MealImage = "MOJO BAR ORANGE DARK CHOCOLATE + VITAMIN C" },
@@ -55,12 +56,21 @@
             new { MealCode = "CCCB", MealImage = "Chicken Curry Rice" },
             new { MealCode = "LTML", MealImage = "Late Meal ₹0" },
             new { MealCode = "VRPB", MealImage = "Veg Red Sause Pasta" },
+            new { MealCode = "VRPF", MealImage = "Veg Red Sause Pasta" },
+
+            new { MealCode = "CAKE", MealImage = "Cake" },
             new { MealCode = "VFSB", MealImage = "Feta Vegetable Salad" },
+            new { MealCode = "VFSF", MealImage = "Feta Vegetable Salad" },
             new { MealCode = "TMAI", MealImage = "Masala Chai" },
+            new { MealCode = "TMAF", MealImage = "Masala Chai" },
             new { MealCode = "NKPB", MealImage = "Non-Veg Kabab" },
+            new { MealCode = "NKPF", MealImage = "Non-Veg Kabab" },
             new { MealCode = "NCOB", MealImage = "Cheddar & Chives Omelette" },
+            new { MealCode = "NCOF", MealImage = "Cheddar & Chives Omelette" },
             new { MealCode = "NCCB", MealImage = "Chicken Ghee Roast with Siracha Fried Rice" },
+            new { MealCode = "NCCF", MealImage = "Chicken Ghee Roast with Siracha Fried Rice" },
             new { MealCode = "CFMR", MealImage = "BLACK COFFEE" },
+            new { MealCode = "CFMF", MealImage = "BLACK COFFEE" },
             
             //Spicejet Meal
             new { MealCode = "VIGB", MealImage = "Dry Fruits Gujiya" },
@@ -157,6 +167,18 @@
             new { MealCode = "CNKS", MealImage = "WOW! Khow Suey Chicken" },
             new { MealCode = "CNKP", MealImage = "Kari Pan-tastic Chicken Pocket" },
             new { MealCode = "CDCP", MealImage = "Chocolate Pistachio Verrine" },
+
+            new { MealCode = "CYOG", MealImage = "Yoga Day Special Meal" },
+            new { MealCode = "CVJN", MealImage = "Three Bean Burrito Wrap (Jain Special)" },
+            new { MealCode = "CSAN", MealImage = "Sankranti Special" },
+            new { MealCode = "CRAZ", MealImage = "Easter Special (Non-Veg)" },
+            new { MealCode = "CONM", MealImage = "Navroz Special (Non-veg)" },
+            new { MealCode = "CMOM", MealImage = "Mother’s Day Special Meal" },
+            new { MealCode = "CHOL", MealImage = "Holi Special" },
+            new { MealCode = "CGAN", MealImage = "Ganesh Chaturthi Special Meal" },
+            new { MealCode = "CDUS", MealImage = "Dussehra Special" },
+            new { MealCode = "CDIW", MealImage = "Diwali Special" },
+            new { MealCode = "CCHS", MealImage = "Christmas Special" },
             
 
 
