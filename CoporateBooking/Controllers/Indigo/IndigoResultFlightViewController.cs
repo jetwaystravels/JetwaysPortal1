@@ -434,10 +434,10 @@ namespace OnionConsumeWebAPI.Controllers
 
                     _mongoDBHelper.UpdateFlightTokenJourney(Guid, "Indigo", journeyKey);
 
-                    SimpleAvailabilityRequestModel _SimpleAvailabilityobj = new SimpleAvailabilityRequestModel();
+                    //SimpleAvailabilityRequestModel _SimpleAvailabilityobj = new SimpleAvailabilityRequestModel();
 
-                    var jsonData = HttpContext.Session.GetString("IndigoPassengerModel");
-                    _SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
+                    //var jsonData = HttpContext.Session.GetString("IndigoPassengerModel");
+                    //_SimpleAvailabilityobj = JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(jsonData.ToString());
                     if (_getPriceItineraryRS != null)
                     {
 

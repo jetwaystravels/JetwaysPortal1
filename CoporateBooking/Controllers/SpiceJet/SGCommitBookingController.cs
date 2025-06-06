@@ -85,7 +85,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 //token = tokenview.Replace(@"""", string.Empty);
                 //   string passengernamedetails = HttpContext.Session.GetString("PassengerNameDetails");
 
-                string passengernamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+                string passengernamedetails = objMongoHelper.UnZip(tokenData.PassengerRequest);
 
                 List<passkeytype> passeengerlist = (List<passkeytype>)JsonConvert.DeserializeObject(passengernamedetails, typeof(List<passkeytype>));
                 // string contactdata = HttpContext.Session.GetString("ContactDetails");
@@ -539,7 +539,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                             }
                             #endregion
-                            string stravailibitilityrequest = HttpContext.Session.GetString("IndigoAvailibilityRequest");
+                            string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest);// HttpContext.Session.GetString("IndigoAvailibilityRequest");
                             GetAvailabilityRequest availibiltyRQ = JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
 
                             var passanger = _getBookingResponse.Booking.Passengers;

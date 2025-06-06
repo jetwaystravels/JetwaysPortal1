@@ -1501,7 +1501,13 @@ Flight Search AREA
     height: 460px;
     z-index: 1;
 }
+    .search-area.guest {
+        height: 460px;
+    }
 
+    .search-area.logged-in {
+        height: 529px;
+    }
 .search-area {
     background: rgba(0, 0, 0, 0) url(../img/bg/banner.jpg) no-repeat scroll center center/cover;
 }

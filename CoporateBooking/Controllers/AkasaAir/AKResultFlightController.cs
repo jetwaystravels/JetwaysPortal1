@@ -307,7 +307,15 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 				}
                 else
                 {
+
                     var AKjsondataexception = responseTripsellAK.Content.ReadAsStringAsync().Result;
+                    if (AKjsondataexception.Contains("rawMessage") && AKjsondataexception.Contains("errors"))
+                    {
+                        ViewBag.ErrorMessage = Regex.Match(AKjsondataexception.ToString(), "rawMessage\":\"(?<msg>[\\s\\S]*?)\"", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["msg"].Value;
+                        return View("service-error-msg");
+                    }
+
+                    //var AKjsondataexception = responseTripsellAK.Content.ReadAsStringAsync().Result;
 
                     logs.WriteLogs(AKjsondataexception, "3-TripsellResponse", "AkasaOneWay", "oneway");
 

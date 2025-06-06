@@ -656,9 +656,19 @@ namespace OnionConsumeWebAPI.Controllers
                     seatMealdetail.ResultRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(AirAsiaTripResponceobj));
 
 				}
-				#region Itenary 
+                else
+                {
+                    var resultsTripsell = responseTripsell.Content.ReadAsStringAsync().Result;
+                    if (resultsTripsell.Contains("rawMessage") && resultsTripsell.Contains("errors"))
+                    {
+                        ViewBag.ErrorMessage = Regex.Match(resultsTripsell.ToString(), "rawMessage\":\"(?<msg>[\\s\\S]*?)\"", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["msg"].Value;
+                        return View("service-error-msg");
+                    }
+                    
+                }
+                    #region Itenary 
 
-				AirAsiaTripResponceModel AirAasiaobjectInfantdata = new AirAsiaTripResponceModel();
+                    AirAsiaTripResponceModel AirAasiaobjectInfantdata = new AirAsiaTripResponceModel();
 				if (!string.IsNullOrEmpty(infanttype))
                 {
 					

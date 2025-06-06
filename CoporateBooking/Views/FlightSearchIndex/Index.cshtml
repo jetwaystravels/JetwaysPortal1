@@ -160,11 +160,11 @@
                                     var userName = claims.Where(c => c.Type == ClaimTypes.Name).ToList()[0].Value;
                                     var userEmail = claims.Where(c => c.Type == ClaimTypes.Email).ToList()[0].Value;
 
-                                    <div class="profile-initials">@userName.Substring(0, 2)</div>
+                                    <div class="profile-initials">@(userName.Split(' ')[0][0].ToString().ToUpper() + userName.Split(' ')[1][0].ToString().ToUpper())</div>
 
                                     <div class="profile-popup" style="display:none;">
                                         <span>@userEmail</span>
-                                        <div class="circle-initials">@userName.Substring(0, 2)</div>
+                                        <div class="circle-initials">@(userName.Split(' ')[0][0].ToString().ToUpper() + userName.Split(' ')[1][0].ToString().ToUpper())</div>
                                         <p class="greeting">Hi,@userName</p>
                                         <a class="nav-link dropbtn signOutBtn" href="@Url.Action("Logout", "Login")">Logout</a>
                                     </div>
@@ -311,7 +311,8 @@
         </div>
         <!-- End sign-up -->
         <!-- ***** Flight Search Area Start ***** -->
-        <section class="section search-area bg-overlay  d-flex align-items-center">
+
+        <section class="section search-area bg-overlay  d-flex align-items-center @(User.Identity.IsAuthenticated ? "logged-in" : "guest")">
             <div class="container">
                 <div class="row ">
                     <div class="col-12 col-md-7 col-lg-12">

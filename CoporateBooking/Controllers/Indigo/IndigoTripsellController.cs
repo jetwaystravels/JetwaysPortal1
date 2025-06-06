@@ -127,7 +127,7 @@ namespace OnionConsumeWebAPI.Controllers
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             MongoSuppFlightToken tokenData = new MongoSuppFlightToken();
             tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Indigo").Result;
-            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassRequest);
+            string passengerNamedetails = objMongoHelper.UnZip(tokenData.PassengerRequest);
 
 			MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
 			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(GUID, "Indigo").Result;
@@ -246,7 +246,8 @@ namespace OnionConsumeWebAPI.Controllers
             MongoHelper objMongoHelper = new MongoHelper();
             string passobj = objMongoHelper.Zip(JsonConvert.SerializeObject(passengerdetails));
 
-            _mongoDBHelper.UpdateFlightTokenPassenger(GUID, "Indigo", passobj);
+            //_mongoDBHelper.UpdateFlightTokenPassenger(GUID, "Indigo", passobj);
+            _mongoDBHelper.UpdateFlightTokenPassengerGDS(GUID, "Indigo", passobj);
 
             tokenData = _mongoDBHelper.GetSuppFlightTokenByGUID(GUID, "Indigo").Result;
 
