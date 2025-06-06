@@ -76,25 +76,28 @@ namespace OnionConsumeWebAPI.Controllers
             LegalEntity legal = new LegalEntity();
             legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
 
-            //string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.LegalName}";
-
-            string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.BillingEntityName}";
-
-            if (airlineId.HasValue)
+            if (legal != null)
             {
-                apiUrl += $"&airlineId={airlineId.Value}";
-            }
-            List<CompanyEmployeeGSTDetails> gstList = new();
-            try
-            {
-                using (HttpClient client = new HttpClient())
+
+                //string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.LegalName}";
+
+                string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.BillingEntityName}";
+
+                if (airlineId.HasValue)
                 {
-                    client.DefaultRequestHeaders.Accept.Add(
-                        new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                   
-                   
-                    HttpResponseMessage response = await client.GetAsync(apiUrl);
-                   
+                    apiUrl += $"&airlineId={airlineId.Value}";
+                }
+                List<CompanyEmployeeGSTDetails> gstList = new();
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Accept.Add(
+                            new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                        HttpResponseMessage response = await client.GetAsync(apiUrl);
+
                         if (response.IsSuccessStatusCode)
                         {
                             string jsonData = await response.Content.ReadAsStringAsync();
@@ -103,24 +106,25 @@ namespace OnionConsumeWebAPI.Controllers
                             // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
                             // ViewBag.GSTdata = gstData;
                         }
-                   
+
+
+                    }
+                }
+
+                catch when (Guid == null)
+                {
+                    // Handle the exception when Guid is null
+                    // You can log the error or take appropriate action
+                }
+                catch
+                {
 
                 }
-            }
 
-            catch when (Guid == null)
-            {
-                // Handle the exception when Guid is null
-                // You can log the error or take appropriate action
-            }
-            catch 
-            {
 
-            }
-           
 
-            
-            ViewBag.GSTdata = gstList;
+                ViewBag.GSTdata = gstList;
+            }
 
             //End:Coprate GST AND EMPLOYEE DETAIL
 

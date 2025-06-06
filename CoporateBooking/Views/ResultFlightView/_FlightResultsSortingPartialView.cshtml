@@ -21,29 +21,29 @@
 </style>
 @if (User.Identity.IsAuthenticated)
 {
-<script>
-    function handleBooking(isLoggedIn) {
-        alert(1);
-        if (!isLoggedIn) {
-            const confirmLogin = confirm("Please login to book your flight.");
-            if (confirmLogin) {
-                const returnUrl = encodeURIComponent(window.location.href);
-                window.location.href = `/Login/UserLogin?returnUrl=${returnUrl}`;
+    <script>
+        function handleBooking(isLoggedIn) {
+            alert(1);
+            if (!isLoggedIn) {
+                const confirmLogin = confirm("Please login to book your flight.");
+                if (confirmLogin) {
+                    const returnUrl = encodeURIComponent(window.location.href);
+                    window.location.href = `/Login/UserLogin?returnUrl=${returnUrl}`;
+                }
+                return false; // Prevent form submission when not logged in
             }
-            return false; // Prevent form submission when not logged in
+            return true; // Allow submission if logged in
         }
-        return true; // Allow submission if logged in
-    }
-</script>
+    </script>
 }
 else
 {
-<script>
-    function handleBooking(isLoggedIn) {
-        alert(2);
-       return true; // Allow submission if logged in 
-    }
-</script>
+    <script>
+        function handleBooking(isLoggedIn) {
+            alert(2);
+           return true; // Allow submission if logged in
+        }
+    </script>
 }
 
 
@@ -1686,7 +1686,8 @@ else
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
-                                                <input type="submit" value="Book Now" class="button small-btn" @(isLoggedIn ? "" : "disabled") />
+                                                @*<input type="submit" value="Book Now" class="button small-btn" @(isLoggedIn ? "" : "disabled") />*@
+                                                <input type="submit" value="Book Now" class="button small-btn" />
                                             </form>
                                         }
                                         else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QP"))
@@ -1736,7 +1737,7 @@ else
                                                 {
                                                     <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn" />
                                                 }
-                                               
+
                                             </form>
                                         }
                                     }

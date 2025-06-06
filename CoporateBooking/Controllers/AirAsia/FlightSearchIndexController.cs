@@ -1687,7 +1687,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 mongoGDSToken.PassRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(_GetfligthModel)); ;
                 mongoGDSToken.Guid = SearchGuid;
                 mongoGDSToken.Supp = "GDS";
-                res = _objAvail.GetAvailabilty(_testURL, sbReq, _objAvail, _GetfligthModel, newGuid.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, SameAirlineRT, "GDSOneWay");
+                res = _objAvail.GetAvailabiltyCorporate(_testURL, sbReq, _objAvail, _GetfligthModel, newGuid.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, SameAirlineRT, "GDSOneWay");
                 TempData["origin"] = _GetfligthModel.origin;
                 TempData["destination"] = _GetfligthModel.destination;
                 TravelPortParsing _objP = new TravelPortParsing();
@@ -1850,7 +1850,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                             string _fareSellkey = "";
                                             string fareAvailabilityKey = "";
                                             string fareAvailabilityKeyhead = "";
-                                            var procuctclass = matchingItineraries[j].Bonds[k].Legs[l].Branddesc;
+                                            var procuctclass = "Corporate " + matchingItineraries[j].Bonds[k].Legs[l].Branddesc;
                                             fareAvailabilityKey = matchingItineraries[j].Bonds[k].Legs[l]._FareBasisCodeforAirpriceHit;
                                             var passengertype = "";
                                             fareAmount = 0.0M;
@@ -3051,7 +3051,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     _GetfligthModel.beginDate = searchLog.ArrivalDateTime;
                     _GetfligthModel.endDate = searchLog.ArrivalDateTime;
 
-                    res = _objAvail.GetAvailabilty(_testURL, sbReq, _objAvail, _GetfligthModel, newGuidR.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, SameAirlineRT, "");
+                    res = _objAvail.GetAvailabiltyCorporate(_testURL, sbReq, _objAvail, _GetfligthModel, newGuidR.ToString(), _CredentialsGDS.domain, _CredentialsGDS.username, _CredentialsGDS.password, flightclass, SameAirlineRT, "");
                     TempData["originR"] = _GetfligthModel.origin;
                     TempData["destinationR"] = _GetfligthModel.destination;
                     _objP = new TravelPortParsing();
@@ -3219,7 +3219,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                 string _fareSellkey = "";
                                                 string fareAvailabilityKey = "";
                                                 string fareAvailabilityKeyhead = "";
-                                                var procuctclass = matchingItineraries[j].Bonds[k1].Legs[l].Branddesc;
+                                                var procuctclass = "Corporate " +matchingItineraries[j].Bonds[k1].Legs[l].Branddesc;
                                                 fareAvailabilityKey = matchingItineraries[j].Bonds[k1].Legs[l]._FareBasisCodeforAirpriceHit;
                                                 var passengertype = "";
                                                 fareAmount = 0.0M;

@@ -1,10 +1,9 @@
 ﻿@model DomainLayer.ViewModel.ViewModel
 
-
 @{
 	var gstData = ViewBag.GSTdata as List<CoporateBooking.Models.CompanyEmployeeGSTDetails>;
+	var gst = (gstData != null && gstData.Count > 0) ? gstData[0] : new CoporateBooking.Models.CompanyEmployeeGSTDetails();
 	Layout = null;
-
 }
 <style>
 
@@ -149,7 +148,13 @@
 							}
 						}
 
-						<input type="text" class="contactFname validate-field" data-validate="name" maxlength="16" oninput="validateInputT(event ,@i)" value="@gstData[0].FirstName"  placeholder="First & middle name" name="passengerdetails[@i].First" style='text-transform:uppercase' required />
+						<input type="text" class="contactFname validate-field" data-validate="name"
+							   maxlength="16" oninput="validateInputT(event ,@i)"
+							   value="@gst.FirstName"
+							   placeholder="First & middle name"
+							   name="passengerdetails[@i].First"
+							   style="text-transform:uppercase"
+							   required />
 
 					</div>
 					<p id="error-Fname" class="error-message  error-CFname" style="display: none;"></p>
@@ -158,7 +163,13 @@
 				<div class="col-md-2">
 
 					<div class="form-input">
-						<input type="text" class="contactLname validate-field" data-validate="last" oninput="validateInputT(event,@i)" maxlength="16" value="@gstData[0].LastName" placeholder="Last name" name="passengerdetails[@i].Last" style='text-transform:uppercase' required />
+						<input type="text" class="contactLname validate-field" data-validate="last"
+							   maxlength="16" oninput="validateInputT(event,@i)"
+							   value="@gst.LastName"
+							   placeholder="Last name"
+							   name="passengerdetails[@i].Last"
+							   style="text-transform:uppercase"
+							   required />
 
 					</div>
 					<p id="error-Lname" class="error-message error-CLname" style="display:none"></p>
@@ -168,7 +179,15 @@
 					if (Model.passeengerlist.passengers[i].passengerTypeCode == "ADT" || Model.passeengerlist.passengers[i].passengerTypeCode == "CHD")
 					{
 						<div class="col-md-3">
-							<div class="form-input"><input type="text" data-validate="email" class="contactemail validate-field" maxlength="50" oninput="validateInputT(event,@i)" value="@gstData[0].BusinessEmail" id="contactemailID" placeholder="email" name="" required /></div>
+							<div class="form-input">
+								<input type="text" data-validate="email" class="contactemail validate-field"
+									   maxlength="50" oninput="validateInputT(event,@i)"
+									   value="@gst.BusinessEmail"
+									   id="contactemailID"
+									   placeholder="email"
+									   name=""
+									   required />
+							</div>
 						</div>
 						<p class="error-message error-emailname" style="display:none"></p>
 						<p class="error-message-val " style="display:none"></p>
@@ -185,8 +204,15 @@
 							
 							<div class="form-input">
 
-								<input type="text" data-validate="phone" id="contactphoneID" maxlength="20" class="contactphone validate-field" oninput="validateInputT(event,@i)" placeholder="phone" value="@gstData[0].MobileNumber" name="passengerdetails[@i].mobile" required />
-								</div>
+								<input type="text" data-validate="phone" id="contactphoneID"
+									   maxlength="20"
+									   class="contactphone validate-field"
+									   oninput="validateInputT(event,@i)"
+									   placeholder="phone"
+									   value="@gst.MobileNumber"
+									   name="passengerdetails[@i].mobile"
+									   required />
+							</div>
 							
 							
 						</div>
@@ -194,7 +220,15 @@
 				<p class="error-message-val" style="display:none"></p>
 
 						<div class="col-md-3 ml-10 mt-10">
-						<div class="form-input"><input type="text" data-validate="ff" id="FFID" maxlength="15" class="contactphone validate-field" oninput="validateInputT(event,@i)" placeholder="FrequentFlyerNumbers" value="@gstData[0].FrequentFlyerNumbers" required /></div>
+						<div class="form-input">
+								<input type="text" data-validate="ff" id="FFID"
+									   maxlength="15"
+									   class="contactphone validate-field"
+									   oninput="validateInputT(event,@i)"
+									   placeholder="FrequentFlyerNumbers"
+									   value="@gst.FrequentFlyerNumbers"
+									   required />
+						</div>
 						
 					</div>
 		    }

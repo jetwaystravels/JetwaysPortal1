@@ -701,34 +701,34 @@ namespace OnionConsumeWebAPI.Controllers
                     tb_Airlines.AirlineID = 1;
                     tb_Airlines.AirlneName = JsonObjPNRBooking.data.info.owningCarrierCode;// "Boing";
                     tb_Airlines.AirlineDescription = "AirIndia Express";
-                    tb_Airlines.CreatedDate = DateTime.Now;
-                    tb_Airlines.Createdby = "Online";
-                    tb_Airlines.Modifieddate = DateTime.Now;
-                    tb_Airlines.Modifyby = "Online";
-                    tb_Airlines.Status = "0";
+                    tb_Airlines.CreatedDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
+                    tb_Airlines.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
+                    tb_Airlines.Modifieddate = JsonObjPNRBooking.data.info.modifiedDate;// DateTime.Now;
+                    tb_Airlines.Modifyby = JsonObjPNRBooking.data.info.modifiedAgentId; //"Online";
+                    tb_Airlines.Status = JsonObjPNRBooking.data.info.status; //"0";
 
                     tb_AirCraft tb_AirCraft = new tb_AirCraft();
                     tb_AirCraft.Id = 1;
                     tb_AirCraft.AirlineID = 1;
-                    tb_AirCraft.AirCraftName = "Airbus";
-                    tb_AirCraft.AirCraftDescription = " City Squares Worldwide";
+                    tb_AirCraft.AirCraftName = "";// "Airbus"; to do
+                    tb_AirCraft.AirCraftDescription = " ";// " City Squares Worldwide"; to do
                     tb_AirCraft.CreatedDate = DateTime.Now;
                     tb_AirCraft.Modifieddate = DateTime.Now;
-                    tb_AirCraft.Createdby = "Online";
-                    tb_AirCraft.Modifyby = "Online";
-                    tb_AirCraft.Status = "0";
+                    tb_AirCraft.Createdby = JsonObjPNRBooking.data.info.createdAgentId;// "Online";
+                    tb_AirCraft.Modifyby = JsonObjPNRBooking.data.info.modifiedAgentId;// "Online";
+                    tb_AirCraft.Status = JsonObjPNRBooking.data.info.status; //"0";
 
                     ContactDetail contactDetail = new ContactDetail();
                     contactDetail.BookingID = JsonObjPNRBooking.data.bookingKey;
                     contactDetail.FirstName = JsonObjPNRBooking.data.contacts.P.name.first;
                     contactDetail.LastName = JsonObjPNRBooking.data.contacts.P.name.last;
                     contactDetail.EmailID = JsonObjPNRBooking.data.contacts.P.emailAddress;
-                    contactDetail.MobileNumber = 789456123;
-                    contactDetail.CreateDate = DateTime.Now;
-                    contactDetail.CreateBy = "Admin";
-                    contactDetail.ModifyDate = DateTime.Now;
-                    contactDetail.ModifyBy = "Admin";
-                    contactDetail.Status = 0;
+                    contactDetail.MobileNumber = 789456123; // todo
+                    contactDetail.CreateDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
+                    contactDetail.CreateBy = JsonObjPNRBooking.data.info.createdAgentId; //"Admin";
+                    contactDetail.ModifyDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
+                    contactDetail.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId; //"Admin";
+                    contactDetail.Status = JsonObjPNRBooking.data.info.status;// 0;
                     GSTDetails gSTDetails = new GSTDetails();
                     if (JsonObjPNRBooking.data.contacts.G != null)
                     {
@@ -737,7 +737,7 @@ namespace OnionConsumeWebAPI.Controllers
                         gSTDetails.GSTNumber = JsonObjPNRBooking.data.contacts.G.customerNumber;
                         gSTDetails.GSTName = JsonObjPNRBooking.data.contacts.G.companyName;
                         gSTDetails.airLinePNR = JsonObjPNRBooking.data.recordLocator;
-                        gSTDetails.status = 0;
+                        gSTDetails.status = JsonObjPNRBooking.data.info.status; //0;
                     }
 
                     tb_PassengerTotal tb_PassengerTotalobj = new tb_PassengerTotal();
@@ -762,11 +762,11 @@ namespace OnionConsumeWebAPI.Controllers
 
                     tb_PassengerTotalobj.TotalBookingAmount = JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                     tb_PassengerTotalobj.totalBookingAmount_Tax = JsonObjPNRBooking.data.breakdown.journeyTotals.totalTax;
-                    tb_PassengerTotalobj.Modifyby = "Online";
-                    tb_PassengerTotalobj.Createdby = "Online";
-                    tb_PassengerTotalobj.Status = "0";
-                    tb_PassengerTotalobj.CreatedDate = DateTime.Now;
-                    tb_PassengerTotalobj.ModifiedDate = DateTime.Now;
+                    tb_PassengerTotalobj.Modifyby = JsonObjPNRBooking.data.info.createdDate;// "Online";
+                    tb_PassengerTotalobj.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
+                    tb_PassengerTotalobj.Status = JsonObjPNRBooking.data.info.status; //"0";
+                    tb_PassengerTotalobj.CreatedDate = JsonObjPNRBooking.data.info.createdDate;// DateTime.Now;
+                    tb_PassengerTotalobj.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
                     var passangerCount = JsonObjPNRBooking.data.passengers;
                     int PassengerDataCount = ((Newtonsoft.Json.Linq.JContainer)passangerCount).Count;
                     List<tb_PassengerDetails> tb_PassengerDetailsList = new List<tb_PassengerDetails>();
@@ -792,11 +792,11 @@ namespace OnionConsumeWebAPI.Controllers
 
                             tb_Passengerobj.TotalAmount = JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                             tb_Passengerobj.TotalAmount_tax = JsonObjPNRBooking.data.breakdown.journeyTotals.totalTax;
-                            tb_Passengerobj.CreatedDate = DateTime.Now;
-                            tb_Passengerobj.Createdby = "Online";
-                            tb_Passengerobj.ModifiedDate = DateTime.Now;
-                            tb_Passengerobj.ModifyBy = "Online";
-                            tb_Passengerobj.Status = "0";
+                            tb_Passengerobj.CreatedDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
+                            tb_Passengerobj.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
+                            tb_Passengerobj.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
+                            tb_Passengerobj.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId; //"Online";
+                            tb_Passengerobj.Status = JsonObjPNRBooking.data.info.status; //"0";
                             if (items.Value.infant != null)
                             {
                                 tb_Passengerobj.Inf_TypeCode = "INFT";
@@ -897,11 +897,11 @@ namespace OnionConsumeWebAPI.Controllers
                         tb_JourneysObj.Destination = JsonObjPNRBooking.data.journeys[i].designator.destination;
                         tb_JourneysObj.DepartureDate = JsonObjPNRBooking.data.journeys[i].designator.departure;
                         tb_JourneysObj.ArrivalDate = JsonObjPNRBooking.data.journeys[i].designator.arrival;
-                        tb_JourneysObj.CreatedDate = DateTime.Now;
-                        tb_JourneysObj.Createdby = "Online";
-                        tb_JourneysObj.ModifiedDate = DateTime.Now;
-                        tb_JourneysObj.Modifyby = "Online";
-                        tb_JourneysObj.Status = "0";
+                        tb_JourneysObj.CreatedDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
+                        tb_JourneysObj.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
+                        tb_JourneysObj.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
+                        tb_JourneysObj.Modifyby = JsonObjPNRBooking.data.info.modifiedAgentId; //"Online";
+                        tb_JourneysObj.Status = JsonObjPNRBooking.data.info.status; //"0";
                         tb_JourneysList.Add(tb_JourneysObj);
                         int SegmentReturnCountt = JsonObjPNRBooking.data.journeys[0].segments.Count;
                         for (int j = 0; j < SegmentReturnCountt; j++)
@@ -917,16 +917,15 @@ namespace OnionConsumeWebAPI.Controllers
                             segmentReturnobj.ArrivalDate = JsonObjPNRBooking.data.journeys[0].segments[j].designator.arrival;
                             segmentReturnobj.Identifier = JsonObjPNRBooking.data.journeys[0].segments[j].identifier.identifier;
                             segmentReturnobj.CarrierCode = JsonObjPNRBooking.data.journeys[0].segments[j].identifier.carrierCode;
-                            segmentReturnobj.Seatnumber = "2";
-                            segmentReturnobj.MealCode = "VScODE";
-                            segmentReturnobj.MealDiscription = "it is a coffe";
-                            segmentReturnobj.DepartureTerminal = 2;
-                            segmentReturnobj.ArrivalTerminal = 1;
-                            segmentReturnobj.CreatedDate = DateTime.Now;
-                            segmentReturnobj.ModifiedDate = DateTime.Now;
-                            segmentReturnobj.Createdby = "Online";
-                            segmentReturnobj.Modifyby = "Online";
-                            segmentReturnobj.Status = "0";
+                            segmentReturnobj.Seatnumber = "2"; // to do
+                            segmentReturnobj.MealCode = "VScODE"; // to do
+                            segmentReturnobj.MealDiscription = "it is a coffe"; // to fo
+                            segmentReturnobj.DepartureTerminal = 2; // to do
+                            segmentReturnobj.ArrivalTerminal = 1;// to do
+                            segmentReturnobj.CreatedDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
+                            segmentReturnobj.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
+                            segmentReturnobj.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
+                            segmentReturnobj.Modifyby = JsonObjPNRBooking.data.info.modifiedAgentId; //"Online";
                             segmentReturnsListt.Add(segmentReturnobj);
 
                         }
