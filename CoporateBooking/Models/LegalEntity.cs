@@ -13,9 +13,16 @@ namespace CoporateBooking.Models
         public string SuppId;
         public string Guid;
 
+        public string UserId;
+
         public string Username;
         public string Password;
         public string Email;
+
+
+        public string LegalFullName;
+        public string BillingEntityFullName;
+        public string EmployeeFullName;
 
         public DateTime CreatedDate;
 

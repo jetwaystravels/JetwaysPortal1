@@ -123,6 +123,12 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             // Optional: Deserialize JSON if you have a model
                             // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
                             ViewBag.CustomerData = jsonData;
+
+
+                            MongoHelper objMongoHelper = new MongoHelper();
+                            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+                            ViewBag.combined = _mongoDBHelper.GetALLlegalEntityDataByUserid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value).Result;
+
                         }
 
                     }
@@ -390,12 +396,17 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 {
                     // Split and trim the legal entity name safely
                     legalEntity.BillingEntityName = rawLegalEntity.Split('-')[0].Trim();
+                    legalEntity.BillingEntityFullName = rawLegalEntity;
 
                     // Employee ID
                     legalEntity.Employee = Convert.ToString(formCollection["hdnempid"]);
+                    legalEntity.EmployeeFullName = Convert.ToString(formCollection["employee"]);
 
                     // Legal Name (from "billing")
                     string rawBilling = Convert.ToString(formCollection["billing"]);
+
+                    legalEntity.LegalFullName = rawBilling;
+
                     legalEntity.LegalName = string.IsNullOrWhiteSpace(rawBilling)
                         ? null
                         : rawBilling.Split('-')[0].Trim();
@@ -425,6 +436,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                     legalEntity.Username = username;
                     legalEntity.Password = username;  // Consider revising if not a placeholder
                     legalEntity.Email = username;
+                    legalEntity.UserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
                     // Save to DB
                     _mongoDBHelper.SaveUpdateLegalEntity(legalEntity);
@@ -2807,7 +2819,12 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         string journeyKey = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].JourneySellKey;
                         Designator Designatorobj = new Designator();
                         Designatorobj.origin = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].DepartureStation;
+                        if (string.IsNullOrEmpty(Designatorobj.origin))
+                            Designatorobj.origin = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].AvailableSegment[0].DepartureStation;
+
                         Designatorobj.destination = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].ArrivalStation;
+                        if (string.IsNullOrEmpty(Designatorobj.destination))
+                            Designatorobj.destination = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].AvailableSegment[0].ArrivalStation;
                         string journeykey = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].JourneySellKey.ToString();
                         string departureTime = Regex.Match(journeykey, @Designatorobj.origin + @"[\s\S]*?~(?<STD>[\s\S]*?)~").Groups["STD"].Value.Trim();
                         string arrivalTime = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
@@ -2829,7 +2846,10 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         string queryorigin = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].DepartureStation;
 
                         string querydestination = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].ArrivalStation;
-
+                        if (string.IsNullOrEmpty(querydestination))
+                            querydestination = Designatorobj.destination;
+                        if (string.IsNullOrEmpty(queryorigin))
+                            queryorigin = Designatorobj.origin;
                         Designatorobj.destination = Citynamelist.GetAllCityData().Where(x => x.citycode == querydestination).SingleOrDefault().cityname;
                         Designatorobj.origin = Citynamelist.GetAllCityData().Where(x => x.citycode == queryorigin).SingleOrDefault().cityname;
 
@@ -3219,7 +3239,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                 string _fareSellkey = "";
                                                 string fareAvailabilityKey = "";
                                                 string fareAvailabilityKeyhead = "";
-                                                var procuctclass = "Corporate " +matchingItineraries[j].Bonds[k1].Legs[l].Branddesc;
+                                                var procuctclass = "Corporate " + matchingItineraries[j].Bonds[k1].Legs[l].Branddesc;
                                                 fareAvailabilityKey = matchingItineraries[j].Bonds[k1].Legs[l]._FareBasisCodeforAirpriceHit;
                                                 var passengertype = "";
                                                 fareAmount = 0.0M;

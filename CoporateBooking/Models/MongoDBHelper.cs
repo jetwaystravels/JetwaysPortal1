@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
 using CoporateBooking.Models;
 using System;
+using ServiceLayer.Service.Interface;
+using StackExchange.Redis;
 
 namespace OnionConsumeWebAPI.Models
 {
@@ -82,7 +84,82 @@ namespace OnionConsumeWebAPI.Models
             return guid;
         }
 
-		public async Task<MongoResponces> GetALLFlightResulByGUIDRoundTrip(string guid)
+        public async Task<dynamic> GetALLlegalEntityDataByUserid(string userid)
+        {
+            List<LegalEntity> legalEntity = null;
+            List<dynamic> combined = null;
+
+            try
+            {
+                legalEntity = await mDB.GetCollection<LegalEntity>("LegalBill")
+                    .Find(Builders<LegalEntity>.Filter.Eq("UserId", userid))
+                    .Sort(Builders<LegalEntity>.Sort.Descending("CreatedDate"))
+                    .ToListAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "GetALLlegalEntityDataByUserid method", _connectionString);
+            }
+
+            SearchLog searchLog = null;
+
+            try
+            {
+                foreach (var entity in legalEntity)
+                {
+                    if (entity.Guid == null)
+                    {
+                        continue;
+                    }
+                    // Get the latest search log for each legal entity
+                    searchLog = await mDB.GetCollection<SearchLog>("LogSearchData")
+                        .Find(Builders<SearchLog>.Filter.Eq("Log_WSGUID", entity.Guid))
+                        .Sort(Builders<SearchLog>.Sort.Descending("Log_DateTime"))
+                        .FirstOrDefaultAsync().ConfigureAwait(false);
+                    if (searchLog != null)
+                    {
+                        // Combine legal entity and search log data
+                        if (legalEntity != null && searchLog != null)
+                        {
+
+                            if (combined == null)
+                                combined = new List<dynamic>();
+                            var entityData = new
+                            {
+                                LegalEntityName = entity.LegalName,
+                                LegalUserId = entity.UserId,
+                                BillingEntityName = entity.BillingEntityName,
+                                Balance = entity.Balance,
+                                BillingEntityFullName = entity.BillingEntityFullName,
+                                LegalEntityFullName = entity.LegalFullName,
+                                EmployeeFullName = entity.EmployeeFullName,
+                                SearchOriginCode  = searchLog.OrgCode,
+                                SearchdestCode = searchLog.DestCode,
+                                SearchOrigin = searchLog.Origin,
+                                Searchdest = searchLog.Destination,
+                                SearchLogDeptDateTime = searchLog.DepartDateTime,
+                                SearchLogArrDateTime = searchLog.ArrivalDateTime
+                            };
+                            combined.Add(entityData);
+
+                            
+                        }
+                    }
+                }
+                return combined;
+
+            }
+            catch (Exception ex)
+            {
+                logger.WriteLog(ex, "GetALLlegalEntityDataByUserid method", _connectionString);
+            }
+
+            
+
+            return null;
+        }
+
+        public async Task<MongoResponces> GetALLFlightResulByGUIDRoundTrip(string guid)
 		{
 			MongoResponces srchDataALL = new MongoResponces();
 			try

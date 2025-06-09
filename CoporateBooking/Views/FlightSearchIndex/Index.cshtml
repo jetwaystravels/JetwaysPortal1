@@ -11,27 +11,27 @@
 <style>
 
     .Radiohide input {
-        display: none;
+    display: none;
     }
 
     .endselect {
-        cursor: pointer;
+    cursor: pointer;
     }
 
 
     .custom-tooltip {
-        position: absolute;
-        display: none;
-        background: #fff; /* White background */
-        color: #666; /* Gray text */
-        border: 1px solid #ccc;
-        padding: 6px 10px;
-        border-radius: 4px;
-        font-size: 13px;
-        white-space: nowrap;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        z-index: 9999;
-        pointer-events: none;
+    position: absolute;
+    display: none;
+    background: #fff; /* White background */
+    color: #666; /* Gray text */
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    pointer-events: none;
     }
 
 </style>
@@ -128,16 +128,16 @@
                     <nav>
                         <ul class="navbar-nav" id="top-navbar-nav">
                             <li class="nav-item">
-                            <li class="nav-item">
-                                <small>Language</small>
-                                <select aria-label="Default">
-                                    <option>English</option>
-                                    <option value="1">French</option>
-                                    <option value="2">Russian </option>
-                                    <option value="3">Spanish</option>
-                                    <option value="3">Arabic</option>
-                                </select>
-                            </li>
+                                <li class="nav-item">
+                                    <small>Language</small>
+                                    <select aria-label="Default">
+                                        <option>English</option>
+                                        <option value="1">French</option>
+                                        <option value="2">Russian </option>
+                                        <option value="3">Spanish</option>
+                                        <option value="3">Arabic</option>
+                                    </select>
+                                </li>
                             </li>
                             <li class="nav-item">
                                 <small>Country</small>
@@ -388,7 +388,7 @@
                                                 <div class="col-12 col-md-10 col-lg-3">
                                                     <label>Billing Entity Name</label>
                                                     <div class="autocomplete-wrapper">
-                                                        <input type="text" id="billingSelect" placeholder="Enter Billing name" class="autocomplete-input billing" required autocomplete="off" />
+                                                        <input type="text" id="billingSelect" placeholder="Enter Billing name" name="billing" class="autocomplete-input billing" required autocomplete="off" />
                                                         <span class="remove-icon">×</span>
                                                     </div>
                                                 </div>
@@ -396,7 +396,7 @@
                                                 <!-- Balance -->
                                                 <div class="col-12 col-md-10 col-lg-2 mt-5">
                                                     <label>Balance</label>
-                                                    <input type="text" name="balance" class="form-control balance-input" placeholder="₹ 0.00" readonly />
+                                                    <input type="text" id="Mydiv" name="balance" class="form-control balance-input" placeholder="₹ 0.00" readonly />
                                                 </div>
                                             </div>
                                         </div>
@@ -429,7 +429,7 @@
                                                     string Serchhome = ViewBag.SearchHome;
                                                     if (!string.IsNullOrEmpty(Serchhome))
                                                     {
-                                                        //object _simpleAvailabilityRequestModel = Newtonsoft.Json.JsonConvert.DeserializeObject<object>(Serchhome);
+                                                    //object _simpleAvailabilityRequestModel = Newtonsoft.Json.JsonConvert.DeserializeObject<object>(Serchhome);
 
 
                                                         model = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(Serchhome);
@@ -676,7 +676,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+
+                                @if (ViewBag.combined != null)
+                                {
+                                    int cnt = 0;
+                                    foreach (var item in ViewBag.combined)
+                                    {
+                                        cnt = cnt + 1;
+                                        <tr>
+                                            
+                                            <td id="uid@(cnt)" style="display:none;">@item.LegalUserId</td>
+                                            <td id="len@(cnt)" style="display:none;">@item.LegalEntityName</td>
+                                            <td id="ben@(cnt)">@item.BillingEntityFullName</td>
+                                            <td id="unm@(cnt)">@item.EmployeeFullName</td>
+                                            <td>@item.LegalEntityFullName</td>
+                                            <td id="uorg@(cnt)">@item.SearchOrigin @item.SearchOriginCode</td>
+                                            <td id="udes@(cnt)">@item.Searchdest @item.SearchdestCode</td>
+                                            <td id="udep@(cnt)">@item.SearchLogDeptDateTime</td>
+                                            <td id="uarr@(cnt)">@item.SearchLogArrDateTime</td>
+                                            <td><button type="button" class="btn btn-lg btn-block" onclick="return SearchSelect(@cnt);" >Select</button></td>
+                                        </tr>
+                                    }
+
+                                   
+
+                                }
+
+                              @*   <tr>
                                     <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
                                     <td>Vinay kumar</td>
                                     <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
@@ -685,28 +711,7 @@
                                     <td>2025-03-12 </td>
                                     <td>2025-03-18 </td>
                                     <td><button type="submit" class="btn btn-lg btn-block">Select</button></td>
-                                </tr>
-                                <tr>
-                                    <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
-                                    <td>Raja kumar</td>
-                                    <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
-                                    <td>New DELHI</td>
-                                    <td>Mumbai BOM</td>
-                                    <td>2025-03-18 </td>
-                                    <td>2025-03-25 </td>
-                                   
-                                    <td><button type="submit" class="btn btn-lg btn-block">Select</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Jetways Travels Pvt</td>
-                                    <td>Menu kumari</td>
-                                    <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
-                                    <td>New DELHI</td>
-                                    <td>Mumbai BOM</td>
-                                    <td>2025-03-18 </td>
-                                    <td>2025-03-25 </td>
-                                </tr>
-
+                                </tr> *@
                             </tbody>
                         </table>
                     </div>
@@ -1464,6 +1469,53 @@
             });
         </script>
         <!--End login popup -->
+
+        <script>
+            function SearchSelect(id)
+            {
+               var autocompleteInstance = $('#legalEntitySelect').autocomplete('instance');
+
+            // Create a mock event object
+                var event = $.Event('autocompleteselect');
+                event.item = { value: document.getElementById("ben"+id).innerText }; // Replace with the value you want to select
+
+                // Manually trigger the 'select' event
+                autocompleteInstance._trigger('select', event, { item: event.item });
+
+                // Optionally, update the input field with the selected value
+                $('#legalEntitySelect').val(event.item.value);
+
+            const $employeeInput = $('#employeeSelect');
+            const autocompleteInstance2 = $employeeInput.autocomplete('instance');
+            const event1 = $.Event('autocompleteselect');
+            event1.item = { value: document.getElementById("unm"+id).innerText, id: document.getElementById("uid"+id).innerText };
+
+               autocompleteInstance2._trigger('select', event1, { item: event1.item });
+
+
+          //  document.getElementById("employeeSelect").value = document.getElementById("unm"+id).innerText;
+            // Optionally, update the hidden employee ID field
+            $('#hdnempid').val(document.getElementById("uid"+id).innerText);
+
+            document.getElementById("myInput").value = document.getElementById("uorg"+id).innerText;
+               document.getElementById("myInput1").value = document.getElementById("udes"+id).innerText;
+
+
+                    document.getElementById("start-date").value = document.getElementById("udep"+id).innerText;
+                  document.getElementById("end-date").value = document.getElementById("uarr"+id).innerText;
+
+              $('#Mydiv').focus();
+
+            //          document.getElementById('Mydiv').addEventListener('click', function() {
+            //     this.focus();
+            // });
+
+         //   fetchBillingEntities();
+
+            }
+        </script>
+
+
     }
 
 </body>
