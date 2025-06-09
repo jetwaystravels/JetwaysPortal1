@@ -1475,6 +1475,10 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         if (string.IsNullOrEmpty(Designatorobj.destination))
                             Designatorobj.destination = _GetfligthModel.destination;
                         string journeykey = _IndigoAvailabilityResponseobj.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].JourneySellKey.ToString();
+                        if (!journeykey.Contains(Designatorobj.destination))
+                            continue;
+                        if (!journeykey.Contains(Designatorobj.origin))
+                            continue;
                         string departureTime = Regex.Match(journeykey, @Designatorobj.origin + @"[\s\S]*?~(?<STD>[\s\S]*?)~").Groups["STD"].Value.Trim();
                         string arrivalTime = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
                         Designatorobj.departure = DateTime.ParseExact(departureTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture); //Convert.ToDateTime(departureTime);
@@ -2820,12 +2824,16 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                         Designator Designatorobj = new Designator();
                         Designatorobj.origin = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].DepartureStation;
                         if (string.IsNullOrEmpty(Designatorobj.origin))
-                            Designatorobj.origin = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].AvailableSegment[0].DepartureStation;
+                            Designatorobj.origin = _GetfligthModel.origin;// _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].AvailableSegment[0].DepartureStation;
 
                         Designatorobj.destination = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].ArrivalStation;
                         if (string.IsNullOrEmpty(Designatorobj.destination))
-                            Designatorobj.destination = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].AvailableSegment[0].ArrivalStation;
+                            Designatorobj.destination = _GetfligthModel.destination; //_IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].AvailableSegment[0].ArrivalStation;
                         string journeykey = _IndigoAvailabilityResponseobjR.GetTripAvailabilityVer2Response.Schedules[0][0].AvailableJourneys[i].JourneySellKey.ToString();
+                        if (!journeykey.Contains(Designatorobj.destination))
+                            continue;
+                        if (!journeykey.Contains(Designatorobj.origin))
+                            continue;
                         string departureTime = Regex.Match(journeykey, @Designatorobj.origin + @"[\s\S]*?~(?<STD>[\s\S]*?)~").Groups["STD"].Value.Trim();
                         string arrivalTime = Regex.Match(journeykey, @Designatorobj.destination + @"[\s\S]*?~(?<STA>[\s\S]*?)~").Groups["STA"].Value.Trim();
                         Designatorobj.departure = DateTime.ParseExact(departureTime, "MM/dd/yyyy HH:mm", CultureInfo.InvariantCulture); //Convert.ToDateTime(departureTime);

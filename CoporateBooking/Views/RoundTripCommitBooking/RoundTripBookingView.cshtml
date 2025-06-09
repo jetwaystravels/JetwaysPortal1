@@ -1550,13 +1550,13 @@
                                                                         continue;
                                                                     /* var weight = htSSr[htbag[hashdata]];
                                                                     <td>@htbag[hashdata] - @weight</td>*/
-                                                                                                                                                        var weight = htbag[hashdata];
+                                                                    var weight = htbag[hashdata];
                                                                     var _weight = weight;
                                                                     //if(_weight=="")
                                                                     //{
-                                                                        _weight = htSSr[weight].ToString().Replace("kg","");
+                                                                        _weight = htSSr[weight].ToString().Replace("kg","").Replace("Kg","");
                                                                     //}
-                                                                    <td>XBAG-@_weight Kg</td>
+                                                                    <td>@weight-@_weight Kg</td>
                                                                 }
                                                                 else
                                                                 {

@@ -1515,6 +1515,15 @@
             }
         </script>
 
+        <!--Clander auto open  popup -->
+        <script>
+
+                $("#arrivalItemId").on("change", function () {
+                const selectedText = $(this).find("option:selected").text();
+                $("#myInput1").val(selectedText);
+                $("#start-date").focus().datepicker("show"); // For jQuery UI
+            });
+        </script>
 
     }
 

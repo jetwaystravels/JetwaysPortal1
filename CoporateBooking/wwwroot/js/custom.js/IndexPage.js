@@ -115,8 +115,6 @@ function checkOnlyThis(checkbox) {
 $(document).ready(function () {
     $('#arrivalItemId').chosen();
     $('#arrivalItemId').trigger('chosen:open');
-
-
     $('#basic-addon1').on('click', function (event) {
         event.stopPropagation();
         $('#arrivalItemId').trigger('chosen:open');
@@ -208,28 +206,44 @@ function toggleDropdownArrival() {
 
 
 function arrivalSelection() {
+    // Debugging (optional during dev)
     debugger;
-    $('.autoarrival input').focus();
-    //alert("Hello Test");
-    var dropdown = document.getElementById("arrivalItemId");
-    var selectedValue = dropdown.value;
-    var selectedOption = dropdown.options[dropdown.selectedIndex];
-    var cityDetails = selectedOption.text.split('-');
-    var cityName = cityDetails[0].trim();
-    var cityCode = cityDetails[1].trim();
-    var airportName = cityDetails[2].trim();
 
-    //alert("Selected City Name: " + cityName);
-    //alert("Selected City Code: " + cityCode);
-    //alert("Selected Airport Name: " + airportName);
-    document.getElementById("myInput1").value = cityName + "-" + cityCode;
-    document.getElementById("airportArval").innerHTML = airportName;
+    // Get dropdown and selected option
+    var dropdown = document.getElementById("arrivalItemId");
+    var selectedOption = dropdown.options[dropdown.selectedIndex];
+
+    // Defensive check
+    if (!selectedOption || !selectedOption.text) return;
+
+    // Extract city and airport info
+    var cityDetails = selectedOption.text.split('-');
+    var cityName = cityDetails[0]?.trim() || "";
+    var cityCode = cityDetails[1]?.trim() || "";
+    var airportName = cityDetails[2]?.trim() || "";
+
+    // Update input and label
+    document.getElementById("myInput1").value = `${cityName} - ${cityCode}`;
     var airportElement = document.getElementById("airportArval");
     airportElement.innerHTML = airportName;
     airportElement.title = airportName;
+
+    // Hide any custom dropdowns (optional UI logic)
     $('.chosen-drop').hide();
+
+    // Reset dropdown selection
     dropdown.selectedIndex = -1;
+
+    // ✅ Auto-focus and open Departure Date calendar
+    var departureInput = document.getElementById("start-date");
+    if (departureInput) {
+        departureInput.focus(); // Focus ensures calendar hint
+        if (typeof departureInput.showPicker === "function") {
+            departureInput.showPicker(); // Chrome/Edge only
+        }
+    }
 }
+
 
 
 
