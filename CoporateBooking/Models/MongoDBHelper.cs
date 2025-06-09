@@ -94,6 +94,7 @@ namespace OnionConsumeWebAPI.Models
                 legalEntity = await mDB.GetCollection<LegalEntity>("LegalBill")
                     .Find(Builders<LegalEntity>.Filter.Eq("UserId", userid))
                     .Sort(Builders<LegalEntity>.Sort.Descending("CreatedDate"))
+                    .Limit(5)
                     .ToListAsync().ConfigureAwait(false);
             }
             catch (Exception ex)

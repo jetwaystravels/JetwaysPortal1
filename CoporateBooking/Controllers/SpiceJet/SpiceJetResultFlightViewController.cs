@@ -675,57 +675,59 @@ namespace OnionConsumeWebAPI.Controllers
                         logs.WriteLogs(JsonConvert.SerializeObject(sellSsrRequest), "6-SellSSRInfantRequest", "SpicejetOneWay", "oneway");
                         logs.WriteLogs(JsonConvert.SerializeObject(sellSsrResponse), "6-SellSSRInfantResponse", "SpicejetOneWay", "oneway");
 
-                        //if (sellSsrResponse != null)
-                        //{
-                            //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                            //var JsonsellSsrResponse = sellSsrResponse;
-                        //}
                         #endregion
-
-                        #region GetState
-                        GetBookingFromStateResponse _GetBookingFromStateRS = null;
-                        GetBookingFromStateRequest _GetBookingFromStateRQ = null;
-                        _GetBookingFromStateRQ = new GetBookingFromStateRequest();
-                        _GetBookingFromStateRQ.Signature = Signature;
-                        _GetBookingFromStateRQ.ContractVersion = 420;
-
-
-                        objSpiceJet = new SpiceJetApiController();
-                        _GetBookingFromStateRS = await objSpiceJet.GetBookingFromState(_GetBookingFromStateRQ);
-
-                        //str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS);
-                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_GetBookingFromStateRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_GetBookingFromStateRS), "GetBookingFromState", "SpicejetOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(_GetBookingFromStateRQ), "7-GetBookingFromStateRequest", "SpicejetOneWay", "oneway");
-                        logs.WriteLogs(JsonConvert.SerializeObject(_GetBookingFromStateRS), "7-GetBookingFromStateResponse", "SpicejetOneWay", "oneway");
-
-                        if (_GetBookingFromStateRS != null)
+                        if (JsonConvert.SerializeObject(sellSsrResponse).ToLower().Contains("ssr inft is not available"))
                         {
-                            //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
-                            var JsonSellSSrInfant = _GetBookingFromStateRS;
-                            int Inftbasefare = 0;
-                            int Inftcount = 0;
-                            int infttax = 0;
-                            if (_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees.Length > 0)
-                            {
-                                for (int i = 0; i < _GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges.Length; i++)
-                                {
-                                    if (i == 0)
-                                    {
-                                        Inftbasefare = Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges[0].Amount);
-                                        Inftcount += Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers.Length);
-                                        AirAsiaTripResponceobj.inftcount = Inftcount;
-                                        AirAsiaTripResponceobj.inftbasefare = Inftbasefare;
-                                    }
-                                    else
-                                    {
-                                        infttax += Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges[i].Amount);
-                                    }
-
-                                }
-                                AirAsiaTripResponceobj.infttax = infttax * infantcount;
-                            }
+                            AirAsiaTripResponceobj.ErrorMsg = Regex.Match(JsonConvert.SerializeObject(sellSsrResponse), "\"Text\":\"(?<msg>[\\s\\S]*?)\"", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["msg"].Value.Trim();
                         }
-                        #endregion
+                        if (string.IsNullOrEmpty(AirAsiaTripResponceobj.ErrorMsg))
+                        {
+
+                            #region GetState
+                            GetBookingFromStateResponse _GetBookingFromStateRS = null;
+                            GetBookingFromStateRequest _GetBookingFromStateRQ = null;
+                            _GetBookingFromStateRQ = new GetBookingFromStateRequest();
+                            _GetBookingFromStateRQ.Signature = Signature;
+                            _GetBookingFromStateRQ.ContractVersion = 420;
+
+
+                            objSpiceJet = new SpiceJetApiController();
+                            _GetBookingFromStateRS = await objSpiceJet.GetBookingFromState(_GetBookingFromStateRQ);
+
+                            //str3 = JsonConvert.SerializeObject(_GetBookingFromStateRS);
+                            //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_GetBookingFromStateRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_GetBookingFromStateRS), "GetBookingFromState", "SpicejetOneWay", "oneway");
+                            logs.WriteLogs(JsonConvert.SerializeObject(_GetBookingFromStateRQ), "7-GetBookingFromStateRequest", "SpicejetOneWay", "oneway");
+                            logs.WriteLogs(JsonConvert.SerializeObject(_GetBookingFromStateRS), "7-GetBookingFromStateResponse", "SpicejetOneWay", "oneway");
+
+                            if (_GetBookingFromStateRS != null)
+                            {
+                                //var _responseSeatAssignment = responceSeatAssignment.Content.ReadAsStringAsync().Result;
+                                var JsonSellSSrInfant = _GetBookingFromStateRS;
+                                int Inftbasefare = 0;
+                                int Inftcount = 0;
+                                int infttax = 0;
+                                if (_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees.Length > 0)
+                                {
+                                    for (int i = 0; i < _GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges.Length; i++)
+                                    {
+                                        if (i == 0)
+                                        {
+                                            Inftbasefare = Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges[0].Amount);
+                                            Inftcount += Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers.Length);
+                                            AirAsiaTripResponceobj.inftcount = Inftcount;
+                                            AirAsiaTripResponceobj.inftbasefare = Inftbasefare;
+                                        }
+                                        else
+                                        {
+                                            infttax += Convert.ToInt32(_GetBookingFromStateRS.BookingData.Passengers[0].PassengerFees[0].ServiceCharges[i].Amount);
+                                        }
+
+                                    }
+                                    AirAsiaTripResponceobj.infttax = infttax * infantcount;
+                                }
+                            }
+                            #endregion
+                        }
 
                        // HttpContext.Session.SetString("SGkeypassenger", JsonConvert.SerializeObject(AirAsiaTripResponceobj));
 						seatMealdetail.ResultRequest = objMongoHelper.Zip(JsonConvert.SerializeObject(AirAsiaTripResponceobj));

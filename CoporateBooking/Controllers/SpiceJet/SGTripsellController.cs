@@ -95,6 +95,15 @@ namespace OnionConsumeWebAPI.Controllers
                 List<passkeytype> passengerNamedetailsdata = (List<passkeytype>)JsonConvert.DeserializeObject(passengerNamedetails, typeof(List<passkeytype>));
                 vm.passengerNamedetails = passengerNamedetailsdata;
             }
+            if (vm.passeengerlist.ErrorMsg != null)
+            {
+                ViewBag.ErrorMessage = vm.passeengerlist.ErrorMsg;
+                return View("service-error-msg");
+            }
+            else
+            {
+                return View(vm);
+            }
             return View(vm);
 
         }
