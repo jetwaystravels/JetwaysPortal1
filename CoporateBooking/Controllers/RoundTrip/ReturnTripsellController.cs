@@ -2330,7 +2330,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         _userName = "Universal API/uAPI5098257106-beb65aec";
                         _password = "Q!f5-d7A3D";
                         fareRepriceReq = new StringBuilder();
-                        string res = _objAvail.AirPriceGetRoundTrip(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, Airfaredata, farebasisdata, p, "");
+                        string res = _objAvail.AirPriceGetRoundTripCorporate(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, Airfaredata, farebasisdata, p, "");
                         HostTokenKey = Regex.Match(res, @"HostToken\s*Key=""(?<HostTokenKey>[\s\S]*?)"">(?<Value>[\s\S]*?)</").Groups["HostTokenKey"].Value.Trim();
                         HostTokenValue = Regex.Match(res, @"HostToken\s*Key=""(?<HostTokenKey>[\s\S]*?)"">(?<Value>[\s\S]*?)</").Groups["Value"].Value.Trim();
                         TravelPortParsing _objP = new TravelPortParsing();

@@ -167,7 +167,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                     farebasisdataL = _farebasisL;
                 }
                 //string res = _objAvail.AirPriceGetRT_V2(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, AirfaredataR, farebasisdataL, farebasisdataR, "GDSRT");
-                string res = _objAvail.AirPriceGet(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, farebasisdataL, 0, "GDSOneWay");
+                string res = _objAvail.AirPriceGetCorporate(_testURL, fareRepriceReq, availibiltyRQGDS, newGuid.ToString(), _targetBranch, _userName, _password, AirfaredataL, farebasisdataL, 0, "GDSOneWay");
 
                 string HostTokenKey = Regex.Match(res, @"HostToken\s*Key=""(?<HostTokenKey>[\s\S]*?)"">(?<Value>[\s\S]*?)</").Groups["HostTokenKey"].Value.Trim();
                 string HostTokenValue = Regex.Match(res, @"HostToken\s*Key=""(?<HostTokenKey>[\s\S]*?)"">(?<Value>[\s\S]*?)</").Groups["Value"].Value.Trim();

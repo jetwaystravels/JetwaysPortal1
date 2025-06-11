@@ -1046,6 +1046,492 @@ namespace OnionArchitectureAPI.Services.Travelport
             return res;
         }
         //Same Airline RoundTrip 26-09-2024
+        public string AirPriceGetCorporate(string _testURL, StringBuilder fareRepriceReq, SimpleAvailabilityRequestModel _GetfligthModel, string newGuid, string _targetBranch, string _userName, string _password, SimpleAvailibilityaAddResponce AirfaredataL, string farebasisdataL, int p, string _AirlineWay)
+        {
+
+            int count = 0;
+            int paxCount = 0;
+            int legcount = 0;
+            string origin = string.Empty;
+            int legKeyCounter = 0;
+
+            fareRepriceReq = new StringBuilder();
+            fareRepriceReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            fareRepriceReq.Append("<soap:Body>");
+
+            fareRepriceReq.Append("<air:AirPriceReq xmlns:air=\"http://www.travelport.com/schema/air_v52_0\" xmlns:com=\"http://www.travelport.com/schema/common_v52_0\" TraceId=\"" + newGuid + "\" FareRuleType=\"long\" AuthorizedBy = \"Travelport\" CheckOBFees=\"All\" TargetBranch=\"" + _targetBranch + "\">");
+            fareRepriceReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"UAPI\"/>");
+            fareRepriceReq.Append("<air:AirItinerary>");
+            //< AirSegment Key = "nX2BdBWDuDKAf9mT8SBAAA==" AvailabilitySource = "P" Equipment = "32A" AvailabilityDisplayType = "Fare Shop/Optimal Shop" Group = "0" Carrier = "AI" FlightNumber = "860" Origin = "DEL" Destination = "BOM" DepartureTime = "2024-07-25T02:15:00.000+05:30" ArrivalTime = "2024-07-25T04:30:00.000+05:30" FlightTime = "135" Distance = "708" ProviderCode = "1G" ClassOfService = "T" />
+
+
+            // to do
+            string segmentIdDataL = AirfaredataL.SegmentidLeftdata;
+            string FarebasisDataL = farebasisdataL;
+            string[] segmentIdsL = segmentIdDataL.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] FarebasisL = FarebasisDataL.Split(new char[] { '^' }, StringSplitOptions.RemoveEmptyEntries);
+            string FarebasisDataL0 = string.Empty;
+            string FarebasisDataL1 = string.Empty;
+            string FarebasisDataL2 = string.Empty;
+
+            string segmentIdAtIndex0 = string.Empty;
+            string segmentIdAtIndex1 = string.Empty;
+            string segmentIdAtIndex2 = string.Empty;
+            // Checking if the array has at least two elements
+            if (segmentIdsL.Length == 3)
+            {
+                segmentIdAtIndex0 = segmentIdsL[0];
+                segmentIdAtIndex1 = segmentIdsL[1];
+                segmentIdAtIndex2 = segmentIdsL[2];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+                FarebasisDataL2 = FarebasisL[2];
+
+            }
+            else if (segmentIdsL.Length == 2)
+            {
+                // Accessing elements by index
+                segmentIdAtIndex0 = segmentIdsL[0];
+                segmentIdAtIndex1 = segmentIdsL[1];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+            }
+            else
+            {
+                segmentIdAtIndex0 = segmentIdsL[0];
+                FarebasisDataL0 = FarebasisL[0];
+            }
+
+
+
+            foreach (var segment in AirfaredataL.segments)
+            {
+                if (count == 0)
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex0;
+                }
+                else if (count == 1)
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex1;
+                }
+                else
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex2;
+                }
+                fareRepriceReq.Append("<air:AirSegment Key=\"" + segmentIdAtIndex0 + "\" AvailabilitySource = \"" + segment.designator._AvailabilitySource + "\" Equipment = \"" + segment.designator._Equipment + "\" AvailabilityDisplayType = \"" + segment.designator._AvailabilityDisplayType + "\" ");
+                fareRepriceReq.Append("Group = \"" + segment.designator._Group + "\" Carrier = \"" + segment.identifier.carrierCode + "\" FlightNumber = \"" + segment.identifier.identifier + "\" ");
+                fareRepriceReq.Append("Origin = \"" + segment.designator.origin + "\" Destination = \"" + segment.designator.destination + "\" ");
+                //fareRepriceReq.Append("DepartureTime = \"" + Convert.ToDateTime(segment.designator._DepartureDate).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz") + "\" ArrivalTime = \"" + Convert.ToDateTime(segment.designator._ArrivalDate).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz") + "\" ");
+                fareRepriceReq.Append("DepartureTime = \"" + segment.designator._DepartureDate + "\" ArrivalTime = \"" + segment.designator._ArrivalDate + "\" ");
+                fareRepriceReq.Append("FlightTime = \"" + segment.designator._FlightTime + "\" Distance = \"" + segment.designator._Distance + "\" ProviderCode = \"" + segment.designator._ProviderCode + "\" ClassOfService = \"" + segment.designator._ClassOfService + "\" ");
+                fareRepriceReq.Append("ParticipantLevel=\"Secure Sell\" LinkAvailability=\"true\" PolledAvailabilityOption=\"Cached status used. Polled avail exists\" OptionalServicesIndicator=\"false\">");
+                //fareRepriceReq.Append("<Connection />");
+                fareRepriceReq.Append("</air:AirSegment>");
+                count++;
+            }
+
+            fareRepriceReq.Append("</air:AirItinerary>");
+            fareRepriceReq.Append("<air:AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\" InventoryRequestType=\"DirectAccess\">");
+            fareRepriceReq.Append("<air:AccountCodes>");
+            fareRepriceReq.Append("<com:AccountCode Code=\"SME2\" ProviderCode=\"1G\"/>");
+            fareRepriceReq.Append("</air:AccountCodes>");
+            fareRepriceReq.Append("</air:AirPricingModifiers>");
+            if (_GetfligthModel.passengercount != null)
+            {
+                if (_GetfligthModel.passengercount.adultcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.passengercount.adultcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"ADT\" BookingTravelerRef=\"" + paxCount + "\"/>");
+                        paxCount++;
+
+                    }
+                }
+                if (_GetfligthModel.passengercount.infantcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.passengercount.infantcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\"  PricePTCOnly=\"true\" BookingTravelerRef=\"" + paxCount + "\" Age=\"1\"/>");
+                        paxCount++;
+                    }
+                }
+
+                if (_GetfligthModel.passengercount.childcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.passengercount.childcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\" BookingTravelerRef=\"" + paxCount + "\" Age=\"11\"/>");
+                        paxCount++;
+                    }
+                }
+
+            }
+            else
+            {
+
+                if (_GetfligthModel.adultcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.adultcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\"  BookingTravelerRef=\"" + paxCount + "\" Code=\"ADT\" />");
+                        paxCount++;
+                    }
+                }
+
+                if (_GetfligthModel.infantcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.infantcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"INF\" PricePTCOnly=\"true\" Age=\"1\"/>");
+                        paxCount++;
+                    }
+                }
+
+
+                if (_GetfligthModel.childcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.childcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"CNN\" Age=\"11\"/>");
+                        paxCount++;
+                    }
+                }
+
+            }
+            fareRepriceReq.Append("<air:AirPricingCommand/>");
+            /*if (segmentIdsL.Length == 3)
+            {
+                segmentIdAtIndex0 = segmentIdsL[0];
+                segmentIdAtIndex1 = segmentIdsL[1];
+                segmentIdAtIndex2 = segmentIdsL[2];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+                FarebasisDataL2 = FarebasisL[2];
+
+            }
+            else if (segmentIdsL.Length == 2)
+            {
+                // Accessing elements by index
+                segmentIdAtIndex0 = segmentIdsL[0];
+                segmentIdAtIndex1 = segmentIdsL[1];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+            }
+            else
+            {
+                segmentIdAtIndex0 = segmentIdsL[0];
+                FarebasisDataL0 = FarebasisL[0];
+            }
+            foreach (var segment in AirfaredataL.segments)
+            {
+                if (legKeyCounter == 0)
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex0;
+
+                    FarebasisDataL = FarebasisDataL0;
+                }
+                else if (legKeyCounter == 1)
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex1;
+                    FarebasisDataL = FarebasisDataL1;
+                }
+                else
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex2;
+                    FarebasisDataL = FarebasisDataL2;
+                }
+                fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\" FareBasisCode=\"" + FarebasisDataL + "\">");
+                //fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\"\">");
+                fareRepriceReq.Append("<PermittedBookingCodes>");
+                fareRepriceReq.Append("<BookingCode Code = \"" + segment.designator._ClassOfService + "\"/>");
+                //fareRepriceReq.Append("<BookingCode Code = \"E\"/>");
+                fareRepriceReq.Append("</PermittedBookingCodes>");
+                fareRepriceReq.Append("</AirSegmentPricingModifiers>");
+                legKeyCounter++;
+            }
+            fareRepriceReq.Append("</AirPricingCommand>");
+            fareRepriceReq.Append("<FormOfPayment xmlns = \"http://www.travelport.com/schema/common_v52_0\" Type = \"Credit\" />");*/
+            fareRepriceReq.Append("</air:AirPriceReq></soap:Body></soap:Envelope>");
+
+
+
+            string res = Methodshit.HttpPost(_testURL, fareRepriceReq.ToString(), _userName, _password);
+            SetSessionValue("GDSAvailibilityRequest", JsonConvert.SerializeObject(_GetfligthModel));
+            SetSessionValue("GDSPassengerModel", JsonConvert.SerializeObject(_GetfligthModel));
+
+
+            if (_AirlineWay.ToLower() == "gdsoneway")
+            {
+                //logs.WriteLogs("URL: " + _testURL + "\n\n Request: " + fareRepriceReq + "\n\n Response: " + res, "GetAirPrice", "GDSOneWay","oneway");
+                logs.WriteLogs(fareRepriceReq.ToString(), "3-GetAirpriceReq", "GDSOneWay", "oneway");
+                logs.WriteLogs(res, "2-GetAirpriceRes", "GDSOneWay", "oneway");
+            }
+            else
+            {
+                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(fareRepriceReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetAirprice", "GDSRT");
+                if (p == 0)
+                {
+                    logs.WriteLogsR(fareRepriceReq.ToString(), "3-GetAirpriceReq_Left", "GDSRT");
+                    logs.WriteLogsR(res, "2-GetAirpriceRes_Left", "GDSRT");
+                }
+                else
+                {
+                    logs.WriteLogsR(fareRepriceReq.ToString(), "3-GetAirpriceReq_Right", "GDSRT");
+                    logs.WriteLogsR(res, "2-GetAirpriceRes_Right", "GDSRT");
+                }
+            }
+            return res;
+        }
+        public string AirPriceGetRoundTripCorporate(string _testURL, StringBuilder fareRepriceReq, SimpleAvailabilityRequestModel _GetfligthModel, string newGuid, string _targetBranch, string _userName, string _password, SimpleAvailibilityaAddResponce AirfaredataL, string farebasisdataL, int p, string _AirlineWay)
+        {
+
+            int count = 0;
+            int paxCount = 0;
+            int legcount = 0;
+            string origin = string.Empty;
+            int legKeyCounter = 0;
+
+            fareRepriceReq = new StringBuilder();
+            fareRepriceReq.Append("<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+            fareRepriceReq.Append("<soap:Body>");
+
+            fareRepriceReq.Append("<air:AirPriceReq xmlns:air=\"http://www.travelport.com/schema/air_v52_0\" xmlns:com=\"http://www.travelport.com/schema/common_v52_0\" TraceId=\"" + newGuid + "\" FareRuleType=\"long\" AuthorizedBy = \"Travelport\" CheckOBFees=\"All\" TargetBranch=\"" + _targetBranch + "\">");
+            fareRepriceReq.Append("<BillingPointOfSaleInfo xmlns=\"http://www.travelport.com/schema/common_v52_0\" OriginApplication=\"UAPI\"/>");
+            fareRepriceReq.Append("<air:AirItinerary>");
+            //< AirSegment Key = "nX2BdBWDuDKAf9mT8SBAAA==" AvailabilitySource = "P" Equipment = "32A" AvailabilityDisplayType = "Fare Shop/Optimal Shop" Group = "0" Carrier = "AI" FlightNumber = "860" Origin = "DEL" Destination = "BOM" DepartureTime = "2024-07-25T02:15:00.000+05:30" ArrivalTime = "2024-07-25T04:30:00.000+05:30" FlightTime = "135" Distance = "708" ProviderCode = "1G" ClassOfService = "T" />
+
+
+            // to do
+            string segmentIdDataL = string.Empty;
+            if (p == 0)
+            {
+                segmentIdDataL = AirfaredataL.SegmentidLeftdata;
+            }
+            else
+            {
+                segmentIdDataL = AirfaredataL.SegmentidRightdata;
+            }
+            string FarebasisDataL = farebasisdataL;
+            string[] segmentIdsL = segmentIdDataL.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] FarebasisL = FarebasisDataL.Split(new char[] { '^' }, StringSplitOptions.RemoveEmptyEntries);
+            string FarebasisDataL0 = string.Empty;
+            string FarebasisDataL1 = string.Empty;
+            string FarebasisDataL2 = string.Empty;
+
+            string segmentIdAtIndex0 = string.Empty;
+            string segmentIdAtIndex1 = string.Empty;
+            string segmentIdAtIndex2 = string.Empty;
+            // Checking if the array has at least two elements
+            if (segmentIdsL.Length == 3)
+            {
+                segmentIdAtIndex0 = segmentIdsL[0];
+                segmentIdAtIndex1 = segmentIdsL[1];
+                segmentIdAtIndex2 = segmentIdsL[2];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+                FarebasisDataL2 = FarebasisL[2];
+
+            }
+            else if (segmentIdsL.Length == 2)
+            {
+                // Accessing elements by index
+                segmentIdAtIndex0 = segmentIdsL[0];
+                segmentIdAtIndex1 = segmentIdsL[1];
+
+                FarebasisDataL0 = FarebasisL[0];
+                FarebasisDataL1 = FarebasisL[1];
+            }
+            else
+            {
+                segmentIdAtIndex0 = segmentIdsL[0];
+                FarebasisDataL0 = FarebasisL[0];
+            }
+
+
+
+            foreach (var segment in AirfaredataL.segments)
+            {
+                if (count == 0)
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex0;
+                }
+                else if (count == 1)
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex1;
+                }
+                else
+                {
+                    segmentIdAtIndex0 = segmentIdAtIndex2;
+                }
+                fareRepriceReq.Append("<air:AirSegment Key=\"" + segmentIdAtIndex0 + "\" AvailabilitySource = \"" + segment.designator._AvailabilitySource + "\" Equipment = \"" + segment.designator._Equipment + "\" AvailabilityDisplayType = \"" + segment.designator._AvailabilityDisplayType + "\" ");
+                fareRepriceReq.Append("Group = \"" + segment.designator._Group + "\" Carrier = \"" + segment.identifier.carrierCode + "\" FlightNumber = \"" + segment.identifier.identifier + "\" ");
+                fareRepriceReq.Append("Origin = \"" + segment.designator.origin + "\" Destination = \"" + segment.designator.destination + "\" ");
+                //fareRepriceReq.Append("DepartureTime = \"" + Convert.ToDateTime(segment.designator._DepartureDate).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz") + "\" ArrivalTime = \"" + Convert.ToDateTime(segment.designator._ArrivalDate).ToString("yyyy-MM-ddTHH:mm:ss.fffzzz") + "\" ");
+                fareRepriceReq.Append("DepartureTime = \"" + segment.designator._DepartureDate + "\" ArrivalTime = \"" + segment.designator._ArrivalDate + "\" ");
+                fareRepriceReq.Append("FlightTime = \"" + segment.designator._FlightTime + "\" Distance = \"" + segment.designator._Distance + "\" ProviderCode = \"" + segment.designator._ProviderCode + "\" ClassOfService = \"" + segment.designator._ClassOfService + "\" ");
+                fareRepriceReq.Append("ParticipantLevel=\"Secure Sell\" LinkAvailability=\"true\" PolledAvailabilityOption=\"Cached status used. Polled avail exists\" OptionalServicesIndicator=\"false\">");
+                //fareRepriceReq.Append("<Connection />");
+                fareRepriceReq.Append("</air:AirSegment>");
+                count++;
+            }
+
+            fareRepriceReq.Append("</air:AirItinerary>");
+            fareRepriceReq.Append("<air:AirPricingModifiers ETicketability=\"Required\" FaresIndicator=\"AllFares\" InventoryRequestType=\"DirectAccess\">");
+            fareRepriceReq.Append("<air:AccountCodes>");
+            fareRepriceReq.Append("<com:AccountCode Code=\"SME2\" ProviderCode=\"1G\"/>");
+            fareRepriceReq.Append("</air:AccountCodes>");
+            fareRepriceReq.Append("</air:AirPricingModifiers>");
+            if (_GetfligthModel.passengercount != null)
+            {
+                if (_GetfligthModel.passengercount.adultcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.passengercount.adultcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"ADT\" BookingTravelerRef=\"" + paxCount + "\"/>");
+                        paxCount++;
+
+                    }
+                }
+                if (_GetfligthModel.passengercount.infantcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.passengercount.infantcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"INF\"  PricePTCOnly=\"true\" BookingTravelerRef=\"" + paxCount + "\" Age=\"1\"/>");
+                        paxCount++;
+                    }
+                }
+
+                if (_GetfligthModel.passengercount.childcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.passengercount.childcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" Code=\"CNN\" BookingTravelerRef=\"" + paxCount + "\" Age=\"11\"/>");
+                        paxCount++;
+                    }
+                }
+
+            }
+            else
+            {
+
+                if (_GetfligthModel.adultcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.adultcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\"  BookingTravelerRef=\"" + paxCount + "\" Code=\"ADT\" />");
+                        paxCount++;
+                    }
+                }
+
+                if (_GetfligthModel.infantcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.infantcount; i++)
+                    {
+                        fareRepriceReq.Append("<com;SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"INF\" PricePTCOnly=\"true\" Age=\"1\"/>");
+                        paxCount++;
+                    }
+                }
+
+
+                if (_GetfligthModel.childcount != 0)
+                {
+                    for (int i = 0; i < _GetfligthModel.childcount; i++)
+                    {
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"CNN\" Age=\"11\"/>");
+                        paxCount++;
+                    }
+                }
+
+            }
+            fareRepriceReq.Append("<air:AirPricingCommand/>");
+            /* if (segmentIdsL.Length == 3)
+             {
+                 segmentIdAtIndex0 = segmentIdsL[0];
+                 segmentIdAtIndex1 = segmentIdsL[1];
+                 segmentIdAtIndex2 = segmentIdsL[2];
+
+                 FarebasisDataL0 = FarebasisL[0];
+                 FarebasisDataL1 = FarebasisL[1];
+                 FarebasisDataL2 = FarebasisL[2];
+
+             }
+             else if (segmentIdsL.Length == 2)
+             {
+                 // Accessing elements by index
+                 segmentIdAtIndex0 = segmentIdsL[0];
+                 segmentIdAtIndex1 = segmentIdsL[1];
+
+                 FarebasisDataL0 = FarebasisL[0];
+                 FarebasisDataL1 = FarebasisL[1];
+             }
+             else
+             {
+                 segmentIdAtIndex0 = segmentIdsL[0];
+                 FarebasisDataL0 = FarebasisL[0];
+             }
+             foreach (var segment in AirfaredataL.segments)
+             {
+                 if (legKeyCounter == 0)
+                 {
+                     segmentIdAtIndex0 = segmentIdAtIndex0;
+
+                     FarebasisDataL = FarebasisDataL0;
+                 }
+                 else if (legKeyCounter == 1)
+                 {
+                     segmentIdAtIndex0 = segmentIdAtIndex1;
+                     FarebasisDataL = FarebasisDataL1;
+                 }
+                 else
+                 {
+                     segmentIdAtIndex0 = segmentIdAtIndex2;
+                     FarebasisDataL = FarebasisDataL2;
+                 }
+                 fareRepriceReq.Append("<AirSegmentPricingModifiers AirSegmentRef = \"" + segmentIdAtIndex0 + "\" FareBasisCode=\"" + FarebasisDataL + "\">");
+                 fareRepriceReq.Append("<PermittedBookingCodes>");
+                 fareRepriceReq.Append("<BookingCode Code = \"" + segment.designator._ClassOfService + "\"/>");
+                 fareRepriceReq.Append("</PermittedBookingCodes>");
+                 fareRepriceReq.Append("</AirSegmentPricingModifiers>");
+                 legKeyCounter++;
+             }
+             fareRepriceReq.Append("</AirPricingCommand>");
+             fareRepriceReq.Append("<FormOfPayment xmlns = \"http://www.travelport.com/schema/common_v52_0\" Type = \"Credit\" />");*/
+            fareRepriceReq.Append("</air:AirPriceReq></soap:Body></soap:Envelope>");
+
+
+
+            string res = Methodshit.HttpPost(_testURL, fareRepriceReq.ToString(), _userName, _password);
+            SetSessionValue("GDSAvailibilityRequest", JsonConvert.SerializeObject(_GetfligthModel));
+            SetSessionValue("GDSPassengerModel", JsonConvert.SerializeObject(_GetfligthModel));
+
+
+            if (_AirlineWay.ToLower() == "gdsoneway")
+            {
+                //logs.WriteLogs("URL: " + _testURL + "\n\n Request: " + fareRepriceReq + "\n\n Response: " + res, "GetAirPrice", "GDSOneWay","oneway");
+                logs.WriteLogs(fareRepriceReq.ToString(), "3-GetAirpriceReq", "GDSOneWay", "oneway");
+                logs.WriteLogs(res, "2-GetAirpriceRes", "GDSOneWay", "oneway");
+            }
+            else
+            {
+                //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(fareRepriceReq) + "\n\n Response: " + JsonConvert.SerializeObject(res), "GetAirprice", "GDSRT");
+                if (p == 0)
+                {
+                    logs.WriteLogsR(fareRepriceReq.ToString(), "3-GetAirpriceReq_Left", "GDSRT");
+                    logs.WriteLogsR(res, "2-GetAirpriceRes_Left", "GDSRT");
+                }
+                else
+                {
+                    logs.WriteLogsR(fareRepriceReq.ToString(), "3-GetAirpriceReq_Right", "GDSRT");
+                    logs.WriteLogsR(res, "2-GetAirpriceRes_Right", "GDSRT");
+                }
+            }
+            return res;
+        }
         public string AirSSRGet(string _testURL, StringBuilder SSRReq, string _SSrType, string newGuid, string _targetBranch, string _userName, string _password, int p, string _AirlineWay)
         {
 

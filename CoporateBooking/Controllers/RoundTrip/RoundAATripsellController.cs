@@ -201,7 +201,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             if (vm.passeengerlistRT.Count > 1)
             {
                 //    ViewBag.ErrorMessage = "";
-                if (vm.passeengerlistRT[0].ErrorMsg != null || vm.passeengerlistRT[1].ErrorMsg!=null)
+                if (vm.passeengerlistRT[0].ErrorMsg != null || vm.passeengerlistRT[1].ErrorMsg != null)
                 {
                     if (!string.IsNullOrEmpty(vm.passeengerlistRT[0].ErrorMsg))
                     {
@@ -1443,7 +1443,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     //htSSr.Add(weight, item.Groups["Price"].Value.Trim() + "@" + item.Value.ToString() + "@" + UniversalLocatorCode + "@" + supplierLocatorCode + "@" + ProvidelocatorCode + "@" + strAirsegmenttext + "@" + Trvellerrefkey);
                                     htSSr.Add(weight, item.Groups["Price"].Value.Trim() + "*" + item.Value.ToString());
                                 }
-                                _htpaxwiseBaggage.Add(weight + "_" + BookingTravellerref + "_" + item.Groups["Price"].Value.Trim().Replace("INR", "")+"_AirIndia", item.Value.ToString());
+                                _htpaxwiseBaggage.Add(weight + "_" + BookingTravellerref + "_" + item.Groups["Price"].Value.Trim().Replace("INR", "") + "_AirIndia", item.Value.ToString());
                             }
 
 
@@ -3913,20 +3913,24 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     res = _objAvail.CreatePNRRoundTrip(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, Logfolder, k1, _unitkey, _ssrKey, _pricesolution);
                                     RecordLocator = Regex.Match(res, @"universal:UniversalRecord\s*LocatorCode=""(?<LocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["LocatorCode"].Value.Trim();
                                     //getdetails
-                                    strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
+                                    string UniversalLocatorCode = string.Empty;
+                                    if (!string.IsNullOrEmpty(RecordLocator))
+                                    {
+                                        strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder);
 
-                                    string ProvidelocatorCode = Regex.Match(strResponse, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<ProviderLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["ProviderLocatorCode"].Value.Trim();
-                                    string supplierLocatorCode = Regex.Match(strResponse, @"SupplierLocatorCode=""(?<SupplierLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["SupplierLocatorCode"].Value.Trim();
-                                    string UniversalLocatorCode = Regex.Match(strResponse, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
-                                    segmentblock += "@" + ProvidelocatorCode + "@" + supplierLocatorCode + "@" + UniversalLocatorCode;
+                                        string ProvidelocatorCode = Regex.Match(strResponse, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<ProviderLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["ProviderLocatorCode"].Value.Trim();
+                                        string supplierLocatorCode = Regex.Match(strResponse, @"SupplierLocatorCode=""(?<SupplierLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["SupplierLocatorCode"].Value.Trim();
+                                        UniversalLocatorCode = Regex.Match(strResponse, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
+                                        segmentblock += "@" + ProvidelocatorCode + "@" + supplierLocatorCode + "@" + UniversalLocatorCode;
 
-                                    var jsonDataObject = objMongoHelper.UnZip(tokenData.PassengerRequest); //HttpContext.Session.GetString("PassengerModel");
-                                    List<passkeytype> passengerdetails = (List<passkeytype>)JsonConvert.DeserializeObject(jsonDataObject.ToString(), typeof(List<passkeytype>));
-                                    string strSeatResponseleft = HttpContext.Session.GetString("SeatResponseleft");
-                                    string strSeatResponseright = HttpContext.Session.GetString("SeatResponseright");
-                                    res = _objAvail.AirMerchandisingFulfillmentReqRoundTrip(_testURL, createSSRReq, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder, unitKey, ssrKey, BaggageSSrkey, availibiltyRQGDS, passengerdetails, _htbaggagedataStringL, _htbaggagedataStringR, strSeatResponseleft, strSeatResponseright, k1, segmentblock);
+                                        var jsonDataObject = objMongoHelper.UnZip(tokenData.PassengerRequest); //HttpContext.Session.GetString("PassengerModel");
+                                        List<passkeytype> passengerdetails = (List<passkeytype>)JsonConvert.DeserializeObject(jsonDataObject.ToString(), typeof(List<passkeytype>));
+                                        string strSeatResponseleft = HttpContext.Session.GetString("SeatResponseleft");
+                                        string strSeatResponseright = HttpContext.Session.GetString("SeatResponseright");
+                                        res = _objAvail.AirMerchandisingFulfillmentReqRoundTrip(_testURL, createSSRReq, newGuid.ToString(), _targetBranch, _userName, _password, Logfolder, unitKey, ssrKey, BaggageSSrkey, availibiltyRQGDS, passengerdetails, _htbaggagedataStringL, _htbaggagedataStringR, strSeatResponseleft, strSeatResponseright, k1, segmentblock);
 
-                                    UniversalLocatorCode = Regex.Match(res, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
+                                        UniversalLocatorCode = Regex.Match(res, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
+                                    }
                                     if (k1 == 0)
                                     {
                                         HttpContext.Session.SetString("PNRL", res + "@@" + UniversalLocatorCode);
@@ -3935,6 +3939,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     {
                                         HttpContext.Session.SetString("PNRR", res + "@@" + UniversalLocatorCode);
                                     }
+
                                     #endregion
                                 }
 
