@@ -8,7 +8,7 @@
         position: fixed;
         z-index: 9999;
         left: 50%;
-        width: 60%!important;
+        width: 60% !important;
         height: 80%;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -122,7 +122,6 @@
         font-weight: 700;
     }
 
-
 </style>
 <script>
     $(document).ready(function () {
@@ -192,7 +191,7 @@
                 // Extract the substring before the hyphen
                 string result = hyphenIndex == -1 ? seatMapName : seatMapName.Substring(0, hyphenIndex);
                 string aircraftModel = result.Replace("B", "Boeing ").Replace("A", "Airbus ");
-              
+
 
 
                 if (i == 1)
@@ -295,11 +294,11 @@
                                             <div class="col-auto">
                                                 @{
                                                     var allCityData = Citynamelist.GetAllCityData();
-                                                    string QueryOriginAirportName = item.segments[i].legs[j].designator.origin;
-                                                    string QueryDestinationAirportName = item.segments[i].legs[j].designator.destination;
+                                                    string QueryOriginAirportName = queryorigin;//item.segments[i].legs[j].designator.origin;
+                                                    string QueryDestinationAirportName = querydestination;// item.segments[i].legs[j].designator.destination;
 
-                                                    var originCity = allCityData.SingleOrDefault(x => x.cityname == QueryOriginAirportName);
-                                                    var destinationCity = allCityData.SingleOrDefault(x => x.cityname == QueryDestinationAirportName);
+                                                    var originCity = allCityData.SingleOrDefault(x => x.citycode == QueryOriginAirportName);
+                                                    var destinationCity = allCityData.SingleOrDefault(x => x.citycode == QueryDestinationAirportName);
 
                                                     if (originCity != null)
                                                     {
@@ -312,7 +311,7 @@
                                                 }
                                                 @*<div class="lh-14 fw-500">@item.segments[i].legs[j].designator.origin <span class="text-13 ml-2 fw-600">( @formatteddepartureDate<span class="text-13 text-light-1 ml-2"> Indira Gandhi, T-@item.segments[i].legs[j].legInfo.departureTerminal </span> )</span></div>*@
                                                 <div class="lh-14 fw-500">
-                                                    @QueryOriginAirportName<span class="text-13 ml-2 fw-600">
+                                                    @originCity.cityname<span class="text-13 ml-2 fw-600">
                                                         ( @formatteddepartureDate<span class="text-13 text-light-1 ml-2">@originCity?.airportname</span>
                                                         @if (@item.segments[i].legs[j].legInfo.departureTerminal != null && @item.segments[i].legs[j].legInfo.departureTerminal != "")
                                                         {
@@ -360,7 +359,7 @@
                                             <div class="col-auto">
                                                 @*<div class="lh-14 fw-500">@item.segments[i].legs[j].designator.destination<span class="text-13 ml-2 fw-600">( @formattedarrivalDate<span class="text-13 text-light-1 ml-2"> Sanganeer, T-@item.segments[i].legs[j].legInfo.arrivalTerminal </span> )</span></div>*@
                                                 <div class="lh-14 fw-500">
-                                                    @QueryDestinationAirportName
+                                                    @destinationCity.cityname
                                                     <span class="text-13 ml-2 fw-600">
                                                         (@formattedarrivalDate
                                                         <span class="text-13 text-light-1 ml-2">@destinationCity?.airportname</span>
@@ -492,7 +491,7 @@
                                                 Fare Type:  @Faretype<b>Stretch</b>
                                                 <span class="tooltiptext">
                                                     <ul>
-                                                        
+
                                                         <li>1: Cabin Bag: 7 k.g</li>
                                                         <li>2: Check-IN: 30 k.g  </li>
                                                         <li>3: Cancellation: Fee starts at (Rs. 3499) Onward.</li>
