@@ -25,7 +25,8 @@
 	}
 
 	.servc-bordr {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -42,7 +43,8 @@
 	}
 	/*baggage*/
 	.servc-bordrbaggage {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -59,7 +61,8 @@
 	/*  end; */
 	/*otherService*/
 	.servc-bordrwheel {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -76,7 +79,8 @@
 	/*End other service*/
 	/*Connected Meal*/
 	.servc-bordrCon {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -93,7 +97,8 @@
 	/*End connected Meal*/
 	/*wheel Connected*/
 	.servc-bordrwheelCon {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -138,16 +143,16 @@
 		max-width: 120px;
 	}
 
-		.select-option .servc-bordr {
-			max-width: 150px;
-		}
+	.select-option .servc-bordr {
+		max-width: 150px;
+	}
 
     .width-90 {
 	width: 60px;
     }
 
     .select-option2 {
-	max-width: 120px;
+	/*max-width: 120px;*/
     }
 
 	.select-option2 .servc-bordr {
@@ -164,22 +169,22 @@
 		font-size: 0.9rem;
 	}
 
-		.checkout .bg-white.service-section .seat {
-			display: inline-flex;
-			padding-left: 50px;
-		}
+	.checkout .bg-white.service-section .seat {
+		display: inline-flex;
+		padding-left: 50px;
+	}
 
-		.checkout .bg-white.service-section .output-div-input {
-			margin: 3px;
-			font-weight: 600;
-			color: #085AC0;
-			width: 26px;
-		}
+	.checkout .bg-white.service-section .output-div-input {
+		margin: 3px;
+		font-weight: 600;
+		color: #085AC0;
+		width: 26px;
+	}
 
-		.checkout .bg-white.service-section .servc-content span {
-			font-weight: 600;
-			text-transform: capitalize;
-		}
+	.checkout .bg-white.service-section .servc-content span {
+		font-weight: 600;
+		text-transform: capitalize;
+	}
 
 	.servc-bordrm1 option {
 		font-size: 12px;
@@ -207,9 +212,9 @@
 		border-bottom: #eee 1px solid;
 	}
 
-		.dropdown-option:hover {
-			background-color: #f1f1f1;
-		}
+	.dropdown-option:hover {
+		background-color: #f1f1f1;
+	}
 
 	.custom-dropdown {
 		position: relative;
@@ -907,7 +912,7 @@
 						    }
 
 						}
-						<div class="d-flex">
+						<div>
 
 						    <select id="ddlbagOptions" class="servc-bordr servc-bordrbaggage">
 							<option selected="selected" value="">Please Select</option>
@@ -1004,8 +1009,8 @@
 						    <span>@name</span>
 						}
 						</div>
-						</div>					    
-						<div class="cell">
+						</div>
+						<div class="cell select-option2">
 						<div class="lft-spc">
 
 						@{

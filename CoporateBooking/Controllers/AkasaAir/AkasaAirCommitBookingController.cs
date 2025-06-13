@@ -459,7 +459,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                     SsrReturn ssrReturn = new SsrReturn();
                                     ssrReturn.ssrCode = item.Value.ssrs[t].ssrCode;
                                     // if (ssrReturn.ssrCode.StartsWith("P") || ssrReturn.ssrCode.StartsWith("X"))
-                                    if (!ssrReturn.ssrCode.StartsWith("P"))
+                                    if (!ssrReturn.ssrCode.StartsWith("P") && !ssrReturn.ssrCode.StartsWith("C"))
                                     {
                                         continue;
                                     }

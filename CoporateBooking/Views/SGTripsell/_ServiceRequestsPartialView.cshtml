@@ -90,11 +90,6 @@
 
 	});
 
-
-
-
-
-
 	$('.select-option2 .servc-bordrCon').change((e) => {
 	debugger;
 	var selectedMealsCon = [];
@@ -166,11 +161,6 @@
 
 
 	});
-
-
-
-
-
 
 
 	// bagage code end
@@ -258,7 +248,8 @@
 	}
 
 	.servc-bordr {
-		max-width: 150px;
+		min-width: 161px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -275,7 +266,8 @@
 	}
 	/*baggage*/
 	.servc-bordrbaggage {
-		max-width: 150px;
+		min-width: 161px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -292,7 +284,8 @@
 	/*  end; */
 	/*otherService*/
 	.servc-bordrwheel {
-		max-width: 150px;
+		min-width: 161px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -309,7 +302,8 @@
 	/*End other service*/
 	/*Connected Meal*/
 	.servc-bordrCon {
-		max-width: 150px;
+		min-width: 161px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -326,7 +320,8 @@
 	/*End connected Meal*/
 	/*wheel Connected*/
 	.servc-bordrwheelCon {
-		max-width: 150px;
+		min-width: 161px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -376,7 +371,7 @@
 	}
 
 	.select-option2 {
-		max-width: 120px;
+		/*max-width: 120px;*/
 	}
 
 		.select-option2 .servc-bordr {
@@ -534,6 +529,8 @@
 		padding: 1rem 0 0;
 		margin: 0px 10px !important;
 	}
+
+	select:focus{border-bottom:#000 1px solid;}
 
 </style>
 
@@ -879,7 +876,7 @@
 											<div class="cell">
 												<div class="lft-spc">
 												<select class="servc-bordr">
-													<option></option>
+													<option value="" disabled selected hidden></option>
 													<option>Meal1</option>
 													<option>Meal2</option>
 													<option>Meal3</option>
@@ -953,7 +950,7 @@
 													<span>@name</span>
 												}
 											</div>
-											<div class="cell">
+											<div class="cell select-option2">
 												<div class="lft-spc">
 
 												@{
@@ -1032,7 +1029,7 @@
 												<div class="cell">
 													<div class="lft-spc">
 												<select class="servc-bordr">
-													<option></option>
+													<option value="" disabled selected hidden></option>
 													<option>Meal1</option>
 													<option>Meal2</option>
 													<option>Meal3</option>

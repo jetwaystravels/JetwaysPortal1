@@ -258,7 +258,8 @@
 	}
 
 	.servc-bordr {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -275,7 +276,8 @@
 	}
 	/*baggage*/
 	.servc-bordrbaggage {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -292,7 +294,8 @@
 	/*  end; */
 	/*otherService*/
 	.servc-bordrwheel {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -309,7 +312,8 @@
 	/*End other service*/
 	/*Connected Meal*/
 	.servc-bordrCon {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -326,7 +330,8 @@
 	/*End connected Meal*/
 	/*wheel Connected*/
 	.servc-bordrwheelCon {
-		max-width: 150px;
+		max-width: 180px;
+		min-width: 162px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -371,21 +376,21 @@
 		max-width: 120px;
 	}
 
-		.select-option .servc-bordr {
-			max-width: 150px;
-		}
+	.select-option .servc-bordr {
+		max-width: 150px;
+	}
 
 	.width-90 {
 		width: 60px;
 	}
 
 	.select-option2 {
-		max-width: 120px;
+		/*max-width: 120px;*/
 	}
 
-		.select-option2 .servc-bordr {
-			max-width: 150px;
-		}
+	.select-option2 .servc-bordr {
+		max-width: 150px;
+	}
 
 	.checkout .bg-white.service-section input {
 		max-width: 150px !important;
@@ -970,10 +975,8 @@
 												}
 												</div>
 											</div>
-									<div class="cell">
+									<div class="cell select-option2">
 										<div class="lft-spc">
-
-
 												@{
 													List<SelectListItem> mealOptions = new List<SelectListItem>();
 													if (Model.Meals.legSsrs.Count > 1)

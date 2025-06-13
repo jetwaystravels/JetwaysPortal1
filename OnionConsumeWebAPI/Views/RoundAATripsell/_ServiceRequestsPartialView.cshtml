@@ -477,10 +477,6 @@
 	});
 	});
 
-
-
-
-
 	$(".modelPopBtn").click(function (e) {
 	e.preventDefault();
 	$("#leftNstop2").off("click");
@@ -516,14 +512,7 @@
 	localStorage.removeItem("BagssrKeyCount");
 	localStorage.removeItem("BagssrKeyCountRT");
 	});
-
-
-
 </script>
-
-
-
-
 <section id="myContainer1">
 	<div class="container">
 		<div class="col-lg-12">
@@ -545,10 +534,7 @@
 										<li><span class="midcomfort"></span>&#8377; 120 - &#8377; 350</li>
 										<li><span class="comfort"></span>&#8377; 49 - 120, &#8377; 351 - 2000</li>
 										<li><span class="booked"></span>Occupied</li>
-
 									</ul>
-
-
 								</div>
 
 								<div class="col-lg-4">
@@ -674,24 +660,6 @@
 				<!--Left Side non stop-->
 				<div class="service-table" id="tabshow1">
 					<div class="border-service">
-								@*<div class="d-flex justify-content-between bg-servc py-2">
-									<div class="serv-header">
-										Traveller
-									</div>
-									<div class="serv-header">
-										<img src="~/img/pmeal.png" style="width:20px;height:20px;margin-right:10px;" />  Meal
-									</div>
-									<div class="serv-header">
-										<img src="~/img/pseat.png" style="width:20px;height:20px;margin-right:10px;" />Seat
-									</div>
-									<div class="serv-header">
-										<img src="~/img/pbaggage.png" style="width:20px;height:20px;margin-right:10px;" /> Baggage
-									</div>
-									<div class="serv-header">
-										Special Request
-									</div>
-								</div>*@
-
 								<div class="table-row header">
 									<div class="cell traveller-cell"><span class="lft-spc">Traveller</span></div>
 									<div class="cell"><span class="lft-spc"><img src="~/img/pmeal.png" class="icon"> Meal</span></div>
@@ -983,7 +951,7 @@
 													<div class="output-div-input" id="outputDiv_@pas"></div>
 												</div>												
 											</div>
-											<div class="cell">
+											<div class="cell select-baggage">
 										<div class="lft-spc">
 												@{
 													List<SelectListItem> BaggageOptions = new List<SelectListItem>();
@@ -1232,23 +1200,6 @@
 				<!----left Side connecting new design Code start---- -->
 				<div class="service-table" id="tabshow2">
 							<div class="border-service">
-								@*<div class="d-flex justify-content-between bg-servc py-2">
-									<div class="serv-header">
-										Traveller
-									</div>
-									<div class="serv-header">
-										<img src="~/img/pmeal.png" style="width:20px;height:20px;margin-right:10px;" /> Meal
-									</div>
-									<div class="serv-header">
-										<img src="~/img/pseat.png" style="width:20px;height:20px;margin-right:10px;" /> Seat
-									</div>
-
-									<div class="serv-header">
-										Special Request
-									</div>
-								</div>*@
-
-
 								<div class="table-row header">
 									<div class="cell traveller-cell"><span class="lft-spc">Traveller</span></div>
 									<div class="cell"><span class="lft-spc"><img src="~/img/pmeal.png" class="icon"> Meal</span></div>
@@ -1496,7 +1447,7 @@
 
 													@if (mealOptions.Count > 0)
 													{
-														<select id="ddlMealOptions2" class="servc-bordr servc-bordrCon">
+													<select id="ddlMealOptions2" class="servc-bordr servc-bordrConm1">
 															<option selected="selected" value="">Please select meal</option>
 															@foreach (var option in mealOptions)
 															{
@@ -1563,24 +1514,6 @@
 					<!------------Return Right side Trip non stop Start---->
 					<div class="service-table" id="tabshow1RT">
 						<div class="border-service">
-									@*<div class="d-flex justify-content-between bg-servc py-2">
-										<div class="serv-header">
-											Traveller
-										</div>
-										<div class="serv-header">
-											<img src="~/img/pmeal.png" style="width:20px;height:20px;margin-right:10px;" />  Meal
-										</div>
-										<div class="serv-header">
-											<img src="~/img/pseat.png" style="width:20px;height:20px;margin-right:10px;" />Seat
-										</div>
-										<div class="serv-header">
-											<img src="~/img/pbaggage.png" style="width:20px;height:20px;margin-right:10px;" /> Baggage
-										</div>
-										<div class="serv-header">
-											Special Request
-										</div>
-									</div>*@
-
 									<div class="table-row header">
 										<div class="cell traveller-cell"><span class="lft-spc">Traveller</span></div>
 										<div class="cell"><span class="lft-spc"><img src="~/img/pmeal.png" class="icon"> Meal</span></div>
@@ -1838,7 +1771,7 @@
 													<div>
 														@if (mealOptions.Count > 0)
 														{
-															<select id="ddlMealOptions" class="servc-bordr">
+															<select id="ddlMealOptions" class="servc-bordr servc-bordrm2">
 																<option selected="selected" value="">Please select meal</option>
 																@foreach (var option in mealOptions)
 																{
@@ -2063,7 +1996,7 @@
 
 													<div>
 
-														<select id="ddlbagOptions" class="servc-bordr">
+														<select id="ddlbagOptions" class="servc-bordr servc-bordrbaggagem2">
 
 															<option selected="selected" value="">Please select baggage</option>
 															@if (AirLine.ToLower() == "airindia")
@@ -2131,22 +2064,6 @@
 					<!----Return Right side Connceting---->
 					<div class="service-table" id="tabshow2RT">
 						<div class="border-service">
-									@*<div class="d-flex justify-content-between bg-servc py-2">
-										<div class="serv-header">
-											Traveller
-										</div>
-										<div class="serv-header">
-											<img src="~/img/pmeal.png" style="width:20px;height:20px;margin-right:10px;" /> Meal
-										</div>
-										<div class="serv-header">
-											<img src="~/img/pseat.png" style="width:20px;height:20px;margin-right:10px;" /> Seat
-										</div>
-
-										<div class="serv-header">
-											Special Request
-										</div>
-									</div>*@
-
 									<div class="table-row header">
 										<div class="cell traveller-cell"><span class="lft-spc">Traveller</span></div>
 										<div class="cell"><span class="lft-spc"><img src="~/img/pmeal.png" class="icon"> Meal</span></div>
@@ -2192,7 +2109,7 @@
 													}
 													</div>
 												</div>
-										<div class="cell">
+										<div class="cell select-option2RT">
 											<div class="lft-spc">
 
 													@{
@@ -2385,7 +2302,7 @@
 													<div>
 														@if (mealOptions.Count > 0)
 														{
-															<select id="ddlMealOptions2" class="servc-bordr">
+														<select id="ddlMealOptions2" class="servc-bordr servc-bordrConm1">
 																<option selected="selected" value="">Please select meal</option>
 																@foreach (var option in mealOptions)
 																{

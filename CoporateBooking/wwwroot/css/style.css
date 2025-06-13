@@ -91,6 +91,23 @@ body {
     display: none;
 }
 
+
+.frequent-logo {
+    /*background: #e5f0fd;*/
+    background: #fff;
+    padding: 4px 10px;
+    border-left: #ddd 1px solid;
+    border-top: #ddd 1px solid;
+    border-bottom: #ddd 1px solid;
+    border-right: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+.frequent-bx {
+    flex: 33.3% !important;
+    max-width:33.3% !important;
+}
+
 @media (max-width: 991px) {
     .canvas-open {
         overflow: hidden;

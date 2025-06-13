@@ -218,7 +218,8 @@
 	}
 
 	.servc-bordr {
-		max-width: 150px;
+		min-width: 131px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -235,7 +236,8 @@
 	}
 	/*baggage*/
 	.servc-bordrbaggage {
-		max-width: 150px;
+		min-width: 131px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -252,7 +254,8 @@
 	/*  end; */
 	/*otherService*/
 	.servc-bordrwheel {
-		max-width: 150px;
+		min-width: 131px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -269,7 +272,8 @@
 	/*End other service*/
 	/*Connected Meal*/
 	.servc-bordrCon {
-		max-width: 150px;
+		min-width: 131px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -286,7 +290,8 @@
 	/*End connected Meal*/
 	/*wheel Connected*/
 	.servc-bordrwheelCon {
-		max-width: 150px;
+		min-width: 131px;
+		max-width: 189px;
 		border-bottom: 1px solid #000;
 		border-top: none;
 		border-left: none;
@@ -336,7 +341,7 @@
 	}
 
 	.select-option2 {
-		max-width: 120px;
+		/*max-width: 120px;*/
 	}
 
 	.select-option2 .servc-bordr {
@@ -815,7 +820,7 @@
 										<div class="cell">
 											<div class="lft-spc">
 											<select class="servc-bordr">
-												<option></option>
+											<option value="" disabled selected hidden></option>
 												<option>Meal1</option>
 												<option>Meal2</option>
 												<option>Meal3</option>
@@ -889,7 +894,7 @@
 										<div class="cell traveller-cell">
 												@Model.passkeytype[pas].first 
 										</div>
-									<div class="cell">
+									<div class="cell select-option2">
 										<div class="lft-spc">
 												@{
 													if (Model.AkMealslist != null)
@@ -973,7 +978,7 @@
 												<div class="cell">
 													<div class="lft-spc">
 														<select class="servc-bordr">
-															<option></option>
+															<option value="" disabled selected hidden></option>
 															<option>Meal1</option>
 															<option>Meal2</option>
 															<option>Meal3</option>

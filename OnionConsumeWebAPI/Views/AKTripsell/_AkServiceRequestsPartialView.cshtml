@@ -218,7 +218,8 @@
 	}
 
 	.servc-bordr {
-	max-width: 150px;
+	max-width: 180px;
+	min-width: 162px;
 	border-bottom: 1px solid #000;
 	border-top: none;
 	border-left: none;
@@ -235,7 +236,8 @@
 	}
 	/*baggage*/
 	.servc-bordrbaggage {
-	max-width: 150px;
+	max-width: 180px;
+	min-width: 162px;
 	border-bottom: 1px solid #000;
 	border-top: none;
 	border-left: none;
@@ -252,7 +254,8 @@
 	/*  end; */
 	/*otherService*/
 	.servc-bordrwheel {
-	max-width: 150px;
+	max-width: 180px;
+	min-width: 162px;
 	border-bottom: 1px solid #000;
 	border-top: none;
 	border-left: none;
@@ -269,7 +272,8 @@
 	/*End other service*/
 	/*Connected Meal*/
 	.servc-bordrCon {
-	max-width: 150px;
+	max-width: 180px;
+	min-width: 162px;
 	border-bottom: 1px solid #000;
 	border-top: none;
 	border-left: none;
@@ -286,7 +290,8 @@
 	/*End connected Meal*/
 	/*wheel Connected*/
 	.servc-bordrwheelCon {
-	max-width: 150px;
+	max-width: 180px;
+	min-width: 162px;
 	border-bottom: 1px solid #000;
 	border-top: none;
 	border-left: none;
@@ -339,7 +344,7 @@
 	}
 
 	.select-option2 {
-	max-width: 120px;
+	/*max-width: 120px;*/
 	}
 
 	.select-option2 .servc-bordr {
@@ -356,10 +361,10 @@
 	font-size: 0.9rem;
 	}
 
-		.checkout .bg-white.service-section .seat {
-			display: inline-flex;
-			padding-left: 50px;
-		}
+	.checkout .bg-white.service-section .seat {
+		display: inline-flex;
+		padding-left: 50px;
+	}
 
 	.checkout .bg-white.service-section .output-div-input {
 	margin: 3px;
@@ -771,7 +776,7 @@
 									</div>
 								</div>
 										<!-- Output div for each passenger -->
-								<div class="cell">
+								<div class="cell select-baggage">
 									<div class="lft-spc">
 											@{
 												if (Model.AkBaggageDetails != null)
@@ -904,7 +909,7 @@
 												@Model.passkeytype[pas].first 
 										</div>
 											</div>
-									<div class="cell">
+									<div class="cell select-option2">
 										<div class="lft-spc">
 												@{
 													if (Model.AkMealslist != null)

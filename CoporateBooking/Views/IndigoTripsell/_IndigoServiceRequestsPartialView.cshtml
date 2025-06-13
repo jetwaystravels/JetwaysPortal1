@@ -143,7 +143,7 @@
 	}
 
 	.select-option2 {
-		max-width: 120px;
+		/*max-width: 120px;*/
 	}
 
 		.select-option2 .servc-bordr {
@@ -890,7 +890,7 @@
 						<div class="cell">
 							<div class="lft-spc">
 							<select class="servc-bordr">
-								<option></option>
+								<option value="" disabled selected hidden></option>
 								<option>Meal1</option>
 								<option>Meal2</option>
 								<option>Meal3</option>
@@ -965,7 +965,7 @@
 						    <span>@name</span>
 						}
 					    </div>
-						<div class="cell">
+						<div class="cell select-option2">
 						<div class="lft-spc">
 						@{
 						    List<SelectListItem> mealOptions = new List<SelectListItem>();
@@ -1048,7 +1048,7 @@
 						<div class="cell">
 							<div class="lft-spc">
 								<select class="servc-bordr">
-									<option></option>
+									<option value="" disabled selected hidden></option>
 									<option>Meal1</option>
 									<option>Meal2</option>
 									<option>Meal3</option>
