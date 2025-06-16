@@ -29,6 +29,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Utility;
 using NuGet.Versioning;
+using System.Text.RegularExpressions;
 
 namespace OnionConsumeWebAPI.Controllers
 {
@@ -80,6 +81,8 @@ namespace OnionConsumeWebAPI.Controllers
             {
                 if (tokenData.CommResponse == null)
                 {
+                    string jsonPayload = string.Empty;
+                    string responseContent = string.Empty;
                     _mongoDBHelper.UpdateCommitResponse(Guid, "AirAsia", "1");
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -109,17 +112,22 @@ namespace OnionConsumeWebAPI.Controllers
                         paymentRequest.Installments = 1;
 
                         // Serializing the payload to JSON
-                        string jsonPayload = JsonConvert.SerializeObject(paymentRequest);
+                        jsonPayload = JsonConvert.SerializeObject(paymentRequest);
                         HttpContent content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
                         // Sending the POST request
                         string url = AppUrlConstant.AirasiaPayment;
 
                         HttpResponseMessage response = await client.PostAsync(url, content);
-                        string responseContent = await response.Content.ReadAsStringAsync();
+                        responseContent = await response.Content.ReadAsStringAsync();
                         var responseData = JsonConvert.DeserializeObject<dynamic>(responseContent);
 
                         //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(paymentRequest) + "\nUrl: " + url + "\nResponse: " + responseContent, "CommitPayment", "AirAsiaOneWay");
+                        logs.WriteLogs(jsonPayload, "17-AddpaymentRequest", "AirAsiaOneWay", "oneway");
+                        logs.WriteLogs(responseContent, "17-AddpaymentResponse", "AirAsiaOneWay", "oneway");
+                    }
+                    else
+                    {
                         logs.WriteLogs(jsonPayload, "17-AddpaymentRequest", "AirAsiaOneWay", "oneway");
                         logs.WriteLogs(responseContent, "17-AddpaymentResponse", "AirAsiaOneWay", "oneway");
                     }
@@ -131,7 +139,7 @@ namespace OnionConsumeWebAPI.Controllers
                     _Commit_BookingModel.notifyContacts = true;
                     _Commit_BookingModel.contactTypesToNotify = NotifyContacts;
                     var jsonCommitBookingRequest = JsonConvert.SerializeObject(_Commit_BookingModel, Formatting.Indented);
-
+                    var _responceCommit_Booking = "";
                     ApiRequests apiRequests = new ApiRequests();
                     //   responseModel = await apiRequests.OnPostAsync(AppUrlConstant.AirasiaCommitBooking, _Commit_BookingModel);
 
@@ -142,12 +150,17 @@ namespace OnionConsumeWebAPI.Controllers
 
                     if (responceCommit_Booking.IsSuccessStatusCode)
                     {
-                        var _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
+                        _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
                         //logs.WriteLogs("Url: " + JsonConvert.SerializeObject(AppUrlConstant.AirasiaCommitBooking) + "Request:" + jsonCommitBookingRequest + "\n Response: " + _responceCommit_Booking, "CommitBooking", "AirAsiaOneWay", "oneway");
                         logs.WriteLogs(jsonCommitBookingRequest, "18-CommitBookingRequest", "AirAsiaOneWay", "oneway");
                         logs.WriteLogs(_responceCommit_Booking, "18-CommitBookingResponse", "AirAsiaOneWay", "oneway");
 
                         //var JsonObjCommit_Booking = JsonConvert.DeserializeObject<dynamic>(_responceCommit_Booking);
+                    }
+                    else
+                    {
+                        logs.WriteLogs(jsonCommitBookingRequest, "18-CommitBookingRequest", "AirAsiaOneWay", "oneway");
+                        logs.WriteLogs(_responceCommit_Booking, "18-CommitBookingResponse", "AirAsiaOneWay", "oneway");
                     }
                     var _responceCommit_Booking1 = responceCommit_Booking.Content.ReadAsStringAsync().Result;
 
@@ -285,7 +298,7 @@ namespace OnionConsumeWebAPI.Controllers
                             returnSeats.taxes = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.taxes;
                             returnSeats.adjustments = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments;
                             returnSeats.totalSeatAmount = returnSeats.total + returnSeats.taxes;
-                            if (returnSeats.adjustments != null &&  returnSeats.adjustments.ToString() != "")
+                            if (returnSeats.adjustments != null && returnSeats.adjustments.ToString() != "")
                             {
                                 returnSeats.totalSeatAmount += Convert.ToInt32(returnSeats.adjustments);
                             }
@@ -660,13 +673,15 @@ namespace OnionConsumeWebAPI.Controllers
                     #region DB Save
                     tb_Booking tb_Booking = new tb_Booking();
                     tb_Booking.AirLineID = 1;
+                    tb_Booking.BookingType = "Corporate";
+                    tb_Booking.TripType = "OneWay";
                     tb_Booking.BookingID = JsonObjPNRBooking.data.bookingKey;
                     tb_Booking.RecordLocator = JsonObjPNRBooking.data.recordLocator;
                     tb_Booking.CurrencyCode = JsonObjPNRBooking.data.currencyCode;
                     tb_Booking.Origin = JsonObjPNRBooking.data.journeys[0].designator.origin;
                     tb_Booking.Destination = JsonObjPNRBooking.data.journeys[0].designator.destination;
-                    tb_Booking.BookedDate = JsonObjPNRBooking.data.info.bookedDate; 
-                    tb_Booking.TotalAmount = JsonObjPNRBooking.data.breakdown.balanceDue;
+                    tb_Booking.BookedDate = JsonObjPNRBooking.data.info.bookedDate;
+                    tb_Booking.TotalAmount = JsonObjPNRBooking.data.breakdown.totalAmount;
                     if (JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices != null)
                     {
                         if (JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.total != null)
@@ -684,36 +699,47 @@ namespace OnionConsumeWebAPI.Controllers
                         {
                             tb_Booking.SeatTotalAmount = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.total;
                             tb_Booking.SeatTotalAmount_Tax = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.taxes;
+                            if (JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments != null)
+                                tb_Booking.SeatAdjustment = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments;
+
                         }
                     }
-                    //tb_Booking.ExpirationDate = JsonObjPNRBooking.data.info.expirationDate;//JsonObjPNRBooking.data.hold.expiration;
+                    tb_Booking.ExpirationDate = JsonObjPNRBooking?.data?.info?.expirationDate != null ? Convert.ToDateTime(JsonObjPNRBooking.data.info.expirationDate) : DateTime.Now;
                     tb_Booking.ArrivalDate = JsonObjPNRBooking.data.journeys[0].designator.arrival;
                     tb_Booking.DepartureDate = JsonObjPNRBooking.data.journeys[0].designator.departure;
-                    //tb_Booking.CreatedDate = JsonObjPNRBooking.data.info.createdDate;
+                    if (JsonObjPNRBooking.data.info.createdDate != null)
+                        tb_Booking.CreatedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate);
                     tb_Booking.Createdby = JsonObjPNRBooking.data.info.createdAgentId;// "Online";
-                    //tb_Booking.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate;
+                    if (JsonObjPNRBooking.data.info.modifiedDate != null)
+                        tb_Booking.ModifiedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate);
                     tb_Booking.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId;//"Online";
                     tb_Booking.BookingDoc = _responcePNRBooking;
                     tb_Booking.Status = JsonObjPNRBooking.data.info.status;// "0";
-                    //tb_Booking.paidStatus = JsonObjPNRBooking.data.info.paidStatus;// "0";
-                    
+                    tb_Booking.PaidStatus = Convert.ToInt32(JsonObjPNRBooking.data.info.paidStatus);// "0";
+
+                    // It  will maintained by manually as Airline Code and description 6E-Indigo
                     tb_Airlines tb_Airlines = new tb_Airlines();
                     tb_Airlines.AirlineID = 1;
                     tb_Airlines.AirlneName = JsonObjPNRBooking.data.info.owningCarrierCode;// "Boing";
                     tb_Airlines.AirlineDescription = "AirIndia Express";
-                    //tb_Airlines.CreatedDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
+                    if (JsonObjPNRBooking.data.info.createdDate != null)
+                        tb_Airlines.CreatedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate); //DateTime.Now;
                     tb_Airlines.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
-                    //tb_Airlines.Modifieddate = JsonObjPNRBooking.data.info.modifiedDate;// DateTime.Now;
+                    if (JsonObjPNRBooking.data.info.modifiedDate != null)
+                        tb_Airlines.Modifieddate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate);// DateTime.Now;
                     tb_Airlines.Modifyby = JsonObjPNRBooking.data.info.modifiedAgentId; //"Online";
                     tb_Airlines.Status = JsonObjPNRBooking.data.info.status; //"0";
 
+                    //It  will maintained by manually from Getseatmap Api
                     tb_AirCraft tb_AirCraft = new tb_AirCraft();
                     tb_AirCraft.Id = 1;
                     tb_AirCraft.AirlineID = 1;
                     tb_AirCraft.AirCraftName = "";// "Airbus"; to do
                     tb_AirCraft.AirCraftDescription = " ";// " City Squares Worldwide"; to do
-                    tb_AirCraft.CreatedDate = DateTime.Now;
-                    tb_AirCraft.Modifieddate = DateTime.Now;
+                    if (JsonObjPNRBooking.data.info.createdDate != null)
+                        tb_AirCraft.CreatedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate); //DateTime.Now;
+                    if (JsonObjPNRBooking.data.info.modifiedDate != null)
+                        tb_AirCraft.Modifieddate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate);// DateTime.Now;
                     tb_AirCraft.Createdby = JsonObjPNRBooking.data.info.createdAgentId;// "Online";
                     tb_AirCraft.Modifyby = JsonObjPNRBooking.data.info.modifiedAgentId;// "Online";
                     tb_AirCraft.Status = JsonObjPNRBooking.data.info.status; //"0";
@@ -723,10 +749,12 @@ namespace OnionConsumeWebAPI.Controllers
                     contactDetail.FirstName = JsonObjPNRBooking.data.contacts.P.name.first;
                     contactDetail.LastName = JsonObjPNRBooking.data.contacts.P.name.last;
                     contactDetail.EmailID = JsonObjPNRBooking.data.contacts.P.emailAddress;
-                    contactDetail.MobileNumber = 789456123; // todo
-                    //contactDetail.CreateDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
+                    contactDetail.MobileNumber = Convert.ToInt32(Regex.Replace(JsonObjPNRBooking.data.contacts.P.phoneNumbers[0].number.ToString(), @"^\+91", "")); // todo
+                    if (JsonObjPNRBooking.data.info.createdDate != null)
+                        contactDetail.CreateDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate); //DateTime.Now;
                     contactDetail.CreateBy = JsonObjPNRBooking.data.info.createdAgentId; //"Admin";
-                    //contactDetail.ModifyDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
+                    if (JsonObjPNRBooking.data.info.modifiedDate != null)
+                        contactDetail.ModifyDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate); //DateTime.Now;
                     contactDetail.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId; //"Admin";
                     contactDetail.Status = JsonObjPNRBooking.data.info.status;// 0;
                     GSTDetails gSTDetails = new GSTDetails();
@@ -757,6 +785,9 @@ namespace OnionConsumeWebAPI.Controllers
                         {
                             tb_PassengerTotalobj.TotalSeatAmount = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.total;
                             tb_PassengerTotalobj.TotalSeatAmount_Tax = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.taxes;
+                            if (JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments != null)
+                                tb_PassengerTotalobj.SeatAdjustment = JsonObjPNRBooking.data.breakdown.passengerTotals.seats.adjustments;
+
                         }
                     }
 
@@ -765,8 +796,10 @@ namespace OnionConsumeWebAPI.Controllers
                     tb_PassengerTotalobj.Modifyby = JsonObjPNRBooking.data.info.createdDate;// "Online";
                     tb_PassengerTotalobj.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
                     tb_PassengerTotalobj.Status = JsonObjPNRBooking.data.info.status; //"0";
-                    //tb_PassengerTotalobj.CreatedDate = JsonObjPNRBooking.data.info.createdDate;// DateTime.Now;
-                    //tb_PassengerTotalobj.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
+                    if (JsonObjPNRBooking.data.info.createdDate != null)
+                        tb_PassengerTotalobj.CreatedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate);// DateTime.Now;
+                    if (JsonObjPNRBooking.data.info.modifiedDate != null)
+                        tb_PassengerTotalobj.ModifiedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate); //DateTime.Now;
                     var passangerCount = JsonObjPNRBooking.data.passengers;
                     int PassengerDataCount = ((Newtonsoft.Json.Linq.JContainer)passangerCount).Count;
                     List<tb_PassengerDetails> tb_PassengerDetailsList = new List<tb_PassengerDetails>();
@@ -783,6 +816,10 @@ namespace OnionConsumeWebAPI.Controllers
                             tb_Passengerobj.FirstName = items.Value.name.first;
                             tb_Passengerobj.Title = items.Value.name.title;
                             tb_Passengerobj.LastName = items.Value.name.last;
+                            if (tb_Passengerobj.Title == "MR" || tb_Passengerobj.Title == "Master" || tb_Passengerobj.Title == "MSTR")
+                                tb_Passengerobj.Gender = "Male";
+                            else if (tb_Passengerobj.Title == "MS" || tb_Passengerobj.Title == "MRS" || tb_Passengerobj.Title == "MISS")
+                                tb_Passengerobj.Gender = "Female";
                             int JourneysReturnCount1 = JsonObjPNRBooking.data.journeys.Count;
                             if (JsonObjPNRBooking.data.journeys[0].segments[isegment].passengerSegment[tb_Passengerobj.PassengerKey].seats != null && JsonObjPNRBooking.data.journeys[0].segments[isegment].passengerSegment[tb_Passengerobj.PassengerKey].seats.Count > 0)
                             {
@@ -792,9 +829,11 @@ namespace OnionConsumeWebAPI.Controllers
 
                             tb_Passengerobj.TotalAmount = JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;
                             tb_Passengerobj.TotalAmount_tax = JsonObjPNRBooking.data.breakdown.journeyTotals.totalTax;
-                            //tb_Passengerobj.CreatedDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
+                            if (JsonObjPNRBooking.data.info.createdDate != null)
+                                tb_Passengerobj.CreatedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate); //DateTime.Now;
                             tb_Passengerobj.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
-                            //tb_Passengerobj.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
+                            if (JsonObjPNRBooking.data.info.modifiedDate != null)
+                                tb_Passengerobj.ModifiedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate); //DateTime.Now;
                             tb_Passengerobj.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId; //"Online";
                             tb_Passengerobj.Status = JsonObjPNRBooking.data.info.status; //"0";
                             if (items.Value.infant != null)
@@ -820,8 +859,14 @@ namespace OnionConsumeWebAPI.Controllers
                             // Handle carrybages and fees
                             List<FeeDetails> feeDetails = new List<FeeDetails>();
                             double TotalAmount_Seat = 0;
+                            decimal TotalAmount_Seat_tax = 0;
+                            decimal TotalAmount_Seat_discount = 0;
                             double TotalAmount_Meals = 0;
+                            decimal TotalAmount_Meals_tax = 0;
+                            decimal TotalAmount_Meals_discount = 0;
                             double TotalAmount_Baggage = 0;
+                            decimal TotalAmount_Baggage_tax = 0;
+                            decimal TotalAmount_Baggage_discount = 0;
                             string carryBagesConcatenation = "";
                             string MealConcatenation = "";
                             int feesCount = items.Value.fees.Count;
@@ -833,12 +878,20 @@ namespace OnionConsumeWebAPI.Controllers
                                     if (ssrCode.StartsWith("P"))
                                     {
                                         TicketCarryBag[tb_Passengerobj.PassengerKey.ToString()] = fee.ssrCode;
-                                        carryBagesConcatenation += fee.ssrCode + ",";
+                                        var BaggageName = MealImageList.GetAllmeal()
+                                                        .Where(x => ((string)fee.ssrCode).Contains(x.MealCode))
+                                                        .Select(x => x.MealImage)
+                                                        .FirstOrDefault();
+                                        carryBagesConcatenation += fee.ssrCode + "-" + BaggageName + ",";
                                     }
                                     else if (ssrCode.StartsWith("V"))
                                     {
                                         TicketMeal[tb_Passengerobj.PassengerKey.ToString()] = fee.ssrCode;
-                                        MealConcatenation += fee.ssrCode + ",";
+                                        var MealName = MealImageList.GetAllmeal()
+                                                        .Where(x => ((string)fee.ssrCode).Contains(x.MealCode))
+                                                        .Select(x => x.MealImage)
+                                                        .FirstOrDefault();
+                                        MealConcatenation += fee.ssrCode + "-" + MealName + ",";
                                     }
                                 }
                                 Hashtable TicketMealTax = new Hashtable();
@@ -847,34 +900,94 @@ namespace OnionConsumeWebAPI.Controllers
 
                                 // Iterate through service charges
                                 int ServiceCount = fee.serviceCharges.Count;
-                                foreach (var serviceCharge in fee.serviceCharges)
+                                if (fee.code.ToString().StartsWith("SE"))
                                 {
-                                    string serviceChargeCode = serviceCharge.code?.ToString();
-                                    double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
-                                    if (serviceChargeCode != null)
+                                    foreach (var serviceCharge in fee.serviceCharges)
                                     {
-                                        if (serviceChargeCode.StartsWith("SE"))
+                                        string serviceChargeCode = serviceCharge.code?.ToString();
+                                        double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
+                                        if (serviceChargeCode != null)
                                         {
-                                            TotalAmount_Seat += amount;
-                                            TicketSeat[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Seat;
+                                            if (serviceChargeCode.StartsWith("SE") && serviceCharge.type == "6")
+                                            {
+                                                TotalAmount_Seat += amount;
+                                                TicketSeat[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Seat;
+                                            }
+                                            else if (serviceCharge.type == "3")
+                                            {
+                                                TotalAmount_Seat_tax += Convert.ToDecimal(amount);
+                                            }
+                                            else if (serviceCharge.type == "1")
+                                            {
+                                                TotalAmount_Seat_discount += Convert.ToDecimal(amount);
+                                            }
                                         }
-                                        else if (serviceChargeCode.StartsWith("V"))
-                                        {
-                                            TotalAmount_Meals += amount;
-                                            TicketMealAmount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Meals;
-                                        }
-                                        else if (serviceChargeCode.StartsWith("P"))
-                                        {
-                                            TotalAmount_Baggage += amount;
-                                            TicketCarryBagAMount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Baggage;
-                                        }
-                                    }
 
+                                    }
+                                }
+                                else if (fee.code.ToString().StartsWith("V"))
+                                {
+                                    foreach (var serviceCharge in fee.serviceCharges)
+                                    {
+                                        string serviceChargeCode = serviceCharge.code?.ToString();
+                                        double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
+                                        if (serviceChargeCode != null)
+                                        {
+
+
+                                            if (serviceChargeCode.StartsWith("V") && serviceCharge.type == "6")
+                                            {
+                                                TotalAmount_Meals += amount;
+                                                TicketMealAmount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Meals;
+                                            }
+                                            else if (serviceCharge.type == "3")
+                                            {
+                                                TotalAmount_Meals_tax += Convert.ToDecimal(amount);
+                                            }
+                                            else if (serviceCharge.type == "1")
+                                            {
+                                                TotalAmount_Meals_discount += Convert.ToDecimal(amount);
+                                            }
+
+                                        }
+
+                                    }
+                                }
+                                else if (fee.code.ToString().StartsWith("P"))
+                                {
+                                    foreach (var serviceCharge in fee.serviceCharges)
+                                    {
+                                        string serviceChargeCode = serviceCharge.code?.ToString();
+                                        double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
+                                        if (serviceChargeCode != null)
+                                        {
+                                            if (serviceChargeCode.StartsWith("P") && serviceCharge.type == "6")
+                                            {
+                                                TotalAmount_Baggage += amount;
+                                                TicketCarryBagAMount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Baggage;
+                                            }
+                                            else if (serviceCharge.type == "3")
+                                            {
+                                                TotalAmount_Baggage_tax += Convert.ToDecimal(amount);
+                                            }
+                                            else if (serviceCharge.type == "1")
+                                            {
+                                                TotalAmount_Baggage_discount += Convert.ToDecimal(amount);
+                                            }
+                                        }
+
+                                    }
                                 }
                             }
                             tb_Passengerobj.TotalAmount_Seat = TotalAmount_Seat;
+                            tb_Passengerobj.TotalAmount_Seat_tax = TotalAmount_Seat_tax;
+                            tb_Passengerobj.TotalAmount_Seat_tax_discount = TotalAmount_Seat_discount;
                             tb_Passengerobj.TotalAmount_Meals = TotalAmount_Meals;
+                            tb_Passengerobj.TotalAmount_Meals_tax = Convert.ToDouble(TotalAmount_Meals_tax);
+                            tb_Passengerobj.TotalAmount_Meals_discount = Convert.ToDouble(TotalAmount_Meals_discount);
                             tb_Passengerobj.BaggageTotalAmount = TotalAmount_Baggage;
+                            tb_Passengerobj.BaggageTotalAmountTax = TotalAmount_Baggage_tax;
+                            tb_Passengerobj.BaggageTotalAmountTax_discount = TotalAmount_Baggage_discount;
                             tb_Passengerobj.Carrybages = carryBagesConcatenation.TrimEnd(',');
                             tb_Passengerobj.MealsCode = MealConcatenation.TrimEnd(',');
                             tb_PassengerDetailsList.Add(tb_Passengerobj);
@@ -897,9 +1010,11 @@ namespace OnionConsumeWebAPI.Controllers
                         tb_JourneysObj.Destination = JsonObjPNRBooking.data.journeys[i].designator.destination;
                         tb_JourneysObj.DepartureDate = JsonObjPNRBooking.data.journeys[i].designator.departure;
                         tb_JourneysObj.ArrivalDate = JsonObjPNRBooking.data.journeys[i].designator.arrival;
-                        //tb_JourneysObj.CreatedDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
+                        if (JsonObjPNRBooking.data.info.createdDate != null)
+                            tb_JourneysObj.CreatedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate); //DateTime.Now;
                         tb_JourneysObj.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
-                        //tb_JourneysObj.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
+                        if (JsonObjPNRBooking.data.info.modifiedDate != null)
+                            tb_JourneysObj.ModifiedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate); //DateTime.Now;
                         tb_JourneysObj.Modifyby = JsonObjPNRBooking.data.info.modifiedAgentId; //"Online";
                         tb_JourneysObj.Status = JsonObjPNRBooking.data.info.status; //"0";
                         tb_JourneysList.Add(tb_JourneysObj);
@@ -919,17 +1034,39 @@ namespace OnionConsumeWebAPI.Controllers
                             segmentReturnobj.CarrierCode = JsonObjPNRBooking.data.journeys[0].segments[j].identifier.carrierCode;
                             segmentReturnobj.Seatnumber = ""; // to do
                             segmentReturnobj.MealCode = ""; // to do
-                            segmentReturnobj.MealDiscription = "it is a coffe"; // to fo
-                            segmentReturnobj.DepartureTerminal = 2; // to do
-                            segmentReturnobj.ArrivalTerminal = 1;// to do
-                            //segmentReturnobj.CreatedDate = JsonObjPNRBooking.data.info.createdDate; //DateTime.Now;
-                            //segmentReturnobj.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate; //DateTime.Now;
+                            segmentReturnobj.MealDiscription = "";// "it is a coffe"; // to fo
+                            var LegReturn = JsonObjPNRBooking.data.journeys[i].segments[j].legs;
+                            int Legcount = ((Newtonsoft.Json.Linq.JContainer)LegReturn).Count;
+                            List<LegReturn> legReturnsList = new List<LegReturn>();
+                            for (int n = 0; n < Legcount; n++)
+                            {
+                                if(JsonObjPNRBooking.data.journeys[i].segments[j].legs[n].legInfo.departureTerminal != null)
+                                  segmentReturnobj.DepartureTerminal = JsonObjPNRBooking.data.journeys[i].segments[j].legs[n].legInfo.departureTerminal;  // to do
+                                if(JsonObjPNRBooking.data.journeys[i].segments[j].legs[n].legInfo.arrivalTerminal!=null)
+                                  segmentReturnobj.ArrivalTerminal = JsonObjPNRBooking.data.journeys[i].segments[j].legs[n].legInfo.arrivalTerminal; // to do
+                            }
+                            if (JsonObjPNRBooking.data.info.createdDate != null)
+                                segmentReturnobj.CreatedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate); //DateTime.Now;
+                            if (JsonObjPNRBooking.data.info.modifiedDate != null)
+                                segmentReturnobj.ModifiedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate); //DateTime.Now;
                             segmentReturnobj.Createdby = JsonObjPNRBooking.data.info.createdAgentId; //"Online";
                             segmentReturnobj.Modifyby = JsonObjPNRBooking.data.info.modifiedAgentId; //"Online";
+                            segmentReturnobj.Status = JsonObjPNRBooking.data.info.status; //;
                             segmentReturnsListt.Add(segmentReturnobj);
 
                         }
                     }
+
+                    Trips tb_Trips = new Trips();
+                    tb_Trips.OutboundFlightID = JsonObjPNRBooking.data.bookingKey;
+                    tb_Trips.TripType = "OneWay";
+                    tb_Trips.TripStatus = "active";
+                    tb_Trips.BookingDate = DateTime.Now;
+                    tb_Trips.UserID = "";
+                    tb_Trips.ReturnFlightID = "";
+
+
+
                     airLineFlightTicketBooking.tb_Booking = tb_Booking;
                     airLineFlightTicketBooking.GSTDetails = gSTDetails;
                     airLineFlightTicketBooking.tb_Segments = segmentReturnsListt;
@@ -938,6 +1075,7 @@ namespace OnionConsumeWebAPI.Controllers
                     airLineFlightTicketBooking.tb_PassengerTotal = tb_PassengerTotalobj;
                     airLineFlightTicketBooking.tb_PassengerDetails = tb_PassengerDetailsList;
                     airLineFlightTicketBooking.ContactDetail = contactDetail;
+                    airLineFlightTicketBooking.tb_Trips = tb_Trips;
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.BaseURL + "api/AirLineTicketBooking/PostairlineTicketData", airLineFlightTicketBooking);
                     if (responsePassengers.IsSuccessStatusCode)

@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using Bookingmanager_;
+using CoporateBooking.Models;
 using DomainLayer.Model;
 using DomainLayer.ViewModel;
 using IndigoBookingManager_;
@@ -45,7 +46,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
         {
             _configuration = configuration;
         }
-        public IActionResult AkTripsellView(string Guid)
+        public async Task<IActionResult> AkTripsellView(string Guid)
         {
             List<SelectListItem> Title = new()
             {
@@ -62,11 +63,69 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
 			MongoHelper objMongoHelper = new MongoHelper();
 			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(Guid, "Akasa").Result;
 
-			//var AKpassenger = HttpContext.Session.GetString("ResultFlightPassenger");
-   //         var AkMeals = HttpContext.Session.GetString("AKMealsBaggage");
-   //         var Akbaggage = HttpContext.Session.GetString("AKBaggageDetails");
-   //         var AkSeatMap = HttpContext.Session.GetString("AKSeatmap");
-   //         var AkItanary = HttpContext.Session.GetString("AkasaAirItanary");
+
+            int? airlineId = 5;
+
+            _mongoDBHelper.UpdateSuppLegalEntity(Guid, Convert.ToString(airlineId.Value));
+
+            LegalEntity legal = new LegalEntity();
+            legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
+
+            if (legal != null)
+            {
+
+                //string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.LegalName}";
+
+                string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.BillingEntityName}";
+
+                if (airlineId.HasValue)
+                {
+                    apiUrl += $"&airlineId={airlineId.Value}";
+                }
+                List<CompanyEmployeeGSTDetails> gstList = new();
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Accept.Add(
+                            new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                        HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string jsonData = await response.Content.ReadAsStringAsync();
+                            gstList = JsonConvert.DeserializeObject<List<CompanyEmployeeGSTDetails>>(jsonData);
+                            // Optional: Deserialize JSON if you have a model
+                            // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
+                            // ViewBag.GSTdata = gstData;
+                        }
+
+
+                    }
+                }
+
+                catch when (Guid == null)
+                {
+                    // Handle the exception when Guid is null
+                    // You can log the error or take appropriate action
+                }
+                catch
+                {
+
+                }
+
+
+
+                ViewBag.GSTdata = gstList;
+            }
+
+            //var AKpassenger = HttpContext.Session.GetString("ResultFlightPassenger");
+            //         var AkMeals = HttpContext.Session.GetString("AKMealsBaggage");
+            //         var Akbaggage = HttpContext.Session.GetString("AKBaggageDetails");
+            //         var AkSeatMap = HttpContext.Session.GetString("AKSeatmap");
+            //         var AkItanary = HttpContext.Session.GetString("AkasaAirItanary");
             if (seatMealdetail.Infant != null)
             {
 

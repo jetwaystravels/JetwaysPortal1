@@ -30,6 +30,8 @@ namespace ServiceLayer.Service.Implementation
                 var jetwaysId = jetid[0].Autogenratednumber;
                 tb_Booking tbobj = new tb_Booking();
                 tbobj.BookingID = ticketObject.BookingID;
+                tbobj.BookingType = ticketObject.tb_Booking.BookingType;
+                tbobj.TripType = ticketObject.tb_Booking.TripType;
                 tbobj.FlightID = jetwaysId;
                 tbobj.AirLineID = ticketObject.tb_Booking.AirLineID;
                 tbobj.Origin = ticketObject.tb_Booking.Origin;
@@ -43,6 +45,7 @@ namespace ServiceLayer.Service.Implementation
                 tbobj.SpecialServicesTotal = ticketObject.tb_Booking.SpecialServicesTotal;
                 tbobj.SpecialServicesTotal_Tax = ticketObject.tb_Booking.SpecialServicesTotal_Tax;
                 tbobj.SeatTotalAmount = ticketObject.tb_Booking.SeatTotalAmount;
+                tbobj.SeatAdjustment = ticketObject.tb_Booking.SeatAdjustment;
                 tbobj.SeatTotalAmount_Tax = ticketObject.tb_Booking.SeatTotalAmount_Tax;
                 tbobj.ExpirationDate = ticketObject.tb_Booking.ExpirationDate;
                 tbobj.BookingDoc = ticketObject.tb_Booking.BookingDoc;
@@ -83,6 +86,7 @@ namespace ServiceLayer.Service.Implementation
                 tb_PassengerTotalobj.TotalMealsAmount = ticketObject.tb_PassengerTotal.TotalMealsAmount;
                 tb_PassengerTotalobj.TotalMealsAmount_Tax = ticketObject.tb_PassengerTotal.TotalMealsAmount_Tax;
                 tb_PassengerTotalobj.TotalSeatAmount = ticketObject.tb_PassengerTotal.TotalSeatAmount;
+                tb_PassengerTotalobj.SeatAdjustment = ticketObject.tb_PassengerTotal.SeatAdjustment;
                 tb_PassengerTotalobj.TotalSeatAmount_Tax = ticketObject.tb_PassengerTotal.TotalSeatAmount_Tax;
                 tb_PassengerTotalobj.Createdby = ticketObject.tb_PassengerTotal.Createdby;
                 tb_PassengerTotalobj.Modifyby = ticketObject.tb_PassengerTotal.Modifyby;
@@ -112,7 +116,7 @@ namespace ServiceLayer.Service.Implementation
                     tb_Journeysobj.Modifyby = ticketObject.tb_journeys[k].Modifyby;
                     tb_Journeysobj.Status = ticketObject.tb_journeys[k].Status;
                     this._dbContext.Add(tb_Journeysobj);
-                    this._dbContext.SaveChanges();
+                    //this._dbContext.SaveChanges();
 
                 }
                 var SegementDataCount = ticketObject.tb_Segments.Count;
@@ -155,16 +159,27 @@ namespace ServiceLayer.Service.Implementation
                     tb_PassengerDetails.FirstName = ticketObject.tb_PassengerDetails[j].FirstName;
                     tb_PassengerDetails.LastName = ticketObject.tb_PassengerDetails[j].LastName;
                     tb_PassengerDetails.TypeCode = ticketObject.tb_PassengerDetails[j].TypeCode;
+                    tb_PassengerDetails.Gender = ticketObject.tb_PassengerDetails[j].Gender;
                     tb_PassengerDetails.Seatnumber = ticketObject.tb_PassengerDetails[j].Seatnumber;
                     tb_PassengerDetails.ModifiedDate = ticketObject.tb_PassengerDetails[j].ModifiedDate;
                     tb_PassengerDetails.CreatedDate = ticketObject.tb_PassengerDetails[j].CreatedDate;
                     tb_PassengerDetails.Createdby = ticketObject.tb_PassengerDetails[j].Createdby;
                     tb_PassengerDetails.ModifyBy = ticketObject.tb_PassengerDetails[j].ModifyBy;
                     tb_PassengerDetails.Carrybages = ticketObject.tb_PassengerDetails[j].Carrybages;
+
                     tb_PassengerDetails.TotalAmount_Seat = ticketObject.tb_PassengerDetails[j].TotalAmount_Seat;
+                    tb_PassengerDetails.TotalAmount_Seat_tax = ticketObject.tb_PassengerDetails[j].TotalAmount_Seat_tax;
+                    tb_PassengerDetails.TotalAmount_Seat_tax_discount = ticketObject.tb_PassengerDetails[j].TotalAmount_Seat_tax_discount;
+
                     tb_PassengerDetails.TotalAmount_Meals = ticketObject.tb_PassengerDetails[j].TotalAmount_Meals;
+                    tb_PassengerDetails.TotalAmount_Meals_tax = ticketObject.tb_PassengerDetails[j].TotalAmount_Meals_tax;
+                    tb_PassengerDetails.TotalAmount_Meals_discount = ticketObject.tb_PassengerDetails[j].TotalAmount_Meals_discount;
+
                     tb_PassengerDetails.MealsCode = ticketObject.tb_PassengerDetails[j].MealsCode;
                     tb_PassengerDetails.BaggageTotalAmount = ticketObject.tb_PassengerDetails[j].BaggageTotalAmount;
+                    tb_PassengerDetails.BaggageTotalAmountTax = ticketObject.tb_PassengerDetails[j].BaggageTotalAmountTax;
+                    tb_PassengerDetails.BaggageTotalAmountTax_discount = ticketObject.tb_PassengerDetails[j].BaggageTotalAmountTax_discount;
+
                     tb_PassengerDetails.Inf_Firstname = ticketObject.tb_PassengerDetails[j].Inf_Firstname;
                     tb_PassengerDetails.Inf_Lastname = ticketObject.tb_PassengerDetails[j].Inf_Lastname;
                     tb_PassengerDetails.Inf_TypeCode = ticketObject.tb_PassengerDetails[j].Inf_TypeCode;
@@ -186,8 +201,19 @@ namespace ServiceLayer.Service.Implementation
                 tb_Air.CreatedDate = ticketObject.tb_AirCraft.CreatedDate;
                 tb_Air.Modifieddate = ticketObject.tb_AirCraft.Modifieddate;
                 tb_Air.Status = ticketObject.tb_AirCraft.Status;
-
                 this._dbContext.Add(tb_Air);
+
+                Trips tb_trp = new Trips();
+                tb_trp.OutboundFlightID = ticketObject.tb_Trips.OutboundFlightID;
+                tb_trp.ReturnFlightID = ticketObject.tb_Trips.ReturnFlightID;
+                tb_trp.UserID = ticketObject.tb_Trips.UserID;
+                tb_trp.TripType = ticketObject.tb_Trips.TripType;
+                tb_trp.TripStatus = ticketObject.tb_Trips.TripStatus;
+                tb_trp.BookingDate = ticketObject.tb_Trips.BookingDate;
+                this._dbContext.Add(tb_trp);
+
+
+                
                 this._dbContext.SaveChanges();
 
                 return "Success";

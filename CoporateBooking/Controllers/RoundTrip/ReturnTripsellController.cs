@@ -85,6 +85,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             List<string> _Mealsdata = new List<string>();
 
             var flagsession = "NA";
+            string airlineId = "0";
             var airlinename = "";
             string[] AirlineNamedesc = new string[2];
             string SeatMapres = string.Empty;
@@ -142,7 +143,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 string _journeySide = _Jparts[1];
                 AirlineNamedesc[p] = _JourneykeyRTData;
 
-
+              
 
 
 
@@ -150,6 +151,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 {
                     if (_JourneykeyRTData.ToLower() == "airasia")
                     {
+                        airlineId = "4";
                         seatMealdetail.PSupp = "AirAsia";
                         seatMealdetail.Supp = "AirAsia";
                         Supp = "AirAsia";
@@ -807,6 +809,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                     if (_JourneykeyRTData.ToLower() == "akasaair")
                     {
+                        airlineId = "5";
                         Supp = "Akasa";
                         seatMealdetail.Supp = "AirAsia";
                         seatMealdetail.PSupp = "Akasa";
@@ -1454,6 +1457,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     string str3 = string.Empty;
                     if (_JourneykeyRTData.ToLower() == "spicejet")
                     {
+                        airlineId = "2";
                         #region SpiceJetSellRequest
 
                         seatMealdetail.Supp = "AirAsia";
@@ -1962,6 +1966,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     {
                         seatMealdetail.Supp = "AirAsia";
                         seatMealdetail.PSupp = "Indigo";
+                        airlineId = "3";
                         //string stravailibitilityrequest = HttpContext.Session.GetString("IndigoAvailibilityRequest");
 
                         Signature = string.Empty;
@@ -2257,7 +2262,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     //GDSTraceid
                     if (_JourneykeyRTData.ToLower() == "vistara" || _JourneykeyRTData.ToLower() == "airindia" || _JourneykeyRTData.ToLower() == "hehnair")
                     {
-
+                        airlineId = "6";
                         Supp = "GDS";
                         seatMealdetail.Supp = "AirAsia";
                         seatMealdetail.PSupp = "GDS";
@@ -4529,6 +4534,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
             seatMealdetail.Guid = Guid;
             _mongoDBHelper.SaveResultSeatMealRequest(seatMealdetail);
+
+            _mongoDBHelper.UpdateSuppLegalEntity(Guid, airlineId);
 
 
             return RedirectToAction("RoundAATripsellView", "RoundAATripsell", new { Guid = Guid, Supp = Supp });

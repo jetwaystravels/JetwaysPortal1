@@ -29,6 +29,7 @@ namespace DomainLayer.Model
         public double SpecialServicesTotal_Tax { get; set; }
         public double SeatTotalAmount { get; set; }
         public double SeatTotalAmount_Tax { get; set; }      
+        public double SeatAdjustment { get; set; }      
         public DateTime CreatedDate { get; set; }
         public DateTime ExpirationDate { get; set; }       
         public string Createdby { get; set; }
@@ -36,6 +37,8 @@ namespace DomainLayer.Model
         public string ModifyBy { get; set; }
         public string BookingDoc { get; set; }
         public string Status { get; set; }
-        public string paidStatus { get; set; }
+        public int PaidStatus { get; set; }
+        public String BookingType { get; set; } = null;
+        public String TripType { get; set; } = null;
     }
 }

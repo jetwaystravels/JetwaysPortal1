@@ -22,6 +22,7 @@ namespace DomainLayer.Model
         public string? MiddleName { get; set; }
         public string LastName { get; set; }
         public string TypeCode { get; set; }
+        public string Gender { get; set; }
         public DateTime? Dob { get; set; }
         public string? Seatnumber { get; set; }
         public int? Handbages { get; set; }
@@ -33,9 +34,13 @@ namespace DomainLayer.Model
         public decimal? TotalAmount_tax { get; set; }
         public double TotalAmount_Meals { get; set; }
         public double? TotalAmount_Meals_tax { get; set; }
+        public double? TotalAmount_Meals_discount { get; set; }
         public double BaggageTotalAmount { get; set; }
+        public decimal? BaggageTotalAmountTax { get; set; }
+        public decimal? BaggageTotalAmountTax_discount { get; set; }
         public double TotalAmount_Seat { get; set; }
         public decimal? TotalAmount_Seat_tax { get; set; }
+        public decimal? TotalAmount_Seat_tax_discount { get; set; }
         public string? Inf_Firstname { get; set; }
         public string? Inf_Middlename { get; set; }
         public string? Inf_Lastname { get; set; }

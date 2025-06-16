@@ -17,6 +17,8 @@ using Utility;
 using IndigoBookingManager_;
 using static DomainLayer.Model.ReturnTicketBooking;
 using Indigo;
+using CoporateBooking.Models;
+using OnionConsumeWebAPI.Extensions;
 
 
 namespace OnionConsumeWebAPI.Controllers
@@ -38,7 +40,7 @@ namespace OnionConsumeWebAPI.Controllers
         {
             _configuration = configuration;
         }
-        public IActionResult IndigoSaverTripsell(string GUID)
+        public async Task<IActionResult> IndigoSaverTripsell(string GUID)
         {
 
             List<SelectListItem> Title = new()
@@ -69,7 +71,65 @@ namespace OnionConsumeWebAPI.Controllers
 			seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(GUID, "Indigo").Result;
 
 
-			ViewModel vm = new ViewModel();
+
+            int? airlineId = 2;
+
+            _mongoDBHelper.UpdateSuppLegalEntity(GUID, Convert.ToString(airlineId.Value));
+
+            LegalEntity legal = new LegalEntity();
+            legal = _mongoDBHelper.GetlegalEntityByGUID(GUID).Result;
+
+            if (legal != null)
+            {
+
+                //string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.LegalName}";
+
+                string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.BillingEntityName}";
+
+                if (airlineId.HasValue)
+                {
+                    apiUrl += $"&airlineId={airlineId.Value}";
+                }
+                List<CompanyEmployeeGSTDetails> gstList = new();
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Accept.Add(
+                            new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                        HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string jsonData = await response.Content.ReadAsStringAsync();
+                            gstList = JsonConvert.DeserializeObject<List<CompanyEmployeeGSTDetails>>(jsonData);
+                            // Optional: Deserialize JSON if you have a model
+                            // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
+                            // ViewBag.GSTdata = gstData;
+                        }
+
+
+                    }
+                }
+
+                catch when (GUID == null)
+                {
+                    // Handle the exception when Guid is null
+                    // You can log the error or take appropriate action
+                }
+                catch
+                {
+
+                }
+
+
+
+                ViewBag.GSTdata = gstList;
+            }
+
+            ViewModel vm = new ViewModel();
             if (seatMealdetail.ResultRequest != null)
             {
                 AirAsiaTripResponceModel passeengerlistItanary = (AirAsiaTripResponceModel)JsonConvert.DeserializeObject(objMongoHelper.UnZip(seatMealdetail.ResultRequest), typeof(AirAsiaTripResponceModel));

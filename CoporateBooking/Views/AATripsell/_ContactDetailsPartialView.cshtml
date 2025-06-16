@@ -153,7 +153,7 @@
 				<div class="col-md-2 phone-number">
 					<div class="form-input">
 
-					<input type="text" name="number" id="number" maxlength="10" value="@gstData[0].MobileNumber" class="phoneNClass" placeholder="Phone Number" oninput="validatePhoneNumber(event)" readonly>
+					<input type="text" name="number" id="number" maxlength="10" value="@gstData[0].MobileNumber" class="phoneNClass" placeholder="Phone Number" oninput="validatePhoneNumber(event)" >
 
 					</div>
 					<p id="error-message8" class="error-message" style="display:none">Enter valid Phone Number</p>
@@ -181,14 +181,14 @@
 				<div class="col-md-3">
 					<div class="form-input">
 
-					<input type="text" id="gstname" maxlength="32" value="@gstData[0].GSTName" name="companyName" oninput="validateInputgst(event)" class="companyName hid-block" placeholder="Company Name" readonly>
+					<input type="text" id="gstname" maxlength="32" value="@gstData[0].GSTName" name="companyName" oninput="validateInputgst(event)" class="companyName hid-block" placeholder="Company Name" >
 					</div>
 					<p id="errorMessagegst" style="color: red;font-size:13px;"></p>
 					<p id="error-message9" class="error-message" style="display:none">Enter Company Name</p>
 				</div>
 				<div class="col-md-3">
 					<div class="form-input">
-					<input type="text" id="gstnumber" maxlength="15" value="@gstData[0].GSTNumber" name="customerNumber" oninput="validateGST(event)" class="companyName hid-block" placeholder="GST Number" readonly>
+					<input type="text" id="gstnumber" maxlength="15" value="@gstData[0].GSTNumber" name="customerNumber" oninput="validateGST(event)" class="companyName hid-block" placeholder="GST Number" >
 					</div>
 					<p id="gstErrorMessage" style="color: red;font-size:13px;"></p>
 					<p id="error-message10" class="error-message" style="display:none">Enter GST Number</p>
@@ -197,7 +197,7 @@
 
 				<div class="col-md-3">
 					<div class="form-input">
-					<input type="text" id="emailAddressGST" name="emailAddressgst" maxlength="30" value="@gstData[0].GSTEmail" oninput="validateEmailGST(event)" class="gstemail hid-block " placeholder="Email ID" readonly>
+					<input type="text" id="emailAddressGST" name="emailAddressgst" maxlength="30" value="@gstData[0].GSTEmail" oninput="validateEmailGST(event)" class="gstemail hid-block " placeholder="Email ID" >
 					</div>
 					<p id="emailErrorMessageGST" style="color: red; font-size:13px;"></p>
 					<p id="error-message11" class="error-message" style="display:none">Enter GST email</p>

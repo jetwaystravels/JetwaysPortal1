@@ -1,38 +1,44 @@
-﻿@using Newtonsoft.Json;
+﻿@using System.Security.Claims;
+@using Newtonsoft.Json;
+@{
+    string bookdisabled = "disabled=disabled";
+}
+
 <style>
     /*List page tab css*/
     .bg-listtab {
-        margin: 10px 0px;
-        background: #e7e7e7;
-        padding: 10px;
+    margin: 10px 0px;
+    background: #e7e7e7;
+    padding: 10px;
     }
 
     .flightT1, .flightT2, .flightT3, .flightT4, .flightT5 {
-        cursor: pointer;
+    cursor: pointer;
     }
 
     .tabBG {
-        padding: 4px 8px;
-        border-radius: 2px;
-        color: #326bf3;
-        border-bottom: 1px solid #326bf3;
+    padding: 4px 8px;
+    border-radius: 2px;
+    color: #326bf3;
+    border-bottom: 1px solid #326bf3;
     }
 
 </style>
 @if (User.Identity.IsAuthenticated)
 {
+    bookdisabled = "";
     <script>
         function handleBooking(isLoggedIn) {
-            alert(1);
-            if (!isLoggedIn) {
-                const confirmLogin = confirm("Please login to book your flight.");
-                if (confirmLogin) {
-                    const returnUrl = encodeURIComponent(window.location.href);
-                    window.location.href = `/Login/UserLogin?returnUrl=${returnUrl}`;
-                }
-                return false; // Prevent form submission when not logged in
-            }
-            return true; // Allow submission if logged in
+        alert(1);
+        if (!isLoggedIn) {
+        const confirmLogin = confirm("Please login to book your flight.");
+        if (confirmLogin) {
+        const returnUrl = encodeURIComponent(window.location.href);
+        window.location.href = `/Login/UserLogin?returnUrl=${returnUrl}`;
+        }
+        return false; // Prevent form submission when not logged in
+        }
+        return true; // Allow submission if logged in
         }
     </script>
 }
@@ -40,8 +46,8 @@ else
 {
     <script>
         function handleBooking(isLoggedIn) {
-            alert(2);
-           return true; // Allow submission if logged in
+        alert(2);
+        return true; // Allow submission if logged in
         }
     </script>
 }
@@ -1677,7 +1683,14 @@ else
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="taxes" name="taxes" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].taxamount" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
-                                                <input type="submit" value="Book Now" class="button small-btn" />
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <input type="submit" value="Book Now" class="button small-btn" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="submit" value="Book Now" onclick="alert('Please enter login'); location.href='@Url.Action("Index", "FlightSearchIndex")'; return false;" class="button small-btn" />
+                                                }
                                             </form>
                                         }
                                         else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("6E"))
@@ -1687,7 +1700,15 @@ else
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
                                                 @*<input type="submit" value="Book Now" class="button small-btn" @(isLoggedIn ? "" : "disabled") />*@
-                                                <input type="submit" value="Book Now" class="button small-btn" />
+                                               @if (User.Identity.IsAuthenticated)
+                                                    {
+                                                     <input type="submit" value="Book Now" class="button small-btn" />
+                                                    }
+                                                    else
+                                                    {
+                                                    <input type="submit" value="Book Now" onclick="alert('Please enter login'); location.href='@Url.Action("Index", "FlightSearchIndex")'; return false;" class="button small-btn" />
+                                                    }
+                                                
                                             </form>
                                         }
                                         else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QP"))
@@ -1696,7 +1717,14 @@ else
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
-                                                <input type="submit" value="Book Now" class="button small-btn" />
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <input type="submit" value="Book Now" class="button small-btn" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="submit" value="Book Now" onclick="alert('Please enter login'); location.href='@Url.Action("Index", "FlightSearchIndex")'; return false;" class="button small-btn" />
+                                                }
                                             </form>
                                         }
                                         else if (@Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("AI") || @Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("H1")
@@ -1719,7 +1747,14 @@ else
                                                 <input type="hidden" id="fareKey" name="fareKey" value="@data" />
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].procuctclass _@Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[k].fareKey" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
-                                                <input type="submit" value="Book Now" class="button small-btn" />
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <input type="submit" value="Book Now" class="button small-btn" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="submit" value="Book Now" onclick="alert('Please enter login'); location.href='@Url.Action("Index", "FlightSearchIndex")'; return false;" class="button small-btn" />
+                                                }
                                             </form>
                                         }
                                         else
@@ -1729,20 +1764,29 @@ else
                                                 <input type="hidden" id="journeyKey" name="journeyKey" value="@Model.SimpleAvailibilityaAddResponcelist[j].journeyKey" />
                                                 <input type="hidden" id="Guid" name="Guid" value="@ViewBag.Guid" />
 
-                                                @if (!string.IsNullOrEmpty(Model.SimpleAvailibilityaAddResponcelist[j].Loginstatus))
+                                                @* @if (!string.IsNullOrEmpty(Model.SimpleAvailibilityaAddResponcelist[j].Loginstatus))
+                                                // {
+                                                //     <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn" />
+                                                // }
+                                                // else
+                                                // {
+                                                //     <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn" />
+                                                // }*@
+                                            @if (User.Identity.IsAuthenticated)
                                                 {
-                                                    <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn" />
+                                                    
+                                                        <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn" />
                                                 }
                                                 else
                                                 {
-                                                    <input type="submit" asp-action="Tripsell" value="Book Now" class="button small-btn" />
+                                                    
+                                                    <input type="submit" value="Book Now" onclick="alert('Please enter login'); location.href='@Url.Action("Index", "FlightSearchIndex")'; return false;" class="button small-btn" />
+                                                      
                                                 }
-
                                             </form>
                                         }
                                     }
 
-                                </td>
 
                             </tr>
                         }

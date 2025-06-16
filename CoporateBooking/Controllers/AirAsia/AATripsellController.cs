@@ -71,7 +71,7 @@ namespace OnionConsumeWebAPI.Controllers
             //string legalEntityCode = "23E008";
             int? airlineId = 6;
 
-            _mongoDBHelper.UpdateSuppLegalEntity(Guid, "6");
+            _mongoDBHelper.UpdateSuppLegalEntity(Guid, Convert.ToString(airlineId.Value));
 
             LegalEntity legal = new LegalEntity();
             legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;

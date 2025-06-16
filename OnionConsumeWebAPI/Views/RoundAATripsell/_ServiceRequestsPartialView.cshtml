@@ -71,7 +71,8 @@
 	}
 
 		.select-option .servc-bordr {
-			max-width: 150px;
+			max-width: 154px;
+			min-width: 140px;
 		}
 
 	.width-90 {
@@ -79,27 +80,30 @@
 	}
 
 	.select-option2 {
-		max-width: 120px;
+		/*max-width: 120px;*/
 	}
 
 		.select-option2 .servc-bordr {
-			max-width: 150px;
+			max-width: 154px;
+			min-width: 140px;
 		}
 
 	.servc-bordrm2 {
-		max-width: 94px;
+		max-width: 154px;
+		min-width: 140px;
 	}
 
 	.servc-bordrConm1 {
-		max-width: 150px;
+		max-width: 154px;
+		min-width: 140px;
 	}
 
 	.servc-bordrbaggage {
-		width: 120PX;
+		width: 120px;
 	}
 
 	.servc-bordrbaggagem2 {
-		width: 120PX;
+		width: 120px;
 	}
 
 	.wdth-100 {
@@ -1248,7 +1252,7 @@
 												}
 												</div>
 											</div>
-									<div class="cell">
+									<div class="cell select-option2">
 										<div class="lft-spc">
 												@{
 													if (Model.MealslistRT != null && Model.MealslistRT.Count > 0 && Model.MealslistRT[0] != null)
@@ -1447,7 +1451,7 @@
 
 													@if (mealOptions.Count > 0)
 													{
-													<select id="ddlMealOptions2" class="servc-bordr servc-bordrConm1">
+													<select id="ddlMealOptions2" class="servc-bordr servc-bordrCon">
 															<option selected="selected" value="">Please select meal</option>
 															@foreach (var option in mealOptions)
 															{

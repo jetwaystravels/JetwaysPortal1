@@ -18,6 +18,7 @@ namespace DomainLayer.Model
         public double TotalMealsAmount_Tax { get; set; }
         public double TotalSeatAmount { get; set; }
         public double TotalSeatAmount_Tax { get; set; }
+        public double SeatAdjustment{ get; set; }
         public double TotalBookingAmount { get; set; }
         public double totalBookingAmount_Tax { get; set; }
         public DateTime CreatedDate { get; set; }

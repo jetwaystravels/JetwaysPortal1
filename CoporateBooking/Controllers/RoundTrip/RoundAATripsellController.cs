@@ -30,6 +30,7 @@ using System;
 using OnionArchitectureAPI.Services.Travelport;
 using System.Text;
 using System.Web;
+using CoporateBooking.Models;
 
 namespace OnionConsumeWebAPI.Controllers.RoundTrip
 {
@@ -50,7 +51,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             _configuration = configuration;
         }
 
-        public IActionResult RoundAATripsellView(string Guid, string Supp)
+        public async Task<IActionResult> RoundAATripsellView(string Guid, string Supp)
         {
 
             List<SelectListItem> Title = new()
@@ -68,6 +69,59 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
             MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
             MongoSeatMealdetail seatMealdetail = new MongoSeatMealdetail();
             seatMealdetail = _mongoDBHelper.GetSuppSeatMealByGUID(Guid, "AirAsia").Result;
+
+
+            LegalEntity legal = new LegalEntity();
+            legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
+
+            if (legal != null)
+            {
+
+                //string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.LegalName}";
+
+                string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.BillingEntityName}";
+
+
+                    apiUrl += $"&airlineId={legal.SuppId}";
+             
+                List<CompanyEmployeeGSTDetails> gstList = new();
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Accept.Add(
+                            new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+
+                        HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string jsonData = await response.Content.ReadAsStringAsync();
+                            gstList = JsonConvert.DeserializeObject<List<CompanyEmployeeGSTDetails>>(jsonData);
+                            // Optional: Deserialize JSON if you have a model
+                            // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
+                            // ViewBag.GSTdata = gstData;
+                        }
+
+
+                    }
+                }
+
+                catch when (Guid == null)
+                {
+                    // Handle the exception when Guid is null
+                    // You can log the error or take appropriate action
+                }
+                catch
+                {
+
+                }
+
+
+
+                ViewBag.GSTdata = gstList;
+            }
 
 
             //	string passengerInfant = HttpContext.Session.GetString("keypassengerItanary");

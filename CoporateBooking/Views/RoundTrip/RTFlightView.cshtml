@@ -123,12 +123,12 @@
 													<div class="d-flex radioW-400">
 														<input type="radio" name="SameAirlineRT" value="OneWay" onclick="checkRadio(this)">
 														<label class="form-check-label">One Way</label>
-							<input type="radio" name="SameAirlineRT" id="roundtripid" value="RoundTrip" onclick="checkRadio(this)" checked>
-							<label class="form-check-label">Round Trip</label>
-							<input type="radio" class="d-none" name="SameAirlineRT" value="AirlineRT" onclick="checkRadio(this)">
-							<label class="form-check-label d-none">Same Airline Roundtrip</label>
+														<input type="radio" name="SameAirlineRT" id="roundtripid" value="RoundTrip" onclick="checkRadio(this)" checked>
+														<label class="form-check-label">Round Trip</label>
+														<input type="radio" class="d-none" name="SameAirlineRT" value="AirlineRT" onclick="checkRadio(this)">
+														<label class="form-check-label d-none">Same Airline Roundtrip</label>
 
-						    </div>
+													</div>
 
 													<span class="input-group-text">
 														<input id="myInput" name="origin" type="text" value="" class="form-control" onclick="RTDropdown()">
@@ -824,7 +824,16 @@
 							</div>
 
 							<div class="rttotal-fare">
-								<input type="button" id="ReturnButtonId" value="Book Now" class="button small-btn rtbtn" data-toggle="modal" data-target="#rtexampleModal">
+								@if (User.Identity.IsAuthenticated)
+								{
+									
+									<input type="button" id="ReturnButtonId" value="Book Now" class="button small-btn rtbtn" data-toggle="modal" data-target="#rtexampleModal">
+								}
+								else
+								{
+									<input type="button" id="ReturnButtonId" value="Book Now" onclick="alert('Please enter login'); location.href='@Url.Action("Index", "FlightSearchIndex")'; return false;" class="button small-btn rtbtn" data-toggle="modal" data-target="#rtexampleModal">
+								}
+							
 
 
 							</div>
@@ -2633,10 +2642,12 @@
 			font-weight: 600;
 		}
 
-       #autodropdownRTId_chosen{margin-top:-30px;}
-    </style>
+		#autodropdownRTId_chosen {
+			margin-top: -30px;
+		}
+	</style>
 
-    <script>
+	<script>
 		$(document).ready(function () {
 			//$('.showBtn').click(function () {
 			$(document).on('click', '.showBtn', function (event) {
@@ -2672,460 +2683,460 @@
 				}
 			});
 		});
-    </script>
+	</script>
 
 
-    <script>
+	<script>
 
-	function checkRadio(radio) {
-	    const endDateInput = document.getElementById('Rway-endDate');
-	    const beginDateInput = document.getElementById('Rway-date');
-	    if (radio.value === 'OneWay') {
-		endDateInput.disabled = false;
-		endDateInput.value = '';
-		endDateInput.style.backgroundColor = '#0e4d74';
-	    }
-	    else if (radio.value === 'RoundTrip') {
-		endDateInput.disabled = false;
-		endDateInput.value = beginDateInput.value;
-		endDateInput.style.backgroundColor = '';
-		endDateInput.style.backgroundColor = '#0E4D74';
-	    }
-	    else if (radio.value === 'AirlineRT') {
-		endDateInput.disabled = false;
-		endDateInput.value = beginDateInput.value;
-		endDateInput.style.backgroundColor = '';
-		endDateInput.style.backgroundColor = '#0E4D74';
-	    }
-	}
-
-
-
-	//Date Picker Validation
-	$(function () {
-	    $("#Rway-date").datepicker({
-		dateFormat: 'yy-mm-dd',
-		numberOfMonths: 2,
-		maxDate: '+12m',
-		minDate: '0',
-		onSelect: function (selectedDate) {
-		    var startDate = $(this).datepicker('getDate');
-		    $("#Rway-endDate").datepicker("option", "minDate", startDate);
-		}
-	    });
-
-	    $("#Rway-endDate").datepicker({
-		dateFormat: 'yy-mm-dd',
-		numberOfMonths: 2,
-		maxDate: '+12m',
-		minDate: '0',
-		onSelect: function (selectedDate) {
-		    var endDate = $(this).datepicker('getDate');
-		    $("#Rway-date").datepicker("option", "maxDate", endDate);
-		}
-	    });
-	});
-
-		// TextBox Validation
-			function validateInputs(event) {
-				const origin = document.getElementById('myInput').value;
-				const destination = document.getElementById('myInput1').value;
-				if (origin == destination) {
-					alert("Departure and Arrival Airport are same please change it..");
-					return false;
-					event.preventDefault();
-
-				}
-				if (!origin) {
-					alert('Please enter the origin.');
-					return false;
-				}
-				if (!destination) {
-					alert('Please enter the destination.');
-					return false;
-				}
-
-			const beginDate = document.getElementById('Rway-date').value;
+		function checkRadio(radio) {
 			const endDateInput = document.getElementById('Rway-endDate');
-			const endDate = endDateInput.value;
-			if (!beginDate) {
-				alert('Please select a start date.');
-				return false;
+			const beginDateInput = document.getElementById('Rway-date');
+			if (radio.value === 'OneWay') {
+			endDateInput.disabled = false;
+			endDateInput.value = '';
+			endDateInput.style.backgroundColor = '#0e4d74';
 			}
-			// if (!endDateInput.disabled && !endDate) {
-			// 	alert('Please select an end date.');
-			// 	return false;
-			// }
-			
-			const roundTripRadio = document.querySelector('input[name="SameAirlineRT"]:checked');
-			if (roundTripRadio && roundTripRadio.value === 'RoundTrip') {
-				if (!endDate) {
-					alert('Please select an end date for Round Trip.');
+			else if (radio.value === 'RoundTrip') {
+			endDateInput.disabled = false;
+			endDateInput.value = beginDateInput.value;
+			endDateInput.style.backgroundColor = '';
+			endDateInput.style.backgroundColor = '#0E4D74';
+			}
+			else if (radio.value === 'AirlineRT') {
+			endDateInput.disabled = false;
+			endDateInput.value = beginDateInput.value;
+			endDateInput.style.backgroundColor = '';
+			endDateInput.style.backgroundColor = '#0E4D74';
+			}
+		}
+
+
+
+		//Date Picker Validation
+		$(function () {
+			$("#Rway-date").datepicker({
+			dateFormat: 'yy-mm-dd',
+			numberOfMonths: 2,
+			maxDate: '+12m',
+			minDate: '0',
+			onSelect: function (selectedDate) {
+				var startDate = $(this).datepicker('getDate');
+				$("#Rway-endDate").datepicker("option", "minDate", startDate);
+			}
+			});
+
+			$("#Rway-endDate").datepicker({
+			dateFormat: 'yy-mm-dd',
+			numberOfMonths: 2,
+			maxDate: '+12m',
+			minDate: '0',
+			onSelect: function (selectedDate) {
+				var endDate = $(this).datepicker('getDate');
+				$("#Rway-date").datepicker("option", "maxDate", endDate);
+			}
+			});
+		});
+
+			// TextBox Validation
+				function validateInputs(event) {
+					const origin = document.getElementById('myInput').value;
+					const destination = document.getElementById('myInput1').value;
+					if (origin == destination) {
+						alert("Departure and Arrival Airport are same please change it..");
+						return false;
+						event.preventDefault();
+
+					}
+					if (!origin) {
+						alert('Please enter the origin.');
+						return false;
+					}
+					if (!destination) {
+						alert('Please enter the destination.');
+						return false;
+					}
+
+				const beginDate = document.getElementById('Rway-date').value;
+				const endDateInput = document.getElementById('Rway-endDate');
+				const endDate = endDateInput.value;
+				if (!beginDate) {
+					alert('Please select a start date.');
 					return false;
 				}
-			}
+				// if (!endDateInput.disabled && !endDate) {
+				// 	alert('Please select an end date.');
+				// 	return false;
+				// }
 
-				var adultCount = parseInt(document.getElementById('field_adult').value);
-				var childCount = parseInt(document.getElementById('field_child').value);
-				var infantCount = parseInt(document.getElementById('field_infant').value);
-				var totalCount = adultCount + childCount;
-				if (totalCount > 9) {
-					alert("The combined total of adults and children must be 9 or less.");
-					return false;
-					event.preventDefault();
+				const roundTripRadio = document.querySelector('input[name="SameAirlineRT"]:checked');
+				if (roundTripRadio && roundTripRadio.value === 'RoundTrip') {
+					if (!endDate) {
+						alert('Please select an end date for Round Trip.');
+						return false;
+					}
 				}
 
-				var adulttravelcount = $('#field_adult').val();
-				var infanttravelcount = $('#field_infant').val();
-				if (infanttravelcount > adulttravelcount || infanttravelcount > 6) {
-					alert("Number of infants cannot be more than adults or exceed 6.");
-					return false;
-					event.preventDefault();
+					var adultCount = parseInt(document.getElementById('field_adult').value);
+					var childCount = parseInt(document.getElementById('field_child').value);
+					var infantCount = parseInt(document.getElementById('field_infant').value);
+					var totalCount = adultCount + childCount;
+					if (totalCount > 9) {
+						alert("The combined total of adults and children must be 9 or less.");
+						return false;
+						event.preventDefault();
+					}
 
+					var adulttravelcount = $('#field_adult').val();
+					var infanttravelcount = $('#field_infant').val();
+					if (infanttravelcount > adulttravelcount || infanttravelcount > 6) {
+						alert("Number of infants cannot be more than adults or exceed 6.");
+						return false;
+						event.preventDefault();
+
+					}
+					return true;
 				}
-				return true;
+
+
+			function toggleRadio(event, radioId, selectedClass) {
+				event.preventDefault();
+				document.querySelectorAll('.form-radio-input').forEach(radio => {
+				radio.checked = false;
+				});
+				var radioButton = document.getElementById(radioId);
+				radioButton.checked = true;
+				document.querySelector('.colorcon').textContent = selectedClass;
+				document.querySelector('.bcon').style.display = 'none';
 			}
 
-
-		function toggleRadio(event, radioId, selectedClass) {
-			event.preventDefault();
-			document.querySelectorAll('.form-radio-input').forEach(radio => {
-			radio.checked = false;
+			document.addEventListener('click', function (event) {
+				const bcon = document.querySelector('.bcon');
+				const toggleButton = document.querySelector('.classtoggle');
+				if (!bcon.contains(event.target) && !toggleButton.contains(event.target)) {
+				bcon.style.display = 'none';
+				}
 			});
-			var radioButton = document.getElementById(radioId);
-			radioButton.checked = true;
-			document.querySelector('.colorcon').textContent = selectedClass;
-			document.querySelector('.bcon').style.display = 'none';
-		}
 
-		document.addEventListener('click', function (event) {
-			const bcon = document.querySelector('.bcon');
-			const toggleButton = document.querySelector('.classtoggle');
-			if (!bcon.contains(event.target) && !toggleButton.contains(event.target)) {
-			bcon.style.display = 'none';
+			$(document).ready(function () {
+				$('.classtoggle').on('click', function () {
+				$('.bcon').toggle();
+				$(this).find('.icon').toggleClass('fa-angle-down fa-angle-up');
+				});
+			});
+
+			var sortOrderName;
+			var sortOrderNameR;
+			const sortLinks = document.querySelectorAll('.sort-link');
+			const sortLinksR = document.querySelectorAll('.sort-linkR');
+
+			const sortOrders = {
+				name: 'desc',
+				price: 'desc',
+				arrival: 'desc',
+				duration: 'desc',
+				deprt: 'desc'
+			};
+
+
+			sortLinks.forEach(sortLink => {
+				sortLink.addEventListener('click', function (e) {
+				e.preventDefault();
+				const sortType = this.dataset.sort.split('_')[0];
+				const currentSortOrder = sortOrders[sortType];
+				sortOrders[sortType] = currentSortOrder === 'desc' ? 'asc' : 'desc';
+				const newSortOrder = currentSortOrder === 'desc' ? `${sortType}_desc` : `${sortType}_asc`;
+				this.dataset.sort = newSortOrder;
+				performSorting(newSortOrder);
+				postSortOrder(newSortOrder);
+				});
+			});
+
+
+			sortLinksR.forEach(sortLinkR => {
+				sortLinkR.addEventListener('click', function (e) {
+				e.preventDefault();
+				const sortTypeR = this.dataset.sort.split('_')[0];
+				const currentSortOrderR = sortOrders[sortTypeR];
+				sortOrders[sortTypeR] = currentSortOrderR === 'desc' ? 'asc' : 'desc';
+				const newSortOrderR = currentSortOrderR === 'desc' ? `${sortTypeR}_desc` : `${sortTypeR}_asc`;
+				this.dataset.sort = newSortOrderR;
+				performSortingR(newSortOrderR);
+				postSortOrder(newSortOrderR);
+				});
+			});
+
+			function performSorting(sortOrder) {
+				sortOrderName = sortOrder;
+				updateFilter();
 			}
-		});
 
-		$(document).ready(function () {
-			$('.classtoggle').on('click', function () {
-			$('.bcon').toggle();
-			$(this).find('.icon').toggleClass('fa-angle-down fa-angle-up');
-			});
-		});
-
-		var sortOrderName;
-		var sortOrderNameR;
-		const sortLinks = document.querySelectorAll('.sort-link');
-		const sortLinksR = document.querySelectorAll('.sort-linkR');
-
-		const sortOrders = {
-			name: 'desc',
-			price: 'desc',
-			arrival: 'desc',
-			duration: 'desc',
-			deprt: 'desc'
-		};
-
-
-		sortLinks.forEach(sortLink => {
-			sortLink.addEventListener('click', function (e) {
-			e.preventDefault();
-			const sortType = this.dataset.sort.split('_')[0];
-			const currentSortOrder = sortOrders[sortType];
-			sortOrders[sortType] = currentSortOrder === 'desc' ? 'asc' : 'desc';
-			const newSortOrder = currentSortOrder === 'desc' ? `${sortType}_desc` : `${sortType}_asc`;
-			this.dataset.sort = newSortOrder;
-			performSorting(newSortOrder);
-			postSortOrder(newSortOrder);
-			});
-		});
-
-
-		sortLinksR.forEach(sortLinkR => {
-			sortLinkR.addEventListener('click', function (e) {
-			e.preventDefault();
-			const sortTypeR = this.dataset.sort.split('_')[0];
-			const currentSortOrderR = sortOrders[sortTypeR];
-			sortOrders[sortTypeR] = currentSortOrderR === 'desc' ? 'asc' : 'desc';
-			const newSortOrderR = currentSortOrderR === 'desc' ? `${sortTypeR}_desc` : `${sortTypeR}_asc`;
-			this.dataset.sort = newSortOrderR;
-			performSortingR(newSortOrderR);
-			postSortOrder(newSortOrderR);
-			});
-		});
-
-		function performSorting(sortOrder) {
-			sortOrderName = sortOrder;
-			updateFilter();
-		}
-
-		function performSortingR(sortOrderR) {
-			sortOrderNameR = sortOrderR;
-			updateFilter();
-		}
-		 var selectedDepartureTimesR = [];
-		var selectedArrivalTimesR = [];
-		$('.flt-Tm-new').click(function () {
-			debugger;
-			let departureTimeR = $(this).data('departure');
-			let arrivalTimeR = $(this).data('arrival');
-			$(this).toggleClass('active');
-			if ($(this).hasClass('active')) {
-			debugger;
-			selectedDepartureTimesR.push(departureTimeR);
-			selectedArrivalTimesR.push(arrivalTimeR);
-			} else {
-			debugger;
-			selectedDepartureTimesR = selectedDepartureTimesR.filter(function (item) {
-				return item !== departureTimeR;
-			});
-			selectedArrivalTimesR = selectedArrivalTimesR.filter(function (item) {
-				return item !== arrivalTimeR;
-			});
+			function performSortingR(sortOrderR) {
+				sortOrderNameR = sortOrderR;
+				updateFilter();
 			}
-			updateFilter();
+			 var selectedDepartureTimesR = [];
+			var selectedArrivalTimesR = [];
+			$('.flt-Tm-new').click(function () {
+				debugger;
+				let departureTimeR = $(this).data('departure');
+				let arrivalTimeR = $(this).data('arrival');
+				$(this).toggleClass('active');
+				if ($(this).hasClass('active')) {
+				debugger;
+				selectedDepartureTimesR.push(departureTimeR);
+				selectedArrivalTimesR.push(arrivalTimeR);
+				} else {
+				debugger;
+				selectedDepartureTimesR = selectedDepartureTimesR.filter(function (item) {
+					return item !== departureTimeR;
+				});
+				selectedArrivalTimesR = selectedArrivalTimesR.filter(function (item) {
+					return item !== arrivalTimeR;
+				});
+				}
+				updateFilter();
 
-		});
-
-
-		var selectedDepartureTimesRight = [];
-		var selectedArrivalTimesRight = [];
-		$('.Returnfilter').click(function () {
-			debugger;
-			let departureTimeRight = $(this).data('departure');
-			let arrivalTimeRight = $(this).data('arrival');
-			$(this).toggleClass('active');
-			if ($(this).hasClass('active')) {
-			debugger;
-			selectedDepartureTimesRight.push(departureTimeRight);
-			selectedArrivalTimesRight.push(arrivalTimeRight);
-			} else {
-			debugger;
-			selectedDepartureTimesRight = selectedDepartureTimesRight.filter(function (item) {
-				return item !== departureTimeRight;
-			});
-			selectedArrivalTimesRight = selectedArrivalTimesRight.filter(function (item) {
-				return item !== arrivalTimeRight;
-			});
-			}
-			updateFilter();
-
-		});
-		function combinedFilterFunction() {
-			$('.selectionCheckbox').on('change', function () {
-			updateFilter();
-			});
-			$('.selectionCheckboxRight').on('change', function () {
-			updateFilter();
 			});
 
-			$('.selectCheckboxAirLineRT').on('change', function () {
-			updateFilter();
-			});
 
-			function restoreCheckboxState(selectedIds, selectedIdsRight, RTFilterIdAirLine) {
-			$('.selectionCheckbox').each(function () {
-				var checkboxValue = $(this).val();
-				$(this).prop('checked', selectedIds.includes(checkboxValue));
-			});
-			$('.selectionCheckboxRight').each(function () {
-				var checkboxValue = $(this).val();
-				$(this).prop('checked', selectedIdsRight.includes(checkboxValue));
-			});
+			var selectedDepartureTimesRight = [];
+			var selectedArrivalTimesRight = [];
+			$('.Returnfilter').click(function () {
+				debugger;
+				let departureTimeRight = $(this).data('departure');
+				let arrivalTimeRight = $(this).data('arrival');
+				$(this).toggleClass('active');
+				if ($(this).hasClass('active')) {
+				debugger;
+				selectedDepartureTimesRight.push(departureTimeRight);
+				selectedArrivalTimesRight.push(arrivalTimeRight);
+				} else {
+				debugger;
+				selectedDepartureTimesRight = selectedDepartureTimesRight.filter(function (item) {
+					return item !== departureTimeRight;
+				});
+				selectedArrivalTimesRight = selectedArrivalTimesRight.filter(function (item) {
+					return item !== arrivalTimeRight;
+				});
+				}
+				updateFilter();
 
-			$('.selectCheckboxAirLineRT').each(function () {
-				var checkboxValue = $(this).val();
-				$(this).prop('checked', RTFilterIdAirLine.includes(checkboxValue));
 			});
-			}
-		}
+			function combinedFilterFunction() {
+				$('.selectionCheckbox').on('change', function () {
+				updateFilter();
+				});
+				$('.selectionCheckboxRight').on('change', function () {
+				updateFilter();
+				});
 
-		 function GetParameterValues(param) {
-			var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-			for (var i = 0; i < url.length; i++) {
-				var urlparam = url[i].split('=');
-				if (urlparam[0] == param) {
-				return urlparam[1];
+				$('.selectCheckboxAirLineRT').on('change', function () {
+				updateFilter();
+				});
+
+				function restoreCheckboxState(selectedIds, selectedIdsRight, RTFilterIdAirLine) {
+				$('.selectionCheckbox').each(function () {
+					var checkboxValue = $(this).val();
+					$(this).prop('checked', selectedIds.includes(checkboxValue));
+				});
+				$('.selectionCheckboxRight').each(function () {
+					var checkboxValue = $(this).val();
+					$(this).prop('checked', selectedIdsRight.includes(checkboxValue));
+				});
+
+				$('.selectCheckboxAirLineRT').each(function () {
+					var checkboxValue = $(this).val();
+					$(this).prop('checked', RTFilterIdAirLine.includes(checkboxValue));
+				});
 				}
 			}
-		 }
 
-		function updateFilter() {
-			var selectedIds = [];
-			var selectedIdsRight = [];
-			var RTFilterIdAirLine = [];
-			// Collect selected IDs for both sets of checkboxes
-			$('input.selectionCheckbox:checked').each(function () {
-			selectedIds.push($(this).val());
-			});
-			$('input.selectionCheckboxRight:checked').each(function () {
-			selectedIdsRight.push($(this).val());
-			});
+			 function GetParameterValues(param) {
+				var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+				for (var i = 0; i < url.length; i++) {
+					var urlparam = url[i].split('=');
+					if (urlparam[0] == param) {
+					return urlparam[1];
+					}
+				}
+			 }
 
-			$('input.selectCheckboxAirLineRT:checked').each(function () {
-			RTFilterIdAirLine.push($(this).val());
-			});
+			function updateFilter() {
+				var selectedIds = [];
+				var selectedIdsRight = [];
+				var RTFilterIdAirLine = [];
+				// Collect selected IDs for both sets of checkboxes
+				$('input.selectionCheckbox:checked').each(function () {
+				selectedIds.push($(this).val());
+				});
+				$('input.selectionCheckboxRight:checked').each(function () {
+				selectedIdsRight.push($(this).val());
+				});
 
-			// Send data to the server
-			$.ajax({
-			url: '/RoundTrip/RTFlightView?Guid=' + GetParameterValues("Guid"),
-			type: 'POST',
-			traditional: true,
-			data: {
-				selectedIds: selectedIds,
-				selectedIdsRight: selectedIdsRight,
-				RTFilterIdAirLine: RTFilterIdAirLine,
-				departure: selectedDepartureTimesR,
-				arrival: selectedArrivalTimesR,
-				departureRight: selectedDepartureTimesRight,
-				arrivalRight: selectedArrivalTimesRight,
-				sortOrderName: sortOrderName,
-				sortOrderNameR: sortOrderNameR
-			},
-			success: function (response) {
-				$('#RTflight-results').html(response);
-				restoreCheckboxState(selectedIds, selectedIdsRight, RTFilterIdAirLine);
-			},
-			error: function (xhr, status, error) {
-				console.error('Error occurred:', error);
+				$('input.selectCheckboxAirLineRT:checked').each(function () {
+				RTFilterIdAirLine.push($(this).val());
+				});
+
+				// Send data to the server
+				$.ajax({
+				url: '/RoundTrip/RTFlightView?Guid=' + GetParameterValues("Guid"),
+				type: 'POST',
+				traditional: true,
+				data: {
+					selectedIds: selectedIds,
+					selectedIdsRight: selectedIdsRight,
+					RTFilterIdAirLine: RTFilterIdAirLine,
+					departure: selectedDepartureTimesR,
+					arrival: selectedArrivalTimesR,
+					departureRight: selectedDepartureTimesRight,
+					arrivalRight: selectedArrivalTimesRight,
+					sortOrderName: sortOrderName,
+					sortOrderNameR: sortOrderNameR
+				},
+				success: function (response) {
+					$('#RTflight-results').html(response);
+					restoreCheckboxState(selectedIds, selectedIdsRight, RTFilterIdAirLine);
+				},
+				error: function (xhr, status, error) {
+					console.error('Error occurred:', error);
+				}
+				});
 			}
+
+
+			document.querySelector('[data-x-dd-click="searchMenu-guests"]').addEventListener('click', function () {
+				const target = document.querySelector('[data-x-dd="searchMenu-guests"]');
+				target.classList.toggle('-is-active');
 			});
-		}
 
+			//flight Details Pop up
+			// $('.flightT1').click(function () {
+			//     if (!$(this).hasClass('active')) {
+			// 	$('.Ftab2, .Ftab3, .Ftab4, .Ftab5').hide();
+			// 	$('.flightT2, .flightT3, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
 
-		document.querySelector('[data-x-dd-click="searchMenu-guests"]').addEventListener('click', function () {
-			const target = document.querySelector('[data-x-dd="searchMenu-guests"]');
-			target.classList.toggle('-is-active');
-		});
+			// 	$(this).addClass('active').addClass('tabBG');
+			// 	$('.Ftab1').show();
+			//     }
+			// });
 
-		//flight Details Pop up
-		// $('.flightT1').click(function () {
-		//     if (!$(this).hasClass('active')) {
-		// 	$('.Ftab2, .Ftab3, .Ftab4, .Ftab5').hide();
-		// 	$('.flightT2, .flightT3, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
+			// $('.flightT2').click(function () {
+			//     if (!$(this).hasClass('active')) {
+			// 	$('.Ftab1, .Ftab3, .Ftab4, .Ftab5').hide();
+			// 	$('.flightT1, .flightT3, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
 
-		// 	$(this).addClass('active').addClass('tabBG');
-		// 	$('.Ftab1').show();
-		//     }
-		// });
+			// 	$(this).addClass('active').addClass('tabBG');
+			// 	$('.Ftab2').show();
+			//     }
+			// });
+				$(document).on('click', '.flightT1', function () {
+					if (!$(this).hasClass('active')) {
+						$('.Ftab2, .Ftab3, .Ftab4, .Ftab5').hide();
+						$('.flightT2, .flightT3, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
 
-		// $('.flightT2').click(function () {
-		//     if (!$(this).hasClass('active')) {
-		// 	$('.Ftab1, .Ftab3, .Ftab4, .Ftab5').hide();
-		// 	$('.flightT1, .flightT3, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
+						$(this).addClass('active').addClass('tabBG');
+						$('.Ftab1').show();
+					}
+				});
 
-		// 	$(this).addClass('active').addClass('tabBG');
-		// 	$('.Ftab2').show();
-		//     }
-		// });
-			$(document).on('click', '.flightT1', function () {
+				$(document).on('click', '.flightT2', function () {
+					if (!$(this).hasClass('active')) {
+						$('.Ftab1, .Ftab3, .Ftab4, .Ftab5').hide();
+						$('.flightT1, .flightT3, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
+
+						$(this).addClass('active').addClass('tabBG');
+						$('.Ftab2').show();
+					}
+				});
+
+			$(document).on('click', '.flightT3', function () {
+			//$('.flightT3').click(function () {
 				if (!$(this).hasClass('active')) {
-					$('.Ftab2, .Ftab3, .Ftab4, .Ftab5').hide();
-					$('.flightT2, .flightT3, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
+				$('.Ftab1, .Ftab2, .Ftab4, .Ftab5').hide();
+				$('.flightT1, .flightT2, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
 
-					$(this).addClass('active').addClass('tabBG');
-					$('.Ftab1').show();
+				$(this).addClass('active').addClass('tabBG');
+				$('.Ftab3').show();
 				}
 			});
 
-			$(document).on('click', '.flightT2', function () {
+			$(document).on('click', '.flightT4', function () {
+			//$('.flightT4').click(function () {
 				if (!$(this).hasClass('active')) {
-					$('.Ftab1, .Ftab3, .Ftab4, .Ftab5').hide();
-					$('.flightT1, .flightT3, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
+				$('.Ftab1, .Ftab2, .Ftab3, .Ftab5').hide();
+				$('.flightT1, .flightT2, .flightT3, .flightT5').removeClass('active').removeClass('tabBG');
 
-					$(this).addClass('active').addClass('tabBG');
-					$('.Ftab2').show();
+				$(this).addClass('active').addClass('tabBG');
+				$('.Ftab4').show();
 				}
 			});
 
-		$(document).on('click', '.flightT3', function () {
-		//$('.flightT3').click(function () {
-			if (!$(this).hasClass('active')) {
-			$('.Ftab1, .Ftab2, .Ftab4, .Ftab5').hide();
-			$('.flightT1, .flightT2, .flightT4, .flightT5').removeClass('active').removeClass('tabBG');
+				$(document).on('click', '.flightT5', function () {
+			//$('.flightT5').click(function () {
+				if (!$(this).hasClass('active')) {
+				$('.Ftab1, .Ftab2, .Ftab3, .Ftab4').hide();
+				$('.flightT1, .flightT2, .flightT3, .flightT4').removeClass('active').removeClass('tabBG');
 
-			$(this).addClass('active').addClass('tabBG');
-			$('.Ftab3').show();
-			}
-		});
+				$(this).addClass('active').addClass('tabBG');
+				$('.Ftab5').show();
+				}
+			});
 
-		$(document).on('click', '.flightT4', function () {
-		//$('.flightT4').click(function () {
-			if (!$(this).hasClass('active')) {
-			$('.Ftab1, .Ftab2, .Ftab3, .Ftab5').hide();
-			$('.flightT1, .flightT2, .flightT3, .flightT5').removeClass('active').removeClass('tabBG');
+			// Return code Flight Details
+				$(document).on('click', '.flightT1RT', function () {
+			//$('.flightT1RT').click(function () {
+				if (!$(this).hasClass('active')) {
+				$('.Ftab2RT, .Ftab3RT, .Ftab4RT, .Ftab5RT').hide();
+				$('.flightT2RT, .flightT3RT, .flightT4RT, .flightT5RT').removeClass('active').removeClass('tabBG');
 
-			$(this).addClass('active').addClass('tabBG');
-			$('.Ftab4').show();
-			}
-		});
+				$(this).addClass('active').addClass('tabBG');
+				$('.Ftab1RT').show();
+				}
+			});
 
-			$(document).on('click', '.flightT5', function () {
-		//$('.flightT5').click(function () {
-			if (!$(this).hasClass('active')) {
-			$('.Ftab1, .Ftab2, .Ftab3, .Ftab4').hide();
-			$('.flightT1, .flightT2, .flightT3, .flightT4').removeClass('active').removeClass('tabBG');
+				$(document).on('click', '.flightT2RT', function () {
+			//$('.flightT2RT').click(function () {
+				if (!$(this).hasClass('active')) {
+				$('.Ftab1RT, .Ftab3RT, .Ftab4RT, .Ftab5RT').hide();
+				$('.flightT1RT, .flightT3RT, .flightT4RT, .flightT5RT').removeClass('active').removeClass('tabBG');
 
-			$(this).addClass('active').addClass('tabBG');
-			$('.Ftab5').show();
-			}
-		});
+				$(this).addClass('active').addClass('tabBG');
+				$('.Ftab2RT').show();
+				}
+			});
 
-		// Return code Flight Details
-			$(document).on('click', '.flightT1RT', function () {
-		//$('.flightT1RT').click(function () {
-			if (!$(this).hasClass('active')) {
-			$('.Ftab2RT, .Ftab3RT, .Ftab4RT, .Ftab5RT').hide();
-			$('.flightT2RT, .flightT3RT, .flightT4RT, .flightT5RT').removeClass('active').removeClass('tabBG');
+			$(document).on('click', '.flightT3RT', function () {
+			//$('.flightT3RT').click(function () {
+				if (!$(this).hasClass('active')) {
+				$('.Ftab1RT, .Ftab2RT, .Ftab4RT, .Ftab5RT').hide();
+				$('.flightT1RT, .flightT2RT, .flightT4RT, .flightT5RT').removeClass('active').removeClass('tabBG');
 
-			$(this).addClass('active').addClass('tabBG');
-			$('.Ftab1RT').show();
-			}
-		});
+				$(this).addClass('active').addClass('tabBG');
+				$('.Ftab3RT').show();
+				}
+			});
 
-			$(document).on('click', '.flightT2RT', function () {
-		//$('.flightT2RT').click(function () {
-			if (!$(this).hasClass('active')) {
-			$('.Ftab1RT, .Ftab3RT, .Ftab4RT, .Ftab5RT').hide();
-			$('.flightT1RT, .flightT3RT, .flightT4RT, .flightT5RT').removeClass('active').removeClass('tabBG');
+				$(document).on('click', '.flightT4RT', function () {
+			//$('.flightT4RT').click(function () {
+				if (!$(this).hasClass('active')) {
+				$('.Ftab1RT, .Ftab2RT, .Ftab3RT, .Ftab5RT').hide();
+				$('.flightT1RT, .flightT2RT, .flightT3RT, .flightT5RT').removeClass('active').removeClass('tabBG');
 
-			$(this).addClass('active').addClass('tabBG');
-			$('.Ftab2RT').show();
-			}
-		});
+				$(this).addClass('active').addClass('tabBG');
+				$('.Ftab4RT').show();
+				}
+			});
 
-		$(document).on('click', '.flightT3RT', function () {
-		//$('.flightT3RT').click(function () {
-			if (!$(this).hasClass('active')) {
-			$('.Ftab1RT, .Ftab2RT, .Ftab4RT, .Ftab5RT').hide();
-			$('.flightT1RT, .flightT2RT, .flightT4RT, .flightT5RT').removeClass('active').removeClass('tabBG');
+				$(document).on('click', '.flightT5RT', function () {
+			//$('.flightT5RT').click(function () {
+				if (!$(this).hasClass('active')) {
+				$('.Ftab1RT, .Ftab2RT, .Ftab3RT, .Ftab4RT').hide();
+				$('.flightT1RT, .flightT2RT, .flightT3RT, .flightT4RT').removeClass('active').removeClass('tabBG');
 
-			$(this).addClass('active').addClass('tabBG');
-			$('.Ftab3RT').show();
-			}
-		});
-
-			$(document).on('click', '.flightT4RT', function () {
-		//$('.flightT4RT').click(function () {
-			if (!$(this).hasClass('active')) {
-			$('.Ftab1RT, .Ftab2RT, .Ftab3RT, .Ftab5RT').hide();
-			$('.flightT1RT, .flightT2RT, .flightT3RT, .flightT5RT').removeClass('active').removeClass('tabBG');
-
-			$(this).addClass('active').addClass('tabBG');
-			$('.Ftab4RT').show();
-			}
-		});
-
-			$(document).on('click', '.flightT5RT', function () {
-		//$('.flightT5RT').click(function () {
-			if (!$(this).hasClass('active')) {
-			$('.Ftab1RT, .Ftab2RT, .Ftab3RT, .Ftab4RT').hide();
-			$('.flightT1RT, .flightT2RT, .flightT3RT, .flightT4RT').removeClass('active').removeClass('tabBG');
-
-			$(this).addClass('active').addClass('tabBG');
-			$('.Ftab5RT').show();
-			}
-		});
+				$(this).addClass('active').addClass('tabBG');
+				$('.Ftab5RT').show();
+				}
+			});
 
 
 
@@ -3654,7 +3665,7 @@
 		window.onload = function () {
 			localStorage.clear();
 		};
-				
+
 		$(document).ready(function () {
 			  $('#Rway-endDate').on('click', function () {
 					debugger;
@@ -3678,7 +3689,7 @@
 
 
 
-    </script>
+	</script>
 
 </body>
 </html>

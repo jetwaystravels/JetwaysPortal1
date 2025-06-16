@@ -17,7 +17,7 @@ namespace RepositoryLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "8.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -371,6 +371,42 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("TicketBooking");
                 });
 
+            modelBuilder.Entity("DomainLayer.Model.Trips", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("BookingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OutboundFlightID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReturnFlightID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TripStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TripType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("tb_Trips");
+                });
+
             modelBuilder.Entity("DomainLayer.Model.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -550,6 +586,10 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BookingType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -586,9 +626,15 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PaidStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("RecordLocator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("SeatAdjustment")
+                        .HasColumnType("float");
 
                     b.Property<double>("SeatTotalAmount")
                         .HasColumnType("float");
@@ -608,6 +654,10 @@ namespace RepositoryLayer.Migrations
 
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
+
+                    b.Property<string>("TripType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -636,6 +686,12 @@ namespace RepositoryLayer.Migrations
                     b.Property<double>("BaggageTotalAmount")
                         .HasColumnType("float");
 
+                    b.Property<decimal?>("BaggageTotalAmountTax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("BaggageTotalAmountTax_discount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("BookingID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -654,6 +710,10 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -720,6 +780,9 @@ namespace RepositoryLayer.Migrations
                     b.Property<double>("TotalAmount_Meals")
                         .HasColumnType("float");
 
+                    b.Property<double?>("TotalAmount_Meals_discount")
+                        .HasColumnType("float");
+
                     b.Property<double?>("TotalAmount_Meals_tax")
                         .HasColumnType("float");
 
@@ -727,6 +790,9 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("float");
 
                     b.Property<decimal?>("TotalAmount_Seat_tax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("TotalAmount_Seat_tax_discount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("TotalAmount_tax")
@@ -772,6 +838,9 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("Modifyby")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("SeatAdjustment")
+                        .HasColumnType("float");
 
                     b.Property<string>("Status")
                         .IsRequired()
