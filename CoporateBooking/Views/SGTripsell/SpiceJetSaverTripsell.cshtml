@@ -127,7 +127,7 @@
             <div class="container">
 
                 <div class="row">
-                    <div class="col-xl-8 col-lg-8">
+                    <div class="col-xl-8 col-lg-8" id="leftContent">
                         <div class="row x-gap-20 y-gap-20 pt-9">
                             <h2 class="text-18 fw-600 mt-10 md:mt-24">Review Your Booking</h2>
                             <partial name="_TripsellPatialView.cshtml" />
@@ -550,6 +550,46 @@
         }
     </script>
 
+    <!--Fare details wrapper right -->
+    <script>
+        const fareBox = document.getElementById('fareBox');
+        const leftContent = document.getElementById('leftContent');
+        const navbarHeight = 100; // height of fixed navbar
+        let lastTop = 0;
+
+        function updateFareBoxPosition() {
+            const scrollY = window.scrollY || window.pageYOffset;
+            const offsetTop = leftContent.offsetTop;
+            const leftHeight = leftContent.offsetHeight;
+            const fareHeight = fareBox.offsetHeight;
+            const maxScroll = offsetTop + leftHeight - fareHeight - 20;
+
+            let newTop;
+
+            if (window.innerWidth <= 991) {
+                fareBox.style.position = 'static';
+                return;
+            }
+
+            // First load (initial): top: 0
+            if (scrollY <= offsetTop) {
+                newTop = 0;
+            } else if (scrollY >= maxScroll) {
+                newTop = maxScroll - offsetTop;
+            } else {
+                // During scroll, keep space from navbar
+                newTop = scrollY - offsetTop + navbarHeight;
+            }
+
+            // Smooth easing
+            lastTop += (newTop - lastTop) * 0.1;
+            fareBox.style.top = `${lastTop}px`;
+
+            requestAnimationFrame(updateFareBoxPosition);
+        }
+
+        requestAnimationFrame(updateFareBoxPosition);
+    </script>
 
 </body>
 

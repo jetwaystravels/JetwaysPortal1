@@ -14292,6 +14292,30 @@ End addons
                     background: #085AC0 !important;
                 }
 
+/* Start fare detail */
+
+.fare-box {
+    position: absolute;
+    width: 100%;
+    /*transition: top 0.2s ease;*/
+    transition: top 0.1s ease-in-out;
+}
+
+
+@media (max-width: 991px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .right {
+        position: static;
+    }
+
+    .fare-box {
+        position: static;
+    }
+}
+
 
 /* ******************************
 Emulate section Start
