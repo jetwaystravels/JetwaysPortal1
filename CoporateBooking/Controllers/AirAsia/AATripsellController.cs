@@ -238,11 +238,11 @@ namespace OnionConsumeWebAPI.Controllers
                 _Phonenumber Phonenumber = new _Phonenumber();
                 List<_Phonenumber> Phonenumberlist = new List<_Phonenumber>();
                 Phonenumber.type = "Home";
-                Phonenumber.number = countryCode + contactobject.number;
+                Phonenumber.number = countryCode + "-" + contactobject.number;
                 Phonenumberlist.Add(Phonenumber);
                 _Phonenumber Phonenumber1 = new _Phonenumber();
                 Phonenumber1.type = "Other";
-                Phonenumber1.number = countryCode + contactobject.number;
+                Phonenumber1.number = countryCode + "-" + contactobject.number;
                 Phonenumberlist.Add(Phonenumber1);
                 foreach (var item in Phonenumberlist)
                 {

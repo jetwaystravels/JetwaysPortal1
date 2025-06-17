@@ -130,6 +130,10 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreateBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -149,8 +153,9 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MobileNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("MobileNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModifyBy")
                         .IsRequired()
@@ -709,8 +714,14 @@ namespace RepositoryLayer.Migrations
                     b.Property<DateTime?>("Dob")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FastForwardService")
+                        .HasColumnType("nvarchar(1)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FrequentFlyerNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Gender")
@@ -805,8 +816,8 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("contact_Emailid")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("contact_Mobileno")
-                        .HasColumnType("int");
+                    b.Property<string>("contact_Mobileno")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -821,9 +832,15 @@ namespace RepositoryLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AdultCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("BookingID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ChildCount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -831,6 +848,9 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("Createdby")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InfantCount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -854,6 +874,9 @@ namespace RepositoryLayer.Migrations
 
                     b.Property<double>("TotalMealsAmount_Tax")
                         .HasColumnType("float");
+
+                    b.Property<int>("TotalPax")
+                        .HasColumnType("int");
 
                     b.Property<double>("TotalSeatAmount")
                         .HasColumnType("float");

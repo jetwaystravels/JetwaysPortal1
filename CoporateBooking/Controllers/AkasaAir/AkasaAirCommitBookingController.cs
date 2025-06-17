@@ -728,7 +728,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     contactDetail.FirstName = JsonObjPNRBooking.data.contacts.P.name.first;
                     contactDetail.LastName = JsonObjPNRBooking.data.contacts.P.name.last;
                     contactDetail.EmailID = JsonObjPNRBooking.data.contacts.P.emailAddress;
-                    contactDetail.MobileNumber = 789456123;//JsonObjPNRBooking.data.contacts.P.phoneNumbers[0].number;
+                    contactDetail.MobileNumber = "789456123";//JsonObjPNRBooking.data.contacts.P.phoneNumbers[0].number;
                     contactDetail.CreateDate = DateTime.Now;
                     contactDetail.CreateBy = "Admin";
                     contactDetail.ModifyDate = DateTime.Now;

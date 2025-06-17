@@ -729,7 +729,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             contactDetail.FirstName = _getBookingResponse.Booking.BookingContacts[0].Names[0].FirstName;
                             contactDetail.LastName = _getBookingResponse.Booking.BookingContacts[0].Names[0].LastName;
                             contactDetail.EmailID = _getBookingResponse.Booking.BookingContacts[0].EmailAddress;
-                            contactDetail.MobileNumber = 789456123;/*Convert.ToInt64(_getBookingResponse.Booking.BookingContacts[0].HomePhone)*/
+                            contactDetail.MobileNumber = "789456123";/*Convert.ToInt64(_getBookingResponse.Booking.BookingContacts[0].HomePhone)*/
                             contactDetail.CreateDate = DateTime.Now;
                             contactDetail.CreateBy = "Admin";
                             contactDetail.ModifyDate = DateTime.Now;

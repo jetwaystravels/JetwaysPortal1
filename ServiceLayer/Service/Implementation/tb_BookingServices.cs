@@ -61,6 +61,7 @@ namespace ServiceLayer.Service.Implementation
                 contactDetailobj.FirstName = ticketObject.ContactDetail.FirstName;
                 contactDetailobj.LastName = ticketObject.ContactDetail.LastName;
                 contactDetailobj.MobileNumber = ticketObject.ContactDetail.MobileNumber;
+                contactDetailobj.CountryCode = ticketObject.ContactDetail.CountryCode;
                 contactDetailobj.EmailID = ticketObject.ContactDetail.EmailID;
                 contactDetailobj.CreateDate = ticketObject.ContactDetail.CreateDate;
                 contactDetailobj.CreateBy = ticketObject.ContactDetail.CreateBy;
@@ -81,6 +82,10 @@ namespace ServiceLayer.Service.Implementation
 
                 tb_PassengerTotal tb_PassengerTotalobj = new tb_PassengerTotal();
                 tb_PassengerTotalobj.BookingID = ticketObject.BookingID;
+                tb_PassengerTotalobj.AdultCount = ticketObject.tb_PassengerTotal.AdultCount;
+                tb_PassengerTotalobj.ChildCount = ticketObject.tb_PassengerTotal.ChildCount;
+                tb_PassengerTotalobj.InfantCount = ticketObject.tb_PassengerTotal.InfantCount;
+                tb_PassengerTotalobj.TotalPax = ticketObject.tb_PassengerTotal.TotalPax;
                 tb_PassengerTotalobj.TotalBookingAmount = ticketObject.tb_PassengerTotal.TotalBookingAmount;
                 tb_PassengerTotalobj.totalBookingAmount_Tax = ticketObject.tb_PassengerTotal.totalBookingAmount_Tax;
                 tb_PassengerTotalobj.TotalMealsAmount = ticketObject.tb_PassengerTotal.TotalMealsAmount;
@@ -158,6 +163,10 @@ namespace ServiceLayer.Service.Implementation
                     tb_PassengerDetails.Title = ticketObject.tb_PassengerDetails[j].Title;
                     tb_PassengerDetails.FirstName = ticketObject.tb_PassengerDetails[j].FirstName;
                     tb_PassengerDetails.LastName = ticketObject.tb_PassengerDetails[j].LastName;
+                    tb_PassengerDetails.contact_Emailid = ticketObject.tb_PassengerDetails[j].contact_Emailid;
+                    tb_PassengerDetails.contact_Mobileno = ticketObject.tb_PassengerDetails[j].contact_Mobileno;
+                    tb_PassengerDetails.FrequentFlyerNumber = ticketObject.tb_PassengerDetails[j].FrequentFlyerNumber;
+                    tb_PassengerDetails.FastForwardService = ticketObject.tb_PassengerDetails[j].FastForwardService;
                     tb_PassengerDetails.TypeCode = ticketObject.tb_PassengerDetails[j].TypeCode;
                     tb_PassengerDetails.Gender = ticketObject.tb_PassengerDetails[j].Gender;
                     tb_PassengerDetails.Seatnumber = ticketObject.tb_PassengerDetails[j].Seatnumber;

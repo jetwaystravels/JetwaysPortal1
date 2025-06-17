@@ -723,7 +723,7 @@ namespace OnionConsumeWebAPI.Controllers
                     contactDetail.FirstName = JsonObjPNRBooking.data.contacts.P.name.first;
                     contactDetail.LastName = JsonObjPNRBooking.data.contacts.P.name.last;
                     contactDetail.EmailID = JsonObjPNRBooking.data.contacts.P.emailAddress;
-                    contactDetail.MobileNumber = 789456123;
+                    contactDetail.MobileNumber = "789456123";
                     contactDetail.CreateDate = DateTime.Now;
                     contactDetail.CreateBy = "Admin";
                     contactDetail.ModifyDate = DateTime.Now;

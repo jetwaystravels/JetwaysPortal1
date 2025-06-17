@@ -105,7 +105,7 @@ body {
 
 .frequent-bx {
     flex: 33.3% !important;
-    max-width:33.3% !important;
+    max-width: 33.3% !important;
 }
 
 @media (max-width: 991px) {
@@ -1518,6 +1518,7 @@ Flight Search AREA
     height: 460px;
     z-index: 1;
 }
+
     .search-area.guest {
         height: 460px;
     }
@@ -1525,6 +1526,7 @@ Flight Search AREA
     .search-area.logged-in {
         height: 529px;
     }
+
 .search-area {
     background: rgba(0, 0, 0, 0) url(../img/bg/banner.jpg) no-repeat scroll center center/cover;
 }
@@ -3153,43 +3155,74 @@ FOOTER AREA CSS
 
 .profile-popup {
     position: absolute;
-    top: 56px;
+    top: 58px;
+    width: 348px;
     right: 0;
     background: #fff;
     color: white;
-    padding: 15px 25px;
+    padding: 5px 0 0;
+    box-shadow: rgba(0, 0, 0, .5) 0 0 6px;
     -webkit-box-shadow: rgba(0, 0, 0, .5) 0 0 6px;
-    border-radius: 16px;
+    border-radius: 5px;
     z-index: 10;
 }
 
-.profile-popupt:before {
-    content: '';
-    position: absolute;
-    top: -5px;
-    right: 50px;
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    transform: rotate(45deg);
-}
+    .profile-popup:before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        right: 28px;
+        width: 10px;
+        height: 10px;
+        background-color: white;
+        transform: rotate(45deg);
+    }
 
-.profile-popup span {
-    color: #111111;
-}
+    .profile-popup span {
+        color: #111111;
+    }
 
+    .profile-popup .inner-list-bx {
+        padding-bottom: 6px;
+    }
+
+    .profile-popup i {
+        color: #808080;
+        margin: 6px 19px 6px 0;
+        font-size: 17px;
+    }
+
+    .profile-popup a {
+        color: black;
+        padding: 9px 18px 1px 18px;
+        text-decoration: none;
+        display: block;
+        font-weight: 700;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+        .profile-popup a:hover {
+            background: #f5f5f5;
+        }
+
+
+        .profile-popup a span {
+            font-size: 13px;
+            display: block;
+            font-weight: 500;
+        }
 
 #top-navbar-nav .dropbtn.signOutBtn {
     background: #085AC0;
     color: white;
     padding: 6px;
     border: none;
-    font-size: 14px;
-    width: 100%;
+    font-size: 13px;
     cursor: pointer;
     border-radius: 5px;
     margin-top: 12px;
     text-align: center;
+    margin: 13px 59px 14px;
 }
 
 .circle-initials {
@@ -3206,10 +3239,14 @@ FOOTER AREA CSS
 }
 
 .greeting {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
     color: #111111;
     text-align: center;
+    border-radius: 5px 5px 0 0;
+    padding: 7px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #f1f1f1;
 }
 
 /*Slect box end section */
@@ -3255,7 +3292,7 @@ FOOTER AREA CSS
     width: 100%;
     z-index: 99;
     background: #000;
-    padding-bottom:22px;
+    padding-bottom: 22px;
 }
 
 .search-result .sidebar.bg-white {

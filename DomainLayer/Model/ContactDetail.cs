@@ -13,7 +13,8 @@ namespace DomainLayer.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailID { get; set; }
-        public int MobileNumber { get; set; }
+        public string MobileNumber { get; set; }
+        public string CountryCode { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
         public DateTime ModifyDate { get; set; }

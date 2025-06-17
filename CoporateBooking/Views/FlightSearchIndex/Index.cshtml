@@ -11,27 +11,27 @@
 <style>
 
     .Radiohide input {
-    display: none;
+        display: none;
     }
 
     .endselect {
-    cursor: pointer;
+        cursor: pointer;
     }
 
 
     .custom-tooltip {
-    position: absolute;
-    display: none;
-    background: #fff; /* White background */
-    color: #666; /* Gray text */
-    border: 1px solid #ccc;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 13px;
-    white-space: nowrap;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
-    pointer-events: none;
+        position: absolute;
+        display: none;
+        background: #fff; /* White background */
+        color: #666; /* Gray text */
+        border: 1px solid #ccc;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 13px;
+        white-space: nowrap;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+        pointer-events: none;
     }
 
 </style>
@@ -128,16 +128,16 @@
                     <nav>
                         <ul class="navbar-nav" id="top-navbar-nav">
                             <li class="nav-item">
-                                <li class="nav-item">
-                                    <small>Language</small>
-                                    <select aria-label="Default">
-                                        <option>English</option>
-                                        <option value="1">French</option>
-                                        <option value="2">Russian </option>
-                                        <option value="3">Spanish</option>
-                                        <option value="3">Arabic</option>
-                                    </select>
-                                </li>
+                            <li class="nav-item">
+                                <small>Language</small>
+                                <select aria-label="Default">
+                                    <option>English</option>
+                                    <option value="1">French</option>
+                                    <option value="2">Russian </option>
+                                    <option value="3">Spanish</option>
+                                    <option value="3">Arabic</option>
+                                </select>
+                            </li>
                             </li>
                             <li class="nav-item">
                                 <small>Country</small>
@@ -163,9 +163,16 @@
                                     <div class="profile-initials">@(userName.Split(' ')[0][0].ToString().ToUpper() + userName.Split(' ')[1][0].ToString().ToUpper())</div>
 
                                     <div class="profile-popup" style="display:none;">
-                                        <span>@userEmail</span>
-                                        <div class="circle-initials">@(userName.Split(' ')[0][0].ToString().ToUpper() + userName.Split(' ')[1][0].ToString().ToUpper())</div>
                                         <p class="greeting">Hi,@userName</p>
+                                        @* <span>@userEmail</span> *@
+                                        @*  <div class="circle-initials">@(userName.Split(' ')[0][0].ToString().ToUpper() + userName.Split(' ')[1][0].ToString().ToUpper())</div> *@
+                                        <a as-controller="FlightSearchIndex" asp-action="MyBooking" class="d-flex">
+                                            <span><i class="fa fa-suitcase" aria-hidden="true"></i></span>
+                                            <div class="inner-list-bx">
+                                                My Trips
+                                                <span>See booking details, Print e-ticket, Cancel Booking, Modify Booking, Check Refund Status & more.</span>
+                                            </div>
+                                        </a>
                                         <a class="nav-link dropbtn signOutBtn" href="@Url.Action("Logout", "Login")">Logout</a>
                                     </div>
                                 }
@@ -429,7 +436,7 @@
                                                     string Serchhome = ViewBag.SearchHome;
                                                     if (!string.IsNullOrEmpty(Serchhome))
                                                     {
-                                                    //object _simpleAvailabilityRequestModel = Newtonsoft.Json.JsonConvert.DeserializeObject<object>(Serchhome);
+                                                        //object _simpleAvailabilityRequestModel = Newtonsoft.Json.JsonConvert.DeserializeObject<object>(Serchhome);
 
 
                                                         model = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(Serchhome);
@@ -460,7 +467,7 @@
 
                                                             }
                                                         }
-                                                        
+
 
                                                     </select>
                                                 </span>
@@ -483,11 +490,11 @@
                                                         {
                                                             foreach (var item in Citynamelist.GetCityData())
                                                             {
-                                                            <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
+                                                                <option value="@item.citycode">@item.cityname - @item.citycode -<br>@item.airportname </option>
 
                                                             }
                                                         }
-                                                       
+
 
                                                     </select>
                                                 </span>
@@ -690,7 +697,7 @@
                                     {
                                         cnt = cnt + 1;
                                         <tr>
-                                            
+
                                             <td id="uid@(cnt)" style="display:none;">@item.LegalUserId</td>
                                             <td id="len@(cnt)" style="display:none;">@item.LegalEntityName</td>
                                             <td id="ben@(cnt)">@item.BillingEntityFullName</td>
@@ -700,15 +707,15 @@
                                             <td id="udes@(cnt)">@item.Searchdest @item.SearchdestCode</td>
                                             <td id="udep@(cnt)">@item.SearchLogDeptDateTime</td>
                                             <td id="uarr@(cnt)">@item.SearchLogArrDateTime</td>
-                                            <td><button type="button" class="btn btn-lg btn-block" onclick="return SearchSelect(@cnt);" >Select</button></td>
+                                            <td><button type="button" class="btn btn-lg btn-block" onclick="return SearchSelect(@cnt);">Select</button></td>
                                         </tr>
                                     }
 
-                                   
+
 
                                 }
 
-                              @*   <tr>
+                                @*   <tr>
                                     <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
                                     <td>Vinay kumar</td>
                                     <td>HHEE56-EISAI PHARMACEUTICALS INDIA PVT LTD-BLR</td>
@@ -1477,48 +1484,48 @@
         <!--End login popup -->
 
         <script>
-            function SearchSelect(id)
-            {
-               var autocompleteInstance = $('#legalEntitySelect').autocomplete('instance');
+               function SearchSelect(id)
+               {
+                  var autocompleteInstance = $('#legalEntitySelect').autocomplete('instance');
 
-            // Create a mock event object
-                var event = $.Event('autocompleteselect');
-                event.item = { value: document.getElementById("ben"+id).innerText }; // Replace with the value you want to select
+               // Create a mock event object
+                   var event = $.Event('autocompleteselect');
+                   event.item = { value: document.getElementById("ben"+id).innerText }; // Replace with the value you want to select
 
-                // Manually trigger the 'select' event
-                autocompleteInstance._trigger('select', event, { item: event.item });
+                   // Manually trigger the 'select' event
+                   autocompleteInstance._trigger('select', event, { item: event.item });
 
-                // Optionally, update the input field with the selected value
-                $('#legalEntitySelect').val(event.item.value);
+                   // Optionally, update the input field with the selected value
+                   $('#legalEntitySelect').val(event.item.value);
 
-            const $employeeInput = $('#employeeSelect');
-            const autocompleteInstance2 = $employeeInput.autocomplete('instance');
-            const event1 = $.Event('autocompleteselect');
-            event1.item = { value: document.getElementById("unm"+id).innerText, id: document.getElementById("uid"+id).innerText };
+               const $employeeInput = $('#employeeSelect');
+               const autocompleteInstance2 = $employeeInput.autocomplete('instance');
+               const event1 = $.Event('autocompleteselect');
+               event1.item = { value: document.getElementById("unm"+id).innerText, id: document.getElementById("uid"+id).innerText };
 
-               autocompleteInstance2._trigger('select', event1, { item: event1.item });
-
-
-          //  document.getElementById("employeeSelect").value = document.getElementById("unm"+id).innerText;
-            // Optionally, update the hidden employee ID field
-            $('#hdnempid').val(document.getElementById("uid"+id).innerText);
-
-            document.getElementById("myInput").value = document.getElementById("uorg"+id).innerText;
-               document.getElementById("myInput1").value = document.getElementById("udes"+id).innerText;
+                  autocompleteInstance2._trigger('select', event1, { item: event1.item });
 
 
-                    document.getElementById("start-date").value = document.getElementById("udep"+id).innerText;
-                  document.getElementById("end-date").value = document.getElementById("uarr"+id).innerText;
+             //  document.getElementById("employeeSelect").value = document.getElementById("unm"+id).innerText;
+               // Optionally, update the hidden employee ID field
+               $('#hdnempid').val(document.getElementById("uid"+id).innerText);
 
-              $('#Mydiv').focus();
+               document.getElementById("myInput").value = document.getElementById("uorg"+id).innerText;
+                  document.getElementById("myInput1").value = document.getElementById("udes"+id).innerText;
 
-            //          document.getElementById('Mydiv').addEventListener('click', function() {
-            //     this.focus();
-            // });
 
-         //   fetchBillingEntities();
+                       document.getElementById("start-date").value = document.getElementById("udep"+id).innerText;
+                     document.getElementById("end-date").value = document.getElementById("uarr"+id).innerText;
 
-            }
+                 $('#Mydiv').focus();
+
+               //          document.getElementById('Mydiv').addEventListener('click', function() {
+               //     this.focus();
+               // });
+
+            //   fetchBillingEntities();
+
+               }
         </script>
 
         <!--Clander auto open  popup -->

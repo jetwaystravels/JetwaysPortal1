@@ -749,7 +749,9 @@ namespace OnionConsumeWebAPI.Controllers
                     contactDetail.FirstName = JsonObjPNRBooking.data.contacts.P.name.first;
                     contactDetail.LastName = JsonObjPNRBooking.data.contacts.P.name.last;
                     contactDetail.EmailID = JsonObjPNRBooking.data.contacts.P.emailAddress;
-                    contactDetail.MobileNumber = Convert.ToInt32(Regex.Replace(JsonObjPNRBooking.data.contacts.P.phoneNumbers[0].number.ToString(), @"^\+91", "")); // todo
+                    //contactDetail.MobileNumber = Convert.ToInt32(Regex.Replace(JsonObjPNRBooking.data.contacts.P.phoneNumbers[0].number.ToString(), @"^\+91", "")); // todo
+                    contactDetail.MobileNumber = JsonObjPNRBooking.data.contacts.P.phoneNumbers[0].number.ToString().Split('-')[1];
+                    contactDetail.CountryCode = JsonObjPNRBooking.data.contacts.P.phoneNumbers[0].number.ToString().Split('-')[0];
                     if (JsonObjPNRBooking.data.info.createdDate != null)
                         contactDetail.CreateDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate); //DateTime.Now;
                     contactDetail.CreateBy = JsonObjPNRBooking.data.info.createdAgentId; //"Admin";
@@ -802,6 +804,30 @@ namespace OnionConsumeWebAPI.Controllers
                         tb_PassengerTotalobj.ModifiedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate); //DateTime.Now;
                     var passangerCount = JsonObjPNRBooking.data.passengers;
                     int PassengerDataCount = ((Newtonsoft.Json.Linq.JContainer)passangerCount).Count;
+
+                    int Adult = 0;
+                    int child = 0;
+                    int Infant = 0;
+                    for (int i = 0; i < PassengerDataDetailsList.Count; i++)
+                    {
+                        if (PassengerDataDetailsList[i].passengertypecode=="ADT")
+                        {
+                            Adult++;
+                        }
+                        else if(PassengerDataDetailsList[i].passengertypecode == "CHD" || PassengerDataDetailsList[i].passengertypecode == "CNN")
+                        {
+                            child++;
+                        }
+                        else if(PassengerDataDetailsList[i].passengertypecode == "INFT" || PassengerDataDetailsList[i].passengertypecode == "INF")
+                        {
+                            Infant++;
+                        }
+
+                    } 
+                    tb_PassengerTotalobj.AdultCount = Adult;
+                    tb_PassengerTotalobj.ChildCount = child;
+                    tb_PassengerTotalobj.InfantCount = Infant;
+                    tb_PassengerTotalobj.TotalPax = Adult + child + Infant;
                     List<tb_PassengerDetails> tb_PassengerDetailsList = new List<tb_PassengerDetails>();
                     int SegmentCount = JsonObjPNRBooking.data.journeys[0].segments.Count;
                     for (int isegment = 0; isegment < SegmentCount; isegment++)
@@ -816,6 +842,12 @@ namespace OnionConsumeWebAPI.Controllers
                             tb_Passengerobj.FirstName = items.Value.name.first;
                             tb_Passengerobj.Title = items.Value.name.title;
                             tb_Passengerobj.LastName = items.Value.name.last;
+
+                            tb_Passengerobj.contact_Emailid = PassengerDataDetailsList.FirstOrDefault(x => x.first == tb_Passengerobj.FirstName && x.last == tb_Passengerobj.LastName).Email;
+                            tb_Passengerobj.contact_Mobileno= PassengerDataDetailsList.FirstOrDefault(x => x.first == tb_Passengerobj.FirstName && x.last == tb_Passengerobj.LastName).mobile;
+                            tb_Passengerobj.FastForwardService = 'N';
+                            tb_Passengerobj.FrequentFlyerNumber = PassengerDataDetailsList.FirstOrDefault(x => x.first == tb_Passengerobj.FirstName && x.last == tb_Passengerobj.LastName).FrequentFlyer;
+
                             if (tb_Passengerobj.Title == "MR" || tb_Passengerobj.Title == "Master" || tb_Passengerobj.Title == "MSTR")
                                 tb_Passengerobj.Gender = "Male";
                             else if (tb_Passengerobj.Title == "MS" || tb_Passengerobj.Title == "MRS" || tb_Passengerobj.Title == "MISS")

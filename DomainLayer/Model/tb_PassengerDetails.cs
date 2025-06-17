@@ -29,7 +29,9 @@ namespace DomainLayer.Model
         public string? Carrybages { get; set; }
         public string? MealsCode { get; set; }
         public string? contact_Emailid { get; set; }
-        public int? contact_Mobileno { get; set; }
+        public string? contact_Mobileno { get; set; }
+        public string? FrequentFlyerNumber { get; set; }
+        public char? FastForwardService { get; set; }
         public decimal? TotalAmount { get; set; }
         public decimal? TotalAmount_tax { get; set; }
         public double TotalAmount_Meals { get; set; }
