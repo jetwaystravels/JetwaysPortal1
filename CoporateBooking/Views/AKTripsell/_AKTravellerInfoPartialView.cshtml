@@ -90,7 +90,7 @@
 		    if (Model.AkPassenger.passengers[i].passengerTypeCode == "ADT" || Model.AkPassenger.passengers[i].passengerTypeCode == "CHD")
 		    {
 			<div class="col-md-3">
-			    <div class="form-input"><input type="text" data-validate="email" class="contactemail validate-field" maxlength="50" oninput="validateInputT(event,@i)" id="contactemailID" placeholder="email" name="" required /></div>
+							<div class="form-input"><input type="text" data-validate="email" class="contactemail validate-field" maxlength="50" oninput="validateInputT(event,@i)" id="contactemailID" placeholder="email" name="passengerdetails[@i].Email" required /></div>
 			</div>
 			<p class="error-message error-emailname" style="display:none"></p>
 			<p class="error-message-val " style="display:none"></p>

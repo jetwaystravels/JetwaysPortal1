@@ -42,6 +42,11 @@ namespace RepositoryLayer.DbContextLayer
         public DbSet<CP_GSTModel> tb_CP_GstDetails { get; set; }
         public DbSet<Trips> tb_Trips { get; set; }
 
+        public DbSet<Booking> GetBookingDetails { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Booking>().HasNoKey().ToView(null);
+        }
     }
 }

@@ -3,24 +3,36 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\JetwaysPortal\\RepositoryLayer\\Migrations\\20250617101551_tb_passengerTotal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:RepositoryLayer\\Migrations\\20250617101551_tb_passengerTotal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\wwwroot\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\wwwroot\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\indigo\\indigocommitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\indigo\\indigocommitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{24025012-1E28-41BF-8E0A-3290BD775A25}|DomainLayer\\DomainLayer.csproj|d:\\jetwaysportal\\domainlayer\\model\\mealimagelist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24025012-1E28-41BF-8E0A-3290BD775A25}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\model\\mealimagelist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\spicejet\\sgcommitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\spicejet\\sgcommitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\views\\flightsearchindex\\mybooking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\views\\flightsearchindex\\mybooking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\akasaair\\akasaaircommitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\akasaair\\akasaaircommitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|d:\\jetwaysportal\\onionconsumewebapi\\controllers\\airasia\\commitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6891B51-C756-4DA5-9E40-97182DE8FB55}|OnionConsumeWebAPI\\OnionConsumeWebAPI.csproj|solutionrelative:onionconsumewebapi\\controllers\\airasia\\commitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|d:\\jetwaysportal\\servicelayer\\service\\interface\\ibooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\service\\interface\\ibooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|d:\\jetwaysportal\\servicelayer\\service\\implementation\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\service\\implementation\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,67 +54,102 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20250617101551_tb_passengerTotal.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\RepositoryLayer\\Migrations\\20250617101551_tb_passengerTotal.cs",
-              "RelativeDocumentMoniker": "RepositoryLayer\\Migrations\\20250617101551_tb_passengerTotal.cs",
-              "ToolTip": "D:\\JetwaysPortal\\RepositoryLayer\\Migrations\\20250617101551_tb_passengerTotal.cs",
-              "RelativeToolTip": "RepositoryLayer\\Migrations\\20250617101551_tb_passengerTotal.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "MealImageList.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\DomainLayer\\Model\\MealImageList.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\Model\\MealImageList.cs",
+              "ToolTip": "D:\\JetwaysPortal\\DomainLayer\\Model\\MealImageList.cs",
+              "RelativeToolTip": "DomainLayer\\Model\\MealImageList.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAwwDIAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T10:15:51.688Z",
+              "WhenOpened": "2025-06-18T11:18:59.591Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IndigoCommitBookingController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\Indigo\\IndigoCommitBookingController.cs",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\Indigo\\IndigoCommitBookingController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\Indigo\\IndigoCommitBookingController.cs",
-              "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\Indigo\\IndigoCommitBookingController.cs",
-              "ViewState": "AgIAAM8CAAAAAAAAAAAQwNsCAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T10:14:31.375Z",
+              "DocumentIndex": 0,
+              "Title": "style.css",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\wwwroot\\css\\style.css",
+              "RelativeDocumentMoniker": "CoporateBooking\\wwwroot\\css\\style.css",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\wwwroot\\css\\style.css",
+              "RelativeToolTip": "CoporateBooking\\wwwroot\\css\\style.css",
+              "ViewState": "AgIAAI4RAAAAAAAAAAAswJ8RAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-06-18T11:13:36.354Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "SGCommitBookingController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\SpiceJet\\SGCommitBookingController.cs",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\SpiceJet\\SGCommitBookingController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\SpiceJet\\SGCommitBookingController.cs",
-              "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\SpiceJet\\SGCommitBookingController.cs",
-              "ViewState": "AgIAAMQAAAAAAAAAAAAcwNYAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T10:13:30.133Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AkasaAirCommitBookingController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AkasaAir\\AkasaAirCommitBookingController.cs",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\AkasaAir\\AkasaAirCommitBookingController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AkasaAir\\AkasaAirCommitBookingController.cs",
-              "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\AkasaAir\\AkasaAirCommitBookingController.cs",
-              "ViewState": "AgIAAMcCAAAAAAAAAAAvwNoCAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T10:13:03.595Z",
+              "Title": "MyBooking.cshtml",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Views\\FlightSearchIndex\\MyBooking.cshtml",
+              "RelativeDocumentMoniker": "CoporateBooking\\Views\\FlightSearchIndex\\MyBooking.cshtml",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Views\\FlightSearchIndex\\MyBooking.cshtml",
+              "RelativeToolTip": "CoporateBooking\\Views\\FlightSearchIndex\\MyBooking.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-18T11:11:54.152Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "CommitBookingController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\CommitBookingController.cs",
-              "RelativeDocumentMoniker": "OnionConsumeWebAPI\\Controllers\\AirAsia\\CommitBookingController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\OnionConsumeWebAPI\\Controllers\\AirAsia\\CommitBookingController.cs",
-              "RelativeToolTip": "OnionConsumeWebAPI\\Controllers\\AirAsia\\CommitBookingController.cs",
-              "ViewState": "AgIAAMMCAAAAAAAAAAAcwNUCAAA8AAAAAAAAAA==",
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\appsettings.Development.json",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\appsettings.Development.json",
+              "RelativeToolTip": "OnionArchitectureAPI\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-18T09:58:10.093Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\appsettings.json",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\appsettings.json",
+              "RelativeToolTip": "OnionArchitectureAPI\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-06-18T09:58:06.141Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IBooking.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Interface\\IBooking.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Service\\Interface\\IBooking.cs",
+              "ToolTip": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Interface\\IBooking.cs",
+              "RelativeToolTip": "ServiceLayer\\Service\\Interface\\IBooking.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T10:12:05.576Z",
+              "WhenOpened": "2025-06-18T09:28:44.353Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BookingService.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Implementation\\BookingService.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Service\\Implementation\\BookingService.cs",
+              "ToolTip": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Implementation\\BookingService.cs",
+              "RelativeToolTip": "ServiceLayer\\Service\\Implementation\\BookingService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T09:12:41.512Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "RelativeToolTip": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T08:34:44.61Z",
               "EditorCaption": ""
             }
           ]

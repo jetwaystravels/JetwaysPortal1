@@ -47,7 +47,8 @@
             new { MealCode = "VMGB", MealImage = "Mushroom Ghee Roast with Sriracha Fried Rice" },
             new { MealCode = "VKDB", MealImage = "Kaju Katli white chocolate Mousse" },
             new { MealCode = "VMGF", MealImage = "Mushroom Ghee Roast with Sriracha Fried Rice" },
-           // new { MealCode = "VIGB", MealImage = "Dry Fruits Gujiya" },
+            new { MealCode = "UPMA", MealImage = "Rava Upma Combo" },
+            new { MealCode = "WHSK", MealImage = "Whiskey" },
 
             new { MealCode = "MMFD", MealImage = "MOJO BAR ORANGE DARK CHOCOLATE + VITAMIN C" },
             new { MealCode = "LSCB", MealImage = "Lemon Samiya ( Vakulaa)" },
@@ -162,6 +163,7 @@
             new { MealCode = "CVHB", MealImage = "Yu Hyderabadi Veg Biryani" },
             new { MealCode = "CVCB", MealImage = "Chaat-Buster Box" },
             new { MealCode = "CVAL", MealImage = "Valentine's Special" },
+            new { MealCode = "CVFF", MealImage = "Fruit & Feta Fiesta Salad" },
             new { MealCode = "CRPX", MealImage = "Snack &amp; Beverage (choose on-board)" },
             new { MealCode = "CNKW", MealImage = "Kosha Chicken Malabari Wrapper" },
             new { MealCode = "CNKS", MealImage = "WOW! Khow Suey Chicken" },

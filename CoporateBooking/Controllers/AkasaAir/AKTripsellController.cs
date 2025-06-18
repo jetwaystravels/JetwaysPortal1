@@ -216,11 +216,11 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                 _Phonenumber AkPhonenumber = new _Phonenumber();
                 List<_Phonenumber> AkPhonenumberlist = new List<_Phonenumber>();
                 AkPhonenumber.type = "Home";
-                AkPhonenumber.number = countryCode + contactobject.number;
+                AkPhonenumber.number = countryCode + "-" + contactobject.number;
                 AkPhonenumberlist.Add(AkPhonenumber);
                 _Phonenumber AkPhonenumber1 = new _Phonenumber();
                 AkPhonenumber1.type = "Other";
-                AkPhonenumber1.number = countryCode + contactobject.number;
+                AkPhonenumber1.number = countryCode + "-" + contactobject.number;
                 AkPhonenumberlist.Add(AkPhonenumber1);
                 foreach (var item in AkPhonenumberlist)
                 {

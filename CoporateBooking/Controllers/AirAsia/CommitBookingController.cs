@@ -159,6 +159,7 @@ namespace OnionConsumeWebAPI.Controllers
                     }
                     else
                     {
+                        _responceCommit_Booking = responceCommit_Booking.Content.ReadAsStringAsync().Result;
                         logs.WriteLogs(jsonCommitBookingRequest, "18-CommitBookingRequest", "AirAsiaOneWay", "oneway");
                         logs.WriteLogs(_responceCommit_Booking, "18-CommitBookingResponse", "AirAsiaOneWay", "oneway");
                     }
