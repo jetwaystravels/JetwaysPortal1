@@ -14,6 +14,7 @@
         public static string URLAkasaAir = "https://tbnk-reyalrb.qp.akasaair.com";
         
         public static string AirlineLogin = "api/Login/GetAirlinelogin";
+        public static string Getflightbooking = BaseURL+"api/Booking/GetbookingDetail";
         #region AirAsia URLs
         public static string AirasiaTokan = URLAirasia + "/api/nsk/v1/token";
         public static string Airasiasearchsimple = URLAirasia + "/api/nsk/v4/availability/search/simple";

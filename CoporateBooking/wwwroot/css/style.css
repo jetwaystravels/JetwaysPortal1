@@ -3149,7 +3149,7 @@ FOOTER AREA CSS
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 8px;
+    margin-top: 11px;
     cursor: pointer;
 }
 
@@ -4121,6 +4121,13 @@ FOOTER AREA CSS
 
 .modal-mfareBlock .col-xl-6.col-lg-6.lf-p {
     padding-right: 0;
+    padding-left:0;
+}
+
+.modal-footer.fbody-padding .book-price {
+    font-weight: 700;
+    position: relative;
+    top: 4px;
 }
 
 .modal-mfareBlock .col-xl-6.col-lg-6.rf-p {
@@ -4511,6 +4518,7 @@ a.login-otp {
         padding: 6px 8px;
         font-size: 14px;
         text-align: left;
+        position:relative;
     }
 
     .m-booking .table td small {
@@ -4538,6 +4546,57 @@ a.login-otp {
     .m-booking .table-bordered td, .table-bordered th {
         border: 1px solid #ddd !important;
     }
+
+
+.confirm-box {
+    display: none;
+    background-color: #fff;
+    padding: 15px;
+    margin: 0 auto 20px;
+    width: 223px;
+    text-align: center;
+    border-radius: 8px;
+    position: absolute;
+    top: -43px;
+    right: 0;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    border: #ccc 1px solid;
+    font-size: 13px;
+}
+
+
+.confirm-box button {
+    border: #ccc 1px solid;
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-right: 5px;
+    margin-top: 8px;
+}
+
+.confirm-box button:hover {
+    background: #f0f0f0;
+}
+
+.confirm-box p {
+    font-size: 13px;
+    text-align: left;
+}
+
+.booking-row .message {
+    width: 100%;
+    margin-top: 31px;
+    font-size: 13px;
+    position: absolute;
+    left: 8px;
+}
+
+.booking-row .message.red {
+    color: red;
+}
+
+.booking-row .message.green {
+    color: green;
+}
 
 /* End My booking section */
 

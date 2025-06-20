@@ -53,11 +53,38 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
     public class FlightSearchIndexController : Controller
     {
 
-        public IActionResult MyBooking()
-        {
+        //public async Task<IActionResult> MyBookingAsync()
+        //{
+        //    List<Booking> bookingList = new List<Booking>();
 
-            return View();
-        }
+        //    try
+        //    {
+        //        using (HttpClient client = new HttpClient())
+        //        {
+        //            // Make GET call
+        //            HttpResponseMessage response = await client.GetAsync(AppUrlConstant.Getflightbooking);
+
+        //            if (response.IsSuccessStatusCode)
+        //            {
+        //                var result = await response.Content.ReadAsStringAsync();
+        //               // bookingList = JsonConvert.DeserializeObject<List<Booking>>(result);
+
+        //                return View(bookingList); // Pass to Razor View
+        //            }
+        //            else
+        //            {
+        //                ViewBag.ErrorMessage = "Failed to load booking data.";
+        //                return View(bookingList);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.ErrorMessage = "An error occurred: " + ex.Message;
+        //        return View(bookingList);
+        //    }
+        //}
+
         // Mongo DB
         // private readonly MongoDbService _mongoDbService;
 

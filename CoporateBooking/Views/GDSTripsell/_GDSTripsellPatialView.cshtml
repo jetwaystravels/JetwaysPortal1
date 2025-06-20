@@ -2,145 +2,35 @@
 @model DomainLayer.ViewModel.ViewModel
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-    /* Styles for modal box and overlay */
-    .modalTrip {
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        left: 50%;
-        width: 60%;
-        height: 80%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        padding: 8px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
-    }
-
-    .overlayTrip {
-        display: none;
-        position: fixed;
-        z-index: 9998;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .tripmodal {
-        background: #366480;
-        padding: 6px;
-    }
-
-        .tripmodal h4 {
-            color: #fff;
-        }
-
-        .tripmodal button {
-            color: #fff;
-        }
-
-
-
-    /* Styles for tabs */
-    .tab {
-        display: none;
-    }
-
-    /* Styles for active tab */
-    .active {
-        display: block;
-    }
-
-    /* Styles for tab buttons */
-    .tab-btn {
-        cursor: pointer;
-        padding: 10px 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        margin-right: 10px;
-    }
-
-        .tab-btn.active {
-            background-color: #ccd6dd; /* Change background color for active tab */
-        }
-
-    .tooltipF {
-        position: relative;
-        display: inline-block;
-    }
-
-        .tooltipF .tooltiptext {
-            visibility: hidden;
-            width: 220px;
-            background-color: #366480;
-            color: #fff;
-            text-align: left;
-            border-radius: 2px;
-            padding: 6px;
-            position: absolute;
-            z-index: 1;
-            top: 0;
-            left: 100%;
-            font-size: 12px;
-            margin-left: 6px; /* Adjust as needed */
-        }
-
-        .tooltipF:hover .tooltiptext {
-            visibility: visible;
-        }
-
-    table {
-        border-collapse: collapse;
-    }
-
-    td,
-    th {
-        border: 1px solid black;
-        padding: 10px 20px;
-    }
-
-    .fligtbox {
-        margin: 4px 15px;
-        border: 1px solid #366480;
-    }
-
-    .firstdiv {
-        background-color: #edcbcb;
-        margin: 15px;
-        padding: 8px;
-    }
-
-    .airliname {
-        border-radius: 20px;
-        margin-left: 8px;
-        padding: 7px 12px;
-        font-size: 13px;
-        border: 1px solid #2f647e;
-        font-weight: 700;
-    }
+.modalTrip {display: none;position: fixed; z-index: 9999;left: 50%;width: 60%;height: 80%;top: 50%;transform: translate(-50%, -50%);background-color: #fff; padding: 8px;border-radius: 5px;box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);}
+.overlayTrip {display: none;position: fixed;z-index: 9998;top: 0;left: 0;width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.5);}
+.tripmodal {background: #366480;padding: 6px;}
+.tripmodal h4 {color: #fff;}
+.tripmodal button {color: #fff;}
+.tab {display: none;}
+.active {display: block;}
+.tab-btn {cursor: pointer;padding: 10px 20px;border: 1px solid #ccc;border-radius: 5px; margin-right: 10px;}
+.tab-btn.active {background-color: #ccd6dd;}
+.tooltipF {position: relative;display: inline-block;}
+.tooltipF .tooltiptext {visibility: hidden;width: 220px;background-color: #366480;color: #fff;text-align: left;border-radius: 2px;padding: 6px;position: absolute;z-index: 1;top: 0;left: 100%;font-size: 12px;margin-left: 6px; }
+.tooltipF:hover .tooltiptext {visibility: visible;}
+table { border-collapse: collapse;}
+td,th {border: 1px solid black;padding: 10px 20px;}
+.fligtbox {margin: 4px 15px; border: 1px solid #366480;}
+.firstdiv {background-color: #edcbcb; margin: 15px;padding: 8px;}
+.airliname {border-radius: 20px; margin-left: 8px;padding: 7px 12px;font-size: 13px;border: 1px solid #2f647e;font-weight: 700;}
 </style>
 <script>
     $(document).ready(function () {
-        // Open modal box
         $("#openModal_0").click(function () {
             $("#modal, #overlay").fadeIn();
             $("body").css("overflow", "hidden");
         });
-
-        // Close modal box
         $("#closeModal, #overlay").click(function () {
             $("#modal, #overlay").fadeOut();
             $("body").css("overflow", "auto");
         });
-
-
-
         $("#tabContent1").addClass("active");
-
-        // Show/hide tab content on click
         $(".tab-btn").click(function () {
             var tabId = $(this).attr("id").replace("tabBtn", "");
             $(".tab").removeClass("active");
@@ -148,12 +38,8 @@
             $("#tabContent" + tabId).addClass("active");
             $(this).addClass("active");
         });
-
-
     });
 </script>
-
-
 @{
 
     string formattedTime = string.Empty;
@@ -176,8 +62,6 @@
             </div>
         </div>
     </div>
-
-
     @{
         foreach (var item in Model.passeengerlist.journeys)
         {
@@ -223,9 +107,6 @@
                                     else
                                         formattedTime = $"{(int)timeSpan.TotalHours} h {(int)timeSpan.Minutes} m";
 
-                                    // <div class="py-15 px-20 rounded-4 text-15 bg-green-1 flex-center">
-                                    //     Change planes at <span class="fw-600"> <div></div> (@item.segments[i].legs[j].designator.origin),</span> Connecting Time: <span class="fw-600">@formattedTime</span>
-                                    // </div>
                                     <div class="py-10 px-20 rounded-4 text-15 bg-blue-2 flex-center m-3">
                                         Technical Support   <span class="fw-600 px-2">@formattedTime</span> Layover in <span class="fw-600 px-2"> @item.segments[i].legs[j].designator.origin</span>
                                     </div>
@@ -686,7 +567,7 @@
                                             </span>
 
                                         }
-                                        else if (item.segments[i].fares[f].productClass.Contains("Eco Value"))
+                                        else if (item.segments[i].fares[f].productClass.Contains("Corporate Eco Value"))
                                         {
 
                                             <span class="tooltipF">
@@ -695,8 +576,8 @@
                                                     <ul>
                                                         <li>1: Cabin Bag: 7 k.g</li>
                                                         <li>2: Check-In: 15 k.g</li>
-                                                        <li>3: Cancellation: 4000 :-  (3 days upto 2 hrs prior from departure)</li>
-                                                        <li>4: Date Change: 3000 :-  (3 days upto 2 hrs prior from departure)</li>
+                                                        <li>3: Cancellation: 4000 :-  ( 2 hrs prior from departure)</li>
+                                                        <li>4: Date Change: 3000 :-  ( 2 hrs prior from departure)</li>
                                                         <li>5: Seat : -</li>
                                                         <li>6: Meal : -</li>
                                                     </ul>
@@ -704,7 +585,7 @@
                                             </span>
 
                                         }
-                                        else if (item.segments[i].fares[f].productClass.Contains("Eco Classic"))
+                                        else if (item.segments[i].fares[f].productClass.Contains("Corporate Eco Classic"))
                                         {
 
                                             <span class="tooltipF">
@@ -1017,7 +898,7 @@
                                             </tr>
                                         </table>
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Value"))
+                                    else if (item.segments[i].fares[f].productClass.Equals("Corporate Eco Value"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1025,12 +906,12 @@
                                                 <td><b>Charges</b></td>
                                             </tr>
                                             <tr>
-                                                <td>3 days upto 2 hrs prior from departure</td>
+                                                <td> 2 hrs prior from departure</td>
                                                 <td>Rs. 4000  </td>
                                             </tr>
                                         </table>
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Classic"))
+                                    else if (item.segments[i].fares[f].productClass.Equals("Corporate Eco Classic"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1248,7 +1129,7 @@
                                             </tr>
                                         </table>
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Value"))
+                                    else if (item.segments[i].fares[f].productClass.Equals("Corporate Eco Value"))
                                     {
                                         <table style="width:100%">
                                             <tr>
@@ -1256,12 +1137,12 @@
                                                 <td><b>Charges</b></td>
                                             </tr>
                                             <tr>
-                                                <td>(3 days upto 2 hrs prior from departure)</td>
+                                                <td>( 2 hrs prior from departure)</td>
                                                 <td>Rs. 3000 </td>
                                             </tr>
                                         </table>
                                     }
-                                    else if (item.segments[i].fares[f].productClass.Equals("Eco Classic"))
+                                    else if (item.segments[i].fares[f].productClass.Equals("Corporate Eco Classic"))
                                     {
                                         <table style="width:100%">
                                             <tr>

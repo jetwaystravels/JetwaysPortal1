@@ -166,7 +166,7 @@
                                         <p class="greeting">Hi,@userName</p>
                                         @* <span>@userEmail</span> *@
                                         @*  <div class="circle-initials">@(userName.Split(' ')[0][0].ToString().ToUpper() + userName.Split(' ')[1][0].ToString().ToUpper())</div> *@
-                                        <a as-controller="FlightSearchIndex" asp-action="MyBooking" class="d-flex">
+                                        <a asp-controller="Booking" asp-action="MyBooking" class="d-flex">
                                             <span><i class="fa fa-suitcase" aria-hidden="true"></i></span>
                                             <div class="inner-list-bx">
                                                 My Trips
