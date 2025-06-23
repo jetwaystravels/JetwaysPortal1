@@ -570,24 +570,111 @@
 					<td>Cancellation Charges</td>
 					@if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("SG"))
 					{
-					    <td>3600 RS. </td>
-					    <td>within 96 hrs from Departure</td>
-					    <td>As per Airline Fare rule</td>
+											if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("CP"))
+											{
+												<td> Rs. 3150</td>
+												<td>Before 96 Hrs from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("SS"))
+											{
+												<td>3600 RS. </td>
+												<td>within 96 hrs from Departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("RS"))
+											{
+												<td>3600 RS. </td>
+												<td>within 96 hrs from Departure</td>
+												<td>As per Airline Fare rule</td>
+											}
 					}
 					else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("6E"))
 					{
 
-					    <td>3999</td>
-					    <td>(3 hrs before departure)</td>
-					    <td>As per Airline Fare rule</td>
+											if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("F"))
+											{
+												<td> Rs. 499</td>
+												<td>Change charges upto</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("A"))
+											{
+												<td>3500 RS. </td>
+												<td>3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("M"))
+											{
+												<td>3500 RS. </td>
+												<td>3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("R"))
+											{
+												<td>RS. 3500 </td>
+												<td> 3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("J"))
+											{
+												<td>RS. 999 </td>
+												<td> 3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("O"))
+											{
+												<td>RS. 999 </td>
+												<td> 3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
 
 					}
 					else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("QP"))
 					{
-						<td>2999 Rs.</td>
-						<td>4 days before departure</td>
-					    <td>As per Airline Fare rule</td>
+											if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("EC"))
+											{
+												<td>2999 Rs.</td>
+												<td>4 days & above</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("AV"))
+											{
+												<td>Rs. 1999</td>
+												<td>4 days & above</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("CP"))
+											{
+												<td>Free </td>
+												<td>Upto 3 hours from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
 					}
+
+
+										else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("IX"))
+										{
+											if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("EC"))
+											{
+												<td>Rs. 3500 </td>
+												<td>Upto 72 hrs before departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("SM"))
+											{
+												<td>Rs.1500 </td>
+												<td>1 day before to departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("FS"))
+											{
+												<td>Rs. 500 </td>
+												<td>Upto 2 hrs before departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+
+										}
 					else if (Model.SimpleAvailibilityaAddResponcelist[j].segments[0].identifier.carrierCode.Equals("UK"))
 					{
 					    <td>Rs. 3710</td>
@@ -626,6 +713,19 @@
 							<td>3 days upto 2 hrs prior from departure</td>
 							<td>As per Airline Fare rule</td>
 						}
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Corporate Eco Value"))
+											{
+												<td>Rs. 4000 </td>
+												<td>  2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+
+											else if (Model.SimpleAvailibilityaAddResponcelist[j].faresIndividual[0].procuctclass.Equals("Corporate Eco Classic"))
+											{
+												<td>Rs.3500  </td>
+												<td>3 days upto 2 hrs prior from departure </td>
+												<td>As per Airline Fare rule</td>
+											}
 						else
 						{
 							<td>Rs. 8000</td>
@@ -1232,26 +1332,113 @@
 				<tbody>
 				    <tr>
 					<td>Cancellation Charges</td>
-					@if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("SG"))
-					{
-					    <td>3600 RS. </td>
-					    <td>within 96 hrs from Departure</td>
-					    <td>As per Airline Fare rule</td>
-					}
-					else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("6E"))
-					{
-					    <td>3999</td>
-					    <td>(3 hrs before departure)</td>
-					    <td>As per Airline Fare rule</td>
+										@if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("SG"))
+										{
+											if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("CP"))
+											{
+												<td> Rs. 3150</td>
+												<td>Before 96 Hrs from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("SS"))
+											{
+												<td>3600 RS. </td>
+												<td>within 96 hrs from Departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("RS"))
+											{
+												<td>3600 RS. </td>
+												<td>within 96 hrs from Departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+										}
+										else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("6E"))
+										{
+
+											if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("F"))
+											{
+												<td> Rs. 499</td>
+												<td>Change charges upto</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("A"))
+											{
+												<td>3500 RS. </td>
+												<td>3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("M"))
+											{
+												<td>3500 RS. </td>
+												<td>3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("R"))
+											{
+												<td>RS. 3500 </td>
+												<td> 3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("J"))
+											{
+												<td>RS. 999 </td>
+												<td> 3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("O"))
+											{
+												<td>RS. 999 </td>
+												<td> 3 days upto 2 hrs prior from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+
+										}
+										else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("QP"))
+										{
+											if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("EC"))
+											{
+												<td>2999 Rs.</td>
+												<td>4 days & above</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("AV"))
+											{
+												<td>Rs. 1999</td>
+												<td>4 days & above</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("CP"))
+											{
+												<td>Free </td>
+												<td>Upto 3 hours from departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+										}
 
 
-					}
-					else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("QP"))
-					{
-						<td>Rs. 2999 </td>
-					    <td>4 days before departure</td>
-					    <td>As per Airline Fare rule</td>
-					}
+										else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("IX"))
+										{
+											if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("EC"))
+											{
+												<td>Rs. 3500 </td>
+												<td>Upto 72 hrs before departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("SM"))
+											{
+												<td>Rs.1500 </td>
+												<td>1 day before to departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+											else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("FS"))
+											{
+												<td>Rs. 500 </td>
+												<td>Upto 2 hrs before departure</td>
+												<td>As per Airline Fare rule</td>
+											}
+
+										}
 					else if (Model.SimpleAvailibilityaAddResponcelistR[j].segments[0].identifier.carrierCode.Equals("UK"))
 					{
 						<td>Rs. 3710</td>
@@ -1290,6 +1477,20 @@
 							<td>3 days upto 2 hrs prior from departure</td>
 							<td>As per Airline Fare rule</td>
 						}
+
+						     else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("Corporate Eco Value"))
+                                {
+                                    <td>Rs. 4000 </td>
+                                    <td>  2 hrs prior from departure</td>
+                                    <td>As per Airline Fare rule</td>
+                                }
+
+                                else if (Model.SimpleAvailibilityaAddResponcelistR[j].faresIndividual[0].procuctclass.Equals("Corporate Eco Classic"))
+                                {
+                                    <td>Rs.3500  </td>
+                                    <td>3 days upto 2 hrs prior from departure </td>
+                                    <td>As per Airline Fare rule</td>
+                                }
 						else
 						{
 							<td>Rs. 8000</td>

@@ -34,6 +34,17 @@ namespace ServiceLayer.Service.Implementation
                 .FromSqlRaw("EXEC sp_GetFlightBookingDetails @FlightID, @RecordLocator", flightIdParam, recordLocatorParam)
                 .ToListAsync();
         }
-        
+        public async Task<bool> UpdateCancelStatusAsync(string recordLocator, int status)
+        {
+            var recordLocatorParam = new SqlParameter("@RecordLocator", recordLocator);
+            var statusParam = new SqlParameter("@CancelStatus", status);
+
+            int rowsAffected = await _dbContext.Database.ExecuteSqlRawAsync(
+                "EXEC sp_UpdateBookingCancelStatus @RecordLocator, @CancelStatus",
+                recordLocatorParam, statusParam);
+
+            return rowsAffected > 0;
+        }
+
     }
 }
