@@ -16,7 +16,7 @@ namespace CoporateBooking.Controllers.common
         {
             //string baseUrl = "https://dotrezapi.test.I5.navitaire.com";
             //string recordLocator = pnr;
-            string recordLocator = "D8G1KH";
+            string recordLocator = "T3VCXZ";
 
             using (HttpClient client = new HttpClient())
             {
@@ -81,9 +81,6 @@ namespace CoporateBooking.Controllers.common
                 if (finalGet.IsSuccessStatusCode)
                 {
                     string finalStatus = await finalGet.Content.ReadAsStringAsync();
-                    //HttpResponseMessage response = await client.GetAsync(AppUrlConstant.CancleStatus);
-
-                   
                     TempData["Success"] = "Booking cancellation session flow completed successfully.";
                     TempData["FinalStatus"] = finalStatus;
                     return RedirectToAction("MyBooking", "Booking");

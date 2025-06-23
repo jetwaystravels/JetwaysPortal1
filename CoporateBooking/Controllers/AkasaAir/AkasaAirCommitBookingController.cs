@@ -754,7 +754,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                         tb_Booking.ModifiedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate);
                     tb_Booking.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId;//"Online";
                     tb_Booking.BookingDoc = _responcePNRBooking;
-                    tb_Booking.Status = JsonObjPNRBooking.data.info.status;// "0";
+                    tb_Booking.BookingStatus = JsonObjPNRBooking.data.info.status;// "0";
                     tb_Booking.PaidStatus = Convert.ToInt32(JsonObjPNRBooking.data.info.paidStatus);// "0";
 
                     // It  will maintained by manually as Airline Code and description 6E-Indigo

@@ -810,7 +810,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             tb_Booking.ModifiedDate = _getBookingResponse.Booking.BookingInfo.ModifiedDate;
                             tb_Booking.ModifyBy = _getBookingResponse.Booking.BookingInfo.ModifiedAgentID.ToString();
                             tb_Booking.BookingDoc = JsonConvert.SerializeObject(_getBookingResponse);
-                            tb_Booking.Status = _getBookingResponse.Booking.BookingInfo.BookingStatus.ToString();
+                            tb_Booking.BookingStatus = _getBookingResponse.Booking.BookingInfo.BookingStatus.ToString();
                             tb_Booking.PaidStatus = Convert.ToInt32(_getBookingResponse.Booking.BookingInfo.PaidStatus);
 
                             tb_Airlines tb_Airlines = new tb_Airlines();

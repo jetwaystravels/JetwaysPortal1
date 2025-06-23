@@ -53,7 +53,8 @@ namespace ServiceLayer.Service.Implementation
                 tbobj.Createdby = ticketObject.tb_Booking.Createdby;
                 tbobj.ModifyBy = ticketObject.tb_Booking.ModifyBy;
                 tbobj.ModifiedDate = ticketObject.tb_Booking.ModifiedDate;
-                tbobj.Status = ticketObject.tb_Booking.Status;
+                tbobj.BookingStatus = ticketObject.tb_Booking.BookingStatus;
+                tbobj.PaidStatus = ticketObject.tb_Booking.PaidStatus;
                 this._dbContext.Add(tbobj);
                 //this._dbContext.SaveChanges();
                 ContactDetail contactDetailobj = new ContactDetail();

@@ -694,7 +694,7 @@ namespace OnionConsumeWebAPI.Controllers
                     tb_Booking.ModifiedDate = JsonObjPNRBooking.data.info.modifiedDate;
                     tb_Booking.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId;//"Online";
                     tb_Booking.BookingDoc = _responcePNRBooking;
-                    tb_Booking.Status = JsonObjPNRBooking.data.info.status;// "0";
+                    tb_Booking.BookingStatus = JsonObjPNRBooking.data.info.status;// "0";
                     tb_Booking.PaidStatus = JsonObjPNRBooking.data.info.paidStatus;// "0";
                     
                     tb_Airlines tb_Airlines = new tb_Airlines();

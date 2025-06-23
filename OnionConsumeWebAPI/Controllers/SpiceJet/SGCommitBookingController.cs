@@ -798,7 +798,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             tb_Booking.ModifiedDate = DateTime.Now;
                             tb_Booking.ModifyBy = "Online";
                             tb_Booking.BookingDoc = Convert.ToString(_getBookingResponse);
-                            tb_Booking.Status = "0";
+                            tb_Booking.BookingStatus = "0";
                             tb_Airlines tb_Airlines = new tb_Airlines();
                             tb_Airlines.AirlineID = 1;
                             tb_Airlines.AirlneName = "Boing";

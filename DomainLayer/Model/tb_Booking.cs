@@ -36,7 +36,7 @@ namespace DomainLayer.Model
         public DateTime ModifiedDate { get; set; }        
         public string ModifyBy { get; set; }
         public string BookingDoc { get; set; }
-        public string Status { get; set; }
+        public string BookingStatus { get; set; }
         public int PaidStatus { get; set; }
         public String BookingType { get; set; } = null;
         public String TripType { get; set; } = null;
