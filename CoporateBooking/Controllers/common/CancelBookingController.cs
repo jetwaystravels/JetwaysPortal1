@@ -81,6 +81,9 @@ namespace CoporateBooking.Controllers.common
                 if (finalGet.IsSuccessStatusCode)
                 {
                     string finalStatus = await finalGet.Content.ReadAsStringAsync();
+                    //HttpResponseMessage response = await client.GetAsync(AppUrlConstant.CancleStatus);
+
+                   
                     TempData["Success"] = "Booking cancellation session flow completed successfully.";
                     TempData["FinalStatus"] = finalStatus;
                     return RedirectToAction("MyBooking", "Booking");

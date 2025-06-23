@@ -221,7 +221,15 @@
            new { MealCode = "XBPC", MealImage = "+ 15 kg Xcess Baggage" },
            new { MealCode = "XBPB", MealImage = "+ 10 kg Xcess Baggage" },
            new { MealCode = "XBPA", MealImage = "+ 5 kg Xcess Baggage" },
-      
+           new { MealCode = "XBPE", MealImage = "+ 3 kg Xcess Baggage" },
+
+           new { MealCode = "EB25", MealImage = "+25 kgs Xcess Baggage" },
+           new { MealCode = "EB20", MealImage = "+ 20 kg Xcess Baggage" },
+           new { MealCode = "EB15", MealImage = "+ 15 kg Xcess Baggage" },
+           new { MealCode = "EB10", MealImage = "+ 10 kg Xcess Baggage" },
+           new { MealCode = "EB05", MealImage = "+ 5 kg Xcess Baggage" },
+           new { MealCode = "EB03", MealImage = "+ 3 kg Xcess Baggage" },
+           new { MealCode = "EB30", MealImage = "+30 kgs Xcess Baggage" },
 
               
             // Add more data as needed...

@@ -760,6 +760,7 @@ namespace OnionConsumeWebAPI.Controllers
                         contactDetail.ModifyDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate); //DateTime.Now;
                     contactDetail.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId; //"Admin";
                     contactDetail.Status = JsonObjPNRBooking.data.info.status;// 0;
+                    
                     GSTDetails gSTDetails = new GSTDetails();
                     if (JsonObjPNRBooking.data.contacts.G != null)
                     {

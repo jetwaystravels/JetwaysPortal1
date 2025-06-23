@@ -35,6 +35,7 @@
         public static string AirasiaPNRBooking = URLAirasia + "/api/nsk/v1/booking/retrieve/byRecordLocator/";
         public static string AirasiaPayment = URLAirasia + "/api/nsk/v4/booking/payments";
         public static string DeleteBooking = URLAirasia + "/api/nsk/v1/booking/journeys";
+        public static string CancleStatus = BaseURL + "/api/Booking/UpdateCancelStatus";
         #endregion
 
         #region AkasaAir URLs
