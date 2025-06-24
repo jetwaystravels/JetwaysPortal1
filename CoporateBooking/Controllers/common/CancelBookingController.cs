@@ -1,10 +1,12 @@
-﻿using DomainLayer.Model;
+﻿using CoporateBooking.Comman;
+using DomainLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnionConsumeWebAPI.Extensions;
 using System.Net.Http.Headers;
 using System.Text;
 using Utility;
+using static DomainLayer.Model.ReturnTicketBooking;
 
 namespace CoporateBooking.Controllers.common
 {
@@ -14,15 +16,14 @@ namespace CoporateBooking.Controllers.common
 
         public async Task<IActionResult> CancelActionAsync(int airline, string pnr)
         {
-            //string baseUrl = "https://dotrezapi.test.I5.navitaire.com";
-            //string recordLocator = pnr;
-            string recordLocator = "T3VCXZ";
+            string recordLocator = "E6ISHN";
+            int status = 3;
 
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
 
-                // Step 1: Fetch Airline Credentials
+                // Step 1: Fetch Airline Credentials  
                 HttpResponseMessage response = await client.GetAsync(AppUrlConstant.AirlineLogin);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -32,9 +33,9 @@ namespace CoporateBooking.Controllers.common
 
                 var results = await response.Content.ReadAsStringAsync();
                 var jsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
-                _credentialsAirasia = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 1); // AirAsia
+                _credentialsAirasia = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 1); // AirAsia  
 
-                // Step 2: Login to get AirAsia token
+                // Step 2: Login to get AirAsia token  
                 var login = new airlineLogin { credentials = _credentialsAirasia };
                 var AirasiaTokan = new AirasiaTokan();
 
@@ -52,10 +53,10 @@ namespace CoporateBooking.Controllers.common
                 dynamic tokenJson = JsonConvert.DeserializeObject<dynamic>(tokenResult);
                 AirasiaTokan.token = tokenJson.data.token;
 
-                // Set Auth Header
+                // Set Auth Header  
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AirasiaTokan.token);
 
-                // Step 3: GET /booking/retrieve/byRecordLocator/{pnr}
+                // Step 3: GET /booking/retrieve/byRecordLocator/{pnr}  
                 string retrieveUrl = $"{AppUrlConstant.AirasiaPNRBooking}/{recordLocator}";
                 HttpResponseMessage retrieveResponse = await client.GetAsync(retrieveUrl);
                 if (!retrieveResponse.IsSuccessStatusCode)
@@ -65,78 +66,66 @@ namespace CoporateBooking.Controllers.common
                     return View("Error");
                 }
 
-                string bookingResult = await retrieveResponse.Content.ReadAsStringAsync();
-                TempData["BookingDetails"] = bookingResult;
+                string _bookingResult = await retrieveResponse.Content.ReadAsStringAsync();
+                //var objpnrBooking = JsonConvert.DeserializeObject<dynamic>(_bookingResult);
+               
+                TempData["BookingDetails"] = _bookingResult;
 
-                // Step 4: DELETE /v1/booking/journeys
-                if (!await SendDeleteAsync(client, $"{AppUrlConstant.DeleteBooking}"))
-                    return View("Error");
-
-                // Step 5: PUT /v3/booking
-                if (!await SendPutAsync(client, $"{AppUrlConstant.AirasiaCommitBooking}"))
-                    return View("Error");
-
-                // Step 6: GET /v1/booking (final confirmation)
-                HttpResponseMessage finalGet = await client.GetAsync($"{AppUrlConstant.AirasiaGetBoking}");
-                if (finalGet.IsSuccessStatusCode)
+                // Step 4: DELETE /v1/booking/journeys  
+                var deleteResult = await HttpHelperService.SendDeleteAsync(client, $"{AppUrlConstant.DeleteBooking}");
+                if (deleteResult.Success)
                 {
-                    string finalStatus = await finalGet.Content.ReadAsStringAsync();
-                    TempData["Success"] = "Booking cancellation session flow completed successfully.";
-                    TempData["FinalStatus"] = finalStatus;
-                    return RedirectToAction("MyBooking", "Booking");
+                    // Step 5: PUT /v3/booking (commit)  
+                    var putResult = await HttpHelperService.SendPutAsync(client, $"{AppUrlConstant.AirasiaCommitBooking}");
+                    if (!putResult.Success)
+                    {
+                        ModelState.AddModelError("", $"PUT failed: {putResult.Error}");
+                        return View("Error");
+                    }
+
+                    // Step 6: GET /v1/booking (final confirmation)  
+                    HttpResponseMessage finalGet = await client.GetAsync($"{AppUrlConstant.AirasiaGetBoking}");
+                    if (finalGet.IsSuccessStatusCode)
+                    {
+                        string _finalStatus = await finalGet.Content.ReadAsStringAsync();
+                        var objcancelBooking = JsonConvert.DeserializeObject<dynamic>(_finalStatus);
+
+                        Breakdown breakdown = new Breakdown();
+                        breakdown.balanceDue = objcancelBooking.data.breakdown.balanceDue;
+                        breakdown.totalAmount = objcancelBooking.data.breakdown.totalAmount;
+                      
+
+                        Logs logs = new Logs();
+                        logs.WriteLogs(_finalStatus, "Cancel", "AirAsiaOneWay", "oneway");
+
+                        string url = $"{AppUrlConstant.CancleStatus}?recordLocator={Uri.EscapeDataString(recordLocator)}&status={status}";
+                        HttpResponseMessage responsecancel = await client.PostAsync(url, null);
+
+                        if (!responsecancel.IsSuccessStatusCode)
+                        {
+                            string error = await responsecancel.Content.ReadAsStringAsync();
+                            ModelState.AddModelError("", $"Cancellation status update failed: {error}");
+                            return View("Error");
+                        }
+                        TempData["Success"] = "Booking cancellation session flow completed successfully.";
+                        TempData["FinalStatus"] = _finalStatus;
+                        return RedirectToAction("MyBooking", "Booking");
+                    }
+                    else
+                    {
+                        string error = await finalGet.Content.ReadAsStringAsync();
+                        ModelState.AddModelError("", $"Final booking status check failed. {error}");
+                        return View("Error");
+                    }
                 }
                 else
                 {
-                    string error = await finalGet.Content.ReadAsStringAsync();
-                    ModelState.AddModelError("", $"Final booking status check failed. {error}");
-                    return View("Error");
+                    ModelState.AddModelError("", $"DELETE failed: {deleteResult.Error}");
                 }
+
+                return View("Error");
             }
         }
-
-        // Helper: Generic DELETE (no body)
-        private async Task<bool> SendDeleteAsync(HttpClient client, string url)
-        {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, url);
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                string error = await response.Content.ReadAsStringAsync();
-                ModelState.AddModelError("", $"DELETE failed at {url}: {error}");
-                return false;
-            }
-            return true;
-        }
-
-        // Helper: Generic PUT (no body)
-        private async Task<bool> SendPutAsync(HttpClient client, string url)
-        {
-            var body = new
-            {
-                notifyContacts = true,
-                contactTypesToNotify = new[] { "P" }
-            };
-
-            var content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
-
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, url)
-            {
-                Content = content
-            };
-
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                string error = await response.Content.ReadAsStringAsync();
-                ModelState.AddModelError("", $"PUT failed at {url}: {error}");
-                return false;
-            }
-
-            return true;
-        }
-
     }
 
 }

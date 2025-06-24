@@ -623,7 +623,7 @@
                                             <div class="col-lg-12">
                                                 <div class="row d-flex justify-content-end">
                                                     <div class="col-12 col-md-10 col-lg-2 pr-0 mt-2">
-                                                        <button type="submit" id="searchbtn" class="btn btn-lg btn-block" onclick="validateForm()">Search</button>
+                                                        <button type="submit" id="searchbtn" class="btn btn-lg btn-block" onclick="validateForm()" @(User.Identity.IsAuthenticated ? "" : "disabled")>Search</button>
 
                                                     </div>
                                                 </div>

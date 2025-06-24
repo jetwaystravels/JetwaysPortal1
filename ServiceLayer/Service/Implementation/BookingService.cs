@@ -43,7 +43,7 @@ namespace ServiceLayer.Service.Implementation
                 "EXEC sp_UpdateBookingCancelStatus @RecordLocator, @CancelStatus",
                 recordLocatorParam, statusParam);
 
-            return rowsAffected > 0;
+            return rowsAffected != 0;
         }
 
     }
