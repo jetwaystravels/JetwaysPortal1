@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\common\\cancelbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\common\\cancelbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -34,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,20 +42,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "BookingController.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
               "RelativeDocumentMoniker": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
               "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
               "RelativeToolTip": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAMwC8AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAMwDcAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-25T06:56:36.764Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "CancelStatusRequest.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\CancelStatusRequest.cs",
               "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\common\\CancelStatusRequest.cs",
@@ -72,7 +68,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "BookingService.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Implementation\\BookingService.cs",
               "RelativeDocumentMoniker": "ServiceLayer\\Service\\Implementation\\BookingService.cs",
@@ -85,7 +81,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "IBooking.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Interface\\IBooking.cs",
               "RelativeDocumentMoniker": "ServiceLayer\\Service\\Interface\\IBooking.cs",
@@ -98,7 +94,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "BookingController.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\BookingController.cs",
               "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\common\\BookingController.cs",
@@ -107,19 +103,6 @@
               "ViewState": "AgIAAAcAAAAAAAAAAAA1wBgAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-24T12:13:01.076Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CancelBookingController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
-              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
-              "RelativeToolTip": "CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAewBMAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T12:12:53.94Z",
               "EditorCaption": ""
             }
           ]
