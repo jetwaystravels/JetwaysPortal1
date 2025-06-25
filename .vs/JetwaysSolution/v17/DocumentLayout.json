@@ -3,28 +3,28 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\airasia\\flightsearchindexcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\common\\cancelbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\common\\cancelbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\views\\flightsearchindex\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\views\\resultflightview\\_flightresultssortingpartialview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\views\\resultflightview\\_flightresultssortingpartialview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\views\\resultflightview\\flightview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\views\\resultflightview\\flightview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|d:\\jetwaysportal\\servicelayer\\service\\implementation\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\service\\implementation\\bookingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\common\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\common\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\common\\cancelbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\common\\cancelbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|d:\\jetwaysportal\\servicelayer\\service\\interface\\ibooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\service\\interface\\ibooking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\common\\cancelstatusrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\common\\cancelstatusrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,80 +46,80 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "FlightSearchIndexController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
-              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
-              "RelativeToolTip": "CoporateBooking\\Controllers\\AirAsia\\FlightSearchIndexController.cs",
-              "ViewState": "AgIAAGUAAAAAAAAAAAAAwH0AAAAMAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "RelativeToolTip": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAMwC8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-24T12:27:47.075Z",
+              "WhenOpened": "2025-06-25T06:56:36.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CancelStatusRequest.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\CancelStatusRequest.cs",
+              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\common\\CancelStatusRequest.cs",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\CancelStatusRequest.cs",
+              "RelativeToolTip": "CoporateBooking\\Controllers\\common\\CancelStatusRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T06:52:27.652Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "_FlightResultsSortingPartialView.cshtml",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Views\\ResultFlightView\\_FlightResultsSortingPartialView.cshtml",
-              "RelativeDocumentMoniker": "CoporateBooking\\Views\\ResultFlightView\\_FlightResultsSortingPartialView.cshtml",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Views\\ResultFlightView\\_FlightResultsSortingPartialView.cshtml",
-              "RelativeToolTip": "CoporateBooking\\Views\\ResultFlightView\\_FlightResultsSortingPartialView.cshtml",
-              "ViewState": "AgIAACcGAAAAAAAAAAAAADkGAABTAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-24T12:18:37.829Z",
+              "Title": "BookingService.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Implementation\\BookingService.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Service\\Implementation\\BookingService.cs",
+              "ToolTip": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Implementation\\BookingService.cs",
+              "RelativeToolTip": "ServiceLayer\\Service\\Implementation\\BookingService.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAswDsAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T06:40:29.677Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "IBooking.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Interface\\IBooking.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Service\\Interface\\IBooking.cs",
+              "ToolTip": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Interface\\IBooking.cs",
+              "RelativeToolTip": "ServiceLayer\\Service\\Interface\\IBooking.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-25T06:38:44.829Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "BookingController.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\BookingController.cs",
               "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\common\\BookingController.cs",
               "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\BookingController.cs",
               "RelativeToolTip": "CoporateBooking\\Controllers\\common\\BookingController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABgAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA1wBgAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-24T12:13:01.076Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "CancelBookingController.cs",
               "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
               "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
               "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
               "RelativeToolTip": "CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAIAwwBMAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-24T12:12:53.94Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FlightView.cshtml",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Views\\ResultFlightView\\FlightView.cshtml",
-              "RelativeDocumentMoniker": "CoporateBooking\\Views\\ResultFlightView\\FlightView.cshtml",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Views\\ResultFlightView\\FlightView.cshtml",
-              "RelativeToolTip": "CoporateBooking\\Views\\ResultFlightView\\FlightView.cshtml",
-              "ViewState": "AgIAAEcCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-24T12:03:36.672Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
-              "RelativeDocumentMoniker": "CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
-              "RelativeToolTip": "CoporateBooking\\Views\\FlightSearchIndex\\Index.cshtml",
-              "ViewState": "AgIAAEMEAAAAAAAAAAAAwFQEAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-24T11:44:48.32Z",
               "EditorCaption": ""
             }
           ]

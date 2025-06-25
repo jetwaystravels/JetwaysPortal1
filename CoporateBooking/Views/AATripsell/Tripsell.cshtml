@@ -413,25 +413,52 @@
             });
 
 
-            $('#toggleButton').on('click', function () {
-                //$('#content').toggleClass('hidden');
-                $('#content').show();
-                $('#content2').hide();
-                var toggleButton2 = document.getElementById("toggleButton2");
-                toggleButton2.style.opacity = "0.2";
-                var toggleButton3To = document.getElementById("toggleButton3");
-                toggleButton3To.style.opacity = "0.2";
-                var content3To = document.getElementById("content3");
-                content3To.style.display = "none";
-                var toggleButton4To = document.getElementById("toggleButton4");
-                toggleButton4To.style.opacity = "0.2";
-                var content4To = document.getElementById("content4");
-                content4To.style.display = "none";
+            // $('#toggleButton').on('click', function () {
+            //     //$('#content').toggleClass('hidden');
+            //     $('#content').show();
+            //     $('#content2').hide();
+            //     var toggleButton2 = document.getElementById("toggleButton2");
+            //     toggleButton2.style.opacity = "0.2";
+            //     var toggleButton3To = document.getElementById("toggleButton3");
+            //     toggleButton3To.style.opacity = "0.2";
+            //     var content3To = document.getElementById("content3");
+            //     content3To.style.display = "none";
+            //     var toggleButton4To = document.getElementById("toggleButton4");
+            //     toggleButton4To.style.opacity = "0.2";
+            //     var content4To = document.getElementById("content4");
+            //     content4To.style.display = "none";
 
-                var GSTContinuebtn1 = document.querySelector("#Continuebtn");
-                GSTContinuebtn1.disabled = true;
-                GSTContinuebtn1.style.opacity = "0.2";
+            //     var GSTContinuebtn1 = document.querySelector("#Continuebtn");
+            //     GSTContinuebtn1.disabled = true;
+            //     GSTContinuebtn1.style.opacity = "0.2";
+            // });
+
+
+            // $('#toggleButton2').on('click', function () {
+            //     var toggleButton2 = document.getElementById("toggleButton2");
+            //     toggleButton2.style.opacity = "1";
+            //     $('#content2').show();
+            // });
+
+
+
+            $(document).ready(function () {
+                const toggles = [
+                    { button: '#toggleButton', content: '#content' },
+                    { button: '#toggleButton2', content: '#content2' },
+                    { button: '#toggleButton4', content: '#content4' },
+                    { button: '#toggleButton5', content: '#content5' },
+                    { button: '#toggleButton6', content: '#content6' }
+                ];
+
+                toggles.forEach(({ button, content }) => {
+                    $(button).on('click', function () {
+                        $(content).toggle(); // Only toggle the matched content
+                    });
+                });
             });
+
+
             $(".Continuebtnprice").click(function () {
                 debugger;
                 const SeatTotal = $('#total').text() || 0;

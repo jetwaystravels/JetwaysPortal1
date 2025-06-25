@@ -10,7 +10,8 @@ namespace ServiceLayer.Service.Interface
     public interface IBooking<T> where T : class
     {
          Task<IEnumerable<Booking>> GetAllAsync(string? flightId = null, string? recordLocator = null);
-         Task<bool> UpdateCancelStatusAsync(string recordLocator, int status);
+        // Task<bool> UpdateCancelStatusAsync(string recordLocator, int status);
+        Task<bool> UpdateCancelStatusAsync( string recordLocator, int status,string userEmail,decimal balanceDue,decimal totalAmount);
 
     }
 }

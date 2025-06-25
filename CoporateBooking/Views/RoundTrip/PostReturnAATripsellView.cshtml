@@ -115,7 +115,39 @@
 	    })
 	    .catch(error => {
 		console.error('Error occurred:', error);
-	    });
+		});
+
+
+        // // Flight Icon Animation
+        // var flhticonDisplay = document.getElementById("flightImage");
+        // flhticonDisplay.style.display = "block";
+        // $('#animationOverlay').fadeIn(20000);
+
+        // // Your existing AJAX code
+        // var formData = $('#reconnectingFlightOneway').serialize();
+
+        // $.ajax({
+        //     url: '/RoundAATripsell/RoundAATripsellView',
+        //     type: 'POST',
+        //     data: formData,
+        //     success: function (response) {
+        //         $('#animationOverlay').fadeOut(20000);
+        //     },
+        //     error: function (xhr, status, error) {
+        //         // Handle error
+        //         console.error(xhr.responseText); // Log the error response
+        //         // Hide the animation overlay on error
+        //         $('#animationOverlay').fadeOut();
+        //     }
+        // });
+        // //For total Ammount Shoud not be hold
+        // localStorage.clear();
+
+
+
+
+
+
 	let flightIconDisplay = document.getElementById("flightImage");
 	let animationOverlay = $('#animationOverlay');
 	if (flightIconDisplay) {
@@ -658,18 +690,6 @@
 
 							</ul>
 						    }
-													if (@Faretype == "Corporate Fare")
-													{
-														<ul>
-															<li><img src="~/img/included.png" alt="icon">Cabin Bag 7 Kgs</li>
-															<li><img src="~/img/included.png" alt="icon">Check in 15 Kgs  (1 piece)</li>
-															<li><img src="~/img/partial_inclusion.png" alt="icon">Cancellation :- Change charges upto 499</li>
-															<li><img src="~/img/partial_inclusion.png" alt="icon">Date Change :- Change charges upto 0</li>
-															<li><img src="~/img/partial_inclusion.png" alt="icon">Seat :- -</li>
-															<li><img src="~/img/partial_inclusion.png" alt="icon">Meal :- -</li>
-
-														</ul>
-													}
 						    if (@Faretype == "Family Fare")
 						    {
 							<ul>

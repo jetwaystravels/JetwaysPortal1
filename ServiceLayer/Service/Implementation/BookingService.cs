@@ -34,16 +34,29 @@ namespace ServiceLayer.Service.Implementation
                 .FromSqlRaw("EXEC sp_GetFlightBookingDetails @FlightID, @RecordLocator", flightIdParam, recordLocatorParam)
                 .ToListAsync();
         }
-        public async Task<bool> UpdateCancelStatusAsync(string recordLocator, int status)
+        //public async Task<bool> UpdateCancelStatusAsync(string recordLocator, int status)
+        //{
+        //    var recordLocatorParam = new SqlParameter("@RecordLocator", recordLocator);
+        //    var statusParam = new SqlParameter("@CancelStatus", status);
+
+        //    int rowsAffected = await _dbContext.Database.ExecuteSqlRawAsync(
+        //        "EXEC sp_UpdateBookingCancelStatus @RecordLocator, @CancelStatus",
+        //        recordLocatorParam, statusParam);
+
+        //    return rowsAffected != 0;
+        //}
+        public async Task<bool> UpdateCancelStatusAsync( string recordLocator, int status,string userEmail,decimal balanceDue, decimal totalAmount)
         {
             var recordLocatorParam = new SqlParameter("@RecordLocator", recordLocator);
             var statusParam = new SqlParameter("@CancelStatus", status);
+            var userEmailParam = new SqlParameter("@UserEmail", userEmail);
+            var balanceDueParam = new SqlParameter("@BalanceDue", balanceDue);
+            var totalAmountParam = new SqlParameter("@TotalAmount", totalAmount);
 
-            int rowsAffected = await _dbContext.Database.ExecuteSqlRawAsync(
-                "EXEC sp_UpdateBookingCancelStatus @RecordLocator, @CancelStatus",
-                recordLocatorParam, statusParam);
-
-            return rowsAffected != 0;
+            int rows = await _dbContext.Database.ExecuteSqlRawAsync(
+                "EXEC dbo.sp_UpdateBookingCancelStatus @RecordLocator,@CancelStatus,@UserEmail,@BalanceDue,@TotalAmount",
+                recordLocatorParam, statusParam, userEmailParam, balanceDueParam, totalAmountParam);
+            return rows > 0;
         }
 
     }

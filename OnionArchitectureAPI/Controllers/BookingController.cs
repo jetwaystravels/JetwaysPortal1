@@ -1,5 +1,6 @@
 ﻿using DomainLayer.Model;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Service.Implementation;
 using ServiceLayer.Service.Interface;
 
 namespace OnionArchitectureAPI.Controllers
@@ -33,14 +34,25 @@ namespace OnionArchitectureAPI.Controllers
 
 
         [HttpPost("UpdateCancelStatus")]
-        public async Task<IActionResult> UpdateCancelStatus([FromQuery] string recordLocator, [FromQuery] int status)
+        //public async Task<IActionResult> UpdateCancelStatus([FromQuery] string recordLocator, [FromQuery] int status)
+        //{
+        //    var result = await _bookingDetail.UpdateCancelStatusAsync(recordLocator, status);
+        //    if (result)
+        //    {
+        //        return Ok(new { message = "Booking status updated successfully." });
+        //    }
+        //    return BadRequest(new { message = "Failed to update booking status." });
+        //}
+        public async Task<IActionResult> UpdateCancelStatus([FromBody] CancelStatusRequest req)
         {
-            var result = await _bookingDetail.UpdateCancelStatusAsync(recordLocator, status);
-            if (result)
-            {
-                return Ok(new { message = "Booking status updated successfully." });
-            }
-            return BadRequest(new { message = "Failed to update booking status." });
+            bool ok = await _bookingDetail.UpdateCancelStatusAsync(
+                          req.RecordLocator,
+                          req.Status,
+                          req.UserEmail,
+                          req.BalanceDue,
+                          req.TotalAmount);
+
+            return ok ? Ok() : StatusCode(500, "DB update failed");
         }
 
         [HttpGet]
@@ -48,5 +60,11 @@ namespace OnionArchitectureAPI.Controllers
         {
             return View();
         }
+        public sealed record CancelStatusRequest(
+          string RecordLocator,
+          int Status,
+          string UserEmail,
+          decimal BalanceDue,
+         decimal TotalAmount);
     }
 }

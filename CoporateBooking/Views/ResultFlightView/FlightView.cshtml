@@ -183,8 +183,8 @@
 						<div class="col-12 col-md-10 col-lg-2 space">
 						    <label style="margin-bottom: 0.1rem;">Return</label>
 							<span class="input-group-text">
-							<input id="Oneway-endDate" name="endDate" type="text" class="form-control" value="">
-						    </span>
+							<input id="Oneway-endDate" name="endDate" type="text" class="form-control" value="" autocomplete="off">
+							</span>
 						</div>
 						<script type="text/javascript">
 
@@ -251,85 +251,86 @@
 												<span class="js-count-infents text-22 text-light-1 fw-600" id="count_infant">@InfantCount</span> Infants
 											</div>
 											</div>
+															<div class="searchMenu-guests__field shadow-2" data-x-dd="searchMenu-guests" data-x-dd-toggle="-is-active">
 
-											<div class="searchMenu-guests__field shadow-2" data-x-dd="searchMenu-guests" data-x-dd-toggle="-is-active">
+																<div class="bg-white px-30 py-30 rounded-4">
 
-											<div class="bg-white px-30 py-30 rounded-4">
+																	@*  ------------------------ *@
+																	<div class="d-flex y-gap-10 justify-between items-center">
+																		<div class="btn-incr-adult text-dark">
+																			<div class="text-13 fw-600">Adults</div>
 
-												@*  ------------------------ *@
-												<div class="d-flex y-gap-10 justify-between items-center">
-												<div class="btn-incr-adult text-dark">
-													<div class="text-13 fw-600">Adults</div>
+																			<input type="hidden" id="adulttype" name="adulttype" value="ADT" asp-for="@AdultCount" />
+																			<div class="text-13 fw-500">Aged 12+ yrs</div>
+																		</div>
+																		<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
+																			<div class="decrement sub btn_sub" style="border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
-													<input type="hidden" id="adulttype" name="adulttype" value="ADT" asp-for="@AdultCount" />
-													<div class="text-13 fw-500">Aged 12+ yrs</div>
-												</div>
-													<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
-													<div class="decrement sub btn_sub" style="border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
+																			<input type="number" id="field_adult" name="adultcount" class="input-field" value="@AdultCount" asp-for="@AdultCount" min="1" max="9" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
+																			<div class="increment add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
+																		</div>
+																	</div>
+																	<div class="border-top-light mt-10 mb-10"></div>
+																	<div class="d-flex y-gap-10 justify-between items-center">
+																		<div class="btn-incr-chld  text-dark">
+																			<div class="text-13 fw-600">
+																				Children
+																			</div>
+																			<input type="hidden" id="childtype" name="childtype" value="CHD" asp-for="@ChildCount" />
+																			<div class="text-13 fw-500">
+																				Aged 2-12 yrs
+																			</div>
+																		</div>
+																		<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
+																			<div class="decrement1 sub btn_sub" style="border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
+																			<input type="number" id="field_child" name="childcount" class="input-field" value="@ChildCount" asp-for="@ChildCount" min="0" max="6" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
+																			<div class="increment1 add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
-													<input type="number" id="field_adult" name="adultcount" class="input-field" value="@AdultCount" asp-for="@AdultCount" min="1" max="9" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
-													<div class="increment add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
-												</div>
-												</div>
-												<div class="border-top-light mt-10 mb-10"></div>
-												<div class="d-flex y-gap-10 justify-between items-center">
-												<div class="btn-incr-chld  text-dark">
-													<div class="text-13 fw-600">
-													Children
-													</div>
-													<input type="hidden" id="childtype" name="childtype" value="CHD" asp-for="@ChildCount" />
-													<div class="text-13 fw-500">
-													Aged 2-12 yrs
-													</div>
-												</div>
-													<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
-													<div class="decrement1 sub btn_sub" style="border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
-													<input type="number" id="field_child" name="childcount" class="input-field" value="@ChildCount" asp-for="@ChildCount" min="0" max="6" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
-													<div class="increment1 add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
+																		</div>
+																	</div>
+																	<div class="border-top-light mt-10 mb-10"></div>
+																	<div class="d-flex y-gap-10 justify-between items-center">
+																		<div class="infant-area  text-dark">
+																			<div class="text-13 fw-600">Infants</div>
+																			<input type="hidden" id="infanttype" name="infanttype" value="INFT" asp-for="@InfantCount" />
+																			<div class="text-13 fw-500">
+																				Below 2 yrs
+																			</div>
+																		</div>
+																		<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
+																			<div class="decrement2 sub btn_sub" style="border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
+																			<input type="number" id="field_infant" name="infantcount" class="input-field" value="@InfantCount" asp-for="@InfantCount" min="0" max="6" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
+																			<div class="increment2 add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
 
-												</div>
-												</div>
-												<div class="border-top-light mt-10 mb-10"></div>
-												<div class="d-flex y-gap-10 justify-between items-center">
-												<div class="infant-area  text-dark">
-													<div class="text-13 fw-600">Infants</div>
-													<input type="hidden" id="infanttype" name="infanttype" value="INFT" asp-for="@InfantCount" />
-													<div class="text-13 fw-500">
-													Below 2 yrs
-													</div>
-												</div>
-													<div class="btn-increase" style="box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2); padding: 0;">
-													<div class="decrement2 sub btn_sub" style="border-left: 1px solid #dcdcdc; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:0; border-radius: 5px 0 0 5px; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-minus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
-													<input type="number" id="field_infant" name="infantcount" class="input-field" value="@InfantCount" asp-for="@InfantCount" min="0" max="6" style="background: #f6f9ff; width: 40px; height: 30px;  border-top: 1px solid #dcdcdc !important;  border-left: 1px solid #dcdcdc !important;  border-right: 1px solid #dcdcdc !important; border-bottom: 1px solid #dcdcdc !important; text-align: center; margin: 0;">
-													<div class="increment2 add btn_sub" style="border-left: 0; border-top: 1px solid #dcdcdc; border-bottom: 1px solid #dcdcdc; border-right:1px solid #dcdcdc; border-radius: 0 5px 5px 0; margin:0; text-align: center; padding: 0; line-height: 25px;"><i class="fa fa-plus" aria-hidden="true" style="font-size: 11px; font-weight: 600;"></i></div>
+																		</div>
 
-												</div>
-												</div>
+																	</div>
 
-												<div class="travel-class-C">
-													<label style="margin: 11px 0 4px;width: 100%; padding: 7px 0 0; border-top: 1px solid #dddddd;">Choose Travel Class</label>
-													<label id="lbEconomy" class="mt-5" style="font-weight: 500; margin-right: 8px;">
-														<input type="radio" id="rbEconomy" name="flightclass" checked value="C" style="vertical-align: sub; margin-right: 5px;">
-														Corporate
-													</label>
-													<label id="lbBusiness" class="mt-5" style="font-weight: 500; margin-right: 8px;">
-														<input type="radio" name="flightclass" value="B" id="rbBusiness" style="vertical-align: sub; margin-right: 5px;">
-														Business
-													</label>
-													@*<label id="lbFirstClass" class="mt-5" style="font-weight: 500; margin-right: 8px;">
-														<input type="radio" name="flightclass" value="F" id="rbFirst" style="vertical-align: sub; margin-right: 5px;">
-														First Class
-													</label>*@
-													<label id="lbPremiumEconomy" class="mt-5" style="font-weight: 500; margin-right: 8px;">
-														<input type="radio" name="flightclass" value="P" id="rbpEconomy" style="vertical-align: sub; margin-right: 5px;">
-														Premium Economy
-													</label>
+																	<div class="travel-class-C">
+																		<label style="margin: 11px 0 4px;width: 100%; padding: 7px 0 0; border-top: 1px solid #dddddd;">Choose Travel Class</label>
+																		<label id="lbEconomy" class="mt-5" style="font-weight: 500; margin-right: 8px;">
+																			<input type="radio" id="rbEconomy" name="flightclass" checked value="C" style="vertical-align: sub; margin-right: 5px;">
+																			Corporate
+																		</label>
+																		<label id="lbBusiness" class="mt-5" style="font-weight: 500; margin-right: 8px;">
+																			<input type="radio" name="flightclass" value="B" id="rbBusiness" style="vertical-align: sub; margin-right: 5px;">
+																			Business
+																		</label>
+																		@*<label id="lbFirstClass" class="mt-5" style="font-weight: 500; margin-right: 8px;">
+																	<input type="radio" name="flightclass" value="F" id="rbFirst" style="vertical-align: sub; margin-right: 5px;">
+																	First Class
+																	</label>*@
+																		<label id="lbPremiumEconomy" class="mt-5" style="font-weight: 500; margin-right: 8px;">
+																			<input type="radio" name="flightclass" value="P" id="rbpEconomy" style="vertical-align: sub; margin-right: 5px;">
+																			Premium Economy
+																		</label>
 
-												</div>
+																	</div>
 
-											</div>
-											</div>
-										</div>
+																</div>
+															</div>
+
+														</div>
 
 										<script>
 
@@ -2082,7 +2083,6 @@
 	//***********Strip Validation*/
 	$(document).ready(function () {
 
-
 	    var maxField = 6;
 	    var maxField_adult = 9;
 	    var count_adult = parseInt(localStorage.getItem("adultcount")) || 1;
@@ -2149,6 +2149,7 @@
 		}
 	    });
 
+
 	    $('.decrement2').on('click', function () {
 		if (count_infant > 0) {
 		    count_infant--;
@@ -2157,9 +2158,7 @@
 		}
 	    });
 
-
-	});
-
+		});
 
 
 	// TextBox Validation
@@ -2225,27 +2224,63 @@
 
 
 	// Validation Oneway , Roundtrip, multicity
-	function checkRadio(radio) {
-	    const endDateInput = document.getElementById('Oneway-endDate');
-	    const beginDateInput = document.getElementById('Oneway-date');
-	    if (radio.value === 'OneWay') {
-		endDateInput.disabled = true;
-		endDateInput.value = '';
-		endDateInput.style.backgroundColor = '#0e4d74';
-	    }
-	    else if (radio.value === 'RoundTrip') {
-		endDateInput.disabled = false;
-		endDateInput.value = beginDateInput.value;
-		endDateInput.style.backgroundColor = '';
-		endDateInput.style.backgroundColor = '#0E4D74';
-	    }
-	    else if (radio.value === 'AirlineRT') {
-		endDateInput.disabled = false;
-		endDateInput.value = beginDateInput.value;
-		endDateInput.style.backgroundColor = '';
-		endDateInput.style.backgroundColor = '#0e4d74';
-	    }
-	}
+	// function checkRadio(radio) {
+	//     const endDateInput = document.getElementById('Oneway-endDate');
+	//     const beginDateInput = document.getElementById('Oneway-date');
+	//     if (radio.value === 'OneWay') {
+	// 	endDateInput.disabled = true;
+	// 	endDateInput.value = '';
+	// 	endDateInput.style.backgroundColor = '#0e4d74';
+	//     }
+	//     else if (radio.value === 'RoundTrip') {
+	// 	endDateInput.disabled = false;
+	// 	endDateInput.value = beginDateInput.value;
+	// 	endDateInput.style.backgroundColor = '';
+	// 	endDateInput.style.backgroundColor = '#0E4D74';
+	//     }
+	//     else if (radio.value === 'AirlineRT') {
+	// 	endDateInput.disabled = false;
+	// 	endDateInput.value = beginDateInput.value;
+	// 	endDateInput.style.backgroundColor = '';
+	// 	endDateInput.style.backgroundColor = '#0e4d74';
+	//     }
+	// }
+
+		function checkRadio(radio) {
+			const endDateInput = document.getElementById('Oneway-endDate');
+			const beginDateInput = document.getElementById('Oneway-date');
+
+			if (radio.value === 'OneWay') {
+				// Simulate disabled using a flag, but don’t disable
+				endDateInput.setAttribute('data-readonly', 'true');
+				endDateInput.value = '';
+			} else if (radio.value === 'RoundTrip') {
+				endDateInput.removeAttribute('data-readonly');
+				endDateInput.value = beginDateInput.value;
+			}
+		}
+
+		document.addEventListener("DOMContentLoaded", function () {
+			const endDateInput = document.getElementById('Oneway-endDate');
+			const roundTripRadio = document.getElementById('roundTripRadio');
+
+			endDateInput.addEventListener('click', function (e) {
+				if (endDateInput.getAttribute('data-readonly') === 'true') {
+					// Activate round trip radio
+					roundTripRadio.checked = true;
+					checkRadio(roundTripRadio);
+
+					// Re-trigger calendar after enabling
+					setTimeout(() => {
+						endDateInput.focus();
+						endDateInput.click(); // Force show calendar
+					}, 100);
+
+					e.preventDefault(); // Prevent first blocked click
+				}
+			});
+		});
+
 
 	//Date Picker Validation
 	$(function () {
@@ -2718,22 +2753,53 @@
 	    }
 	    inputField.focus();
 	}
+		// $(document).ready(function () {
+		// 	$('#Oneway-endDate').on('click', function () {
+		// 		$('#roundtripid').prop('checked', true);
+		// 		let nextTwoDays = new Date();
+		// 		nextTwoDays.setDate(nextTwoDays.getDate() + 2);
+		// 		let formattedDate = nextTwoDays.toISOString().split('T')[0];
+		// 		$('#Oneway-endDate').val(formattedDate);
+		// 		let nextOneDays = new Date();
+		// 		nextOneDays.setDate(nextOneDays.getDate() + 1);
+		// 		let OnewayDate = nextOneDays.toISOString().split('T')[0];
+		// 		$('#Oneway-date').val(OnewayDate);
+		// 		// $('.hasDatepicker').prop('disabled', false);
+		// 		$('#Oneway-endDate').css('visibility', 'visible');
+		// 		$('#Oneway-endDate').focus();
+		// 	});
+		// });
+
+
+
 		$(document).ready(function () {
 			$('#Oneway-endDate').on('click', function () {
+				// If already has value, do NOT overwrite
+				const currentReturnDate = $('#Oneway-endDate').val();
+				if (currentReturnDate) {
+					return; // Exit early — don't change anything
+				}
+
+				// If empty, switch to round trip and suggest dates
 				$('#roundtripid').prop('checked', true);
-				let nextTwoDays = new Date();
-				nextTwoDays.setDate(nextTwoDays.getDate() + 2);
-				let formattedDate = nextTwoDays.toISOString().split('T')[0];
-				$('#Oneway-endDate').val(formattedDate);
-				let nextOneDays = new Date();
-				nextOneDays.setDate(nextOneDays.getDate() + 1);
-				let OnewayDate = nextOneDays.toISOString().split('T')[0];
-				$('#Oneway-date').val(OnewayDate);
-				//$('.hasDatepicker').prop('disabled', false);
-				$('#Oneway-endDate').css('visibility', 'visible');
-				$('#Oneway-endDate').focus();
+
+				const today = new Date();
+
+				const oneDayLater = new Date(today);
+				oneDayLater.setDate(today.getDate() + 1);
+				const formattedOneway = oneDayLater.toISOString().split('T')[0];
+				$('#Oneway-date').val(formattedOneway);
+
+				const twoDaysLater = new Date(today);
+				twoDaysLater.setDate(today.getDate() + 2);
+				const formattedReturn = twoDaysLater.toISOString().split('T')[0];
+				$('#Oneway-endDate').val(formattedReturn);
+
+				$('#Oneway-endDate').css('visibility', 'visible').focus();
 			});
 		});
+
+
 
     </script>
 

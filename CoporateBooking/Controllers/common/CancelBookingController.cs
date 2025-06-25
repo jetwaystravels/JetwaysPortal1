@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnionConsumeWebAPI.Extensions;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 using Utility;
 using static DomainLayer.Model.ReturnTicketBooking;
@@ -16,7 +17,7 @@ namespace CoporateBooking.Controllers.common
 
         public async Task<IActionResult> CancelActionAsync(int airline, string pnr)
         {
-            string recordLocator = "E6ISHN";
+            string recordLocator = "G1FWTP";
             int status = 3;
 
             using (HttpClient client = new HttpClient())
@@ -93,13 +94,29 @@ namespace CoporateBooking.Controllers.common
                         Breakdown breakdown = new Breakdown();
                         breakdown.balanceDue = objcancelBooking.data.breakdown.balanceDue;
                         breakdown.totalAmount = objcancelBooking.data.breakdown.totalAmount;
-                      
+
+                        var identity = (ClaimsIdentity)User.Identity;
+                        IEnumerable<Claim> claims = identity.Claims;
+                        var userEmail = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
                         Logs logs = new Logs();
                         logs.WriteLogs(_finalStatus, "Cancel", "AirAsiaOneWay", "oneway");
 
-                        string url = $"{AppUrlConstant.CancleStatus}?recordLocator={Uri.EscapeDataString(recordLocator)}&status={status}";
-                        HttpResponseMessage responsecancel = await client.PostAsync(url, null);
+                        // Create request object for the API
+                        var cancelRequest = new
+                        {
+                            RecordLocator = recordLocator,
+                            Status = status,
+                            UserEmail = userEmail,
+                            BalanceDue = breakdown.balanceDue,
+                            TotalAmount = breakdown.totalAmount
+                        };
+
+                        string jsonPayload = JsonConvert.SerializeObject(cancelRequest);
+                        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                        string url = $"{AppUrlConstant.CancleStatus}";
+                        HttpResponseMessage responsecancel = await client.PostAsync(url, content);
 
                         if (!responsecancel.IsSuccessStatusCode)
                         {
@@ -107,10 +124,12 @@ namespace CoporateBooking.Controllers.common
                             ModelState.AddModelError("", $"Cancellation status update failed: {error}");
                             return View("Error");
                         }
+
                         TempData["Success"] = "Booking cancellation session flow completed successfully.";
                         TempData["FinalStatus"] = _finalStatus;
                         return RedirectToAction("MyBooking", "Booking");
                     }
+
                     else
                     {
                         string error = await finalGet.Content.ReadAsStringAsync();

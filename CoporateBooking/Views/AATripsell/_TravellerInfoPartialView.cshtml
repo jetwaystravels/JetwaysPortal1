@@ -441,6 +441,9 @@
     
 
 </script>
+
+
+
 <script type="text/javascript">
     $(document).ready(function () {
 	function showForm() {
@@ -449,282 +452,279 @@
 	$("#editData").click(function () {
 	    $("#dataPopup").hide();
 	});
-      //
+	 //
+
+		$("#showReviewPopup").click(function (e) {
+			e.preventDefault();
+
+			/*******Validation Start*********/
+			const fieldsToValidate = [
+				{ className: 'contactFname', errorMessage: 'First name is required', validationdata: /^[A-Za-z]{1,32}$/ },
+				{ className: 'contactLname', errorMessage: 'Last name is required', validationdata: /^[A-Za-z]{1,32}$/ },
+				{ className: 'contactemail', errorMessage: 'Email is invalid', validationdata: /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
+				{ className: 'contactphone', errorMessage: 'Enter valid phone number', validationdata: /^\d{10,}$/ }
+			];
+
+			let firstInvalidElement = null;
+
+			fieldsToValidate.forEach(field => {
+				const elements = document.querySelectorAll(`.${field.className}`);
+				elements.forEach(element => {
+					element.addEventListener("input", function () {
+						removeError(element);
 
 
+						// Restrict input to alphabetic characters for contactFname and contactLname
+						if (field.className === 'contactFname' || field.className === 'contactLname') {
+							element.value = element.value.replace(/[^A-Za-z]/g, ''); // Allow only alphabets
+						}
+						// Restrict input to integers only for contactphone
+						if (field.className === 'contactphone') {
+							element.value = element.value.replace(/[^0-9]/g, '');
+						}
+					});
 
+					if (element.value.trim() === "") {
+						if (field.className !== 'contactphone' && field.className !== 'contactemail') {
+							// If the field is blank and it's not the phone field, show the error message
+							showError(element, field.errorMessage);
+							if (!firstInvalidElement) {
+								firstInvalidElement = element;
+							}
+						}
+					}
 
-	$("#showReviewPopup").click(function (e) {
-	    e.preventDefault();
-	    
-	    /*******Validation Start*********/
-	    const fieldsToValidate = [
-		{ className: 'contactFname', errorMessage: 'First name is required', validationdata: /^[A-Za-z]{1,32}$/ },
-		{ className: 'contactLname', errorMessage: 'Last name is required', validationdata: /^[A-Za-z]{1,32}$/ },
-		{ className: 'contactemail', errorMessage: 'Email is invalid', validationdata: /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
-		{ className: 'contactphone', errorMessage: 'Enter valid phone number', validationdata: /^\d{10,}$/ }
-	    ];
+					else if (element.value.trim().startsWith('0')) {
+						showError(element, 'Phone number cannot start with 0');
+						if (!firstInvalidElement) {
+							firstInvalidElement = element;
+						}
+					}
 
-	    let firstInvalidElement = null;
+					else if (field.className === 'contactphone' && element.value.trim().length < 10) {
+						// If the phone number has fewer than 10 digits, show an error message
+						showError(element, 'Phone number must be at least 10 digits');
+						if (!firstInvalidElement) {
+							firstInvalidElement = element;
+						}
+					} else if (field.className !== 'contactphone' && !field.validationdata.test(element.value.trim())) {
+						// For other fields, check their pattern validation
+						showError(element, field.errorMessage);
+						if (!firstInvalidElement) {
+							firstInvalidElement = element;
+						}
+					}
+				});
+			});
 
-	    fieldsToValidate.forEach(field => {
-		const elements = document.querySelectorAll(`.${field.className}`);
-		elements.forEach(element => {
-		    element.addEventListener("input", function () {
-			removeError(element);
+			// Check for duplicate first names
+			const fnameElements = document.querySelectorAll('.contactFname');
+			const fnameValues = Array.from(fnameElements).map(el => el.value.trim());
+			const duplicates = fnameValues.filter((item, index) => fnameValues.indexOf(item) !== index && item !== "");
 
-
-			// Restrict input to alphabetic characters for contactFname and contactLname
-			if (field.className === 'contactFname' || field.className === 'contactLname') {
-			    element.value = element.value.replace(/[^A-Za-z]/g, ''); // Allow only alphabets
+			if (duplicates.length > 0) {
+				fnameElements.forEach(element => {
+					if (duplicates.includes(element.value.trim())) {
+						showError(element, 'Duplicate first names');
+						if (!firstInvalidElement) {
+							firstInvalidElement = element;
+						}
+					}
+					else {
+						// If no duplicates, remove the error
+						removeError(element);
+					}
+				});
 			}
-			// Restrict input to integers only for contactphone
-			if (field.className === 'contactphone') {
-			    element.value = element.value.replace(/[^0-9]/g, '');
-			}
-		    });
 
-		    if (element.value.trim() === "") {
-			if (field.className !== 'contactphone' && field.className !== 'contactemail') {
-			    // If the field is blank and it's not the phone field, show the error message
-			    showError(element, field.errorMessage);
-			    if (!firstInvalidElement) {
-				firstInvalidElement = element;
-			    }
-			}
-		    } 
-		    
-		     else if (element.value.trim().startsWith('0')) {
-			showError(element, 'Phone number cannot start with 0');
-			if (!firstInvalidElement) {
-			    firstInvalidElement = element;
-			}
-		    }
 
-		    else if (field.className === 'contactphone' && element.value.trim().length < 10) {
-			// If the phone number has fewer than 10 digits, show an error message
-			showError(element, 'Phone number must be at least 10 digits');
-			if (!firstInvalidElement) {
-			    firstInvalidElement = element;
+			if (firstInvalidElement) {
+				firstInvalidElement.focus();
+				return false;
+			} else {
+				fieldsToValidate.forEach(field => {
+					const elements = document.querySelectorAll(`.${field.className}`);
+					elements.forEach(element => {
+						removeError(element);
+					});
+				});
+
 			}
-		    } else if (field.className !== 'contactphone' && !field.validationdata.test(element.value.trim())) {
-			// For other fields, check their pattern validation
-			showError(element, field.errorMessage);
-			if (!firstInvalidElement) {
-			    firstInvalidElement = element;
+
+			function removeError(element) {
+				const parentElement = element.closest('.col-md-3,.col-md-2');
+				const errorMessage = parentElement.querySelector(".error-message");
+				if (errorMessage) {
+					errorMessage.style.display = 'none';
+				}
+				element.classList.remove("error-input");
 			}
-		    }
+
+			function showError(element, message) {
+				const parentElement = element.closest('.col-md-3, .col-md-2');
+				let errorMessage = parentElement.querySelector(".error-message");
+				if (!errorMessage) {
+					errorMessage = document.createElement("p");
+					errorMessage.className = "error-message";
+					parentElement.appendChild(errorMessage);
+				}
+				errorMessage.textContent = message;
+				errorMessage.style.display = 'block';
+				element.classList.add("error-input");
+			}
+
+			function validateInfantDOB(inafantIdx) {
+				var year = document.getElementById("year_" + inafantIdx).value;
+				//var month = document.getElementById("month_" + inafantIdx).value;
+				var month = parseInt(document.getElementById("month_" + inafantIdx).value);
+				var day = document.getElementById("day_" + inafantIdx).value;
+				var dob = year + "-" + month + "-" + day;
+				/****************************/
+				if (month === 2) {
+					if (!isValidFebruaryDay(year, day)) {
+						alert("Invalid date! For February, the day must be 1-28 for a non-leap year or 1-29 for a leap year.");
+						return false;
+					}
+				}
+
+				else if (month === 4) {
+					if (day > 30) {
+						alert("Invalid date! April has only 30 days.");
+						return false;
+					}
+				}
+
+				else if (month === 6) {
+					if (day > 30) {
+						alert("Invalid date! June has only 30 days.");
+						return false;
+					}
+				}
+
+				else if (month === 9) {
+					if (day > 30) {
+						alert("Invalid date! September has only 30 days.");
+						return false;
+					}
+				}
+
+				else if (month === 11) {
+					if (day > 30) {
+						alert("Invalid date! November has only 30 days.");
+						return false;
+					}
+				}
+
+				/************************* */
+
+				if (year == "") {
+					alert("Please select year for infant date-of-birth");
+					return false;
+				}
+				if (month == "") {
+					alert("Please select month for infant date-of-birth");
+					return false;
+				}
+				if (day == "") {
+					alert("Please select day for infant date-of-birth");
+					return false;
+				}
+				var dobDate = new Date(dob);
+				var currentDate = new Date();
+				var timeDiff = currentDate.getTime() - dobDate.getTime();
+				var yearsDiff = timeDiff / (1000 * 3600 * 24 * 365.25);
+				// Check if the age is less than 2 years (24 months)
+				if (dobDate > currentDate) {
+					alert("Date of birth cannot be in the future. Please select a valid date.");
+					return false;
+				}
+
+				if (yearsDiff < 2) {
+					// if ($("#InfDOBCount_0").is(":visible")) {
+					//     alert("Infant 1  DOB : " + dob);
+					// }
+					// else if ($("#InfDOBCount_1").is(":visible")) {
+					//     alert("Infant 2  DOB : " + dob);
+					// }
+					// else if ($("#InfDOBCount_2").is(":visible")) {
+					//     alert("Infant 3  DOB : " + dob);
+					// }
+					// else if ($("#InfDOBCount_3").is(":visible")) {
+					//     alert("Infant 4  DOB : " + dob);
+					// }
+					// else if ($("#InfDOBCount_4").is(":visible")) {
+					//     alert("Infant 5  DOB : " + dob);
+					// }
+					// else if ($("#InfDOBCount_5").is(":visible")) {
+					//     alert("Infant 6  DOB : " + dob);
+					// }
+					return true; // Infant is valid
+				} else {
+
+					return false; // Infant is too old
+				}
+			}
+
+			// Example usage:
+			if ($("#InfDOBCount_0").is(":visible")) {
+				if (!validateInfantDOB(0)) {
+					alert("Infant 1 can't be greater than 2 years.");
+					return false;
+				}
+			}
+
+			if ($("#InfDOBCount_1").is(":visible")) {
+				if (!validateInfantDOB(1)) {
+					alert("Infant 2 can't be greater than 2 years.");
+					return false;
+				}
+			}
+
+			if ($("#InfDOBCount_2").is(":visible")) {
+				if (!validateInfantDOB(2)) {
+					alert("Infant 3 can't be greater than 2 years.");
+					return false;
+				}
+			}
+			if ($("#InfDOBCount_3").is(":visible")) {
+				if (!validateInfantDOB(3)) {
+					alert("Infant 4 can't be greater than 2 years.");
+					return false;
+				}
+			}
+			if ($("#InfDOBCount_4").is(":visible")) {
+				if (!validateInfantDOB(4)) {
+					alert("Infant 5 can't be greater than 2 years.");
+					return false;
+				}
+			}
+			if ($("#InfDOBCount_5").is(":visible")) {
+				if (!validateInfantDOB(5)) {
+					alert("Infant 6 can't be greater than 2 years.");
+					return false;
+				}
+			}
+
+			// Infant validation (remains the same)
+
+			/*******Validation End*********/
+			var enteredData = "";
+			for (var i = 0; i < @Model.passeengerlist.passengers.Count; i++) {
+				var firstName = $("input[name='passengerdetails[" + i + "].First']").val().toUpperCase();
+				var lastName = $("input[name='passengerdetails[" + i + "].Last']").val().toUpperCase();
+				var title = $("select[name='passengerdetails[" + i + "].Title']").val().toUpperCase();
+				var Passengertypecode = $("input[name='passengerdetails[" + i + "].passengertypecode']").val();
+				if (Passengertypecode == "ADT") { Passengertypecode = "Adult"; }
+				if (Passengertypecode == "CHD") { Passengertypecode = "Child"; }
+				enteredData += "<p><strong>Passenger " + (i + 1) + ": (" + Passengertypecode + ")</strong><br>";
+				enteredData += "Title: " + title + "<br>";
+				enteredData += "First Name: " + firstName + "<br>";
+				enteredData += "Last Name: " + lastName + "</p>";
+			}
+			$("#enteredData").html(enteredData);
+			$('#dataPopup').modal('show');
+
 		});
-	    });
-
-	    // Check for duplicate first names
-	    const fnameElements = document.querySelectorAll('.contactFname');
-	    const fnameValues = Array.from(fnameElements).map(el => el.value.trim());
-	    const duplicates = fnameValues.filter((item, index) => fnameValues.indexOf(item) !== index && item !== "");
-
-	    if (duplicates.length > 0) {
-		fnameElements.forEach(element => {
-		    if (duplicates.includes(element.value.trim())) {
-			showError(element, 'Duplicate first names');
-			if (!firstInvalidElement) {
-			    firstInvalidElement = element;
-			}
-		    }
-		    else {
-			// If no duplicates, remove the error
-			removeError(element);
-		    }
-		});
-	    }
-	       
-
-	    if (firstInvalidElement) {
-		firstInvalidElement.focus();
-		return false;
-	    } else {
-		fieldsToValidate.forEach(field => {
-		    const elements = document.querySelectorAll(`.${field.className}`);
-		    elements.forEach(element => {
-			removeError(element);
-		    });
-		});
-	       
-	    }
-
-	    function removeError(element) {
-		const parentElement = element.closest('.col-md-3,.col-md-2');
-		const errorMessage = parentElement.querySelector(".error-message");
-		if (errorMessage) {
-		    errorMessage.style.display = 'none';
-		}
-		element.classList.remove("error-input");
-	    }
-
-	    function showError(element, message) {
-		const parentElement = element.closest('.col-md-3, .col-md-2');
-		let errorMessage = parentElement.querySelector(".error-message");
-		if (!errorMessage) {
-		    errorMessage = document.createElement("p");
-		    errorMessage.className = "error-message";
-		    parentElement.appendChild(errorMessage);
-		}
-		errorMessage.textContent = message;
-		errorMessage.style.display = 'block';
-		element.classList.add("error-input");
-	    }
-
-	    function validateInfantDOB(inafantIdx) {
-		var year = document.getElementById("year_" + inafantIdx).value;
-		//var month = document.getElementById("month_" + inafantIdx).value;
-		var month = parseInt(document.getElementById("month_" + inafantIdx).value);
-		var day = document.getElementById("day_" + inafantIdx).value;
-		var dob = year + "-" + month + "-" + day;
-		/****************************/
-		if (month === 2) {
-		    if (!isValidFebruaryDay(year, day)) {
-			alert("Invalid date! For February, the day must be 1-28 for a non-leap year or 1-29 for a leap year.");
-			return false;
-		    }
-		}
-
-		     else if (month === 4) {
-			if (day > 30) {
-			    alert("Invalid date! April has only 30 days.");
-			    return false;
-			}
-		    }
-
-		    else if (month === 6) {
-			if (day > 30) {
-			    alert("Invalid date! June has only 30 days.");
-			    return false;
-			}
-		    }
-
-		    else if (month === 9) {
-			if (day > 30) {
-			    alert("Invalid date! September has only 30 days.");
-			    return false;
-			}
-		    }
-
-		    else if (month === 11) {
-			if (day > 30) {
-			    alert("Invalid date! November has only 30 days.");
-			    return false;
-			}
-		    }
-
-		/************************* */
-	       
-		if (year == "") {
-		    alert("Please select year for infant date-of-birth");
-		    return false;
-		}
-		if (month == "") {
-		    alert("Please select month for infant date-of-birth");
-		    return false;
-		}
-		if (day == "") {
-		    alert("Please select day for infant date-of-birth");
-		    return false;
-		}
-		var dobDate = new Date(dob);
-		var currentDate = new Date();
-		var timeDiff = currentDate.getTime() - dobDate.getTime();
-		var yearsDiff = timeDiff / (1000 * 3600 * 24 * 365.25);
-		// Check if the age is less than 2 years (24 months)
-		if (dobDate > currentDate) {
-		    alert("Date of birth cannot be in the future. Please select a valid date.");
-		    return false;
-		}
-
-		if (yearsDiff < 2) {
-		    // if ($("#InfDOBCount_0").is(":visible")) {
-		    //     alert("Infant 1  DOB : " + dob);
-		    // }
-		    // else if ($("#InfDOBCount_1").is(":visible")) {
-		    //     alert("Infant 2  DOB : " + dob);
-		    // }
-		    // else if ($("#InfDOBCount_2").is(":visible")) {
-		    //     alert("Infant 3  DOB : " + dob);
-		    // }
-		    // else if ($("#InfDOBCount_3").is(":visible")) {
-		    //     alert("Infant 4  DOB : " + dob);
-		    // }
-		    // else if ($("#InfDOBCount_4").is(":visible")) {
-		    //     alert("Infant 5  DOB : " + dob);
-		    // }
-		    // else if ($("#InfDOBCount_5").is(":visible")) {
-		    //     alert("Infant 6  DOB : " + dob);
-		    // }
-		    return true; // Infant is valid
-		} else {
-
-		    return false; // Infant is too old
-		}
-	    }
-
-	    // Example usage:
-	    if ($("#InfDOBCount_0").is(":visible")) {
-		if (!validateInfantDOB(0)) {
-		    alert("Infant 1 can't be greater than 2 years.");
-		    return false;
-		}
-	    }
-
-	    if ($("#InfDOBCount_1").is(":visible")) {
-		if (!validateInfantDOB(1)) {
-		    alert("Infant 2 can't be greater than 2 years.");
-		    return false;
-		}
-	    }
-
-	    if ($("#InfDOBCount_2").is(":visible")) {
-		if (!validateInfantDOB(2)) {
-		    alert("Infant 3 can't be greater than 2 years.");
-		    return false;
-		}
-	    }
-	    if ($("#InfDOBCount_3").is(":visible")) {
-		if (!validateInfantDOB(3)) {
-		    alert("Infant 4 can't be greater than 2 years.");
-		    return false;
-		}
-	    }
-	    if ($("#InfDOBCount_4").is(":visible")) {
-		if (!validateInfantDOB(4)) {
-		    alert("Infant 5 can't be greater than 2 years.");
-		    return false;
-		}
-	    }
-	    if ($("#InfDOBCount_5").is(":visible")) {
-		if (!validateInfantDOB(5)) {
-		    alert("Infant 6 can't be greater than 2 years.");
-		    return false;
-		}
-	    }
-
-	    // Infant validation (remains the same)
-
-	    /*******Validation End*********/
-	    var enteredData = "";
-	    for (var i = 0; i < @Model.passeengerlist.passengers.Count; i++) {
-		var firstName = $("input[name='passengerdetails[" + i + "].First']").val().toUpperCase();
-		var lastName = $("input[name='passengerdetails[" + i + "].Last']").val().toUpperCase();
-		var title = $("select[name='passengerdetails[" + i + "].Title']").val().toUpperCase();
-		var Passengertypecode = $("input[name='passengerdetails[" + i + "].passengertypecode']").val();
-		if (Passengertypecode == "ADT") { Passengertypecode = "Adult"; }
-		if (Passengertypecode == "CHD") { Passengertypecode = "Child"; }
-		enteredData += "<p><strong>Passenger " + (i + 1) + ": (" + Passengertypecode + ")</strong><br>";
-		enteredData += "Title: " + title + "<br>";
-		enteredData += "First Name: " + firstName + "<br>";
-		enteredData += "Last Name: " + lastName + "</p>";
-	    }
-	    $("#enteredData").html(enteredData);
-	    $('#dataPopup').modal('show');
-		
-	});
 		$('#dataPopup').on('show.bs.modal', function () {
 			$('body').css('overflow', 'hidden');
 		});
@@ -732,6 +732,7 @@
 		$('#dataPopup').on('hidden.bs.modal', function () {
 			$('body').css('overflow', 'auto');
 		});
+
 
 	/************************************************************/
 	function isValidFebruaryDay(year, day) {
@@ -749,7 +750,6 @@
 	    }
 	}
 	//****************************************************** */
-
 
 
 
@@ -803,6 +803,18 @@
 	});
 
 
+
     });
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
