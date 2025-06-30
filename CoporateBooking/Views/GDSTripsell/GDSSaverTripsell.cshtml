@@ -441,36 +441,71 @@
             });
 
 
-            $('#toggleButton').on('click', function () {
-                //$('#content').toggleClass('hidden');
-                $('#content').show();
-                $('#content2').hide();
-                $('#content4').hide();
-                var toggleButton2 = document.getElementById("toggleButton2");
-                toggleButton2.style.opacity = "0.2";
-                // var toggleButton3To = document.getElementById("toggleButton3");
-                // toggleButton3To.style.opacity = "0.2";
-                // var content3To = document.getElementById("content3");
-                // content3To.style.display = "none";
-                var SGtoggleButton4To = document.getElementById("toggleButton4");
-                SGtoggleButton4To.style.opacity = "0.2";
-                var SGcontent4To = document.getElementById("content4");
-                SGcontent4To.style.display = "none";
+            // $('#toggleButton').on('click', function () {
+            //     //$('#content').toggleClass('hidden');
+            //     $('#content').show();
+            //     $('#content2').hide();
+            //     $('#content4').hide();
+            //     var toggleButton2 = document.getElementById("toggleButton2");
+            //     toggleButton2.style.opacity = "0.2";
+            //     // var toggleButton3To = document.getElementById("toggleButton3");
+            //     // toggleButton3To.style.opacity = "0.2";
+            //     // var content3To = document.getElementById("content3");
+            //     // content3To.style.display = "none";
+            //     var SGtoggleButton4To = document.getElementById("toggleButton4");
+            //     SGtoggleButton4To.style.opacity = "0.2";
+            //     var SGcontent4To = document.getElementById("content4");
+            //     SGcontent4To.style.display = "none";
 
-                var GSTContinuebtn1 = document.querySelector("#Continuebtn");
-                GSTContinuebtn1.disabled = true;
-                GSTContinuebtn1.style.opacity = "0.2";
-            });
+            //     var GSTContinuebtn1 = document.querySelector("#Continuebtn");
+            //     GSTContinuebtn1.disabled = true;
+            //     GSTContinuebtn1.style.opacity = "0.2";
+            // });
 
-            $('#toggleButton2').on('click', function () {
-                //$('#content').toggleClass('hidden');
-                $('#content').hide();
-                $('#content2').show();
-                $('#content4').hide();
-                var servicetoggle = document.getElementById("toggleButton4");
-                servicetoggle.style.opacity = "0.2";
+            // $('#toggleButton2').on('click', function () {
+            //     //$('#content').toggleClass('hidden');
+            //     $('#content').hide();
+            //     $('#content2').show();
+            //     $('#content4').hide();
+            //     var servicetoggle = document.getElementById("toggleButton4");
+            //     servicetoggle.style.opacity = "0.2";
 
-            });
+            // });
+
+
+            <!--toogle div show and hide Start-- >
+                $(document).ready(function () {
+                    const toggles = [
+                        { button: '#toggleButton', content: '#content' },
+                        { button: '#toggleButton2', content: '#content2' },
+                        { button: '#toggleButton4', content: '#content4' },
+                        { button: '#toggleButton5', content: '#content5' },
+                        { button: '#toggleButton6', content: '#content6' }
+                    ];
+
+                    toggles.forEach(({ button, content }, index) => {
+                        $(button).on('click', function () {
+                            // Prevent toggle if this div is disabled via opacity
+                            const opacity = parseFloat($(this).css('opacity'));
+                            if (opacity <= 0.2) return;
+
+                            // Hide all other content sections
+                            toggles.forEach(({ content: otherContent }) => {
+                                if (otherContent !== content) {
+                                    $(otherContent).hide();
+                                }
+                            });
+
+                            // Toggle own content section
+                            $(content).toggle();
+                        });
+                    });
+                });
+            <!--toogle div show and hide End-- >
+
+
+
+
 
             $(".Continuebtnprice").click(function () {
                 // Retrieve and store meal total

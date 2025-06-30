@@ -440,23 +440,35 @@
             //     $('#content2').show();
             // });
 
+            <!--toogle div show and hide Start-- >
+                $(document).ready(function () {
+                    const toggles = [
+                        { button: '#toggleButton', content: '#content' },
+                        { button: '#toggleButton2', content: '#content2' },
+                        { button: '#toggleButton4', content: '#content4' },
+                        { button: '#toggleButton5', content: '#content5' },
+                        { button: '#toggleButton6', content: '#content6' }
+                    ];
 
+                    toggles.forEach(({ button, content }, index) => {
+                        $(button).on('click', function () {
+                            // Prevent toggle if this div is disabled via opacity
+                            const opacity = parseFloat($(this).css('opacity'));
+                            if (opacity <= 0.2) return;
 
-            $(document).ready(function () {
-                const toggles = [
-                    { button: '#toggleButton', content: '#content' },
-                    { button: '#toggleButton2', content: '#content2' },
-                    { button: '#toggleButton4', content: '#content4' },
-                    { button: '#toggleButton5', content: '#content5' },
-                    { button: '#toggleButton6', content: '#content6' }
-                ];
+                            // Hide all other content sections
+                            toggles.forEach(({ content: otherContent }) => {
+                                if (otherContent !== content) {
+                                    $(otherContent).hide();
+                                }
+                            });
 
-                toggles.forEach(({ button, content }) => {
-                    $(button).on('click', function () {
-                        $(content).toggle(); // Only toggle the matched content
+                            // Toggle own content section
+                            $(content).toggle();
+                        });
                     });
                 });
-            });
+            <!--toogle div show and hide End-- >
 
 
             $(".Continuebtnprice").click(function () {
