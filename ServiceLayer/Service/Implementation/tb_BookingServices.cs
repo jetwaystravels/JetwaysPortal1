@@ -55,6 +55,7 @@ namespace ServiceLayer.Service.Implementation
                 tbobj.ModifiedDate = ticketObject.tb_Booking.ModifiedDate;
                 tbobj.BookingStatus = ticketObject.tb_Booking.BookingStatus;
                 tbobj.PaidStatus = ticketObject.tb_Booking.PaidStatus;
+                tbobj.CompanyName = ticketObject.tb_Booking.CompanyName;
                 this._dbContext.Add(tbobj);
                 //this._dbContext.SaveChanges();
                 ContactDetail contactDetailobj = new ContactDetail();
@@ -89,8 +90,8 @@ namespace ServiceLayer.Service.Implementation
                 tb_PassengerTotalobj.TotalPax = ticketObject.tb_PassengerTotal.TotalPax;
                 tb_PassengerTotalobj.TotalBookingAmount = ticketObject.tb_PassengerTotal.TotalBookingAmount;
                 tb_PassengerTotalobj.totalBookingAmount_Tax = ticketObject.tb_PassengerTotal.totalBookingAmount_Tax;
-                tb_PassengerTotalobj.TotalMealsAmount = ticketObject.tb_PassengerTotal.TotalMealsAmount;
-                tb_PassengerTotalobj.TotalMealsAmount_Tax = ticketObject.tb_PassengerTotal.TotalMealsAmount_Tax;
+                tb_PassengerTotalobj.SpecialServicesAmount = ticketObject.tb_PassengerTotal.SpecialServicesAmount;
+                tb_PassengerTotalobj.SpecialServicesAmount_Tax = ticketObject.tb_PassengerTotal.SpecialServicesAmount_Tax;
                 tb_PassengerTotalobj.TotalSeatAmount = ticketObject.tb_PassengerTotal.TotalSeatAmount;
                 tb_PassengerTotalobj.SeatAdjustment = ticketObject.tb_PassengerTotal.SeatAdjustment;
                 tb_PassengerTotalobj.TotalSeatAmount_Tax = ticketObject.tb_PassengerTotal.TotalSeatAmount_Tax;
@@ -195,6 +196,10 @@ namespace ServiceLayer.Service.Implementation
                     tb_PassengerDetails.Inf_TypeCode = ticketObject.tb_PassengerDetails[j].Inf_TypeCode;
                     tb_PassengerDetails.Inf_Dob = ticketObject.tb_PassengerDetails[j].Inf_Dob;
                     tb_PassengerDetails.Inf_Gender = ticketObject.tb_PassengerDetails[j].Inf_Gender;
+
+                    tb_PassengerDetails.InftAmount= ticketObject.tb_PassengerDetails[j].InftAmount;
+                    tb_PassengerDetails.InftAmount_Tax= ticketObject.tb_PassengerDetails[j].InftAmount_Tax;
+
                     tb_PassengerDetails.TotalAmount_tax = ticketObject.tb_PassengerDetails[j].TotalAmount_tax;
                     tb_PassengerDetails.TotalAmount = ticketObject.tb_PassengerDetails[j].TotalAmount;
                     tb_PassengerDetails.Status = ticketObject.tb_PassengerDetails[j].Status;

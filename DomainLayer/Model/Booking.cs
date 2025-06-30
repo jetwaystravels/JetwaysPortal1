@@ -19,5 +19,9 @@ namespace DomainLayer.Model
         public string? Segments { get; set; }
         public string? Passengers { get; set; }
 
+        public string? BookingStatus { get; set; }
+
+        public int cancelstatus { get; set; }
+
     }
 }

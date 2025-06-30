@@ -739,8 +739,8 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     tb_PassengerTotal tb_PassengerTotalobj = new tb_PassengerTotal();
                     bookingKey = JsonObjPNRBooking.data.bookingKey;
                     tb_PassengerTotalobj.BookingID = JsonObjPNRBooking.data.bookingKey;
-                    tb_PassengerTotalobj.TotalMealsAmount = (double)1000.00;//JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.total;
-                    tb_PassengerTotalobj.TotalMealsAmount_Tax = (double)100.00; //JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.taxes;
+                    tb_PassengerTotalobj.SpecialServicesAmount = (double)1000.00;//JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.total;
+                    tb_PassengerTotalobj.SpecialServicesAmount_Tax = (double)100.00; //JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.taxes;
                     tb_PassengerTotalobj.TotalSeatAmount = (double)2000.00;//JsonObjPNRBooking.data.breakdown.passengerTotals.seats.total;
                     tb_PassengerTotalobj.TotalSeatAmount_Tax = (double)200.00;//JsonObjPNRBooking.data.breakdown.passengerTotals.seats.taxes;
                     tb_PassengerTotalobj.TotalBookingAmount = (double)1000.00;//JsonObjPNRBooking.data.breakdown.journeyTotals.totalAmount;

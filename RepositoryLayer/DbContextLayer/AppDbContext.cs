@@ -43,11 +43,24 @@ namespace RepositoryLayer.DbContextLayer
         public DbSet<Trips> tb_Trips { get; set; }
 
         public DbSet<Booking> GetBookingDetails { get; set; }
-      
+        //public DbSet<GetbookingDB> Bookings { get; set; }
+        //public DbSet<FlightSegmentDB> FlightSegments { get; set; }
+        //public DbSet<PassengerDB> Passengers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Booking>().HasNoKey().ToView(null);
+
+            //modelBuilder.Entity<GetbookingDB>()
+            //.HasMany(b => b.FlightSegments)
+            //.WithOne(f => f.Booking)
+            //.HasForeignKey(f => f.BookingID);
+
+            //modelBuilder.Entity<GetbookingDB>()
+            //    .HasMany(b => b.Passengers)
+            //    .WithOne(p => p.Booking)
+            //    .HasForeignKey(p => p.BookingID);
         }
     }
 }

@@ -18,8 +18,8 @@ namespace DomainLayer.Model
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
         public int TotalPax { get; set; }
-        public double TotalMealsAmount { get; set; }
-        public double TotalMealsAmount_Tax { get; set; }
+        public double SpecialServicesAmount { get; set; }
+        public double SpecialServicesAmount_Tax { get; set; }
         public double TotalSeatAmount { get; set; }
         public double TotalSeatAmount_Tax { get; set; }
         public double SeatAdjustment{ get; set; }

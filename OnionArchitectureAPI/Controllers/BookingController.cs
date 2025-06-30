@@ -55,6 +55,14 @@ namespace OnionArchitectureAPI.Controllers
             return ok ? Ok() : StatusCode(500, "DB update failed");
         }
 
+        [HttpGet("GetbookingPNR")]
+        public async Task<IActionResult> GetDetails(string recordLocator)
+        {
+            var result = await _bookingDetail.GetBookingDetailsFromSPAsync(recordLocator);
+                      if (result == null) return NotFound();
+            return Ok(result);
+        }
+
         [HttpGet]
         public IActionResult Index()
         {

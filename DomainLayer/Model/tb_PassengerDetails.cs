@@ -49,6 +49,8 @@ namespace DomainLayer.Model
         public string? Inf_TypeCode { get; set; }
         public string? Inf_Gender { get; set; }
         public DateTime? Inf_Dob { get; set; }
+        public double InftAmount { get; set; }
+        public double InftAmount_Tax { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string Createdby { get; set; }
         public DateTime ModifiedDate { get; set; }

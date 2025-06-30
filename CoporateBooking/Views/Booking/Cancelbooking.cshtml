@@ -1,0 +1,223 @@
+﻿@using static CoporateBooking.Models.CancelBookingResponse
+@model BookingData
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AirIndiaExpress Airline Booking Summary</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            color: #212529;
+        }
+
+        .booking-card {
+            background: #fff;
+            padding: 24px;
+            max-width: 920px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .flight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+            .flight-header h3 {
+                margin: 0;
+                font-size: 18px;
+                color: #ea5b0c;
+            }
+
+        .flight-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .flight-info div {
+                text-align: center;
+            }
+
+            .flight-info .airport {
+                font-weight: bold;
+                font-size: 16px;
+            }
+
+            .flight-info .datetime {
+                font-size: 14px;
+                color: #555;
+            }
+
+        .booking-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .meta-item {
+            flex: 1;
+            text-align: center;
+            font-size: 14px;
+        }
+
+            .meta-item span {
+                display: block;
+                color: #888;
+                font-size: 13px;
+            }
+
+        .passenger-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+            .passenger-table th,
+            .passenger-table td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+                font-size: 14px;
+            }
+
+        .status-cancelled {
+            background-color: #fff3cd;
+            color: #a15200;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .footer-btns {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #0069d9;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+            .btn:hover {
+                background-color: #0056b3;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+            .btn-secondary:hover {
+                background-color: #545b62;
+            }
+
+    </style>
+</head>
+<body>
+
+    <div class="booking-card">
+        <div class="flight-header">
+            <h3>Air India Express - QP 1411<br><small>Class: Economy (U3) | Type: Corporate</small></h3>
+            <p><strong>Airline PNR :</strong> IB1IVA</p>
+        </div>
+
+        <div class="flight-info">
+            <div>
+                <div class="airport">New Delhi (DEL)</div>
+                <div class="datetime">10:00 Sat 26 Jul, 2025</div>
+                <div>Terminal: 1D</div>
+            </div>
+            <div>
+                <div>2 h 25 m</div>
+                <div>● ● ●</div>
+                <div>Non-Stop</div>
+            </div>
+            <div>
+                <div class="airport">Mumbai (BOM)</div>
+                <div class="datetime">12:25 Sat 26 Jul, 2025</div>
+                <div>Terminal: T1</div>
+            </div>
+        </div>
+
+        <div class="booking-meta">
+            <div class="meta-item">Fare Basis<br><span>U3O7CWIF</span></div>
+            <div class="meta-item">GDS PNR<br><span>IB1IVA</span></div>
+            <div class="meta-item">Passive PNR<br><span>—</span></div>
+            <div class="meta-item">Deal Code<br><span>—</span></div>
+            <div class="meta-item">Tour Code<br><span>—</span></div>
+        </div>
+
+        <h4>Passenger Details</h4>
+        <table class="passenger-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Ticket</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Preferences</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" /></td>
+                    <td>
+                        Mr Test Mahesh Joshi<br>
+                        <small>mahesh.joshi@jetwaystravels.com</small><br>
+                        <small>9990908494</small>
+                    </td>
+                    <td>IB1IVA</td>
+                    <td>INR 5,211</td>
+                    <td><span class="status-cancelled">Cancelled</span></td>
+                    <td>
+                        Seat No: —<br>
+                        Meal: —<br>
+                        Baggage: 7 Kgs
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer-btns">
+            <a href="#" class="btn btn-secondary">Back</a>
+            @* <a href="#" class="btn">Manage Booking ▼</a> *@
+           
+
+            <form asp-controller="CancelBooking" asp-action="CancelAction" class="d-inline" asp-route-pnr="@Model.recordLocator" asp-route-airline="@ViewBag.AirlineId" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn"
+                        onclick="return confirm('Are you sure you want to cancel this booking?');">
+                    Cancel Booking
+                </button>
+            </form>
+
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+

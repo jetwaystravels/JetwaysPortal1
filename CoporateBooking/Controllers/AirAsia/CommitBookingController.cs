@@ -30,6 +30,8 @@ using Microsoft.AspNetCore.Http;
 using Utility;
 using NuGet.Versioning;
 using System.Text.RegularExpressions;
+using System.Security.Claims;
+using CoporateBooking.Models;
 
 namespace OnionConsumeWebAPI.Controllers
 {
@@ -674,7 +676,12 @@ namespace OnionConsumeWebAPI.Controllers
                     #region DB Save
                     tb_Booking tb_Booking = new tb_Booking();
                     tb_Booking.AirLineID = 1;
-                    tb_Booking.BookingType = "Corporate";
+                    string productcode = JsonObjPNRBooking.data.journeys[0].segments[0].fares[0].productClass;
+                    var fareName = FareList.GetAllfare().Where(x => ((string)productcode).Equals(x.ProductCode)).FirstOrDefault();
+                    tb_Booking.BookingType = "Corporate-" + JsonObjPNRBooking.data.journeys[0].segments[0].fares[0].productClass + " ("+ fareName.Faredesc + ")";
+                    LegalEntity legal = new LegalEntity();
+                    legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
+                    tb_Booking.CompanyName = legal.BillingEntityFullName;
                     tb_Booking.TripType = "OneWay";
                     tb_Booking.BookingID = JsonObjPNRBooking.data.bookingKey;
                     tb_Booking.RecordLocator = JsonObjPNRBooking.data.recordLocator;
@@ -710,13 +717,21 @@ namespace OnionConsumeWebAPI.Controllers
                     tb_Booking.DepartureDate = JsonObjPNRBooking.data.journeys[0].designator.departure;
                     if (JsonObjPNRBooking.data.info.createdDate != null)
                         tb_Booking.CreatedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.createdDate);
-                    tb_Booking.Createdby = JsonObjPNRBooking.data.info.createdAgentId;// "Online";
+                    if (HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        var identity = (ClaimsIdentity)User.Identity;
+                        IEnumerable<Claim> claims = identity.Claims;
+                        var userEmail = claims.Where(c => c.Type == ClaimTypes.Email).ToList()[0].Value;
+                        tb_Booking.Createdby = userEmail;// "Online";
+                    }
+
                     if (JsonObjPNRBooking.data.info.modifiedDate != null)
                         tb_Booking.ModifiedDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate);
                     tb_Booking.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId;//"Online";
                     tb_Booking.BookingDoc = _responcePNRBooking;
                     tb_Booking.BookingStatus = JsonObjPNRBooking.data.info.status;// "2";
                     tb_Booking.PaidStatus = Convert.ToInt32(JsonObjPNRBooking.data.info.paidStatus);// "0";
+                   
 
                     // It  will maintained by manually as Airline Code and description 6E-Indigo
                     tb_Airlines tb_Airlines = new tb_Airlines();
@@ -760,7 +775,7 @@ namespace OnionConsumeWebAPI.Controllers
                         contactDetail.ModifyDate = Convert.ToDateTime(JsonObjPNRBooking.data.info.modifiedDate); //DateTime.Now;
                     contactDetail.ModifyBy = JsonObjPNRBooking.data.info.modifiedAgentId; //"Admin";
                     contactDetail.Status = JsonObjPNRBooking.data.info.status;// 0;
-                    
+
                     GSTDetails gSTDetails = new GSTDetails();
                     if (JsonObjPNRBooking.data.contacts.G != null)
                     {
@@ -777,10 +792,10 @@ namespace OnionConsumeWebAPI.Controllers
                     tb_PassengerTotalobj.BookingID = JsonObjPNRBooking.data.bookingKey;
                     if (JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices != null)
                     {
-                        tb_PassengerTotalobj.TotalMealsAmount = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.total;
+                        tb_PassengerTotalobj.SpecialServicesAmount = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.total;
                         if (JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.taxes != null)
                         {
-                            tb_PassengerTotalobj.TotalMealsAmount_Tax = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.taxes;
+                            tb_PassengerTotalobj.SpecialServicesAmount_Tax = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.taxes;
                         }
                     }
                     if (JsonObjPNRBooking.data.breakdown.passengerTotals.seats != null)
@@ -812,20 +827,20 @@ namespace OnionConsumeWebAPI.Controllers
                     int Infant = 0;
                     for (int i = 0; i < PassengerDataDetailsList.Count; i++)
                     {
-                        if (PassengerDataDetailsList[i].passengertypecode=="ADT")
+                        if (PassengerDataDetailsList[i].passengertypecode == "ADT")
                         {
                             Adult++;
                         }
-                        else if(PassengerDataDetailsList[i].passengertypecode == "CHD" || PassengerDataDetailsList[i].passengertypecode == "CNN")
+                        else if (PassengerDataDetailsList[i].passengertypecode == "CHD" || PassengerDataDetailsList[i].passengertypecode == "CNN")
                         {
                             child++;
                         }
-                        else if(PassengerDataDetailsList[i].passengertypecode == "INFT" || PassengerDataDetailsList[i].passengertypecode == "INF")
+                        else if (PassengerDataDetailsList[i].passengertypecode == "INFT" || PassengerDataDetailsList[i].passengertypecode == "INF")
                         {
                             Infant++;
                         }
 
-                    } 
+                    }
                     tb_PassengerTotalobj.AdultCount = Adult;
                     tb_PassengerTotalobj.ChildCount = child;
                     tb_PassengerTotalobj.InfantCount = Infant;
@@ -880,6 +895,9 @@ namespace OnionConsumeWebAPI.Controllers
                                 {
                                     tb_Passengerobj.Inf_Gender = "Master";
                                 }
+                                tb_Passengerobj.InftAmount = 0.0;// to do
+                                tb_Passengerobj.InftAmount_Tax = 0.0;// to do
+
                                 for (int i = 0; i < PassengerDataDetailsList.Count; i++)
                                 {
                                     if (tb_Passengerobj.Inf_TypeCode == PassengerDataDetailsList[i].passengertypecode && tb_Passengerobj.Inf_Firstname.ToLower() == PassengerDataDetailsList[i].first.ToLower() + " " + PassengerDataDetailsList[i].last.ToLower())

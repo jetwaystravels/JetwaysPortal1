@@ -1,4 +1,6 @@
-﻿<!doctype html>
+﻿@model List<Booking>
+
+<!doctype html>
 <html class="no-js" lang="en">
 <head>
     <meta charset="UTF-8">
@@ -147,54 +149,49 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+                                    foreach(Booking books in Model.Where(x=>  x.cancelstatus == 0 && x.DepartureDate >= DateTime.Today ).ToList())
+                                    {
                                     <tr>
-                                        <td>512653</td>
-                                        <td><strong>22-Jun</strong>-2025,<strong>12:15</strong></td>
-                                        <td>BQ013F</td>
-                                        <td>Raj kumar<br /><small>Jetways Travels</small></td>
+                                                <td>@books.FlightID</td>
+                                            <td><strong>@Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM")</strong>-@Convert.ToDateTime(books.DepartureDate).ToString("yyyy"),<strong>@Convert.ToDateTime(books.DepartureDate).ToString("HH:mm")</strong> </td>
+
+                                            <td>@books.RecordLocator</td>
+                                            <td>@books.Passengers <br /><small>Jetways Travels</small></td>
                                         <td>
-                                            Domestic One Way (Online)<br />
-                                            22-Jun-2025, 12:15 New Delhi to Mumbai |<br />
-                                            6E 5387 | PNR: E11DHF
+                                                Domestic @books.TripType (Online)<br />
+                                                @Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM-yyyy, HH:MM") @books.Origin to @books.Destination |<br />
+                                                @books.Segments | PNR: @books.RecordLocator
                                         </td>
                                         <td class="status-booked" style="color:#008000;"><i class="fa fa-check-circle" aria-hidden="true"></i>Booked</td>
                                         <td>
                                             <div class="booking-row">
-                                                <button data-action="cancel" class="cancel-btn action-btn"  type="button" style="color: #fff; border: #ddd 1px solid; background: #EF0000;">Cancel</button>
-                                                <button data-action="residual" type="button" class="cancel-btn action-btn" style="color: #fff; border: #ddd 1px solid; background: #FF4B33;">Reschedule</button>
-                                                <span class="message"></span>
-                                                <div class="confirm-box">
-                                                    <p class="confirm-text">Are you sure?</p>
-                                                    <button class="yes-btn">Yes</button>
-                                                    <button class="no-btn">No</button>
-                                                </div>
+
+                                                <!-- Cancel Button Form -->
+                                                    <form asp-controller="Booking" asp-action="Cancelbooking" class="d-inline" asp-route-pnr="@books.RecordLocator" asp-route-airline="@books.AirLineID" method="post">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="cancel-btn action-btn"
+                                                            style="color: #fff; border: #ddd 1px solid; background: #EF0000;">
+                                                        Manage Bookig
+                                                    </button>
+                                                </form>
+
+                                                <!-- Reschedule Button Form -->
+                                                <form asp-controller="Booking" asp-action="RescheduleAction" method="post" class="d-inline">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="cancel-btn action-btn"
+                                                            style="color: #fff; border: #ddd 1px solid; background: #FF4B33;">
+                                                        Reschedule
+                                                    </button>
+                                                </form>
+
                                             </div>
                                         </td>
+
                                     </tr>
-                                    <tr>
-                                        <td>1850281</td>
-                                        <td><strong>22-Jun</strong>-2025,<strong>12:15</strong></td>
-                                        <td>BE015Y</td>
-                                        <td>Sajid Ali<br /><small>LITTLE MILLENNIUM EDUCATION PVT LTD</small></td>
-                                        <td>
-                                            Domestic One Way (Online)<br />
-                                            20-Jun-2025, 11:15 New Delhi to Pune |<br />
-                                            6E 5387 | PNR: E11DHF
-                                        </td>
-                                        <td class="status-booked" style="color:#008000;"><i class="fa fa-check-circle" aria-hidden="true"></i>Booked</td>
-                                        <td>
-                                            <div class="booking-row">
-                                                <button data-action="cancel" class="cancel-btn action-btn" type="button" style="color: #fff; border: #ddd 1px solid; background: #EF0000;">Cancel</button>
-                                                <button data-action="residual" type="button" class="cancel-btn action-btn" style="color: #fff; border: #ddd 1px solid; background: #FF4B33;">Reschedule</button>
-                                                <span class="message"></span>
-                                                <div class="confirm-box">
-                                                    <p class="confirm-text">Are you sure?</p>
-                                                    <button class="yes-btn">Yes</button>
-                                                    <button class="no-btn">No</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -213,30 +210,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>852653</td>
-                                        <td><strong>22-Jun</strong>-2025,<strong>12:15</strong></td>
-                                        <td>CZ015F</td>
-                                        <td>Kishore Singh<br /><small>Jetways Travels</small></td>
-                                        <td>
-                                            Domestic One Way (Online)<br />
-                                            28-July-2025, 12:15 New Delhi to Gujarat |<br />
-                                            6E 5387 | PNR: E11EHF
-                                        </td>
-                                        <td class="status-awaiting" style="color:#EF0000;"><i class="fa fa-times-circle" aria-hidden="true"></i>View Refund</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1950275</td>
-                                        <td><strong>22-Jun</strong>-2025,<strong>12:15</strong></td>
-                                        <td>ZE015N</td>
-                                        <td>Aakahs<br /><small>LITTLE MILLENNIUM EDUCATION PVT LTD</small></td>
-                                        <td>
-                                            Domestic One Way (Online)<br />
-                                            20-Jun-2025, 11:15 New Delhi to Pune |<br />
-                                            6E 5387 | PNR: E11DHF
-                                        </td>
-                                        <td class="status-awaiting" style="color:#EF0000;"><i class="fa fa-times-circle" aria-hidden="true"></i>View Refund</td>
-                                    </tr>
+                                    
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+                                        @* if(Model[0].) *@
+                                        foreach (Booking books in Model.Where(x => x.cancelstatus == 3 ).ToList())
+                                    {
+                                        <tr>
+                                                <td>@books.FlightID</td>
+                                            <td><strong>@Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM")</strong>-@Convert.ToDateTime(books.DepartureDate).ToString("yyyy"),<strong>@Convert.ToDateTime(books.DepartureDate).ToString("HH:mm")</strong> </td>
+
+                                            <td>@books.RecordLocator</td>
+                                            <td>@books.Passengers <br /><small>Jetways Travels</small></td>
+                                            <td>
+                                                Domestic @books.TripType (Online)<br />
+                                                @Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM-yyyy, HH:MM") @books.Origin to @books.Destination |<br />
+                                                @books.Segments | PNR: @books.RecordLocator
+                                            </td>
+                                                <td> <button class="status-booked" onclick="return ViewRefundData('@books.FlightID' , '@books.RecordLocator')" style="color:#008000;"><i class="fa fa-check-circle" aria-hidden="true"></i>View Refund</button>
+
+                                                    <div id="@books.FlightID">
+                                                    </div>
+                                                </td>
+                                                
+                                        </tr>
+                                    }
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -255,30 +254,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>852653</td>
-                                        <td><strong>22-Jun</strong>-2025,<strong>12:15</strong></td>
-                                        <td>CZ015F</td>
-                                        <td>Kishore Singh<br /><small>Jetways Travels</small></td>
-                                        <td>
-                                            Domestic One Way (Online)<br />
-                                            28-July-2025, 12:15 New Delhi to Gujarat |<br />
-                                            6E 5387 | PNR: E11EHF
-                                        </td>
-                                        <td class="status-awaiting" style="color:#EF0000;"><i class="fa fa-times-circle" aria-hidden="true"></i>Complete</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1950275</td>
-                                        <td><strong>22-Jun</strong>-2025,<strong>12:15</strong></td>
-                                        <td>ZE015N</td>
-                                        <td>Aakahs<br /><small>LITTLE MILLENNIUM EDUCATION PVT LTD</small></td>
-                                        <td>
-                                            Domestic One Way (Online)<br />
-                                            20-Jun-2025, 11:15 New Delhi to Pune |<br />
-                                            6E 5387 | PNR: E11DHF
-                                        </td>
-                                        <td class="status-awaiting" style="color:#EF0000;"><i class="fa fa-times-circle" aria-hidden="true"></i>Complete</td>
-                                    </tr>
+
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+                                        @* if(Model[0].) *@
+                                        foreach (Booking books in Model.Where(x => x.cancelstatus != 3 && x.DepartureDate < DateTime.Today).ToList())
+                                        {
+                                            <tr>
+                                                <td>@books.FlightID</td>
+                                                <td><strong>@Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM")</strong>-@Convert.ToDateTime(books.DepartureDate).ToString("yyyy"),<strong>@Convert.ToDateTime(books.DepartureDate).ToString("HH:mm")</strong> </td>
+
+                                                <td>@books.RecordLocator</td>
+                                                <td>@books.Passengers <br /><small>Jetways Travels</small></td>
+                                                <td>
+                                                    Domestic @books.TripType (Online)<br />
+                                                    @Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM-yyyy, HH:MM") @books.Origin to @books.Destination |<br />
+                                                    @books.Segments | PNR: @books.RecordLocator
+                                                </td>
+
+                                                <td class="status-awaiting" style="color:#EF0000;"><i class="fa fa-times-circle" aria-hidden="true"></i>Complete</td>
+
+                                            </tr>
+                                        }
+                                    }
+
+
+                               
                                 </tbody>
                             </table>
                         </div>
@@ -398,49 +399,23 @@
         });
     </script>
 
-    <!-- Cancel and Residual Script -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        document.querySelectorAll(".booking-row").forEach(row => {
-            const confirmBox = row.querySelector(".confirm-box");
-            const confirmText = row.querySelector(".confirm-text");
-            const messageArea = row.querySelector(".message");
-
-            let currentAction = "";
-
-            row.querySelectorAll(".action-btn").forEach(button => {
-                button.addEventListener("click", () => {
-                    currentAction = button.dataset.action;
-
-                    if (currentAction === "cancel") {
-                        confirmText.textContent = "Are you sure you want to cancel this booking?";
-                    } else if (currentAction === "residual") {
-                        confirmText.textContent = "Are you sure you want to mark this booking as residual?";
-                    }
-
-                    confirmBox.style.display = "block";
-                    messageArea.textContent = "";
-                    messageArea.className = "message"; // Reset color
-                });
-            });
-
-            row.querySelector(".yes-btn").addEventListener("click", () => {
-                if (currentAction === "cancel") {
-                    window.location.href = `/CancelBooking/CancelAction`;
-                    messageArea.textContent = "Booking has been cancelled.";
-                    messageArea.className = "message red";
-                } else if (currentAction === "residual") {
-                    messageArea.textContent = "Booking marked as residual.";
-                    messageArea.className = "message green";
+        function ViewRefundData(id, pnr) {
+            $.ajax({
+                url: "/CancelBooking/CancelRefund?fid=" + encodeURIComponent(id) + "&p=" + encodeURIComponent(pnr),
+                type: "GET",
+                contentType: "application/json",
+                success: function (data) {
+                    console.log("Refund Data:", data);
+                    document.getElementById(id).innerHTML = "<span>" + data.amount + "</span><span>" + pnr + "</span>";
+                    // You can update the DOM here with returned data if needed
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error);
                 }
-                confirmBox.style.display = "none";
             });
-
-            row.querySelector(".no-btn").addEventListener("click", () => {
-                messageArea.textContent = "No action taken.";
-                messageArea.className = "message";
-                confirmBox.style.display = "none";
-            });
-        });
+        }
     </script>
 
 </body>

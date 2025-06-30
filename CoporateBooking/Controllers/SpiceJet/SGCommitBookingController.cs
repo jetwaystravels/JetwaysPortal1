@@ -26,6 +26,8 @@ using static DomainLayer.Model.SeatMapResponceModel;
 using static DomainLayer.Model.ReturnAirLineTicketBooking;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Security.Claims;
+using CoporateBooking.Models;
 
 namespace OnionConsumeWebAPI.Controllers.AirAsia
 {
@@ -783,7 +785,12 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             airLineFlightTicketBooking.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                             tb_Booking tb_Booking = new tb_Booking();
                             tb_Booking.AirLineID = 3;
-                            tb_Booking.BookingType = "Corporate";
+                            string productcode = _getBookingResponse.Booking.Journeys[0].Segments[0].Fares[0].ProductClass;
+                            var fareName = FareList.GetAllfare().Where(x => ((string)productcode).Equals(x.ProductCode)).FirstOrDefault();
+                            tb_Booking.BookingType = "Corporate-" + _getBookingResponse.Booking.Journeys[0].Segments[0].Fares[0].ProductClass + " (" + fareName.Faredesc + ")";
+                            LegalEntity legal = new LegalEntity();
+                            legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
+                            tb_Booking.CompanyName = legal.BillingEntityFullName;
                             tb_Booking.TripType = "OneWay";
                             tb_Booking.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                             tb_Booking.RecordLocator = _getBookingResponse.Booking.RecordLocator;
@@ -806,7 +813,13 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             tb_Booking.DepartureDate = parsedDate.ToString("yyyy-MM-dd HH:mm:ss");
 
                             tb_Booking.CreatedDate = _getBookingResponse.Booking.BookingInfo.CreatedDate;
-                            tb_Booking.Createdby = _getBookingResponse.Booking.BookingInfo.CreatedAgentID.ToString();
+                            if (HttpContext.User.Identity.IsAuthenticated)
+                            {
+                                var identity = (ClaimsIdentity)User.Identity;
+                                IEnumerable<Claim> claims = identity.Claims;
+                                var userEmail = claims.Where(c => c.Type == ClaimTypes.Email).ToList()[0].Value;
+                                tb_Booking.Createdby = userEmail;// "Online";
+                            }
                             tb_Booking.ModifiedDate = _getBookingResponse.Booking.BookingInfo.ModifiedDate;
                             tb_Booking.ModifyBy = _getBookingResponse.Booking.BookingInfo.ModifiedAgentID.ToString();
                             tb_Booking.BookingDoc = JsonConvert.SerializeObject(_getBookingResponse);
@@ -863,8 +876,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             tb_PassengerTotalobj.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                             if (_getBookingResponse.Booking.Passengers.Length > 0 && _getBookingResponse.Booking.Passengers[0].PassengerFees.Length > 0)
                             {
-                                tb_PassengerTotalobj.TotalMealsAmount = (double)Totatamountmb; // FFWD + MEAL + BAGGAGE
-                                tb_PassengerTotalobj.TotalMealsAmount_Tax = (double)TotalBagtax; // FFWD + MEAL + BAGGAGE
+                                tb_PassengerTotalobj.SpecialServicesAmount = (double)Totatamountmb; // FFWD + MEAL + BAGGAGE
+                                tb_PassengerTotalobj.SpecialServicesAmount_Tax = (double)TotalBagtax; // FFWD + MEAL + BAGGAGE
                                 tb_PassengerTotalobj.TotalSeatAmount = returnSeats.total;
                                 tb_PassengerTotalobj.TotalSeatAmount_Tax = returnSeats.taxes;
                             }
@@ -905,6 +918,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                     tb_Passengerobj.Gender = "Male";
                                 else if (tb_Passengerobj.Title == "MS" || tb_Passengerobj.Title == "MRS" || tb_Passengerobj.Title == "MISS")
                                     tb_Passengerobj.Gender = "Female";
+                                tb_Passengerobj.InftAmount = 0.0;// to do
+                                tb_Passengerobj.InftAmount_Tax = 0.0;// to do
                                 for (int isegment = 0; isegment < SegmentCount; isegment++)
                                 {
                                     for (int i = 0; i < _getBookingResponse.Booking.Journeys[0].Segments[isegment].PaxSeats.Length; i++)

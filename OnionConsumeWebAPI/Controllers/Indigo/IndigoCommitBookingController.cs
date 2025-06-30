@@ -763,8 +763,8 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             tb_PassengerTotalobj.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                             if (_getBookingResponse.Booking.Passengers.Length > 0 && _getBookingResponse.Booking.Passengers[0].PassengerFees.Length > 0)
                             {
-                                tb_PassengerTotalobj.TotalMealsAmount = (double)Totatamountmb;
-                                tb_PassengerTotalobj.TotalMealsAmount_Tax = (double)TotalBagtax;
+                                tb_PassengerTotalobj.SpecialServicesAmount = (double)Totatamountmb;
+                                tb_PassengerTotalobj.SpecialServicesAmount_Tax = (double)TotalBagtax;
                                 tb_PassengerTotalobj.TotalSeatAmount = returnSeats.total;
                                 tb_PassengerTotalobj.TotalSeatAmount_Tax = returnSeats.taxes;
                             }

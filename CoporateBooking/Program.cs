@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using OnionConsumeWebAPI.ApiService;
 using OnionConsumeWebAPI.Comman;
+
 using OnionConsumeWebAPI.ErrorHandling;
 using System.Security.Claims;
 //using OnionConsumeWebAPI.Models.DbSettings;
@@ -65,6 +66,7 @@ builder.Services.AddDistributedRedisCache(option =>
 //	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
 //});
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>

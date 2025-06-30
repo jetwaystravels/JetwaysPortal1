@@ -17,8 +17,7 @@ namespace CoporateBooking.Controllers.common
 
         public async Task<IActionResult> CancelActionAsync(int airline, string pnr)
         {
-            string recordLocator = "G1FWTP";
-            int status = 3;
+           
 
             using (HttpClient client = new HttpClient())
             {
@@ -58,7 +57,7 @@ namespace CoporateBooking.Controllers.common
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AirasiaTokan.token);
 
                 // Step 3: GET /booking/retrieve/byRecordLocator/{pnr}  
-                string retrieveUrl = $"{AppUrlConstant.AirasiaPNRBooking}/{recordLocator}";
+                string retrieveUrl = $"{AppUrlConstant.AirasiaPNRBooking}/{pnr}";
                 HttpResponseMessage retrieveResponse = await client.GetAsync(retrieveUrl);
                 if (!retrieveResponse.IsSuccessStatusCode)
                 {
@@ -105,8 +104,8 @@ namespace CoporateBooking.Controllers.common
                         // Create request object for the API
                         var cancelRequest = new
                         {
-                            RecordLocator = recordLocator,
-                            Status = status,
+                            RecordLocator = pnr,
+                            Status = 3,
                             UserEmail = userEmail,
                             BalanceDue = breakdown.balanceDue,
                             TotalAmount = breakdown.totalAmount
@@ -145,6 +144,23 @@ namespace CoporateBooking.Controllers.common
                 return View("Error");
             }
         }
+
+        [HttpGet]
+        public IActionResult CancelRefund(string fid, string p)
+        {
+            // Example response (replace with real refund logic)
+            var refundDetails = new
+            {
+                RefundId = fid,
+                PNR = p,
+                Amount = 4500.00,
+                Status = "Processed"
+            };
+
+            // Return as JSON
+            return Json(refundDetails);
+        }
+
     }
 
 }

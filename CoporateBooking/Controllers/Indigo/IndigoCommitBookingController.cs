@@ -28,6 +28,8 @@ using static DomainLayer.Model.ReturnAirLineTicketBooking;
 using Indigo;
 using OnionConsumeWebAPI.Models;
 using System.Globalization;
+using System.Security.Claims;
+using CoporateBooking.Models;
 
 namespace OnionConsumeWebAPI.Controllers.Indigo
 {
@@ -689,7 +691,12 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             airLineFlightTicketBooking.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                             tb_Booking tb_Booking = new tb_Booking();
                             tb_Booking.AirLineID = 4;
-                            tb_Booking.BookingType = "Corporate";
+                            string productcode = _getBookingResponse.Booking.Journeys[0].Segments[0].Fares[0].ProductClass;
+                            var fareName = FareList.GetAllfare().Where(x => ((string)productcode).Equals(x.ProductCode)).FirstOrDefault();
+                            tb_Booking.BookingType = "Corporate-" + _getBookingResponse.Booking.Journeys[0].Segments[0].Fares[0].ProductClass + " (" + fareName.Faredesc + ")";
+                            LegalEntity legal = new LegalEntity();
+                            legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
+                            tb_Booking.CompanyName = legal.BillingEntityFullName;
                             tb_Booking.TripType = "OneWay";
                             tb_Booking.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                             tb_Booking.RecordLocator = _getBookingResponse.Booking.RecordLocator;
@@ -712,7 +719,13 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             tb_Booking.DepartureDate=parsedDate.ToString("yyyy-MM-dd HH:mm:ss");
 
                             tb_Booking.CreatedDate = _getBookingResponse.Booking.BookingInfo.CreatedDate;
-                            tb_Booking.Createdby = _getBookingResponse.Booking.BookingInfo.CreatedAgentID.ToString();
+                            if (HttpContext.User.Identity.IsAuthenticated)
+                            {
+                                var identity = (ClaimsIdentity)User.Identity;
+                                IEnumerable<Claim> claims = identity.Claims;
+                                var userEmail = claims.Where(c => c.Type == ClaimTypes.Email).ToList()[0].Value;
+                                tb_Booking.Createdby = userEmail;// "Online";
+                            }
                             tb_Booking.ModifiedDate = _getBookingResponse.Booking.BookingInfo.ModifiedDate;
                             tb_Booking.ModifyBy = _getBookingResponse.Booking.BookingInfo.ModifiedAgentID.ToString();
                             tb_Booking.BookingDoc = JsonConvert.SerializeObject(_getBookingResponse);
@@ -769,8 +782,8 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             tb_PassengerTotalobj.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                             if (_getBookingResponse.Booking.Passengers.Length > 0 && _getBookingResponse.Booking.Passengers[0].PassengerFees.Length > 0)
                             {
-                                tb_PassengerTotalobj.TotalMealsAmount = (double)Totatamountmb; // FFWD + MEAL + BAGGAGE
-                                tb_PassengerTotalobj.TotalMealsAmount_Tax = (double)TotalBagtax; // FFWD + MEAL + BAGGAGE
+                                tb_PassengerTotalobj.SpecialServicesAmount = (double)Totatamountmb; // FFWD + MEAL + BAGGAGE
+                                tb_PassengerTotalobj.SpecialServicesAmount_Tax = (double)TotalBagtax; // FFWD + MEAL + BAGGAGE
                                 tb_PassengerTotalobj.TotalSeatAmount = returnSeats.total;
                                 tb_PassengerTotalobj.TotalSeatAmount_Tax = returnSeats.taxes;
                             }
@@ -811,8 +824,16 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                     tb_Passengerobj.Gender = "Male";
                                 else if (tb_Passengerobj.Title == "MS" || tb_Passengerobj.Title == "MRS" || tb_Passengerobj.Title == "MISS")
                                     tb_Passengerobj.Gender = "Female";
+                                tb_Passengerobj.InftAmount = 0.0;// to do
+                                tb_Passengerobj.InftAmount_Tax = 0.0;// to do
+                                double AdtAmount = 0.0;
+                                double AdttaxAmount = 0.0;
+                                double AdtTAmount = 0.0;
+                                double AdtTtaxAmount = 0.0;
                                 for (int isegment = 0; isegment < SegmentCount; isegment++)
                                 {
+                                     AdtAmount = 0.0;
+                                     AdttaxAmount = 0.0;
                                     for (int i = 0; i < _getBookingResponse.Booking.Journeys[0].Segments[isegment].PaxSeats.Length; i++)
                                     {
                                         if (items.PassengerNumber == _getBookingResponse.Booking.Journeys[0].Segments[isegment].PaxSeats[i].PassengerNumber)
@@ -822,13 +843,47 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                         }
                                     }
                                     tb_Passengerobj.SegmentsKey = _getBookingResponse.Booking.Journeys[0].Segments[isegment].SegmentSellKey;
+                                    int fareCount = _getBookingResponse.Booking.Journeys[0].Segments[isegment].Fares.Length;
+                                    for (int k = 0; k < fareCount; k++)
+                                    {
+                                        var passengerFares = _getBookingResponse.Booking.Journeys[0].Segments[isegment].Fares[k].PaxFares;
+                                        int passengerFarescount = _getBookingResponse.Booking.Journeys[0].Segments[isegment].Fares[k].PaxFares.Length;
+                                        if (passengerFarescount > 0)
+                                        {
+                                            for (int l = 0; l < passengerFarescount; l++)
+                                            {
+                                                if (_getBookingResponse.Booking.Journeys[0].Segments[isegment].Fares[k].PaxFares[l].PaxType == tb_Passengerobj.TypeCode)
+                                                {
+                                                    int serviceChargescount = _getBookingResponse.Booking.Journeys[0].Segments[isegment].Fares[k].PaxFares[l].ServiceCharges.Length;
+                                                    for (int m = 0; m < serviceChargescount; m++)
+                                                    {
+                                                        ServiceChargeReturn AAServicechargeobj = new ServiceChargeReturn();
+                                                        AAServicechargeobj.amount = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[isegment].Fares[k].PaxFares[l].ServiceCharges[m].Amount);
+                                                        string data = _getBookingResponse.Booking.Journeys[0].Segments[isegment].Fares[k].PaxFares[l].ServiceCharges[m].ChargeType.ToString();
+                                                        if (data.ToLower() == "fareprice")
+                                                        {
+                                                            AdtTAmount += Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[isegment].Fares[k].PaxFares[l].ServiceCharges[m].Amount);
+                                                        }
+                                                        else
+                                                        {
+                                                            AdtTtaxAmount += Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[isegment].Fares[k].PaxFares[l].ServiceCharges[m].Amount);
+                                                        }
+                                                    }
+
+                                                    AdtAmount += AdtTAmount * adultcount;
+                                                    AdttaxAmount += AdtTtaxAmount * adultcount;
+                                                }
+
+                                            }
+                                        }
+                                    }
                                 }
 
 
 
 
-                                tb_Passengerobj.TotalAmount = (decimal)breakdown.journeyTotals.totalAmount;
-                                tb_Passengerobj.TotalAmount_tax = (decimal)breakdown.journeyTotals.totalTax;
+                                tb_Passengerobj.TotalAmount = (decimal)AdtAmount;
+                                tb_Passengerobj.TotalAmount_tax = (decimal)AdttaxAmount;
                                 tb_Passengerobj.CreatedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.CreatedDate);
                                 tb_Passengerobj.Createdby = _getBookingResponse.Booking.BookingInfo.CreatedAgentID.ToString();
                                 tb_Passengerobj.ModifiedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.ModifiedDate);
@@ -1045,9 +1100,9 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                 segmentReturnobj.MealCode = "";
                                 segmentReturnobj.MealDiscription = "";
                                 if (!string.IsNullOrEmpty(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.DepartureTerminal))
-                                    segmentReturnobj.DepartureTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.DepartureTerminal);
+                                    //segmentReturnobj.DepartureTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.DepartureTerminal);
                                 if (!string.IsNullOrEmpty (_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal))
-                                    segmentReturnobj.ArrivalTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal);
+                                    //segmentReturnobj.ArrivalTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal);
                                 segmentReturnobj.CreatedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.CreatedDate);
                                 segmentReturnobj.ModifiedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.ModifiedDate);
                                 segmentReturnobj.Createdby = _getBookingResponse.Booking.BookingInfo.CreatedAgentID.ToString();
