@@ -4121,7 +4121,7 @@ FOOTER AREA CSS
 
 .modal-mfareBlock .col-xl-6.col-lg-6.lf-p {
     padding-right: 0;
-    padding-left:0;
+    padding-left: 0;
 }
 
 .modal-footer.fbody-padding .book-price {
@@ -4479,6 +4479,7 @@ a.login-otp {
         padding: 25px 15px;
         min-height: 370px;
         max-height: 450px;
+        overflow: auto;
     }
 
     .m-booking #search {
@@ -4493,7 +4494,7 @@ a.login-otp {
             color: #555555;
         }
 
-        
+
 
         .m-booking #search label {
             position: absolute;
@@ -4518,7 +4519,7 @@ a.login-otp {
         padding: 6px 8px;
         font-size: 14px;
         text-align: left;
-        position:relative;
+        position: relative;
     }
 
     .m-booking .table td small {
@@ -4533,13 +4534,41 @@ a.login-otp {
         color: #fff;
         font-weight: 500;
         margin-right: 5px;
+        width: 7.1rem;
+    }
+
+    .m-booking .trip-id {
+        width: 15%;
+    }
+
+    .m-booking .travel-date {
+        width: 12%;
+    }
+
+    .m-booking .pnr-no {
+        width: 9%;
+    }
+
+    .m-booking .trv-dtl {
+        width: 26%;
+    }
+
+    .m-booking .trp-dtl {
+        width: 18%;
+    }
+
+    .m-booking .status {
+        width: 8%;
+    }
+
+    .m-booking .action {
+        width: 12%;
     }
 
 
 
     .m-booking table.table td svg {
-        vertical-align: middle;
-        margin-right: 12px;
+        margin-right: 5px;
     }
 
 
@@ -4565,22 +4594,22 @@ a.login-otp {
 }
 
 
-.confirm-box button {
-    border: #ccc 1px solid;
-    border-radius: 3px;
-    padding: 0 10px;
-    margin-right: 5px;
-    margin-top: 8px;
-}
+    .confirm-box button {
+        border: #ccc 1px solid;
+        border-radius: 3px;
+        padding: 0 10px;
+        margin-right: 5px;
+        margin-top: 8px;
+    }
 
-.confirm-box button:hover {
-    background: #f0f0f0;
-}
+        .confirm-box button:hover {
+            background: #f0f0f0;
+        }
 
-.confirm-box p {
-    font-size: 13px;
-    text-align: left;
-}
+    .confirm-box p {
+        font-size: 13px;
+        text-align: left;
+    }
 
 .booking-row .message {
     width: 100%;
@@ -4590,13 +4619,13 @@ a.login-otp {
     left: 8px;
 }
 
-.booking-row .message.red {
-    color: red;
-}
+    .booking-row .message.red {
+        color: red;
+    }
 
-.booking-row .message.green {
-    color: green;
-}
+    .booking-row .message.green {
+        color: green;
+    }
 
 /* End My booking section */
 
