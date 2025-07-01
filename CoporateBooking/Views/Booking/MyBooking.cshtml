@@ -311,7 +311,7 @@
                                                     <img src="@imagePath" alt="Airline Logo" style="height: 30px;" />
                                                     @books.FlightID
                                                 </td>
-                                                <td><strong>@Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM")</strong>-@Convert.ToDateTime(books.DepartureDate).ToString("yyyy"),<strong>@Convert.ToDateTime(books.DepartureDate).ToString("HH:mm")</strong> </td>
+                                                <td class="travel-date"><strong>@Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM")</strong>-@Convert.ToDateTime(books.DepartureDate).ToString("yyyy"),<strong>@Convert.ToDateTime(books.DepartureDate).ToString("HH:mm")</strong> </td>
 
                                                 <td>@books.RecordLocator</td>
                                                 <td>@books.Passengers <br /><small>Jetways Travels</small></td>
@@ -320,13 +320,30 @@
                                                     @Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM-yyyy, HH:MM") @books.Origin to @books.Destination |<br />
                                                     @books.Segments | PNR: @books.RecordLocator
                                                 </td>
-                                                <td>
+                                                <td class="status">
                                                     <button class="status-booked" onclick="return ViewRefundData('@books.FlightID' , '@books.RecordLocator')" style="color:#008000;"><i class="fa fa-check-circle" aria-hidden="true"></i>View Refund</button>
+                                                    <div class="popbx" id="popbx-@books.FlightID" style="display: none;">
+                                                        <button class="close-btn " onclick="closeRefundPopup('@books.FlightID')">&times;</button>
 
-                                                    <div id="@books.FlightID">
+                                                        <table class="table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th><strong>Booking Amount:</strong></th>
+                                                                    <td><div id="@books.FlightID"></div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th><strong>Deduction Amount:</strong></th>
+                                                                    <td><div id="@books.FlightID"></div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th><strong>Refund Amount:</strong></th>
+                                                                    <td><div id="@books.FlightID"></div></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                </td>
 
+                                                </td>
                                             </tr>
                                         }
                                     }
@@ -370,17 +387,17 @@
                                                     <img src="@imagePath" alt="Airline Logo" style="height: 30px;" />
                                                     @books.FlightID
                                                 </td>
-                                                <td><strong>@Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM")</strong>-@Convert.ToDateTime(books.DepartureDate).ToString("yyyy"),<strong>@Convert.ToDateTime(books.DepartureDate).ToString("HH:mm")</strong> </td>
+                                                <td class="travel-date"><strong>@Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM")</strong>-@Convert.ToDateTime(books.DepartureDate).ToString("yyyy"),<strong>@Convert.ToDateTime(books.DepartureDate).ToString("HH:mm")</strong> </td>
 
-                                                <td>@books.RecordLocator</td>
-                                                <td>@books.Passengers <br /><small>Jetways Travels</small></td>
-                                                <td>
+                                                <td class="pnr-no">@books.RecordLocator</td>
+                                                <td class="trv-dtl">@books.Passengers <br /><small>Jetways Travels</small></td>
+                                                <td class="trp-dtl">
                                                     Domestic @books.TripType (Online)<br />
                                                     @Convert.ToDateTime(books.DepartureDate).ToString("dd-MMM-yyyy, HH:MM") @books.Origin to @books.Destination |<br />
                                                     @books.Segments | PNR: @books.RecordLocator
                                                 </td>
 
-                                                <td class="status-awaiting" style="color:#EF0000;"><i class="fa fa-times-circle" aria-hidden="true"></i>Complete</td>
+                                                <td class="status-awaiting status" style="color:#EF0000;"><i class="fa fa-times-circle" aria-hidden="true"></i>Complete</td>
 
                                             </tr>
                                         }
@@ -508,7 +525,7 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    @* <script>
         function ViewRefundData(id, pnr) {
             $.ajax({
                 url: "/CancelBooking/CancelRefund?fid=" + encodeURIComponent(id) + "&p=" + encodeURIComponent(pnr),
@@ -523,6 +540,32 @@
                     console.error("Error:", error);
                 }
             });
+        }
+    </script> *@
+
+
+    <script>
+        function ViewRefundData(id, pnr) {
+            // Show the pop-up box
+            document.getElementById("popbx-" + id).style.display = "block";
+
+            $.ajax({
+                    url: "/CancelBooking/CancelRefund?fid=" + encodeURIComponent(id) + "&p=" + encodeURIComponent(pnr),
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (data) {
+                        console.log("Refund Data:", data);
+                        document.getElementById(id).innerHTML = "<span>" + data.amount + "</span><span>" + pnr + "</span>";
+                        // You can update the DOM here with returned data if needed
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+                });
+            }
+
+            function closeRefundPopup(id) {
+            document.getElementById("popbx-" + id).style.display = "none";
         }
     </script>
 

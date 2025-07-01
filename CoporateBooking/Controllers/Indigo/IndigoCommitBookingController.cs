@@ -105,45 +105,45 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                     _commit objcommit = new _commit();
                     if (tokenData.CommResponse == null)
                     {
-                       
+
                         #region GetState
                         _sell objsell = new _sell();
                         IndigoBookingManager_.GetBookingFromStateResponse _GetBookingFromStateRS1 = await objsell.GetBookingFromState(token, 0, "");
 
-                    string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
-                    decimal Totalpayment = 0M;
-                    if (_GetBookingFromStateRS1 != null)
-                    {
-                        Totalpayment = _GetBookingFromStateRS1.BookingData.BookingSum.TotalCost;
-                    }
-                    #endregion
-                    #region Addpayment Commneted For Api Payment deduction
-                    IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment, "OneWay");
-                    if (_BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors.Length>0 && _BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors[0].ErrorDescription.ToLower().Contains("not enough funds available"))
-                    {
-                        _AirLinePNRTicket.ErrorDesc = "Not enough funds available.";
-                    }
-                    #endregion
-
-                    #region Commit Booking
-
-
-
-                         _BookingCommitResponse = await objcommit.commit(token, contactList, passeengerlist, "OneWay");
-                    }
-
-                        if ((_BookingCommitResponse != null && _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator != null) || (tokenData.CommResponse != null))
+                        string strdata = JsonConvert.SerializeObject(_GetBookingFromStateRS1);
+                        decimal Totalpayment = 0M;
+                        if (_GetBookingFromStateRS1 != null)
                         {
-                        IndigoBookingManager_.GetBookingResponse _getBookingResponse = null;
-                            if (tokenData.CommResponse == null)
-                            {
-                                 _getBookingResponse = await objcommit.GetBookingdetails(token, _BookingCommitResponse, "OneWay");
+                            Totalpayment = _GetBookingFromStateRS1.BookingData.BookingSum.TotalCost;
+                        }
+                        #endregion
+                        #region Addpayment Commneted For Api Payment deduction
+                        IndigoBookingManager_.AddPaymentToBookingResponse _BookingPaymentResponse = await objcommit.AddpaymenttoBook(token, Totalpayment, "OneWay");
+                        if (_BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors.Length > 0 && _BookingPaymentResponse.BookingPaymentResponse.ValidationPayment.PaymentValidationErrors[0].ErrorDescription.ToLower().Contains("not enough funds available"))
+                        {
+                            _AirLinePNRTicket.ErrorDesc = "Not enough funds available.";
+                        }
+                        #endregion
 
-                                _mongoDBHelper.UpdateCommitResponse(Guid, "Indigo", objMongoHelper.Zip(JsonConvert.SerializeObject(_getBookingResponse)));
-                            }
-                            else
-                            {
-                              _getBookingResponse = (IndigoBookingManager_.GetBookingResponse)JsonConvert.DeserializeObject(objMongoHelper.UnZip(tokenData.CommResponse), typeof(IndigoBookingManager_.GetBookingResponse));
+                        #region Commit Booking
+
+
+
+                        _BookingCommitResponse = await objcommit.commit(token, contactList, passeengerlist, "OneWay");
+                    }
+
+                    if ((_BookingCommitResponse != null && _BookingCommitResponse.BookingUpdateResponseData.Success.RecordLocator != null) || (tokenData.CommResponse != null))
+                    {
+                        IndigoBookingManager_.GetBookingResponse _getBookingResponse = null;
+                        if (tokenData.CommResponse == null)
+                        {
+                            _getBookingResponse = await objcommit.GetBookingdetails(token, _BookingCommitResponse, "OneWay");
+
+                            _mongoDBHelper.UpdateCommitResponse(Guid, "Indigo", objMongoHelper.Zip(JsonConvert.SerializeObject(_getBookingResponse)));
+                        }
+                        else
+                        {
+                            _getBookingResponse = (IndigoBookingManager_.GetBookingResponse)JsonConvert.DeserializeObject(objMongoHelper.UnZip(tokenData.CommResponse), typeof(IndigoBookingManager_.GetBookingResponse));
                         }
 
 
@@ -170,13 +170,13 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             if (_getBookingResponse.Booking.Journeys[0].Segments[0].PaxSeats.Length > 0)
                                 _unitdesinator.unitDesignatorPax = _getBookingResponse.Booking.Journeys[0].Segments[0].PaxSeats[0].UnitDesignator;
 
-                                //GST Number
-                                if (_getBookingResponse.Booking.BookingContacts[0].TypeCode == "I")
-                                {
-                                    returnTicketBooking.customerNumber = _getBookingResponse.Booking.BookingContacts[0].CustomerNumber;
-                                    returnTicketBooking.companyName = _getBookingResponse.Booking.BookingContacts[0].CompanyName;
-                                    returnTicketBooking.emailAddressgst = _getBookingResponse.Booking.BookingContacts[0].EmailAddress;
-                                }
+                            //GST Number
+                            if (_getBookingResponse.Booking.BookingContacts[0].TypeCode == "I")
+                            {
+                                returnTicketBooking.customerNumber = _getBookingResponse.Booking.BookingContacts[0].CustomerNumber;
+                                returnTicketBooking.companyName = _getBookingResponse.Booking.BookingContacts[0].CompanyName;
+                                returnTicketBooking.emailAddressgst = _getBookingResponse.Booking.BookingContacts[0].EmailAddress;
+                            }
 
                             Contacts _contact = new Contacts();
                             _contact.phoneNumbers = _getBookingResponse.Booking.BookingContacts[0].HomePhone.ToString();
@@ -379,7 +379,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                                 flightnumber = flightnumber.PadRight(5);
                                             }
                                             if (sequencenumber.Length < 5)
-                                                sequencenumber = sequencenumber.PadRight(5,'0');
+                                                sequencenumber = sequencenumber.PadRight(5, '0');
                                             seatnumber = "0000";
                                             if (seatnumber.Length < 4)
                                                 seatnumber = seatnumber.PadLeft(4, '0');
@@ -407,7 +407,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                                     flightnumber = flightnumber.PadRight(5);
                                                 }
                                                 if (sequencenumber.Length < 5)
-                                                    sequencenumber = sequencenumber.PadRight(5,'0');
+                                                    sequencenumber = sequencenumber.PadRight(5, '0');
                                                 seatnumber = htseatdata[item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation].ToString();
                                                 if (seatnumber.Length < 4)
                                                     seatnumber = seatnumber.PadLeft(4, '0');
@@ -429,7 +429,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                             {
                                                 //if (item1.SSRCode != "INFT" && item1.SSRCode != "FFWD" && !item1.SSRCode.StartsWith('X'))
                                                 //{
-                                                    htmealdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
+                                                htmealdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
                                                 //}
                                                 returnSeats.SSRCode += item1.SSRCode + ",";
                                             }
@@ -437,7 +437,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                             {
                                                 //if (item1.SSRCode != "INFT" && item1.SSRCode != "FFWD")
                                                 //{
-                                                    htbagdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
+                                                htbagdata.Add(item1.PassengerNumber.ToString() + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].DepartureStation + "_" + _getBookingResponse.Booking.Journeys[i].Segments[j].ArrivalStation, item1.SSRCode);
                                                 //}
                                                 returnSeats.SSRCode += item1.SSRCode + ",";
                                             }
@@ -461,7 +461,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
 
                             #endregion
                             //string stravailibitilityrequest = HttpContext.Session.GetString("IndigoAvailibilityRequest");
-                            string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest); 
+                            string stravailibitilityrequest = objMongoHelper.UnZip(tokenData.PassRequest);
                             GetAvailabilityRequest availibiltyRQ = JsonConvert.DeserializeObject<GetAvailabilityRequest>(stravailibitilityrequest);
 
                             var passanger = _getBookingResponse.Booking.Passengers;
@@ -477,7 +477,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                 passkeytypeobj.name = new Name();
                                 foreach (var item1 in item.PassengerFees)
                                 {
-                                    if (item1.FeeCode.Equals("SEAT")|| item1.FeeType.ToString().ToLower().Contains("seat"))
+                                    if (item1.FeeCode.Equals("SEAT") || item1.FeeType.ToString().ToLower().Contains("seat"))
                                     {
                                         flightreference = item1.FlightReference;
                                         string[] parts = flightreference.Split(' ');
@@ -538,7 +538,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                         foreach (var item2 in item1.ServiceCharges)
                                         {
 
-                                            if (item2.ChargeCode.Equals("SEAT")|| item2.ChargeCode.Equals("SNXT"))
+                                            if (item2.ChargeCode.Equals("SEAT") || item2.ChargeCode.Equals("SNXT"))
                                             {
                                                 returnSeats.total += Convert.ToInt32(item2.Amount);
                                                 //breakdown.passengerTotals.seats.total += Convert.ToInt32(item2.Amount);
@@ -710,13 +710,13 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             tb_Booking.SpecialServicesTotal_Tax = (double)TotalBagtax;
                             tb_Booking.SeatTotalAmount = returnSeats.total;
                             tb_Booking.SeatTotalAmount_Tax = returnSeats.taxes;
-                            tb_Booking.ExpirationDate =_getBookingResponse.Booking.BookingInfo.ExpiredDate;
+                            tb_Booking.ExpirationDate = _getBookingResponse.Booking.BookingInfo.ExpiredDate;
                             //tb_Booking.ArrivalDate = _getBookingResponse.Booking.Journeys[0].Segments[segmentcount - 1].STA.ToString().Replace('T',' ');//DateTime.Now;
                             //tb_Booking.DepartureDate = _getBookingResponse.Booking.Journeys[0].Segments[0].Legs[0].STD.ToString().Replace('T', ' ');//DateTime.Now;
-                            DateTime parsedDate = DateTime.ParseExact(_getBookingResponse.Booking.Journeys[0].Segments[segmentcount-1].Legs[0].STA.ToString(),"dd-MM-yyyy HH:mm:ss",CultureInfo.InvariantCulture);
+                            DateTime parsedDate = DateTime.ParseExact(_getBookingResponse.Booking.Journeys[0].Segments[segmentcount - 1].Legs[0].STA.ToString(), "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                             tb_Booking.ArrivalDate = parsedDate.ToString("yyyy-MM-dd HH:mm:ss");
                             parsedDate = DateTime.ParseExact(_getBookingResponse.Booking.Journeys[0].Segments[0].Legs[0].STD.ToString(), "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                            tb_Booking.DepartureDate=parsedDate.ToString("yyyy-MM-dd HH:mm:ss");
+                            tb_Booking.DepartureDate = parsedDate.ToString("yyyy-MM-dd HH:mm:ss");
 
                             tb_Booking.CreatedDate = _getBookingResponse.Booking.BookingInfo.CreatedDate;
                             if (HttpContext.User.Identity.IsAuthenticated)
@@ -832,8 +832,8 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                 double AdtTtaxAmount = 0.0;
                                 for (int isegment = 0; isegment < SegmentCount; isegment++)
                                 {
-                                     AdtAmount = 0.0;
-                                     AdttaxAmount = 0.0;
+                                    AdtAmount = 0.0;
+                                    AdttaxAmount = 0.0;
                                     for (int i = 0; i < _getBookingResponse.Booking.Journeys[0].Segments[isegment].PaxSeats.Length; i++)
                                     {
                                         if (items.PassengerNumber == _getBookingResponse.Booking.Journeys[0].Segments[isegment].PaxSeats[i].PassengerNumber)
@@ -894,7 +894,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                     tb_Passengerobj.Inf_TypeCode = "INFT";
                                     tb_Passengerobj.Inf_Firstname = items.Infant.Names[0].FirstName;
                                     tb_Passengerobj.Inf_Lastname = items.Infant.Names[0].LastName;
-                                    tb_Passengerobj.Inf_Dob = DateTime.Now;// Convert.ToDateTime(items.Infant.DOB);
+                                    tb_Passengerobj.Inf_Dob = Convert.ToDateTime(items.Infant.DOB);
                                     if (items.Infant.Gender != null)
                                     {
                                         tb_Passengerobj.Inf_Gender = "Master";
@@ -1089,7 +1089,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                 segmentReturnobj.SegmentCount = j;
                                 segmentReturnobj.Origin = _getBookingResponse.Booking.Journeys[0].Segments[j].DepartureStation;
                                 segmentReturnobj.Destination = _getBookingResponse.Booking.Journeys[0].Segments[j].ArrivalStation;
-                               
+
                                 parsedDate = DateTime.ParseExact(_getBookingResponse.Booking.Journeys[0].Segments[j].STA.ToString(), "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
                                 segmentReturnobj.ArrivalDate = parsedDate.ToString("yyyy-MM-dd HH:mm:ss");
                                 parsedDate = DateTime.ParseExact(_getBookingResponse.Booking.Journeys[0].Segments[j].STD.ToString(), "dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
@@ -1101,9 +1101,9 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                 segmentReturnobj.MealDiscription = "";
                                 if (!string.IsNullOrEmpty(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.DepartureTerminal))
                                     //segmentReturnobj.DepartureTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.DepartureTerminal);
-                                if (!string.IsNullOrEmpty (_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal))
-                                    //segmentReturnobj.ArrivalTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal);
-                                segmentReturnobj.CreatedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.CreatedDate);
+                                    if (!string.IsNullOrEmpty(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal))
+                                        //segmentReturnobj.ArrivalTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal);
+                                        segmentReturnobj.CreatedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.CreatedDate);
                                 segmentReturnobj.ModifiedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.ModifiedDate);
                                 segmentReturnobj.Createdby = _getBookingResponse.Booking.BookingInfo.CreatedAgentID.ToString();
                                 segmentReturnobj.Modifyby = _getBookingResponse.Booking.BookingInfo.ModifiedAgentID.ToString();
@@ -1144,7 +1144,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                         IndigoSessionmanager_.LogoutResponse _logoutResponse = new IndigoSessionmanager_.LogoutResponse();
                         _logoutRequestobj.ContractVersion = 456;
                         _logoutRequestobj.Signature = token;
-                        _getapiIndigo objIndigo = new _getapiIndigo();;
+                        _getapiIndigo objIndigo = new _getapiIndigo(); ;
                         _logoutResponse = await objIndigo.Logout(_logoutRequestobj);
 
                         //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_logoutRequestobj) + "\n Response: " + JsonConvert.SerializeObject(_logoutResponse), "Logout", "SpicejetOneWay", "oneway");

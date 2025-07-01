@@ -4439,6 +4439,7 @@ a.login-otp {
 
     .m-booking .top-bx {
         margin-top: -84px;
+        /* position: relative;*/
     }
 
 
@@ -4477,9 +4478,8 @@ a.login-otp {
         box-shadow: 0 0 9px 0 rgba(0, 0, 0, .14);
         border-radius: 0 0 8px 8px;
         padding: 25px 15px;
-        min-height: 370px;
-        max-height: 450px;
-        overflow: auto;
+        height: 360px;
+        overflow-y: auto;
     }
 
     .m-booking #search {
@@ -4542,7 +4542,7 @@ a.login-otp {
     }
 
     .m-booking .travel-date {
-        width: 12%;
+        width: 14%;
     }
 
     .m-booking .pnr-no {
@@ -4558,7 +4558,7 @@ a.login-otp {
     }
 
     .m-booking .status {
-        width: 8%;
+        width: 10%;
     }
 
     .m-booking .action {
@@ -4576,6 +4576,41 @@ a.login-otp {
         border: 1px solid #ddd !important;
     }
 
+    .m-booking .popbx {
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, .40);
+        padding: 10px;
+        position: absolute;
+        border: 1px solid #ccc;
+        padding: 15px 10px;
+        background: #fff;
+        /* right: 40px;
+        top:94px;
+        width: 320px;*/
+        right: 0;
+        top: 37px;
+        width: 320px;
+        z-index: 10;
+        background: #f9f9f9;
+        border-radius: 4px;
+    }
+
+.popbx .table td, .table th {
+    border: none !important;
+}
+
+.popbx table.table th {
+    padding: 10px 8px;
+}
+
+.popbx .close-btn {
+    position: absolute;
+    right: 7px;
+    top: -2px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
 
 .confirm-box {
     display: none;

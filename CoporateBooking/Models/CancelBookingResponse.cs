@@ -33,6 +33,32 @@
         public class Journey
         {
             public JourneyDesignator designator { get; set; }
+            public List<Segment> segments { get; set; }
+        }
+        public class Segment
+        {
+            public bool isStandby { get; set; }
+            public SegmentDesignator designator { get; set; }
+            public SegmentIdentifier identifier { get; set; }
+            public List<Fare> fares { get; set; }
+        }
+        public class SegmentIdentifier
+        {
+            public string identifier { get; set; }
+            public string carrierCode { get; set; }
+        }
+        public class Fare
+        {
+            public string fareBasisCode { get; set; }
+            public string classOfService { get; set; }
+            public string fareClassOfService { get; set; }
+        }
+        public class SegmentDesignator
+        {
+            public string origin { get; set; }
+            public string destination { get; set; }
+            public DateTime departure { get; set; }
+            public DateTime arrival { get; set; }
         }
 
         public class JourneyDesignator

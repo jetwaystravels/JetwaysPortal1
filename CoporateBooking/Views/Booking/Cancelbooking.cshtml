@@ -131,93 +131,123 @@
             .btn-secondary:hover {
                 background-color: #545b62;
             }
-
     </style>
 </head>
 <body>
 
     <div class="booking-card">
+        @{
+            var journey = Model.journeys.FirstOrDefault();
+            var duration = journey != null ? journey.designator.arrival - journey.designator.departure : TimeSpan.Zero;
+        }
+
         <div class="flight-header">
-            <h3>Air India Express - QP 1411<br><small>Class: Economy (U3) | Type: Corporate</small></h3>
-            <p><strong>Airline PNR :</strong> IB1IVA</p>
+            <h3>
+                Air India Express - @string.Join(", ", journey.segments.Select(s => s.identifier.carrierCode + " " + s.identifier.identifier))<br />
+                <small>Class: Economy (@journey.segments.FirstOrDefault()?.fares.FirstOrDefault()?.classOfService ?? "—") | Type: Corporate</small>
+            </h3>
+            <p><strong>Airline PNR :</strong> @Model.recordLocator</p>
         </div>
 
         <div class="flight-info">
             <div>
-                <div class="airport">New Delhi (DEL)</div>
-                <div class="datetime">10:00 Sat 26 Jul, 2025</div>
-                <div>Terminal: 1D</div>
+                <div class="airport">@journey.designator.origin</div>
+                <div class="datetime">@journey.designator.departure.ToString("HH:mm ddd dd MMM, yyyy")</div>
+                <div>Terminal: —</div>
             </div>
             <div>
-                <div>2 h 25 m</div>
+                <div>@($"{duration.Hours} h {duration.Minutes} m")</div>
                 <div>● ● ●</div>
                 <div>Non-Stop</div>
             </div>
             <div>
-                <div class="airport">Mumbai (BOM)</div>
-                <div class="datetime">12:25 Sat 26 Jul, 2025</div>
-                <div>Terminal: T1</div>
+                <div class="airport">@journey.designator.destination</div>
+                <div class="datetime">@journey.designator.arrival.ToString("HH:mm ddd dd MMM, yyyy")</div>
+                <div>Terminal: —</div>
             </div>
         </div>
 
         <div class="booking-meta">
-            <div class="meta-item">Fare Basis<br><span>U3O7CWIF</span></div>
-            <div class="meta-item">GDS PNR<br><span>IB1IVA</span></div>
+            <div class="meta-item">Fare Basis<br><span>@(journey.segments.FirstOrDefault()?.fares.FirstOrDefault()?.fareBasisCode ?? "—")</span></div>
+            <div class="meta-item">GDS PNR<br><span>@Model.recordLocator</span></div>
             <div class="meta-item">Passive PNR<br><span>—</span></div>
             <div class="meta-item">Deal Code<br><span>—</span></div>
             <div class="meta-item">Tour Code<br><span>—</span></div>
         </div>
 
-        <h4>Passenger Details</h4>
-        <table class="passenger-table">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Ticket</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Preferences</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" /></td>
-                    <td>
-                        Mr Test Mahesh Joshi<br>
-                        <small>mahesh.joshi@jetwaystravels.com</small><br>
-                        <small>9990908494</small>
-                    </td>
-                    <td>IB1IVA</td>
-                    <td>INR 5,211</td>
-                    <td><span class="status-cancelled">Cancelled</span></td>
-                    <td>
-                        Seat No: —<br>
-                        Meal: —<br>
-                        Baggage: 7 Kgs
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <form asp-controller="CancelBooking" asp-action="CancelAction" asp-route-pnr="@Model.recordLocator"
+              asp-route-airline="@ViewBag.AirlineId" method="post" id="cancelForm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="cancellationType" id="cancellationType" value="complete" />
 
-        <div class="footer-btns">
-            <a href="#" class="btn btn-secondary">Back</a>
-            @* <a href="#" class="btn">Manage Booking ▼</a> *@
-           
+            <h4>Passenger Details</h4>
+            <table class="passenger-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll" /></th>
+                        <th>Name</th>
+                        <th>Ticket</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pax in Model.passengers.Values)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="passenger-checkbox" name="passengerKeys" value="@pax.passengerKey" />
+                            </td>
+                            <td>
+                                Mr/Ms @pax.name.first @pax.name.last<br />
+                                <small>Passenger Key: @pax.passengerKey</small><br />
+                                <small>—</small>
+                            </td>
+                            <td>@Model.recordLocator</td>
+                            <td>INR @Model.breakdown.totalAmount.ToString("N0")</td>
+                            <td><span class="status-cancelled">Confirm</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-            <form asp-controller="CancelBooking" asp-action="CancelAction" class="d-inline" asp-route-pnr="@Model.recordLocator" asp-route-airline="@ViewBag.AirlineId" method="post">
-                @Html.AntiForgeryToken()
-                <button type="submit" class="btn"
-                        onclick="return confirm('Are you sure you want to cancel this booking?');">
-                    Cancel Booking
-                </button>
-            </form>
-
-
-        </div>
+            <div class="footer-btns">
+                <a href="#" class="btn btn-secondary">Back</a>
+                <button type="submit" class="btn" id="cancelBtn">Cancel Booking</button>
+            </div>
+        </form>
     </div>
+
+    <script>
+        // Select All checkbox handler
+        document.getElementById("selectAll").addEventListener("change", function () {
+            const checkboxes = document.querySelectorAll(".passenger-checkbox");
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+
+        // Confirm Cancel Booking and set cancellation type
+        document.getElementById("cancelForm").addEventListener("submit", function (e) {
+            const all = document.querySelectorAll(".passenger-checkbox");
+            const selected = document.querySelectorAll(".passenger-checkbox:checked");
+
+            if (selected.length === 0) {
+                alert("Please select at least one passenger to cancel.");
+                e.preventDefault();
+                return;
+            }
+
+            const isPartial = selected.length < all.length;
+            document.getElementById("cancellationType").value = isPartial ? "partial" : "complete";
+
+            const message = isPartial
+                ? `You are cancelling ${selected.length} of ${all.length} passengers. Proceed with partial cancellation?`
+                : "You are about to cancel the entire booking. Proceed with full cancellation?";
+
+            if (!confirm(message)) {
+                e.preventDefault();
+            }
+        });
+    </script>
 
 </body>
 </html>
-
-

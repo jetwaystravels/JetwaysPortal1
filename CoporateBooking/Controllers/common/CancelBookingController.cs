@@ -15,15 +15,44 @@ namespace CoporateBooking.Controllers.common
     {
         private _credentials _credentialsAirasia = null;
 
-        public async Task<IActionResult> CancelActionAsync(int airline, string pnr)
+        public async Task<IActionResult> CancelActionAsync(int airline, string pnr, List<string> passengerKeys, string cancellationType)
         {
-           
 
+            if (airline == 1) // AirAsia
+            {
+                if (cancellationType == "complete")
+                {
+                    return await CancelCompleteAirAsiaBooking(pnr);
+                }
+                else if (cancellationType == "partial")
+                {
+                    return await CancelPartialAirAsiaBooking(pnr, passengerKeys);
+                }
+            }
+            else if (airline == 2) // Air India Express or other
+            {
+                if (cancellationType == "complete")
+                {
+                    return await CancelCompleteOtherAirline(pnr);
+                }
+                else if (cancellationType == "partial")
+                {
+                    return await CancelPartialOtherAirline(pnr, passengerKeys);
+                }
+            }
+
+            ModelState.AddModelError("", "Unsupported airline or invalid cancellation type.");
+            return View("Error");
+
+        }
+
+        private async Task<IActionResult> CancelCompleteAirAsiaBooking(string pnr)
+        {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(AppUrlConstant.BaseURL);
 
-                // Step 1: Fetch Airline Credentials  
+                // 1. Get AirAsia credentials
                 HttpResponseMessage response = await client.GetAsync(AppUrlConstant.AirlineLogin);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -33,16 +62,13 @@ namespace CoporateBooking.Controllers.common
 
                 var results = await response.Content.ReadAsStringAsync();
                 var jsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
-                _credentialsAirasia = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 1); // AirAsia  
+                var _credentialsAirasia = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 1); // AirAsia
 
-                // Step 2: Login to get AirAsia token  
+                // 2. Login and get token
                 var login = new airlineLogin { credentials = _credentialsAirasia };
-                var AirasiaTokan = new AirasiaTokan();
-
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage tokenResponse = await client.PostAsJsonAsync(AppUrlConstant.AirasiaTokan, login);
-
                 if (!tokenResponse.IsSuccessStatusCode)
                 {
                     ModelState.AddModelError("", "AirAsia token request failed.");
@@ -51,99 +77,102 @@ namespace CoporateBooking.Controllers.common
 
                 var tokenResult = await tokenResponse.Content.ReadAsStringAsync();
                 dynamic tokenJson = JsonConvert.DeserializeObject<dynamic>(tokenResult);
-                AirasiaTokan.token = tokenJson.data.token;
+                string token = tokenJson.data.token;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                // Set Auth Header  
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", AirasiaTokan.token);
-
-                // Step 3: GET /booking/retrieve/byRecordLocator/{pnr}  
-                string retrieveUrl = $"{AppUrlConstant.AirasiaPNRBooking}/{pnr}";
-                HttpResponseMessage retrieveResponse = await client.GetAsync(retrieveUrl);
+                // 3. Retrieve booking
+                var retrieveUrl = $"{AppUrlConstant.AirasiaPNRBooking}/{pnr}";
+                var retrieveResponse = await client.GetAsync(retrieveUrl);
                 if (!retrieveResponse.IsSuccessStatusCode)
                 {
-                    string err = await retrieveResponse.Content.ReadAsStringAsync();
+                    var err = await retrieveResponse.Content.ReadAsStringAsync();
                     ModelState.AddModelError("", $"Booking retrieval failed: {err}");
                     return View("Error");
                 }
 
-                string _bookingResult = await retrieveResponse.Content.ReadAsStringAsync();
-                //var objpnrBooking = JsonConvert.DeserializeObject<dynamic>(_bookingResult);
-               
-                TempData["BookingDetails"] = _bookingResult;
-
-                // Step 4: DELETE /v1/booking/journeys  
+                // 4. Delete journey
                 var deleteResult = await HttpHelperService.SendDeleteAsync(client, $"{AppUrlConstant.DeleteBooking}");
-                if (deleteResult.Success)
-                {
-                    // Step 5: PUT /v3/booking (commit)  
-                    var putResult = await HttpHelperService.SendPutAsync(client, $"{AppUrlConstant.AirasiaCommitBooking}");
-                    if (!putResult.Success)
-                    {
-                        ModelState.AddModelError("", $"PUT failed: {putResult.Error}");
-                        return View("Error");
-                    }
-
-                    // Step 6: GET /v1/booking (final confirmation)  
-                    HttpResponseMessage finalGet = await client.GetAsync($"{AppUrlConstant.AirasiaGetBoking}");
-                    if (finalGet.IsSuccessStatusCode)
-                    {
-                        string _finalStatus = await finalGet.Content.ReadAsStringAsync();
-                        var objcancelBooking = JsonConvert.DeserializeObject<dynamic>(_finalStatus);
-
-                        Breakdown breakdown = new Breakdown();
-                        breakdown.balanceDue = objcancelBooking.data.breakdown.balanceDue;
-                        breakdown.totalAmount = objcancelBooking.data.breakdown.totalAmount;
-
-                        var identity = (ClaimsIdentity)User.Identity;
-                        IEnumerable<Claim> claims = identity.Claims;
-                        var userEmail = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-
-                        Logs logs = new Logs();
-                        logs.WriteLogs(_finalStatus, "Cancel", "AirAsiaOneWay", "oneway");
-
-                        // Create request object for the API
-                        var cancelRequest = new
-                        {
-                            RecordLocator = pnr,
-                            Status = 3,
-                            UserEmail = userEmail,
-                            BalanceDue = breakdown.balanceDue,
-                            TotalAmount = breakdown.totalAmount
-                        };
-
-                        string jsonPayload = JsonConvert.SerializeObject(cancelRequest);
-                        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-                        string url = $"{AppUrlConstant.CancleStatus}";
-                        HttpResponseMessage responsecancel = await client.PostAsync(url, content);
-
-                        if (!responsecancel.IsSuccessStatusCode)
-                        {
-                            string error = await responsecancel.Content.ReadAsStringAsync();
-                            ModelState.AddModelError("", $"Cancellation status update failed: {error}");
-                            return View("Error");
-                        }
-
-                        TempData["Success"] = "Booking cancellation session flow completed successfully.";
-                        TempData["FinalStatus"] = _finalStatus;
-                        return RedirectToAction("MyBooking", "Booking");
-                    }
-
-                    else
-                    {
-                        string error = await finalGet.Content.ReadAsStringAsync();
-                        ModelState.AddModelError("", $"Final booking status check failed. {error}");
-                        return View("Error");
-                    }
-                }
-                else
+                if (!deleteResult.Success)
                 {
                     ModelState.AddModelError("", $"DELETE failed: {deleteResult.Error}");
+                    return View("Error");
                 }
 
-                return View("Error");
+                // 5. PUT commit
+                var putResult = await HttpHelperService.SendPutAsync(client, $"{AppUrlConstant.AirasiaCommitBooking}");
+                if (!putResult.Success)
+                {
+                    ModelState.AddModelError("", $"PUT failed: {putResult.Error}");
+                    return View("Error");
+                }
+
+                // 6. Final GET booking
+                var finalGet = await client.GetAsync($"{AppUrlConstant.AirasiaGetBoking}");
+                if (!finalGet.IsSuccessStatusCode)
+                {
+                    var error = await finalGet.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("", $"Final booking status check failed. {error}");
+                    return View("Error");
+                }
+
+                var _finalStatus = await finalGet.Content.ReadAsStringAsync();
+                dynamic objcancelBooking = JsonConvert.DeserializeObject<dynamic>(_finalStatus);
+                decimal balanceDue = objcancelBooking.data.breakdown.balanceDue;
+                decimal totalAmount = objcancelBooking.data.breakdown.totalAmount;
+
+                var email = User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+                Logs logs = new Logs();
+                logs.WriteLogs(_finalStatus, "Cancel", "AirAsiaOneWay", "oneway");
+
+                var cancelRequest = new
+                {
+                    RecordLocator = pnr,
+                    Status = 3,
+                    UserEmail = email,
+                    BalanceDue = balanceDue,
+                    TotalAmount = totalAmount
+                };
+
+                string jsonPayload = JsonConvert.SerializeObject(cancelRequest);
+                var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                var responsecancel = await client.PostAsync(AppUrlConstant.CancleStatus, content);
+
+                if (!responsecancel.IsSuccessStatusCode)
+                {
+                    string err = await responsecancel.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("", $"Cancellation status update failed: {err}");
+                    return View("Error");
+                }
+
+                TempData["Success"] = "Booking cancellation session flow completed successfully.";
+                TempData["FinalStatus"] = _finalStatus;
+                return RedirectToAction("MyBooking", "Booking");
             }
         }
+
+        private async Task<IActionResult> CancelPartialAirAsiaBooking(string pnr, List<string> passengerKeys)
+        {
+            // TODO: Call AirAsia SSR delete or passenger-specific cancel API if available
+            ModelState.AddModelError("", "Partial cancellation for AirAsia is not yet implemented.");
+            return View("Error");
+        }
+
+        private async Task<IActionResult> CancelCompleteOtherAirline(string pnr)
+        {
+            // TODO: Implement logic for airline 2 full cancellation
+            ModelState.AddModelError("", "Complete cancellation for this airline is not yet implemented.");
+            return View("Error");
+        }
+
+        private async Task<IActionResult> CancelPartialOtherAirline(string pnr, List<string> passengerKeys)
+        {
+            // TODO: Implement logic for airline 2 partial cancellation
+            ModelState.AddModelError("", "Partial cancellation for this airline is not yet implemented.");
+            return View("Error");
+        }
+
+
 
         [HttpGet]
         public IActionResult CancelRefund(string fid, string p)
