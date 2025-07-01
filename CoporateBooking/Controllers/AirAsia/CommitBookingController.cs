@@ -792,7 +792,10 @@ namespace OnionConsumeWebAPI.Controllers
                     tb_PassengerTotalobj.BookingID = JsonObjPNRBooking.data.bookingKey;
                     if (JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices != null)
                     {
-                        tb_PassengerTotalobj.SpecialServicesAmount = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.total;
+                        if (JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.total != null)
+                        {
+                            tb_PassengerTotalobj.SpecialServicesAmount = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.total;
+                        }
                         if (JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.taxes != null)
                         {
                             tb_PassengerTotalobj.SpecialServicesAmount_Tax = JsonObjPNRBooking.data.breakdown.passengerTotals.specialServices.taxes;
