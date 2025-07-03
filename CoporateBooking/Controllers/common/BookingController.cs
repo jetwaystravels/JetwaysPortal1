@@ -139,5 +139,50 @@ namespace CoporateBooking.Controllers.common
             }
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> GetBookingData(string tab, int page = 1, int pageSize = 10)
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            var userEmail = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            if (string.IsNullOrEmpty(userEmail))
+                return BadRequest("User not authenticated");
+
+            try
+            {
+                using var client = new HttpClient();
+                var requestUrl = $"{AppUrlConstant.Getflightbooking}?userEmail={Uri.EscapeDataString(userEmail)}";
+                var response = await client.GetAsync(requestUrl);
+
+                if (!response.IsSuccessStatusCode)
+                    return StatusCode((int)response.StatusCode, "Failed to retrieve data");
+
+                var result = await response.Content.ReadAsStringAsync();
+                var bookings = JsonConvert.DeserializeObject<List<Booking>>(result);
+
+                var filtered = tab switch
+                {
+                    "active" => bookings.Where(x => x.cancelstatus == 0 && x.DepartureDate >= DateTime.Today),
+                    "cancelled" => bookings.Where(x => x.cancelstatus == 3),
+                    "completed" => bookings.Where(x => x.cancelstatus != 3 && x.DepartureDate < DateTime.Today),
+                    _ => Enumerable.Empty<Booking>()
+                };
+
+                var paged = filtered
+                            .OrderByDescending(x => x.DepartureDate)
+                            .Skip((page - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList();
+
+                return Json(paged);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error: " + ex.Message);
+            }
+        }
+
+
     }
 }

@@ -4478,8 +4478,8 @@ a.login-otp {
         box-shadow: 0 0 9px 0 rgba(0, 0, 0, .14);
         border-radius: 0 0 8px 8px;
         padding: 25px 15px;
-        height: 360px;
-        overflow-y: auto;
+        /*height: 360px;
+        overflow-y: auto;*/
     }
 
     .m-booking #search {

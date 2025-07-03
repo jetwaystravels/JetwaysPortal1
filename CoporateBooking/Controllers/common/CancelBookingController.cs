@@ -277,7 +277,7 @@ namespace CoporateBooking.Controllers.common
                 var cancelRequest = new
                 {                    
                     RecordLocator = newRecordLocator,
-                    Status = 3,
+                    Status = 1,
                     UserEmail = email,
                     BalanceDue = balanceDue,
                     TotalAmount = totalAmount
