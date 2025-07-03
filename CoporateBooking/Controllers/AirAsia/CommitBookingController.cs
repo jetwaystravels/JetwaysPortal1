@@ -1000,7 +1000,7 @@ namespace OnionConsumeWebAPI.Controllers
                             foreach (var fee in items.Value.fees)
                             {
                                 string ssrCode = fee.ssrCode?.ToString();
-                                if (ssrCode != null)
+                                if (!string.IsNullOrEmpty(ssrCode))
                                 {
                                     if (ssrCode.StartsWith("P"))
                                     {
@@ -1014,7 +1014,7 @@ namespace OnionConsumeWebAPI.Controllers
                                             carryBagesConcatenation += fee.ssrCode + "-" + BaggageName + ",";
                                         }
                                     }
-                                    else if (ssrCode.StartsWith("V"))
+                                    else
                                     {
                                         if (fee.flightReference.ToString().Contains(oridest) == true)
                                         {
@@ -1041,24 +1041,27 @@ namespace OnionConsumeWebAPI.Controllers
                                         double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
                                         if (serviceChargeCode != null)
                                         {
-                                            if (serviceChargeCode.StartsWith("SE") && serviceCharge.type == "6")
+                                            if (fee.flightReference.ToString().Contains(oridest) == true)
                                             {
-                                                TotalAmount_Seat += amount;
-                                                TicketSeat[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Seat;
-                                            }
-                                            else if (serviceCharge.type == "3")
-                                            {
-                                                TotalAmount_Seat_tax += Convert.ToDecimal(amount);
-                                            }
-                                            else if (serviceCharge.type == "1")
-                                            {
-                                                TotalAmount_Seat_discount += Convert.ToDecimal(amount);
+                                                if (serviceChargeCode.StartsWith("SE") && serviceCharge.type == "6")
+                                                {
+                                                    TotalAmount_Seat = amount;
+                                                    TicketSeat[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Seat;
+                                                }
+                                                else if (serviceCharge.type == "3")
+                                                {
+                                                    TotalAmount_Seat_tax += Convert.ToDecimal(amount);
+                                                }
+                                                else if (serviceCharge.type == "1")
+                                                {
+                                                    TotalAmount_Seat_discount += Convert.ToDecimal(amount);
+                                                }
                                             }
                                         }
 
                                     }
                                 }
-                                else if (fee.code.ToString().StartsWith("V"))
+                                else if (!fee.code.ToString().StartsWith("P") && !fee.code.ToString().StartsWith("SE"))
                                 {
                                     foreach (var serviceCharge in fee.serviceCharges)
                                     {
@@ -1066,20 +1069,22 @@ namespace OnionConsumeWebAPI.Controllers
                                         double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
                                         if (serviceChargeCode != null)
                                         {
+                                            if (fee.flightReference.ToString().Contains(oridest) == true)
+                                            {
 
-
-                                            if (serviceChargeCode.StartsWith("V") && serviceCharge.type == "6")
-                                            {
-                                                TotalAmount_Meals += amount;
-                                                TicketMealAmount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Meals;
-                                            }
-                                            else if (serviceCharge.type == "3")
-                                            {
-                                                TotalAmount_Meals_tax += Convert.ToDecimal(amount);
-                                            }
-                                            else if (serviceCharge.type == "1")
-                                            {
-                                                TotalAmount_Meals_discount += Convert.ToDecimal(amount);
+                                                if (serviceCharge.type == "6")
+                                                {
+                                                    TotalAmount_Meals = amount;
+                                                    TicketMealAmount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Meals;
+                                                }
+                                                else if (serviceCharge.type == "3")
+                                                {
+                                                    TotalAmount_Meals_tax += Convert.ToDecimal(amount);
+                                                }
+                                                else if (serviceCharge.type == "1")
+                                                {
+                                                    TotalAmount_Meals_discount += Convert.ToDecimal(amount);
+                                                }
                                             }
 
                                         }
@@ -1092,11 +1097,11 @@ namespace OnionConsumeWebAPI.Controllers
                                     {
                                         string serviceChargeCode = serviceCharge.code?.ToString();
                                         double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
-                                        if (serviceChargeCode != null)
+                                        if (serviceChargeCode != null && isegment==0)
                                         {
                                             if (serviceChargeCode.StartsWith("P") && serviceCharge.type == "6")
                                             {
-                                                TotalAmount_Baggage += amount;
+                                                TotalAmount_Baggage = amount;
                                                 TicketCarryBagAMount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Baggage;
                                             }
                                             else if (serviceCharge.type == "3")

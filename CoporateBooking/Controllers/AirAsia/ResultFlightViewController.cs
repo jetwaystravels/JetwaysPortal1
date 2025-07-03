@@ -1352,6 +1352,15 @@ namespace OnionConsumeWebAPI.Controllers
 					seatMealdetail.Meals = objMongoHelper.Zip(JsonConvert.SerializeObject(SSRAvailabiltyResponceobj));
 
 				}
+                else
+                {
+                    var _responseSSRAvailabilty = responseSSRAvailabilty.Content.ReadAsStringAsync().Result;
+                    if (_responseSSRAvailabilty.Contains("rawMessage") && _responseSSRAvailabilty.Contains("errors"))
+                    {
+                        ViewBag.ErrorMessage = Regex.Match(_responseSSRAvailabilty.ToString(), "rawMessage\":\"(?<msg>[\\s\\S]*?)\"", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["msg"].Value;
+                        return View("service-error-msg");
+                    }
+                }
                 #endregion
 
                 seatMealdetail.Supp = "AirAsia";

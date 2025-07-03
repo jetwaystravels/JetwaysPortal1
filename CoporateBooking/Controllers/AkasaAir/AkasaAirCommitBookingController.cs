@@ -1062,18 +1062,21 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                         double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
                                         if (serviceChargeCode != null)
                                         {
-                                            if (serviceChargeCode.StartsWith("SFE") && serviceCharge.type == "6")
+                                            if (fee.flightReference.ToString().Contains(oridest) == true)
                                             {
-                                                TotalAmount_Seat += amount;
-                                                TicketSeat[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Seat;
-                                            }
-                                            else if (serviceCharge.type == "3")
-                                            {
-                                                TotalAmount_Seat_tax += Convert.ToDecimal(amount);
-                                            }
-                                            else if (serviceCharge.type == "1")
-                                            {
-                                                TotalAmount_Seat_discount += Convert.ToDecimal(amount);
+                                                if (serviceChargeCode.StartsWith("SFE") && serviceCharge.type == "6")
+                                                {
+                                                    TotalAmount_Seat = amount;
+                                                    TicketSeat[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Seat;
+                                                }
+                                                else if (serviceCharge.type == "3")
+                                                {
+                                                    TotalAmount_Seat_tax += Convert.ToDecimal(amount);
+                                                }
+                                                else if (serviceCharge.type == "1")
+                                                {
+                                                    TotalAmount_Seat_discount += Convert.ToDecimal(amount);
+                                                }
                                             }
                                         }
 
@@ -1087,20 +1090,22 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                         double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
                                         if (serviceChargeCode != null)
                                         {
+                                            if (fee.flightReference.ToString().Contains(oridest) == true)
+                                            {
 
-
-                                            if ((serviceChargeCode.StartsWith("P") || serviceChargeCode.StartsWith("C")) && serviceCharge.type == "6")
-                                            {
-                                                TotalAmount_Meals += amount;
-                                                TicketMealAmount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Meals;
-                                            }
-                                            else if (serviceCharge.type == "3")
-                                            {
-                                                TotalAmount_Meals_tax += Convert.ToDecimal(amount);
-                                            }
-                                            else if (serviceCharge.type == "1")
-                                            {
-                                                TotalAmount_Meals_discount += Convert.ToDecimal(amount);
+                                                if ((serviceChargeCode.StartsWith("P") || serviceChargeCode.StartsWith("C")) && serviceCharge.type == "6")
+                                                {
+                                                    TotalAmount_Meals = amount;
+                                                    TicketMealAmount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Meals;
+                                                }
+                                                else if (serviceCharge.type == "3")
+                                                {
+                                                    TotalAmount_Meals_tax += Convert.ToDecimal(amount);
+                                                }
+                                                else if (serviceCharge.type == "1")
+                                                {
+                                                    TotalAmount_Meals_discount += Convert.ToDecimal(amount);
+                                                }
                                             }
 
                                         }
@@ -1113,11 +1118,11 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                     {
                                         string serviceChargeCode = serviceCharge.code?.ToString();
                                         double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
-                                        if (serviceChargeCode != null)
+                                        if (serviceChargeCode != null && isegment == 0)
                                         {
                                             if (serviceChargeCode.StartsWith("X") && serviceCharge.type == "6")
                                             {
-                                                TotalAmount_Baggage += amount;
+                                                TotalAmount_Baggage = amount;
                                                 TicketCarryBagAMount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Baggage;
                                             }
                                             else if (serviceCharge.type == "3")
@@ -1143,7 +1148,20 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                             tb_Passengerobj.BaggageTotalAmountTax = TotalAmount_Baggage_tax;
                             tb_Passengerobj.BaggageTotalAmountTax_discount = TotalAmount_Baggage_discount;
                             tb_Passengerobj.Carrybages = carryBagesConcatenation.TrimEnd(',');
-                            tb_Passengerobj.MealsCode = MealConcatenation.TrimEnd(',');
+                            if (string.IsNullOrEmpty(MealConcatenation.TrimEnd(',')))
+                            {
+                                string data=htmealdata[tb_Passengerobj.PassengerKey.ToString()+"_"+ JsonObjPNRBooking.data.journeys[0].segments[isegment].designator.origin+"_"+ JsonObjPNRBooking.data.journeys[0].segments[isegment].designator.destination].ToString();
+                                var MealName = MealImageList.GetAllmeal()
+                                                .Where(x => ((string)data).Contains(x.MealCode))
+                                                .Select(x => x.MealImage)
+                                                .FirstOrDefault();
+                                MealConcatenation += data + "-" + MealName + ",";
+                                tb_Passengerobj.MealsCode = MealConcatenation.TrimEnd(',');
+                            }
+                            else
+                            {
+                                tb_Passengerobj.MealsCode = MealConcatenation.TrimEnd(',');
+                            }
                             tb_PassengerDetailsList.Add(tb_Passengerobj);
 
 

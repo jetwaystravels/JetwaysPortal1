@@ -37,15 +37,7 @@ namespace OnionArchitectureAPI.Controllers
 
 
         [HttpPost("UpdateCancelStatus")]
-        //public async Task<IActionResult> UpdateCancelStatus([FromQuery] string recordLocator, [FromQuery] int status)
-        //{
-        //    var result = await _bookingDetail.UpdateCancelStatusAsync(recordLocator, status);
-        //    if (result)
-        //    {
-        //        return Ok(new { message = "Booking status updated successfully." });
-        //    }
-        //    return BadRequest(new { message = "Failed to update booking status." });
-        //}
+       
         public async Task<IActionResult> UpdateCancelStatus([FromBody] CancelStatusRequest req)
         {
             bool ok = await _bookingDetail.UpdateCancelStatusAsync(

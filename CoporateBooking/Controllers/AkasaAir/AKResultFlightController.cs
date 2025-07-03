@@ -806,6 +806,11 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     var _AkasaResponseSSRAvailabiltyexception = responseAkasaSSRAvailabilty.Content.ReadAsStringAsync().Result;
 
                     logs.WriteLogs(_AkasaResponseSSRAvailabiltyexception, "5-mealResponse", "AkasaOneWay", "oneway");
+                    if (_AkasaResponseSSRAvailabiltyexception.Contains("rawMessage") && _AkasaResponseSSRAvailabiltyexception.Contains("errors"))
+                    {
+                        ViewBag.ErrorMessage = Regex.Match(_AkasaResponseSSRAvailabiltyexception.ToString(), "rawMessage\":\"(?<msg>[\\s\\S]*?)\"", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["msg"].Value;
+                        return View("service-error-msg");
+                    }
                 }
                 #endregion
                 #region SeatMap
