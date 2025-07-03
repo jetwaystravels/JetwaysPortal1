@@ -550,7 +550,7 @@
             document.getElementById("popbx-" + id).style.display = "block";
 
             $.ajax({
-                    url: "/CancelBooking/CancelRefund?fid=" + encodeURIComponent(id) + "&p=" + encodeURIComponent(pnr),
+                    url: "/CancelBooking/CancelRefund?flightid=" + encodeURIComponent(id) + "&pnr=" + encodeURIComponent(pnr),
                     type: "GET",
                     contentType: "application/json",
                     success: function (data) {

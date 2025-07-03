@@ -705,7 +705,14 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                     tb_Booking.BookingType = "Corporate-" + JsonObjPNRBooking.data.journeys[0].segments[0].fares[0].productClass + " (" + fareName.Faredesc + ")";
                     LegalEntity legal = new LegalEntity();
                     legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
-                    tb_Booking.CompanyName = legal.BillingEntityFullName;
+                    if (legal != null)
+                    {
+                        tb_Booking.CompanyName = legal.BillingEntityFullName;
+                    }
+                    else
+                    {
+                        tb_Booking.CompanyName = "";
+                    }
                     tb_Booking.TripType = "OneWay";
                     tb_Booking.BookingID = JsonObjPNRBooking.data.bookingKey;
                     tb_Booking.RecordLocator = JsonObjPNRBooking.data.recordLocator;

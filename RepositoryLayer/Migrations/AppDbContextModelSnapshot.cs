@@ -51,6 +51,49 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("tb_admin");
                 });
 
+            modelBuilder.Entity("DomainLayer.Model.Booking", b =>
+                {
+                    b.Property<int>("AirLineID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("BookedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("BookingStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DepartureDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Destination")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FlightID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Origin")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Passengers")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecordLocator")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Segments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TripType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("cancelstatus")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView(null, (string)null);
+                });
+
             modelBuilder.Entity("DomainLayer.Model.CP_GSTModel", b =>
                 {
                     b.Property<int>("Id")
@@ -274,6 +317,64 @@ namespace RepositoryLayer.Migrations
                     b.HasKey("username");
 
                     b.ToTable("TblLogin");
+                });
+
+            modelBuilder.Entity("DomainLayer.Model.RefundRequest", b =>
+                {
+                    b.Property<int>("RefundID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RefundID"));
+
+                    b.Property<DateTime?>("ApprovalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ApprovedBy")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("BookingAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("BookingID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("DeductionAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("PaymentReversed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RecordLocator")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("RefundAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RefundReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefundStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("RefundID");
+
+                    b.ToTable("RefundRequests");
                 });
 
             modelBuilder.Entity("DomainLayer.Model.TicketBooking", b =>
@@ -591,7 +692,15 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BookingStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("BookingType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -652,10 +761,6 @@ namespace RepositoryLayer.Migrations
 
                     b.Property<double>("SpecialServicesTotal_Tax")
                         .HasColumnType("float");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("TotalAmount")
                         .HasColumnType("float");
@@ -748,6 +853,12 @@ namespace RepositoryLayer.Migrations
 
                     b.Property<string>("Inf_TypeCode")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("InftAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("InftAmount_Tax")
+                        .HasColumnType("float");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -862,17 +973,17 @@ namespace RepositoryLayer.Migrations
                     b.Property<double>("SeatAdjustment")
                         .HasColumnType("float");
 
+                    b.Property<double>("SpecialServicesAmount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("SpecialServicesAmount_Tax")
+                        .HasColumnType("float");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("TotalBookingAmount")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalMealsAmount")
-                        .HasColumnType("float");
-
-                    b.Property<double>("TotalMealsAmount_Tax")
                         .HasColumnType("float");
 
                     b.Property<int>("TotalPax")

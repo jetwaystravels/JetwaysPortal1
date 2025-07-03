@@ -26,9 +26,12 @@ namespace OnionArchitectureAPI.Controllers
         //}
 
         [HttpGet("GetbookingDetail")]
-        public async Task<IActionResult> GetbookingDetail([FromQuery] string? flightId = null, [FromQuery] string? recordLocator = null)
+        public async Task<IActionResult> GetbookingDetail([FromQuery] string userEmail)
         {
-            var data = await _bookingDetail.GetAllAsync(flightId, recordLocator);
+            if (string.IsNullOrWhiteSpace(userEmail))
+                return BadRequest("userEmail is required.");
+
+            var data = await _bookingDetail.GetAllAsync(userEmail);
             return Ok(data);
         }
 

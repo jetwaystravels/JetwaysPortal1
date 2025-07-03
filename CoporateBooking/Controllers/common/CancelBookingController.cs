@@ -175,19 +175,52 @@ namespace CoporateBooking.Controllers.common
 
 
         [HttpGet]
-        public IActionResult CancelRefund(string fid, string p)
+        public async Task<IActionResult> CancelRefundAsync(string flightid, string pnr)
         {
-            // Example response (replace with real refund logic)
-            var refundDetails = new
+            RefundRequest RefundRequestList = null;
+          
+            try
             {
-                RefundId = fid,
-                PNR = p,
-                Amount = 4500.00,
-                Status = "Processed"
-            };
+                using (HttpClient client = new HttpClient())
+                {
+                    // Build the query string if needed
+                    var apiUrl = $"{AppUrlConstant.GetRefund}?bookingId={flightid}&recordLocator={pnr}";
 
-            // Return as JSON
-            return Json(refundDetails);
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = await response.Content.ReadAsStringAsync();
+                        RefundRequestList = JsonConvert.DeserializeObject<RefundRequest>(result);
+
+                        return View(RefundRequestList); // Pass to Razor View
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Failed to load refund data.";
+                        return View(RefundRequestList);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "An error occurred: " + ex.Message;
+                return View(RefundRequestList);
+            }
+
+
+
+            //// Example response (replace with real refund logic)
+            //var refundDetails = new
+            //{
+            //    RefundId = fid,
+            //    PNR = p,
+            //    Amount = 4500.00,
+            //    Status = "Processed"
+            //};
+
+            //// Return as JSON
+            //return Json(refundDetails);
         }
 
     }

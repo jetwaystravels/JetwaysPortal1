@@ -47,6 +47,8 @@ builder.Services.AddScoped<IGSTDetails, GSTDetailsServices>();
 builder.Services.AddScoped<IAdmin, AdminService>();
 builder.Services.AddScoped<ICP_GstDetail<CP_GSTModel>, CP_GSTService>();
 builder.Services.AddScoped<IBooking<Booking>, BookingService>();
+builder.Services.AddScoped<IRefundRequest<RefundRequest>, RefundRequestService>();
+
 
 // Core ASP.NET and AWS Lambda services
 builder.Services.AddHttpContextAccessor();

@@ -17,14 +17,18 @@ namespace CoporateBooking.Controllers.common
         public async Task<IActionResult> MyBookingAsync()
         {
             List<Booking> bookingList = null;
+            var identity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+            var userEmail = claims.Where(c => c.Type == ClaimTypes.Email).ToList()[0].Value;
 
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
                     // Make GET call
-                    HttpResponseMessage response = await client.GetAsync(AppUrlConstant.Getflightbooking);
-
+                    //HttpResponseMessage response = await client.GetAsync(AppUrlConstant.Getflightbooking);
+                    var requestUrl = $"{AppUrlConstant.Getflightbooking}?userEmail={Uri.EscapeDataString(userEmail)}";
+                    HttpResponseMessage response = await client.GetAsync(requestUrl);
                     if (response.IsSuccessStatusCode)
                     {
                         var result = await response.Content.ReadAsStringAsync();

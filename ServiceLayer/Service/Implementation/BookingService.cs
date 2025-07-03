@@ -21,17 +21,19 @@ namespace ServiceLayer.Service.Implementation
             this._dbContext = dbContext;
         }
 
-        
-        public async Task<IEnumerable<Booking>> GetAllAsync(string? flightId = null, string? recordLocator = null)
+
+        public async Task<IEnumerable<Booking>> GetAllAsync(string userEmail)
         {
-            var flightIdParam = new SqlParameter("@FlightID", (object?)flightId ?? DBNull.Value);
-            var recordLocatorParam = new SqlParameter("@RecordLocator", (object?)recordLocator ?? DBNull.Value);
+            if (string.IsNullOrWhiteSpace(userEmail))
+                throw new ArgumentException("userEmail is required", nameof(userEmail));
+
+            var userEmailParam = new SqlParameter("@UserEmail", userEmail);
 
             return await _dbContext.GetBookingDetails
-                .FromSqlRaw("EXEC sp_GetFlightBookingDetails @FlightID, @RecordLocator", flightIdParam, recordLocatorParam)
+                .FromSqlRaw("EXEC sp_GetFlightBookingDetails @UserEmail", userEmailParam)
                 .ToListAsync();
         }
-        
+
         public async Task<bool> UpdateCancelStatusAsync( string recordLocator, int status,string userEmail,decimal balanceDue, decimal totalAmount)
         {
             var recordLocatorParam = new SqlParameter("@RecordLocator", recordLocator);
