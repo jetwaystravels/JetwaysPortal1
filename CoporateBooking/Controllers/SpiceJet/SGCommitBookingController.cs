@@ -678,7 +678,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                 //breakdown.passengerTotals.seats.total += Convert.ToInt32(item2.Amount);
                                                 TotalMeal = passengerTotals.specialServices.total;
                                             }
-                                            if (item2.ChargeCode.StartsWith("E", StringComparison.OrdinalIgnoreCase) == true)
+                                            else if (item2.ChargeCode.StartsWith("E", StringComparison.OrdinalIgnoreCase) == true)
                                             {
                                                 passengerTotals.baggage.total += Convert.ToInt32(item2.Amount);
                                                 //breakdown.passengerTotals.seats.total += Convert.ToInt32(item2.Amount);
@@ -1094,7 +1094,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                             TotalAmount_Meals = amount;
                                                             //TicketMealAmount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Meals;
                                                         }
-                                                        else if (serviceCharge.ChargeType.ToString() == "IncludedTax")
+                                                        else if (serviceCharge.ChargeType.ToString() == "Tax")
                                                         {
                                                             TotalAmount_Meals_tax += Convert.ToDecimal(amount);
                                                         }
@@ -1153,7 +1153,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                             tb_Passengerobj.InftAmount = amount;
                                                             //TicketCarryBagAMount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Baggage;
                                                         }
-                                                        else if (serviceCharge.ChargeType.ToString() == "IncludedTax")
+                                                        else if (serviceCharge.ChargeType.ToString() == "Tax")
                                                         {
                                                             tb_Passengerobj.InftAmount_Tax += Convert.ToDouble(amount);
                                                         }
@@ -1171,7 +1171,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
 
                                             }
 
-                                            tb_Passengerobj.InftAmount -= tb_Passengerobj.InftAmount_Tax;
+                                            //tb_Passengerobj.InftAmount -= tb_Passengerobj.InftAmount_Tax;
                                         }
                                     }
 
