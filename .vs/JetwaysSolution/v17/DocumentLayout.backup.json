@@ -3,24 +3,36 @@
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\common\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\common\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\services\\print\\pdfticketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\services\\print\\pdfticketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\views\\booking\\mybooking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\views\\booking\\mybooking.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\controllers\\printticketcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\controllers\\printticketcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\common\\cancelbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\common\\cancelbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|d:\\jetwaysportal\\servicelayer\\service\\implementation\\printticketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\service\\implementation\\printticketservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\travelclick\\gdscommitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\travelclick\\gdscommitbookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\wwwroot\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\wwwroot\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|d:\\jetwaysportal\\servicelayer\\service\\interface\\iprintticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3FFBADD2-E883-4F25-8528-3950655D05A9}|ServiceLayer\\ServiceLayer.csproj|solutionrelative:servicelayer\\service\\interface\\iprintticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24025012-1E28-41BF-8E0A-3290BD775A25}|DomainLayer\\DomainLayer.csproj|d:\\jetwaysportal\\domainlayer\\model\\printticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24025012-1E28-41BF-8E0A-3290BD775A25}|DomainLayer\\DomainLayer.csproj|solutionrelative:domainlayer\\model\\printticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5133491-3295-4A63-A845-1A68BB3D7FB1}|RepositoryLayer\\RepositoryLayer.csproj|d:\\jetwaysportal\\repositorylayer\\dbcontextlayer\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5133491-3295-4A63-A845-1A68BB3D7FB1}|RepositoryLayer\\RepositoryLayer.csproj|solutionrelative:repositorylayer\\dbcontextlayer\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,66 +54,106 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GDSCommitBookingController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\TravelClick\\GDSCommitBookingController.cs",
-              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\TravelClick\\GDSCommitBookingController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\TravelClick\\GDSCommitBookingController.cs",
-              "RelativeToolTip": "CoporateBooking\\Controllers\\TravelClick\\GDSCommitBookingController.cs",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAowAsEAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\RepositoryLayer\\DbContextLayer\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "RepositoryLayer\\DbContextLayer\\AppDbContext.cs",
+              "ToolTip": "D:\\JetwaysPortal\\RepositoryLayer\\DbContextLayer\\AppDbContext.cs",
+              "RelativeToolTip": "RepositoryLayer\\DbContextLayer\\AppDbContext.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAA5wC8AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-03T11:17:06.998Z",
+              "WhenOpened": "2025-07-04T07:14:19.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Program.cs",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\Program.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Program.cs",
+              "RelativeToolTip": "OnionArchitectureAPI\\Program.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAswDQAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-04T07:06:44.687Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BookingController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\BookingController.cs",
-              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\common\\BookingController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\BookingController.cs",
-              "RelativeToolTip": "CoporateBooking\\Controllers\\common\\BookingController.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAIAwwDkAAAAIAAAAAAAAAA==",
+              "Title": "PdfTicketService.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Services\\Print\\PdfTicketService.cs",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\Services\\Print\\PdfTicketService.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Services\\Print\\PdfTicketService.cs",
+              "RelativeToolTip": "OnionArchitectureAPI\\Services\\Print\\PdfTicketService.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwBcAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-03T11:01:27.583Z",
+              "WhenOpened": "2025-07-04T07:00:30.003Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "style.css",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\wwwroot\\css\\style.css",
-              "RelativeDocumentMoniker": "CoporateBooking\\wwwroot\\css\\style.css",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\wwwroot\\css\\style.css",
-              "RelativeToolTip": "CoporateBooking\\wwwroot\\css\\style.css",
-              "ViewState": "AgIAAGQRAAAAAAAAAAArwIIRAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-07-03T10:30:26.127Z"
+              "DocumentIndex": 7,
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "RelativeToolTip": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-04T06:49:06.426Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MyBooking.cshtml",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Views\\Booking\\MyBooking.cshtml",
-              "RelativeDocumentMoniker": "CoporateBooking\\Views\\Booking\\MyBooking.cshtml",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Views\\Booking\\MyBooking.cshtml",
-              "RelativeToolTip": "CoporateBooking\\Views\\Booking\\MyBooking.cshtml",
-              "ViewState": "AgIAAOIBAAAAAAAAAAAswPcBAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-03T10:20:02.152Z",
+              "Title": "PrintTicketController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\PrintTicketController.cs",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\Controllers\\PrintTicketController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\PrintTicketController.cs",
+              "RelativeToolTip": "OnionArchitectureAPI\\Controllers\\PrintTicketController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB0AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-04T06:48:45.592Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "CancelBookingController.cs",
-              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
-              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
-              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
-              "RelativeToolTip": "CoporateBooking\\Controllers\\common\\CancelBookingController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Title": "PrintTicketService.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Implementation\\PrintTicketService.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Service\\Implementation\\PrintTicketService.cs",
+              "ToolTip": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Implementation\\PrintTicketService.cs",
+              "RelativeToolTip": "ServiceLayer\\Service\\Implementation\\PrintTicketService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAApwBwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-03T10:06:45.427Z",
+              "WhenOpened": "2025-07-04T06:31:13.756Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IPrintTicket.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Interface\\IPrintTicket.cs",
+              "RelativeDocumentMoniker": "ServiceLayer\\Service\\Interface\\IPrintTicket.cs",
+              "ToolTip": "D:\\JetwaysPortal\\ServiceLayer\\Service\\Interface\\IPrintTicket.cs",
+              "RelativeToolTip": "ServiceLayer\\Service\\Interface\\IPrintTicket.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-04T06:29:36.094Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Printticket.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\DomainLayer\\Model\\Printticket.cs",
+              "RelativeDocumentMoniker": "DomainLayer\\Model\\Printticket.cs",
+              "ToolTip": "D:\\JetwaysPortal\\DomainLayer\\Model\\Printticket.cs",
+              "RelativeToolTip": "DomainLayer\\Model\\Printticket.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-04T06:27:39.777Z",
               "EditorCaption": ""
             }
           ]

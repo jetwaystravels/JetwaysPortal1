@@ -252,6 +252,11 @@ namespace OnionArchitectureAPI.Services.Indigo
                         p1.PassengerInfo.Gender = Gender.Female;
                         p1.PassengerInfo.WeightCategory = WeightCategory.Female;
                     }
+                    //FrequentFlyer Number
+                    p1.PassengerProgram = new PassengerProgram();
+                    p1.PassengerProgram.ProgramCode = "6E";
+                    p1.PassengerProgram.ProgramNumber = "123456789";
+
                     p1.PassengerTypeInfos = new PassengerTypeInfo[1];
                     p1.PassengerTypeInfos[0] = new PassengerTypeInfo();
                     p1.PassengerTypeInfos[0].DOBSpecified = true;
@@ -332,6 +337,11 @@ namespace OnionArchitectureAPI.Services.Indigo
                             p1.PassengerInfo.Gender = Gender.Female;
                             p1.PassengerInfo.WeightCategory = WeightCategory.Child;
                         }
+                        //Frequent flyer Number
+                        p1.PassengerProgram = new PassengerProgram();
+                        p1.PassengerProgram.ProgramCode = "6E";
+                        p1.PassengerProgram.ProgramNumber = "245678958";
+
                         p1.PassengerTypeInfos = new PassengerTypeInfo[1];
                         p1.PassengerTypeInfos[0] = new PassengerTypeInfo();
                         p1.PassengerTypeInfos[0].DOBSpecified = true;

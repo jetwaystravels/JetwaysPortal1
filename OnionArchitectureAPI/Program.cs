@@ -7,6 +7,7 @@ using DomainLayer.Model;
 using ServiceLayer.Service.Implementation;
 using ServiceLayer.Service.Interface;
 using Azure.Core;
+using OnionArchitectureAPI.Services.Print;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +49,8 @@ builder.Services.AddScoped<IAdmin, AdminService>();
 builder.Services.AddScoped<ICP_GstDetail<CP_GSTModel>, CP_GSTService>();
 builder.Services.AddScoped<IBooking<Booking>, BookingService>();
 builder.Services.AddScoped<IRefundRequest<RefundRequest>, RefundRequestService>();
-
+builder.Services.AddScoped<IPrintTicket<Printticket>, PrintTicketService>();
+builder.Services.AddSingleton<PdfTicketService>();
 
 // Core ASP.NET and AWS Lambda services
 builder.Services.AddHttpContextAccessor();

@@ -1094,7 +1094,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                                             TotalAmount_Meals = amount;
                                                             //TicketMealAmount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Meals;
                                                         }
-                                                        else if (serviceCharge.ChargeType.ToString() == "Tax")
+                                                        else if (serviceCharge.ChargeType.ToString() == "Tax" || serviceCharge.ChargeType.ToString() == "IncludedTax")
                                                         {
                                                             TotalAmount_Meals_tax += Convert.ToDecimal(amount);
                                                         }

@@ -45,6 +45,7 @@ namespace RepositoryLayer.DbContextLayer
         public DbSet<Booking> GetBookingDetails { get; set; }
         public DbSet<RefundRequest> RefundRequests { get; set; }
 
+        public DbSet<Printticket> ticketprint { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

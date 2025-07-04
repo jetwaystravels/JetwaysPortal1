@@ -825,6 +825,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                         tb_Passengerobj.Gender = "Male";
                                     else if (tb_Passengerobj.Title == "MS" || tb_Passengerobj.Title == "MRS" || tb_Passengerobj.Title == "MISS")
                                         tb_Passengerobj.Gender = "Female";
+                                    tb_Passengerobj.FrequentFlyerNumber = items.PassengerProgram.ProgramNumber;
                                     tb_Passengerobj.InftAmount = 0.0;// to do
                                     tb_Passengerobj.InftAmount_Tax = 0.0;// to do
                                     double AdtAmount = 0.0;
