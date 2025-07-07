@@ -550,7 +550,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                     //SSR
                                     foreach (Match mitem in Regex.Matches(strResponse, @"common_v52_0:BookingTraveler Key=""(?<passengerKey>[\s\S]*?)""[\s\S]*?BookingTravelerName[\s\S]*?First=""(?<First>[\s\S]*?)""\s*Last=""(?<Last>[\s\S]*?)""(?<data>[\s\S]*?)</common_v52_0:BookingTraveler>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                     {
-                                        if(mitem.Value.Contains("TravelerType=\"INF\""))
+                                        if (mitem.Value.Contains("TravelerType=\"INF\""))
                                         {
                                             continue;
                                         }
@@ -589,7 +589,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                                     htbagdata.Add(mitem.Groups["First"].Value.Trim() + "_" + mitem.Groups["Last"].Value.Trim() + "_" + htsegmentdetails[item.Groups["segmentkey"].Value.Trim()].ToString(), item.Groups["BagWeight"].Value.Trim());
 
                                                 }
-                                                
+
                                             }
                                             catch (Exception ex)
                                             {
@@ -609,14 +609,14 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                 #endregion
 
 
-                                foreach (Match bagitem in Regex.Matches(strResponse, @"OptionalService Type=""Baggage""\s*TotalPrice=""INR(?<BagPrice>[\s\S]*?)""",RegexOptions.IgnoreCase|RegexOptions.Multiline))
+                                foreach (Match bagitem in Regex.Matches(strResponse, @"OptionalService Type=""Baggage""\s*TotalPrice=""INR(?<BagPrice>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                 {
                                     passengerTotals.baggage.total += Convert.ToInt32(bagitem.Groups["BagPrice"].Value.Trim());
                                 }
 
                                 foreach (Match bagitem in Regex.Matches(strResponse, @"OptionalService Type=""PreReservedSeatAssignment""\s*TotalPrice=""INR(?<SeatPrice>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                 {
-                                    returnSeats.total+= Convert.ToInt32(bagitem.Groups["SeatPrice"].Value.Trim());
+                                    returnSeats.total += Convert.ToInt32(bagitem.Groups["SeatPrice"].Value.Trim());
                                 }
 
                                 int passengercount = availibiltyRQGDS.adultcount + availibiltyRQGDS.childcount + availibiltyRQGDS.infantcount;
@@ -671,7 +671,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                 //{
                                 breakdown.totalToCollect = Convert.ToDouble(breakdown.journeyfareTotals[0].totalAmount) + Convert.ToDouble(breakdown.journeyfareTotals[0].totalTax);
                                 //}
-                                if(breakdown.passengerTotals.baggage.total!=0)
+                                if (breakdown.passengerTotals.baggage.total != 0)
                                 {
                                     breakdown.totalToCollect += Convert.ToDouble(breakdown.passengerTotals.baggage.total);
                                 }
@@ -704,7 +704,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                 airLineFlightTicketBooking.BookingID = Bookingid;
                                 tb_Booking tb_Booking = new tb_Booking();
                                 tb_Booking.AirLineID = 5;
-                                tb_Booking.BookingType = "Corporate-"+ Regex.Match(strResponseretriv, "BrandID=\"[\\s\\S]*?Name=\"(?<fareName>[\\s\\S]*?)\"").Groups["fareName"].Value.Trim();
+                                tb_Booking.BookingType = "Corporate-" + Regex.Match(strResponseretriv, "BrandID=\"[\\s\\S]*?Name=\"(?<fareName>[\\s\\S]*?)\"").Groups["fareName"].Value.Trim();
                                 LegalEntity legal = new LegalEntity();
                                 legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
                                 tb_Booking.CompanyName = legal.BillingEntityFullName;
@@ -756,7 +756,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
                                 if (basefareBag != null)
                                 {
-                                    tb_Booking.SpecialServicesTotal = Convert.ToDouble(basefareBag);
+                                    tb_Booking.SpecialServicesTotal = Convert.ToDouble(basefareBag) + Convert.ToDouble(taxfareBag);
                                     if (taxfareBag != null)
                                     {
                                         tb_Booking.SpecialServicesTotal_Tax = Convert.ToDouble(taxfareBag);
@@ -766,7 +766,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                 {
                                     if (basefareSeat > 0 || basefareSeat != 0)
                                     {
-                                        tb_Booking.SeatTotalAmount = basefareSeat;
+                                        tb_Booking.SeatTotalAmount = basefareSeat + taxfareSeat;
                                         if (taxfareSeat != null)
                                         {
                                             tb_Booking.SeatTotalAmount_Tax = taxfareSeat;
@@ -891,12 +891,43 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                 List<tb_PassengerDetails> tb_PassengerDetailsList = new List<tb_PassengerDetails>();
                                 int SegmentCount = segmentscount;
                                 string passenger = objMongoHelper.UnZip(tokenData.OldPassengerRequest);
+                                //string passenger = objMongoHelper.UnZip(tokenData.PassengerRequest);
 
                                 List<passkeytype> paxList = (List<passkeytype>)JsonConvert.DeserializeObject(passenger, typeof(List<passkeytype>));
                                 List<passkeytype> infantList = paxList.Where(p => p.passengertypecode == "INF").ToList();
 
+                                //To do
+                                Hashtable htpaxdetails = new Hashtable();
+                                foreach (Match item in Regex.Matches(strResponseretriv, @"<air:TicketInfo[\s\S]*?BookingTravelerRef=""(?<paxid>[\s\S]*?)""[\s\S]*?First=""(?<FName>[\s\S]*?)""[\s\S]*?last=""(?<LName>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                {
+                                    if (!htpaxdetails.Contains(item.Groups["paxid"].Value))
+                                    {
+                                        htpaxdetails.Add(item.Groups["paxid"].Value, item.Groups["FName"].Value + "_" + item.Groups["LName"].Value);
+                                    }
+                                }
 
-                                for (int isegment = 0; isegment < SegmentCount; isegment++)
+                                if (htpaxdetails.Count == 0)
+                                {
+                                    foreach (Match item in Regex.Matches(strResponseretriv, @"BookingTraveler\s*Key=""(?<paxid>[\s\S]*?)""[\s\S]*?First=""(?<FName>[\s\S]*?)""[\s\S]*?last=""(?<LName>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                    {
+                                        if (!htpaxdetails.Contains(item.Groups["paxid"].Value))
+                                        {
+                                            htpaxdetails.Add(item.Groups["paxid"].Value, item.Groups["FName"].Value + "_" + item.Groups["LName"].Value);
+                                        }
+                                    }
+                                }
+
+                                Hashtable htpassenegerdata = new Hashtable();
+                                foreach (Match item in Regex.Matches(strResponseretriv, @"air:AirPricingInfo[\s\S]*?BasePrice=""INR(?<Amount>[\s\S]*?)""[\s\S]*?Taxes=""INR(?<Tax>[\s\S]*?)""[\s\S]*?SegmentRef=""(?<segment>[\s\S]*?)""[\s\S]*?</air:AirPricingInfo>", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                {
+                                    foreach (Match itemnew in Regex.Matches(item.Value, @"<air:PassengerType[\s\S]*?BookingTravelerRef=""(?<BookingTraveller>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                                    {
+                                        htpassenegerdata.Add(htpaxdetails[itemnew.Groups["BookingTraveller"].Value.Trim()] + "_" + item.Groups["segment"].Value, item.Groups["Amount"].Value + "/" + item.Groups["Tax"].Value);
+                                    }
+                                }
+
+
+                                for (int isegment = 0; isegment < pnrResDetail.Bonds.Legs.Count; isegment++)
                                 {
                                     //foreach (var items in pnrResDetail.PaxeDetailList)
                                     for (int k = 0; k < paxList.Count; k++)
@@ -929,8 +960,10 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                         tb_Passengerobj.Seatnumber = "";
                                         //}
 
-                                        tb_Passengerobj.TotalAmount = Convert.ToDecimal(breakdown.journeyTotals.totalAmount);
-                                        tb_Passengerobj.TotalAmount_tax = Convert.ToDecimal(breakdown.journeyTotals.totalTax);
+                                        string combinedName = (tb_Passengerobj.FirstName + "_" + tb_Passengerobj.LastName).ToUpper() + "_" + pnrResDetail.Bonds.Legs[isegment].AircraftCode;
+                                        string data = htpassenegerdata[combinedName].ToString();
+                                        tb_Passengerobj.TotalAmount = Convert.ToDecimal(data.Split('/')[0]);
+                                        tb_Passengerobj.TotalAmount_tax = Convert.ToDecimal(data.Split('/')[1]);
                                         //if (JsonObjPNRBooking.data.info.createdDate != null)
                                         tb_Passengerobj.CreatedDate = Convert.ToDateTime(Regex.Match(strResponseretriv, "AirReservation[\\s\\S]*?CreateDate=\"(?<CreateDate>[\\s\\S]*?)\"").Groups["CreateDate"].Value.Trim());  //DateTime.Now;
                                         tb_Passengerobj.Createdby = ""; //"Online";
@@ -957,12 +990,14 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                                     //{
                                                     //if (tb_Passengerobj.Inf_TypeCode == PassengerDataDetailsList[i].passengertypecode && tb_Passengerobj.Inf_Firstname.ToLower() == PassengerDataDetailsList[i].first.ToLower() + " " + PassengerDataDetailsList[i].last.ToLower())
                                                     //{
-                                                    tb_Passengerobj.PassengerKey = infantList[k].passengerkey;
+                                                    //tb_Passengerobj.PassengerKey = infantList[k].passengerkey;
                                                     // break;
                                                     //}
                                                     //}
-                                                    tb_Passengerobj.InftAmount = 0.0;// to do
-                                                    tb_Passengerobj.InftAmount_Tax = 0.0;// to do
+                                                    string combinedkey = (infantList[inf].first + "_" + infantList[inf].last).ToUpper() + "_" + pnrResDetail.Bonds.Legs[isegment].AircraftCode;
+                                                    data = htpassenegerdata[combinedkey].ToString();
+                                                    tb_Passengerobj.InftAmount = Convert.ToDouble(data.Split('/')[0]);
+                                                    tb_Passengerobj.InftAmount_Tax = Convert.ToDouble(data.Split('/')[1]);
                                                 }
                                             }
 
@@ -1024,33 +1059,12 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
 
                                         //Seat
 
-                                        //To do
-                                        Hashtable htpaxdetails = new Hashtable();
-                                        foreach (Match item in Regex.Matches(strResponseretriv, @"<air:TicketInfo[\s\S]*?BookingTravelerRef=""(?<paxid>[\s\S]*?)""[\s\S]*?First=""(?<FName>[\s\S]*?)""[\s\S]*?last=""(?<LName>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
-                                        {
-                                            if (!htpaxdetails.Contains(item.Groups["paxid"].Value))
-                                            {
-                                                htpaxdetails.Add(item.Groups["paxid"].Value, item.Groups["FName"].Value + "_" + item.Groups["LName"].Value);
-                                            }
-                                        }
-
-                                        if (htpaxdetails.Count == 0)
-                                        {
-                                            foreach (Match item in Regex.Matches(strResponseretriv, @"BookingTraveler\s*Key=""(?<paxid>[\s\S]*?)""[\s\S]*?First=""(?<FName>[\s\S]*?)""[\s\S]*?last=""(?<LName>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
-                                            {
-                                                if (!htpaxdetails.Contains(item.Groups["paxid"].Value))
-                                                {
-                                                    htpaxdetails.Add(item.Groups["paxid"].Value, item.Groups["FName"].Value + "_" + item.Groups["LName"].Value);
-                                                }
-                                            }
-                                        }
-
                                         foreach (Match bagitem in Regex.Matches(strResponse, @"OptionalService Type=""Baggage""\s*TotalPrice=""INR(?<BagPrice>[\s\S]*?)""[\s\S]*?BasePrice=""INR(?<BagBasePrice>[\s\S]*?)""\s*Taxes=""INR(?<BagTaxPrice>[\s\S]*?)""[\s\S]*?BookingTravelerRef=""(?<Paxid>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline))
                                         {
-                                            if(tb_Passengerobj.FirstName.Trim().ToUpper() + "_" + tb_Passengerobj.LastName.Trim().ToUpper() == htpaxdetails[bagitem.Groups["Paxid"].Value.Trim()].ToString())
+                                            if (tb_Passengerobj.FirstName.Trim().ToUpper() + "_" + tb_Passengerobj.LastName.Trim().ToUpper() == htpaxdetails[bagitem.Groups["Paxid"].Value.Trim()].ToString())
                                             {
-                                                TotalAmount_Baggage= Convert.ToInt32(bagitem.Groups["BagBasePrice"].Value.Trim());
-                                                TotalAmount_Baggage_tax= Convert.ToInt32(bagitem.Groups["BagTaxPrice"].Value.Trim());
+                                                TotalAmount_Baggage = Convert.ToInt32(bagitem.Groups["BagBasePrice"].Value.Trim());
+                                                TotalAmount_Baggage_tax = Convert.ToInt32(bagitem.Groups["BagTaxPrice"].Value.Trim());
                                                 break;
                                             }
 
@@ -1062,18 +1076,18 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                             {
                                                 TotalAmount_Seat = Convert.ToInt32(bagitem.Groups["seatBasePrice"].Value.Trim());
                                                 TotalAmount_Seat_tax = Convert.ToInt32(bagitem.Groups["seatTaxPrice"].Value.Trim());
-                                            break;
+                                                break;
                                             }
                                         }
 
-                                        tb_Passengerobj.Seatnumber= SeatConcatenation.TrimEnd(',');
-                                        tb_Passengerobj.TotalAmount_Seat = TotalAmount_Seat;
+                                        tb_Passengerobj.Seatnumber = SeatConcatenation.TrimEnd(',');
+                                        tb_Passengerobj.TotalAmount_Seat = TotalAmount_Seat + Convert.ToDouble(TotalAmount_Seat_tax);
                                         tb_Passengerobj.TotalAmount_Seat_tax = TotalAmount_Seat_tax;
                                         tb_Passengerobj.TotalAmount_Seat_tax_discount = TotalAmount_Seat_discount;
                                         tb_Passengerobj.TotalAmount_Meals = TotalAmount_Meals;
                                         tb_Passengerobj.TotalAmount_Meals_tax = Convert.ToDouble(TotalAmount_Meals_tax);
                                         tb_Passengerobj.TotalAmount_Meals_discount = Convert.ToDouble(TotalAmount_Meals_discount);
-                                        tb_Passengerobj.BaggageTotalAmount = TotalAmount_Baggage;
+                                        tb_Passengerobj.BaggageTotalAmount = TotalAmount_Baggage + Convert.ToDouble(TotalAmount_Baggage_tax);
                                         tb_Passengerobj.BaggageTotalAmountTax = TotalAmount_Baggage_tax;
                                         tb_Passengerobj.BaggageTotalAmountTax_discount = TotalAmount_Baggage_discount;
                                         tb_Passengerobj.Carrybages = carryBagesConcatenation.TrimEnd(',');
@@ -1086,11 +1100,11 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                 for (int l = 0; l < tb_PassengerDetailsList.Count; l++)
                                 {
                                     tb_PassengerTotalobj.TotalSeatAmount += tb_PassengerDetailsList[l].TotalAmount_Seat;
-                                    tb_PassengerTotalobj.TotalSeatAmount_Tax+= Convert.ToDouble(tb_PassengerDetailsList[l].TotalAmount_Seat_tax);
+                                    tb_PassengerTotalobj.TotalSeatAmount_Tax += Convert.ToDouble(tb_PassengerDetailsList[l].TotalAmount_Seat_tax);
                                     tb_PassengerTotalobj.SpecialServicesAmount += Convert.ToDouble(tb_PassengerDetailsList[l].TotalAmount_Meals);
                                     tb_PassengerTotalobj.SpecialServicesAmount += Convert.ToDouble(tb_PassengerDetailsList[l].BaggageTotalAmount);
-                                    tb_PassengerTotalobj.SpecialServicesAmount_Tax+= tb_PassengerDetailsList[l].TotalAmount_Meals_tax ?? 0.0; 
-                                    tb_PassengerTotalobj.SpecialServicesAmount_Tax += Convert.ToDouble(tb_PassengerDetailsList[l].BaggageTotalAmountTax); 
+                                    tb_PassengerTotalobj.SpecialServicesAmount_Tax += tb_PassengerDetailsList[l].TotalAmount_Meals_tax ?? 0.0;
+                                    tb_PassengerTotalobj.SpecialServicesAmount_Tax += Convert.ToDouble(tb_PassengerDetailsList[l].BaggageTotalAmountTax);
                                 }
                                 int JourneysCount = 1;
                                 List<tb_journeys> tb_JourneysList = new List<tb_journeys>();
