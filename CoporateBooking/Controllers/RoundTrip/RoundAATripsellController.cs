@@ -82,8 +82,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 string apiUrl = $"{AppUrlConstant.CompanyEmployeeGST}?employeeCode={legal.Employee}&legalEntityCode={legal.BillingEntityName}";
 
 
-                    apiUrl += $"&airlineId={legal.SuppId}";
-             
+                apiUrl += $"&airlineId={legal.SuppId}";
+
                 List<CompanyEmployeeGSTDetails> gstList = new();
                 try
                 {
@@ -482,11 +482,11 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         _Phonenumber Phonenumber = new _Phonenumber();
                         List<_Phonenumber> Phonenumberlist = new List<_Phonenumber>();
                         Phonenumber.type = "Home";
-                        Phonenumber.number = contactobject.countrycode + contactobject.number;
+                        Phonenumber.number = contactobject.countrycode + "-" + contactobject.number;
                         Phonenumberlist.Add(Phonenumber);
                         _Phonenumber Phonenumber1 = new _Phonenumber();
                         Phonenumber1.type = "Other";
-                        Phonenumber1.number = contactobject.countrycode + contactobject.number;
+                        Phonenumber1.number = contactobject.countrycode + "-" + contactobject.number;
                         Phonenumberlist.Add(Phonenumber1);
                         foreach (var item in Phonenumberlist)
                         {
@@ -567,12 +567,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                         _Phonenumber Phonenumber = new _Phonenumber();
                         List<_Phonenumber> Phonenumberlist = new List<_Phonenumber>();
                         Phonenumber.type = "Home";
-                        Phonenumber.number = contactobject.countrycode + contactobject.number;
+                        Phonenumber.number = contactobject.countrycode + "-" + contactobject.number;
                         //Phonenumber.number = passengerdetails.mobile;
                         Phonenumberlist.Add(Phonenumber);
                         _Phonenumber Phonenumber1 = new _Phonenumber();
                         Phonenumber1.type = "Other";
-                        Phonenumber1.number = contactobject.countrycode + contactobject.number;
+                        Phonenumber1.number = contactobject.countrycode + "-" + contactobject.number;
                         Phonenumberlist.Add(Phonenumber1);
                         foreach (var item in Phonenumberlist)
                         {
@@ -656,7 +656,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     {
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].TypeCode = "P";
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].CountryCode = "IN";
-                        _ContactModelSG.updateContactsRequestData.BookingContactList[0].HomePhone = contactobject.countrycode + contactobject.number;
+                        _ContactModelSG.updateContactsRequestData.BookingContactList[0].HomePhone = contactobject.countrycode + "-" + contactobject.number;
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].EmailAddress = contactobject.emailAddress;
                         BookingName[] Name = new BookingName[1];
                         Name[0] = new BookingName();

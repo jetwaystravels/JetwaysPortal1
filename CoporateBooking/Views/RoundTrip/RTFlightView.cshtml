@@ -826,14 +826,14 @@
 							<div class="rttotal-fare">
 								@if (User.Identity.IsAuthenticated)
 								{
-									
+
 									<input type="button" id="ReturnButtonId" value="Book Now" class="button small-btn rtbtn" data-toggle="modal" data-target="#rtexampleModal">
 								}
 								else
 								{
 									<input type="button" id="ReturnButtonId" value="Book Now" onclick="alert('Please enter login'); location.href='@Url.Action("Index", "FlightSearchIndex")'; return false;" class="button small-btn rtbtn" data-toggle="modal" data-target="#rtexampleModal">
 								}
-							
+
 
 
 							</div>
@@ -3317,48 +3317,119 @@
 	</script>
 
 	<script type="text/javascript">
-		document.addEventListener('DOMContentLoaded', function () {
+
+		//***********Old traveler code Start*/
+
+		// document.addEventListener('DOMContentLoaded', function () {
+		// 	const adultInputField = document.getElementById('field_adult');
+		// 	const childInputField = document.getElementById('field_child');
+		// 	const infantInputField = document.getElementById('field_infant');
+		// 	const adultCountElement = document.getElementById('count_adult');
+		// 	const childCountElement = document.getElementById('count_child');
+		// 	const infantCountElement = document.getElementById('count_infant');
+		// 	document.querySelector('.increment.add.btn_sub').addEventListener('click', function () {
+		// 	incrementValue(adultInputField, adultCountElement);
+		// 	});
+		// 	document.querySelector('.decrement.sub.btn_sub').addEventListener('click', function () {
+		// 	decrementValue(adultInputField, adultCountElement);
+		// 	});
+		// 	document.querySelector('.increment1.add.btn_sub').addEventListener('click', function () {
+		// 	incrementValue(childInputField, childCountElement);
+		// 	});
+		// 	document.querySelector('.decrement1.sub.btn_sub').addEventListener('click', function () {
+		// 	decrementValue(childInputField, childCountElement);
+		// 	});
+		// 	document.querySelector('.increment2.add.btn_sub').addEventListener('click', function () {
+		// 	incrementValue(infantInputField, infantCountElement);
+		// 	});
+		// 	document.querySelector('.decrement2.sub.btn_sub').addEventListener('click', function () {
+		// 	decrementValue(infantInputField, infantCountElement);
+		// 	});
+
+		// 	function incrementValue(inputField, countElement) {
+		// 	const currentValue = parseInt(inputField.value);
+		// 	if (currentValue < parseInt(inputField.max)) {
+		// 		inputField.value = currentValue + 1;
+		// 		countElement.textContent = currentValue + 1;
+		// 	}
+		// 	}
+
+		// 	function decrementValue(inputField, countElement) {
+		// 	const currentValue = parseInt(inputField.value);
+		// 	if (currentValue > parseInt(inputField.min)) {
+		// 		inputField.value = currentValue - 1;
+		// 		countElement.textContent = currentValue - 1;
+		// 	}
+		// 	}
+		// });
+
+		//***********Old traveler code End*/
+
+
+		//***********New traveler code Start*/
+
+			document.addEventListener('DOMContentLoaded', function () {
 			const adultInputField = document.getElementById('field_adult');
 			const childInputField = document.getElementById('field_child');
 			const infantInputField = document.getElementById('field_infant');
 			const adultCountElement = document.getElementById('count_adult');
 			const childCountElement = document.getElementById('count_child');
 			const infantCountElement = document.getElementById('count_infant');
+
 			document.querySelector('.increment.add.btn_sub').addEventListener('click', function () {
-			incrementValue(adultInputField, adultCountElement);
+				incrementValue(adultInputField, adultCountElement);
 			});
+
 			document.querySelector('.decrement.sub.btn_sub').addEventListener('click', function () {
-			decrementValue(adultInputField, adultCountElement);
+				decrementValue(adultInputField, adultCountElement);
 			});
+
 			document.querySelector('.increment1.add.btn_sub').addEventListener('click', function () {
-			incrementValue(childInputField, childCountElement);
+				incrementValue(childInputField, childCountElement);
 			});
+
 			document.querySelector('.decrement1.sub.btn_sub').addEventListener('click', function () {
-			decrementValue(childInputField, childCountElement);
+				decrementValue(childInputField, childCountElement);
 			});
+
+			// ✅ ✅ UPDATED: Infant Increment Button Logic
 			document.querySelector('.increment2.add.btn_sub').addEventListener('click', function () {
-			incrementValue(infantInputField, infantCountElement);
+				const currentInfants = parseInt(infantInputField.value);
+				const currentAdults = parseInt(adultInputField.value);
+
+				// ✅ Prevent infants > adults
+				if ((currentInfants + 1) > currentAdults) {
+					alert("Number of infants cannot be more than adults");
+					return; // Stop increment
+				}
+
+				incrementValue(infantInputField, infantCountElement);
 			});
 			document.querySelector('.decrement2.sub.btn_sub').addEventListener('click', function () {
 			decrementValue(infantInputField, infantCountElement);
 			});
 
 			function incrementValue(inputField, countElement) {
-			const currentValue = parseInt(inputField.value);
-			if (currentValue < parseInt(inputField.max)) {
-				inputField.value = currentValue + 1;
-				countElement.textContent = currentValue + 1;
-			}
+				const currentValue = parseInt(inputField.value);
+				if (currentValue < parseInt(inputField.max)) {
+					inputField.value = currentValue + 1;
+					countElement.textContent = currentValue + 1;
+				}
 			}
 
 			function decrementValue(inputField, countElement) {
-			const currentValue = parseInt(inputField.value);
-			if (currentValue > parseInt(inputField.min)) {
-				inputField.value = currentValue - 1;
-				countElement.textContent = currentValue - 1;
-			}
+				const currentValue = parseInt(inputField.value);
+				if (currentValue > parseInt(inputField.min)) {
+					inputField.value = currentValue - 1;
+					countElement.textContent = currentValue - 1;
+				}
 			}
 		});
+
+
+		//***********New traveler code End*/
+
+
 
 		var uniqueId, uniqueIdR;
 		function RenderData(uniqueId) {
@@ -3666,26 +3737,55 @@
 			localStorage.clear();
 		};
 
-		$(document).ready(function () {
-			  $('#Rway-endDate').on('click', function () {
-					debugger;
-					let selectedTrip = $('input[name="SameAirlineRT"]:checked').val();
-					if (selectedTrip === 'OneWay') {
-						  $('#roundtripid').prop('checked', true);
-						  let nextTwoDays = new Date();
-						  nextTwoDays.setDate(nextTwoDays.getDate() + 2);
-						  let formattedDate = nextTwoDays.toISOString().split('T')[0];
-						  $('#Rway-endDate').val(formattedDate);
-						  let nextOneDays = new Date();
-						  nextOneDays.setDate(nextOneDays.getDate() + 1);
-						  let OnewayDate = nextOneDays.toISOString().split('T')[0];
-						  $('#Rway-date').val(OnewayDate);
-						  $('#Rway-endDate').css('visibility', 'visible');
-						  $('#Rway-endDate').focus();
-					}
-			  });
-		});
+		//***********Old roundtripid code Start*/
 
+		// $(document).ready(function () {
+		// 	  $('#Rway-endDate').on('click', function () {
+		// 			debugger;
+		// 			let selectedTrip = $('input[name="SameAirlineRT"]:checked').val();
+		// 			if (selectedTrip === 'OneWay') {
+		// 				  $('#roundtripid').prop('checked', true);
+		// 				  let nextTwoDays = new Date();
+		// 				  nextTwoDays.setDate(nextTwoDays.getDate() + 2);
+		// 				  let formattedDate = nextTwoDays.toISOString().split('T')[0];
+		// 				  $('#Rway-endDate').val(formattedDate);
+		// 				  let nextOneDays = new Date();
+		// 				  nextOneDays.setDate(nextOneDays.getDate() + 1);
+		// 				  let OnewayDate = nextOneDays.toISOString().split('T')[0];
+		// 				  $('#Rway-date').val(OnewayDate);
+		// 				  $('#Rway-endDate').css('visibility', 'visible');
+		// 				  $('#Rway-endDate').focus();
+		// 			}
+		// 	  });
+		// });
+
+
+		//***********Old roundtripid code End*/
+
+
+		//***********New roundtripid code Start*/
+
+			$(document).ready(function () {
+			$('#Rway-endDate').on('click', function () {
+				let selectedTrip = $('input[name="SameAirlineRT"]:checked').val();
+
+				if (selectedTrip === 'OneWay') {
+					// ✅ Automatically switch to Round Trip
+					$('#roundtripid').prop('checked', true);
+
+					// ✅ Set default return date to +2 days from today
+					let nextTwoDays = new Date();
+					nextTwoDays.setDate(nextTwoDays.getDate() + 2);
+					let formattedDate = nextTwoDays.toISOString().split('T')[0];
+					$('#Rway-endDate').val(formattedDate);
+
+					// ✅ Do NOT change #Rway-date (departure) anymore
+					// ✅ Make return date input visible and focus it
+					$('#Rway-endDate').css('visibility', 'visible').focus();
+				}
+			});
+		});
+		//***********New roundtripid code End*/
 
 
 
