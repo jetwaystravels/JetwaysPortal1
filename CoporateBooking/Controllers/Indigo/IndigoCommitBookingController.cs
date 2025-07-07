@@ -30,6 +30,7 @@ using OnionConsumeWebAPI.Models;
 using System.Globalization;
 using System.Security.Claims;
 using CoporateBooking.Models;
+using System.Text.RegularExpressions;
 
 namespace OnionConsumeWebAPI.Controllers.Indigo
 {
@@ -1146,10 +1147,26 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                 segmentReturnobj.MealCode = "";
                                 segmentReturnobj.MealDiscription = "";
                                 if (!string.IsNullOrEmpty(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.DepartureTerminal))
-                                    segmentReturnobj.DepartureTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.DepartureTerminal);
-                                    if (!string.IsNullOrEmpty(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal))
-                                        segmentReturnobj.ArrivalTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal);
-                                        segmentReturnobj.CreatedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.CreatedDate);
+                                {
+                                    //segmentReturnobj.DepartureTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.DepartureTerminal);
+                                    string terminalValue = _getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.DepartureTerminal;
+                                    Match match = Regex.Match(terminalValue, @"\d+");
+                                    if (match.Success)
+                                    {
+                                        segmentReturnobj.DepartureTerminal = Convert.ToInt32(match.Value);
+                                    }
+                                }
+                                if (!string.IsNullOrEmpty(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal))
+                                {
+                                    segmentReturnobj.ArrivalTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal);
+                                    string terminalValue = _getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal;
+                                    Match match = Regex.Match(terminalValue, @"\d+");
+                                    if (match.Success)
+                                    {
+                                        segmentReturnobj.ArrivalTerminal = Convert.ToInt32(match.Value);
+                                    }
+                                }
+                                segmentReturnobj.CreatedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.CreatedDate);
                                 segmentReturnobj.ModifiedDate = Convert.ToDateTime(_getBookingResponse.Booking.BookingInfo.ModifiedDate);
                                 segmentReturnobj.Createdby = _getBookingResponse.Booking.BookingInfo.CreatedAgentID.ToString();
                                 segmentReturnobj.Modifyby = _getBookingResponse.Booking.BookingInfo.ModifiedAgentID.ToString();

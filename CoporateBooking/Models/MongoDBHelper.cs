@@ -87,7 +87,8 @@ namespace OnionConsumeWebAPI.Models
         public async Task<dynamic> GetALLlegalEntityDataByUserid(string userid)
         {
             List<LegalEntity> legalEntity = null;
-            List<dynamic> combined = null;
+            List<EntityInfo> combined = null;
+
 
             try
             {
@@ -124,8 +125,8 @@ namespace OnionConsumeWebAPI.Models
                         {
 
                             if (combined == null)
-                                combined = new List<dynamic>();
-                            var entityData = new
+                                combined = new List<EntityInfo>();
+                            var entityData = new EntityInfo
                             {
                                 LegalEntityName = entity.LegalName,
                                 LegalUserId = entity.UserId,
@@ -654,18 +655,18 @@ namespace OnionConsumeWebAPI.Models
 
 
                  legal = await mDB.GetCollection<LegalEntity>("LegalBill").Find(Builders<LegalEntity>.Filter.Eq("Guid", legalEntity.Guid)).Sort(Builders<LegalEntity>.Sort.Descending("CreatedDate")).FirstOrDefaultAsync().ConfigureAwait(false);
-                 if (legal == null)
-                 {
+                 //if (legal == null)
+                 //{
                     legalEntity.CreatedDate = DateTime.UtcNow;
                     await  mDB.GetCollection<LegalEntity>("LegalBill").InsertOneAsync(legalEntity);
-                 }
-                else
-                {
-               //     var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
-               //Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
-               //     var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.ContactRequest, Contact);
-               //     mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
-                }
+               //  }
+               // else
+               // {
+               ////     var filter = Builders<MongoSuppFlightToken>.Filter.And(Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Guid, guid),
+               ////Builders<MongoSuppFlightToken>.Filter.Eq(emp => emp.Supp, supp));
+               ////     var update = Builders<MongoSuppFlightToken>.Update.Set(s => s.ContactRequest, Contact);
+               ////     mDB.GetCollection<MongoSuppFlightToken>("SearchFlightToken").UpdateOneAsync(filter, update);
+               // }
                
             }
             catch (Exception ex)

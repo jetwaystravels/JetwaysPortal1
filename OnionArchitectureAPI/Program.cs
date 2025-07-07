@@ -60,6 +60,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 // Logging
+CustomFontResolver.Register();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 builder.Logging.Services.BuildServiceProvider()

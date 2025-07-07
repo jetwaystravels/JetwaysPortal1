@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using OnionConsumeWebAPI.Extensions;
 using System.Net.Http.Headers;
 using System.Security.Claims;
+using System.ServiceModel.Channels;
 using System.Text;
 using Utility;
 using static DomainLayer.Model.ReturnTicketBooking;
@@ -147,7 +148,10 @@ namespace CoporateBooking.Controllers.common
 
                 TempData["Success"] = "Booking cancellation session flow completed successfully.";
                 TempData["FinalStatus"] = _finalStatus;
-                return RedirectToAction("MyBooking", "Booking");
+
+                string Message = "Booking cancellation completed successfully." + totalAmount;
+
+                return RedirectToAction("MyBooking", "Booking" , new { Mess = Message });
             }
         }
 
@@ -319,7 +323,7 @@ namespace CoporateBooking.Controllers.common
         [HttpGet]
         public async Task<IActionResult> CancelRefundAsync(string flightid, string pnr)
         {
-            RefundRequest RefundRequestList = null;
+            List<RefundRequest> RefundRequestList = null;
           
             try
             {
@@ -333,21 +337,22 @@ namespace CoporateBooking.Controllers.common
                     if (response.IsSuccessStatusCode)
                     {
                         var result = await response.Content.ReadAsStringAsync();
-                        RefundRequestList = JsonConvert.DeserializeObject<RefundRequest>(result);
+                        RefundRequestList = JsonConvert.DeserializeObject<List<RefundRequest>>(result);
 
-                        return View(RefundRequestList); // Pass to Razor View
+                        return Json(RefundRequestList); // Pass to Razor View
+                       
                     }
                     else
                     {
                         ViewBag.ErrorMessage = "Failed to load refund data.";
-                        return View(RefundRequestList);
+                        return Json(RefundRequestList);
                     }
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "An error occurred: " + ex.Message;
-                return View(RefundRequestList);
+                return Json(RefundRequestList);
             }
 
 

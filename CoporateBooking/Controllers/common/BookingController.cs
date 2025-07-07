@@ -14,7 +14,7 @@ namespace CoporateBooking.Controllers.common
     public class BookingController : Controller
     {
         private _credentials _credentialsAirasia = null;
-        public async Task<IActionResult> MyBookingAsync()
+        public async Task<IActionResult> MyBookingAsync(string Mess = "")
         {
             List<Booking> bookingList = null;
             var identity = (ClaimsIdentity)User.Identity;
@@ -33,6 +33,11 @@ namespace CoporateBooking.Controllers.common
                     {
                         var result = await response.Content.ReadAsStringAsync();
                         bookingList = JsonConvert.DeserializeObject<List<Booking>>(result);
+
+                        if(Mess != "")
+                        {
+                            ViewBag.Message = Mess;
+                        }
 
                         return View(bookingList); // Pass to Razor View
                     }

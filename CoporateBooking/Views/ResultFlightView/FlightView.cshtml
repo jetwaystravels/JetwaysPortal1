@@ -135,7 +135,9 @@
 													</div>
 													<span class="input-group-text">
 														<input id="myInput" name="origin" type="text" value="" class="form-control" onclick="onewayDropdown()">
+														<input type="hidden" name="hdnlegal" value="@ViewBag.Guid" />
 														@* <span id="airportName"></span> *@
+														
 													</span>
 													<span class="autodropdownOneWay">
 														<select id="autodropdownOneWayId" name="autodropdownOneWayId" onchange="OnewaySelection()">
@@ -2133,21 +2135,21 @@
 			}
 			});
 
-			$('.increment2').on('click', function (event) {
-			debugger;
-			if (count_infant < maxField) {
-				var adultcounttotal = parseInt(localStorage.getItem("adultcount")) || 1;
-				if (count_infant >= adultcounttotal) {
-				alert("Number of infants cannot be more than adults");
-				return false;
-				event.preventDefault();
-				}
-				count_infant++;
-				$('#count_infant').text(count_infant);
-				$('#field_infant').val(count_infant);
+			// $('.increment2').on('click', function (event) {
+			// debugger;
+			// if (count_infant < maxField) {
+			// 	var adultcounttotal = parseInt(localStorage.getItem("adultcount")) || 1;
+			// 	if (count_infant >= adultcounttotal) {
+			// 	alert("Number of infants cannot be more than adults");
+			// 	return false;
+			// 	event.preventDefault();
+			// 	}
+			// 	count_infant++;
+			// 	$('#count_infant').text(count_infant);
+			// 	$('#field_infant').val(count_infant);
 
-			}
-			});
+			// }
+			// });
 
 
 			$('.decrement2').on('click', function () {
@@ -2521,9 +2523,73 @@
 			}
 		});
 
+		//***********Old traveler code Start*/
 
+		// document.addEventListener('DOMContentLoaded', function () {
+		// 	// Select the input fields for adults, children, and infants
+		// 	const adultInputField = document.getElementById('field_adult');
+		// 	const childInputField = document.getElementById('field_child');
+		// 	const infantInputField = document.getElementById('field_infant');
 
-		document.addEventListener('DOMContentLoaded', function () {
+		// 	// Select the elements to update the selected values
+		// 	const adultCountElement = document.getElementById('count_adult');
+		// 	const childCountElement = document.getElementById('count_child');
+		// 	const infantCountElement = document.getElementById('count_infant');
+
+		// 	// Add event listener for adult increment button
+		// 	document.querySelector('.increment.add.btn_sub').addEventListener('click', function () {
+		// 	incrementValue(adultInputField, adultCountElement);
+		// 	});
+
+		// 	// Add event listener for adult decrement button
+		// 	document.querySelector('.decrement.sub.btn_sub').addEventListener('click', function () {
+		// 	decrementValue(adultInputField, adultCountElement);
+		// 	});
+
+		// 	// Add event listener for child increment button
+		// 	document.querySelector('.increment1.add.btn_sub').addEventListener('click', function () {
+		// 	incrementValue(childInputField, childCountElement);
+		// 	});
+
+		// 	// Add event listener for child decrement button
+		// 	document.querySelector('.decrement1.sub.btn_sub').addEventListener('click', function () {
+		// 	decrementValue(childInputField, childCountElement);
+		// 	});
+
+		// 	// Add event listener for infant increment button
+		// 	document.querySelector('.increment2.add.btn_sub').addEventListener('click', function () {
+		// 	incrementValue(infantInputField, infantCountElement);
+		// 	});
+
+		// 	// Add event listener for infant decrement button
+		// 	document.querySelector('.decrement2.sub.btn_sub').addEventListener('click', function () {
+		// 	decrementValue(infantInputField, infantCountElement);
+		// 	});
+
+		// 	// Function to increment the input value and update the count element
+		// 	function incrementValue(inputField, countElement) {
+		// 	const currentValue = parseInt(inputField.value);
+		// 	if (currentValue < parseInt(inputField.max)) {
+		// 		inputField.value = currentValue + 1;
+		// 		countElement.textContent = currentValue + 1;
+		// 	}
+		// 	}
+
+		// 	// Function to decrement the input value and update the count element
+		// 	function decrementValue(inputField, countElement)
+		// 	{
+		// 		const currentValue = parseInt(inputField.value);
+		// 		if (currentValue > parseInt(inputField.min)) {
+		// 			inputField.value = currentValue - 1;
+		// 			countElement.textContent = currentValue - 1;
+		// 		}
+		// 	}
+
+		//***********Old traveler code End*/
+
+		//***********New traveler code Start*/
+
+			document.addEventListener('DOMContentLoaded', function () {
 			// Select the input fields for adults, children, and infants
 			const adultInputField = document.getElementById('field_adult');
 			const childInputField = document.getElementById('field_child');
@@ -2536,52 +2602,83 @@
 
 			// Add event listener for adult increment button
 			document.querySelector('.increment.add.btn_sub').addEventListener('click', function () {
-			incrementValue(adultInputField, adultCountElement);
+				incrementValue(adultInputField, adultCountElement);
 			});
 
 			// Add event listener for adult decrement button
 			document.querySelector('.decrement.sub.btn_sub').addEventListener('click', function () {
-			decrementValue(adultInputField, adultCountElement);
+				decrementValue(adultInputField, adultCountElement);
+
+				// Ensure infant count is never greater than updated adult count
+				if (parseInt(infantInputField.value) > parseInt(adultInputField.value)) {
+					infantInputField.value = adultInputField.value;
+					infantCountElement.textContent = adultInputField.value;
+				}
 			});
 
 			// Add event listener for child increment button
 			document.querySelector('.increment1.add.btn_sub').addEventListener('click', function () {
-			incrementValue(childInputField, childCountElement);
+				incrementValue(childInputField, childCountElement);
 			});
 
 			// Add event listener for child decrement button
 			document.querySelector('.decrement1.sub.btn_sub').addEventListener('click', function () {
-			decrementValue(childInputField, childCountElement);
+				decrementValue(childInputField, childCountElement);
 			});
 
-			// Add event listener for infant increment button
+			// ✅ FIXED infant increment button
+			const infantBtn = document.querySelector('.increment2.add.btn_sub');
+
+			// Make sure previous click events aren't doubled
+			infantBtn.replaceWith(infantBtn.cloneNode(true));
+
 			document.querySelector('.increment2.add.btn_sub').addEventListener('click', function () {
-			incrementValue(infantInputField, infantCountElement);
+				const currentInfants = parseInt(infantInputField.value);
+				const currentAdults = parseInt(adultInputField.value);
+				const maxInfants = parseInt(infantInputField.max);
+
+				if (currentInfants >= currentAdults) {
+					// Prevent stacked alerts by using setTimeout
+					setTimeout(function () {
+						alert("Number of infants cannot be more than adults");
+					}, 0);
+					return;
+				}
+
+				if (currentInfants < maxInfants) {
+					infantInputField.value = currentInfants + 1;
+					infantCountElement.textContent = currentInfants + 1;
+				}
 			});
 
 			// Add event listener for infant decrement button
 			document.querySelector('.decrement2.sub.btn_sub').addEventListener('click', function () {
-			decrementValue(infantInputField, infantCountElement);
+				decrementValue(infantInputField, infantCountElement);
 			});
 
 			// Function to increment the input value and update the count element
 			function incrementValue(inputField, countElement) {
-			const currentValue = parseInt(inputField.value);
-			if (currentValue < parseInt(inputField.max)) {
-				inputField.value = currentValue + 1;
-				countElement.textContent = currentValue + 1;
-			}
+				const currentValue = parseInt(inputField.value);
+				const max = parseInt(inputField.max);
+				if (currentValue < max) {
+					inputField.value = currentValue + 1;
+					countElement.textContent = currentValue + 1;
+				}
 			}
 
 			// Function to decrement the input value and update the count element
-			function decrementValue(inputField, countElement)
-			{
+			function decrementValue(inputField, countElement) {
 				const currentValue = parseInt(inputField.value);
-				if (currentValue > parseInt(inputField.min)) {
+				const min = parseInt(inputField.min);
+				if (currentValue > min) {
 					inputField.value = currentValue - 1;
 					countElement.textContent = currentValue - 1;
 				}
 			}
+
+				//***********New traveler code End*/
+
+
 				$('.rplc-btn').on('click', function (event) {
 					var flyingFromValue = $('#myInput').val();
 					var flyingToValue = $('#myInput1').val();

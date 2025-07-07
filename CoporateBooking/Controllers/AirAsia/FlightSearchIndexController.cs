@@ -248,8 +248,20 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             {
                 return RedirectToAction("Index", "FlightSearchIndex");
             }
-            //caching
-            Logs logs = new Logs();
+
+            LegalEntity legalEntity = new LegalEntity();
+            if (!Request.Form.ContainsKey("hdnlegal") || string.IsNullOrEmpty(Request.Form["hdnlegal"]))
+            {
+                
+            }
+            else
+            {
+                legalEntity = _mongoDBHelper.GetlegalEntityByGUID(Convert.ToString(formCollection["hdnlegal"])).Result;
+            }
+
+
+                //caching
+                Logs logs = new Logs();
             IHttpContextAccessor httpContextAccessorInstance = new HttpContextAccessor();
             string searlizetext = string.Empty;
             string _simpleAvailability = string.Empty;
@@ -414,59 +426,89 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                 }
 
 
-                LegalEntity legalEntity = new LegalEntity();
-                legalEntity.Guid = SearchGuid;
+               
+                legalEntity.Guid = ResponseGuid;// SearchGuid;
 
-                string rawLegalEntity = Convert.ToString(formCollection["legal_entity"]);
-
-                if (!string.IsNullOrWhiteSpace(rawLegalEntity))
+                if (!Request.Form.ContainsKey("hdnlegal") || string.IsNullOrEmpty(Request.Form["hdnlegal"]))
                 {
-                    // Split and trim the legal entity name safely
-                    legalEntity.BillingEntityName = rawLegalEntity.Split('-')[0].Trim();
-                    legalEntity.BillingEntityFullName = rawLegalEntity;
+                                   
 
-                    // Employee ID
-                    legalEntity.Employee = Convert.ToString(formCollection["hdnempid"]);
-                    legalEntity.EmployeeFullName = Convert.ToString(formCollection["employee"]);
+                    string rawLegalEntity = Convert.ToString(formCollection["legal_entity"]);
 
-                    // Legal Name (from "billing")
-                    string rawBilling = Convert.ToString(formCollection["billing"]);
-
-                    legalEntity.LegalFullName = rawBilling;
-
-                    legalEntity.LegalName = string.IsNullOrWhiteSpace(rawBilling)
-                        ? null
-                        : rawBilling.Split('-')[0].Trim();
-
-                    // Balance handling
-                    string balanceInput = Convert.ToString(formCollection["balance"])?.Replace("₹", "").Trim();
-
-                    if (string.IsNullOrWhiteSpace(balanceInput) || balanceInput.ToLower() == "null")
+                    if (!string.IsNullOrWhiteSpace(rawLegalEntity))
                     {
-                        legalEntity.Balance = null;
-                    }
-                    else
-                    {
-                        if (double.TryParse(balanceInput, out double parsedBalance))
+                        // Split and trim the legal entity name safely
+                        legalEntity.BillingEntityName = rawLegalEntity.Split('-')[0].Trim();
+                        legalEntity.BillingEntityFullName = rawLegalEntity;
+
+                        // Employee ID
+                        legalEntity.Employee = Convert.ToString(formCollection["hdnempid"]);
+                        legalEntity.EmployeeFullName = Convert.ToString(formCollection["employee"]);
+
+                        // Legal Name (from "billing")
+                        string rawBilling = Convert.ToString(formCollection["billing"]);
+
+                        legalEntity.LegalFullName = rawBilling;
+
+                        legalEntity.LegalName = string.IsNullOrWhiteSpace(rawBilling)
+                            ? null
+                            : rawBilling.Split('-')[0].Trim();
+
+                        // Balance handling
+                        string balanceInput = Convert.ToString(formCollection["balance"])?.Replace("₹", "").Trim();
+
+                        if (string.IsNullOrWhiteSpace(balanceInput) || balanceInput.ToLower() == "null")
                         {
-                            legalEntity.Balance = parsedBalance;
+                            legalEntity.Balance = null;
                         }
                         else
                         {
-                            // Optionally log or handle invalid numeric input
-                            legalEntity.Balance = null;
+                            if (double.TryParse(balanceInput, out double parsedBalance))
+                            {
+                                legalEntity.Balance = parsedBalance;
+                            }
+                            else
+                            {
+                                // Optionally log or handle invalid numeric input
+                                legalEntity.Balance = null;
+                            }
                         }
+
+                        // Common identity-based fields
+                        string username = HttpContext.User.Identity.Name;
+                        legalEntity.Username = username;
+                        legalEntity.Password = username;  // Consider revising if not a placeholder
+                        legalEntity.Email = username;
+                        legalEntity.UserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                        // Save to DB
+                        _mongoDBHelper.SaveUpdateLegalEntity(legalEntity);
                     }
+                }
+                else
+                {
+                    LegalEntity NewlegalEntity = new LegalEntity();
 
-                    // Common identity-based fields
-                    string username = HttpContext.User.Identity.Name;
-                    legalEntity.Username = username;
-                    legalEntity.Password = username;  // Consider revising if not a placeholder
-                    legalEntity.Email = username;
-                    legalEntity.UserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                    NewlegalEntity.BillingEntityName = legalEntity.BillingEntityName;
+                    NewlegalEntity.BillingEntityFullName = legalEntity.BillingEntityFullName;
 
-                    // Save to DB
-                    _mongoDBHelper.SaveUpdateLegalEntity(legalEntity);
+                    // Employee ID
+                    NewlegalEntity.Employee = legalEntity.Employee;
+                    NewlegalEntity.EmployeeFullName = legalEntity.EmployeeFullName;
+
+
+                    NewlegalEntity.LegalFullName = legalEntity.LegalFullName;
+                    NewlegalEntity.LegalName = legalEntity.LegalName;
+                    NewlegalEntity.Balance = legalEntity.Balance;
+                    NewlegalEntity.Username = legalEntity.Username;
+                    NewlegalEntity.Password = legalEntity.Password;
+
+                    NewlegalEntity.Email = legalEntity.Email;
+                    NewlegalEntity.UserId = legalEntity.UserId;
+
+                    NewlegalEntity.Guid = legalEntity.Guid;
+                    // SearchGuid;
+                    _mongoDBHelper.SaveUpdateLegalEntity(NewlegalEntity);
                 }
 
 

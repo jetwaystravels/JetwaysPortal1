@@ -19,8 +19,9 @@ namespace OnionArchitectureAPI.Services.Print
             using var doc = new PdfDocument();
             var page = doc.AddPage();
             var gfx = XGraphics.FromPdfPage(page);
+            var fontHeader = new XFont("Roboto", 14, XFontStyleEx.Bold, new XPdfFontOptions(PdfFontEmbedding.Always));
 
-            var fontHeader = new XFont("Roboto", 14, XFontStyleEx.Bold);
+           // var fontHeader = new XFont("Roboto", 14, XFontStyleEx.Bold);
             var fontBody = new XFont("Roboto", 11, XFontStyleEx.Regular);
 
             double y = 40;

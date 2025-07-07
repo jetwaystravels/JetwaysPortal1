@@ -105,6 +105,19 @@
         <!-- ***** End inner search ***** -->
 
 
+        @{
+            if (ViewBag.Message != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> @ViewBag.Message
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+        }
+
         <section class="layout-pb-md bg-light-2 m-booking">
             <div class="container top-bx">
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -269,7 +282,7 @@
                                                     @books.Segments | PNR: @books.RecordLocator
                                                 </td>
                                                 <td class="status">
-                                                    <button class="status-booked" onclick="return ViewRefundData('@books.FlightID' , '@books.RecordLocator')" style="color:#008000;"><i class="fa fa-check-circle" aria-hidden="true"></i>View Refund</button>
+                                                    <button class="status-booked" onclick="return OldViewRefundData('@books.FlightID' , '@books.RecordLocator')" style="color:#008000;"><i class="fa fa-check-circle" aria-hidden="true"></i>View Refund</button>
                                                     <div class="popbx" id="popbx-@books.FlightID" style="display: none;">
                                                         <button class="close-btn " onclick="closeRefundPopup('@books.FlightID')">&times;</button>
 
@@ -277,15 +290,15 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <th><strong>Booking Amount:</strong></th>
-                                                                    <td><div id="@books.FlightID"></div></td>
+                                                                    <td><div id="@books.FlightID-1"></div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th><strong>Deduction Amount:</strong></th>
-                                                                    <td><div id="@books.FlightID"></div></td>
+                                                                    <td><div id="@books.FlightID-2"></div></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th><strong>Refund Amount:</strong></th>
-                                                                    <td><div id="@books.FlightID"></div></td>
+                                                                    <td><div id="@books.FlightID-3"></div></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -477,7 +490,7 @@
 
 
     <script>
-        function ViewRefundData(id, pnr) {
+        function OldViewRefundData(id, pnr) {
             // Show the pop-up box
             document.getElementById("popbx-" + id).style.display = "block";
 
@@ -486,11 +499,17 @@
                     type: "GET",
                     contentType: "application/json",
                     success: function (data) {
+                       // alert(data);
                         console.log("Refund Data:", data);
-                        document.getElementById(id).innerHTML = "<span>" + data.amount + "</span><span>" + pnr + "</span>";
+                      
+                        document.getElementById(id + "-1").innerHTML = data[0].bookingAmount;
+                        document.getElementById(id + "-2").innerHTML = data[0].deductionAmount;
+                        document.getElementById(id + "-3").innerHTML = data[0].refundAmount;
                         // You can update the DOM here with returned data if needed
+                          return false;
                     },
                     error: function (xhr, status, error) {
+                         alert(error);
                         console.error("Error:", error);
                     }
                 });
