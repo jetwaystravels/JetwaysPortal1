@@ -762,6 +762,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                     {
                                         tb_Booking.SpecialServicesTotal_Tax = Convert.ToDouble(taxfareBag);
                                     }
+                                    tb_Booking.SpecialServicesTotal -= tb_Booking.SpecialServicesTotal_Tax;
                                 }
                                 if (basefareSeat != null)
                                 {
@@ -776,6 +777,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                         tb_Booking.SeatAdjustment = 0.0;
 
                                     }
+                                    tb_Booking.SeatTotalAmount -= tb_Booking.SeatTotalAmount_Tax;
                                 }
                                 tb_Booking.ExpirationDate = DateTime.Now;
 
@@ -1102,11 +1104,15 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
                                 {
                                     tb_PassengerTotalobj.TotalSeatAmount += tb_PassengerDetailsList[l].TotalAmount_Seat;
                                     tb_PassengerTotalobj.TotalSeatAmount_Tax += Convert.ToDouble(tb_PassengerDetailsList[l].TotalAmount_Seat_tax);
+                                    
                                     tb_PassengerTotalobj.SpecialServicesAmount += Convert.ToDouble(tb_PassengerDetailsList[l].TotalAmount_Meals);
                                     tb_PassengerTotalobj.SpecialServicesAmount += Convert.ToDouble(tb_PassengerDetailsList[l].BaggageTotalAmount);
                                     tb_PassengerTotalobj.SpecialServicesAmount_Tax += tb_PassengerDetailsList[l].TotalAmount_Meals_tax ?? 0.0;
                                     tb_PassengerTotalobj.SpecialServicesAmount_Tax += Convert.ToDouble(tb_PassengerDetailsList[l].BaggageTotalAmountTax);
+                                    
                                 }
+                                tb_PassengerTotalobj.TotalSeatAmount -= tb_PassengerTotalobj.TotalSeatAmount_Tax;
+                                tb_PassengerTotalobj.SpecialServicesAmount -= tb_PassengerTotalobj.SpecialServicesAmount_Tax;
                                 int JourneysCount = 1;
                                 List<tb_journeys> tb_JourneysList = new List<tb_journeys>();
                                 List<tb_Segments> segmentReturnsListt = new List<tb_Segments>();
