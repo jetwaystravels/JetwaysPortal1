@@ -112,11 +112,20 @@ namespace OnionConsumeWebAPI.Controllers.Admin
         {
             return View();
         }
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
 
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "FlightSearchIndex");
+            // Sign out of the cookie authentication scheme
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // Clear session data
+            HttpContext.Session.Clear();
+
+            // Optionally: Clear request cookies as well (e.g., auth cookie)
+            Response.Cookies.Delete(".AspNetCore.Cookies");
+
+            // Redirect to login page
+            return RedirectToAction("UserLogin", "Login");
         }
 
         [HttpGet]

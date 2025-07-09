@@ -687,6 +687,8 @@ namespace OnionConsumeWebAPI.Controllers
                     }
                     else
                         tb_Booking.CompanyName = "";
+
+                    tb_Booking.BookingRelationId = Guid;
                     tb_Booking.TripType = "OneWay";
                     tb_Booking.BookingID = JsonObjPNRBooking.data.bookingKey;
                     tb_Booking.RecordLocator = JsonObjPNRBooking.data.recordLocator;
@@ -1195,13 +1197,13 @@ namespace OnionConsumeWebAPI.Controllers
                         }
                     }
 
-                    Trips tb_Trips = new Trips();
-                    tb_Trips.OutboundFlightID = JsonObjPNRBooking.data.bookingKey;
-                    tb_Trips.TripType = "OneWay";
-                    tb_Trips.TripStatus = "active";
-                    tb_Trips.BookingDate = DateTime.Now;
-                    tb_Trips.UserID = "";
-                    tb_Trips.ReturnFlightID = "";
+                    //Trips tb_Trips = new Trips();
+                    //tb_Trips.OutboundFlightID = JsonObjPNRBooking.data.bookingKey;
+                    //tb_Trips.TripType = "OneWay";
+                    //tb_Trips.TripStatus = "active";
+                    //tb_Trips.BookingDate = DateTime.Now;
+                    //tb_Trips.UserID = "";
+                    //tb_Trips.ReturnFlightID = "";
 
 
 
@@ -1213,7 +1215,7 @@ namespace OnionConsumeWebAPI.Controllers
                     airLineFlightTicketBooking.tb_PassengerTotal = tb_PassengerTotalobj;
                     airLineFlightTicketBooking.tb_PassengerDetails = tb_PassengerDetailsList;
                     airLineFlightTicketBooking.ContactDetail = contactDetail;
-                    airLineFlightTicketBooking.tb_Trips = tb_Trips;
+                    //airLineFlightTicketBooking.tb_Trips = tb_Trips;
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.BaseURL + "api/AirLineTicketBooking/PostairlineTicketData", airLineFlightTicketBooking);
                     if (responsePassengers.IsSuccessStatusCode)

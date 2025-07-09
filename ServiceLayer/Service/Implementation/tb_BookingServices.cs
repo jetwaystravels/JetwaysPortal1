@@ -31,6 +31,7 @@ namespace ServiceLayer.Service.Implementation
                 tb_Booking tbobj = new tb_Booking();
                 tbobj.BookingID = ticketObject.BookingID;
                 tbobj.BookingType = ticketObject.tb_Booking.BookingType;
+                tbobj.BookingRelationId = ticketObject.tb_Booking.BookingRelationId;
                 tbobj.TripType = ticketObject.tb_Booking.TripType;
                 tbobj.FlightID = jetwaysId;
                 tbobj.AirLineID = ticketObject.tb_Booking.AirLineID;
@@ -218,14 +219,14 @@ namespace ServiceLayer.Service.Implementation
                 tb_Air.Status = ticketObject.tb_AirCraft.Status;
                 this._dbContext.Add(tb_Air);
 
-                Trips tb_trp = new Trips();
-                tb_trp.OutboundFlightID = ticketObject.tb_Trips.OutboundFlightID;
-                tb_trp.ReturnFlightID = ticketObject.tb_Trips.ReturnFlightID;
-                tb_trp.UserID = ticketObject.tb_Trips.UserID;
-                tb_trp.TripType = ticketObject.tb_Trips.TripType;
-                tb_trp.TripStatus = ticketObject.tb_Trips.TripStatus;
-                tb_trp.BookingDate = ticketObject.tb_Trips.BookingDate;
-                this._dbContext.Add(tb_trp);
+                //Trips tb_trp = new Trips();
+                //tb_trp.OutboundFlightID = ticketObject.tb_Trips.OutboundFlightID;
+                //tb_trp.ReturnFlightID = ticketObject.tb_Trips.ReturnFlightID;
+                //tb_trp.UserID = ticketObject.tb_Trips.UserID;
+                //tb_trp.TripType = ticketObject.tb_Trips.TripType;
+                //tb_trp.TripStatus = ticketObject.tb_Trips.TripStatus;
+                //tb_trp.BookingDate = ticketObject.tb_Trips.BookingDate;
+                //this._dbContext.Add(tb_trp);
 
 
                 

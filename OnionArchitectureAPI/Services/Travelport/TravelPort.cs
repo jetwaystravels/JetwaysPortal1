@@ -1432,7 +1432,7 @@ namespace OnionArchitectureAPI.Services.Travelport
                 {
                     for (int i = 0; i < _GetfligthModel.infantcount; i++)
                     {
-                        fareRepriceReq.Append("<com;SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"INF\" PricePTCOnly=\"true\" Age=\"1\"/>");
+                        fareRepriceReq.Append("<com:SearchPassenger xmlns=\"http://www.travelport.com/schema/common_v52_0\" BookingTravelerRef=\"" + paxCount + "\" Code=\"INF\" PricePTCOnly=\"true\" Age=\"1\"/>");
                         paxCount++;
                     }
                 }

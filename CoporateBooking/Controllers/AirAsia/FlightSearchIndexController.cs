@@ -117,59 +117,52 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
         [Route("")]
         public async Task<IActionResult> Index()
         {
-
-            // var email = HttpContext.Session.GetString("LoggedInEmail");
-
-            // string emaillogin1 = "kanpur.ashok@gmail.com";
-
-
-            if (HttpContext.User.Identity.IsAuthenticated)
+            if (!HttpContext.User.Identity.IsAuthenticated)
             {
-                var identity = (ClaimsIdentity)User.Identity;
-                IEnumerable<Claim> claims = identity.Claims;
-
-                var userEmail = claims.Where(c => c.Type == ClaimTypes.Email).ToList()[0].Value;
-
-
-
-
-                string apiUrl = $"{AppUrlConstant.CustomerDetailsByEmail}?email={userEmail}";
-                try
-                {
-                    using (HttpClient client = new HttpClient())
-                    {
-                        client.DefaultRequestHeaders.Accept.Add(
-                            new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                        HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            string jsonData = await response.Content.ReadAsStringAsync();
-
-                            // Optional: Deserialize JSON if you have a model
-                            // var customers = JsonConvert.DeserializeObject<List<CustomerDetails>>(jsonData);
-                            ViewBag.CustomerData = jsonData;
-
-
-                            MongoHelper objMongoHelper = new MongoHelper();
-                            MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
-                            ViewBag.combined = _mongoDBHelper.GetALLlegalEntityDataByUserid(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value).Result;
-
-                        }
-
-                    }
-                }
-                catch
-                {
-
-                }
-
+                return RedirectToAction("UserLogin", "Login");
             }
 
+            var identity = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identity.Claims;
+
+            var userEmail = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var userId = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userEmail) || string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("UserLogin", "Login");
+            }
+
+            string apiUrl = $"{AppUrlConstant.CustomerDetailsByEmail}?email={userEmail}";
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Add(
+                        new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonData = await response.Content.ReadAsStringAsync();
+                        ViewBag.CustomerData = jsonData;
+
+                        MongoDBHelper _mongoDBHelper = new MongoDBHelper(_configuration);
+                        ViewBag.combined = await _mongoDBHelper.GetALLlegalEntityDataByUserid(userId);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Ideally log the exception
+                // You could use ViewBag.Error = "Something went wrong." or TempData["Error"]
+            }
 
             return View();
         }
+
 
         //, FormCollection formCollection
 

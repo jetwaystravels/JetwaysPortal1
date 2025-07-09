@@ -792,6 +792,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
                             tb_Booking.CompanyName = legal.BillingEntityFullName;
                             tb_Booking.TripType = "OneWay";
+                            tb_Booking.BookingRelationId = Guid;
                             tb_Booking.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                             tb_Booking.RecordLocator = _getBookingResponse.Booking.RecordLocator;
                             tb_Booking.CurrencyCode = _getBookingResponse.Booking.CurrencyCode;
@@ -827,7 +828,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             tb_Booking.PaidStatus = Convert.ToInt32(_getBookingResponse.Booking.BookingInfo.PaidStatus);
 
                             tb_Airlines tb_Airlines = new tb_Airlines();
-                            tb_Airlines.AirlineID = 4;
+                            tb_Airlines.AirlineID = 3;
                             tb_Airlines.AirlneName = "";
                             tb_Airlines.AirlineDescription = "";
                             tb_Airlines.CreatedDate = _getBookingResponse.Booking.BookingInfo.CreatedDate;
@@ -837,8 +838,8 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             tb_Airlines.Status = _getBookingResponse.Booking.BookingInfo.BookingStatus.ToString();
 
                             tb_AirCraft tb_AirCraft = new tb_AirCraft();
-                            tb_AirCraft.Id = 4;
-                            tb_AirCraft.AirlineID = 4;
+                            tb_AirCraft.Id = 1;
+                            tb_AirCraft.AirlineID = 3;
                             tb_AirCraft.AirCraftName = "";
                             tb_AirCraft.AirCraftDescription = " ";
                             tb_AirCraft.CreatedDate = _getBookingResponse.Booking.BookingInfo.CreatedDate;
@@ -1257,13 +1258,13 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                                 segmentReturnsListt.Add(segmentReturnobj);
                             }
 
-                            Trips tb_Trips = new Trips();
-                            tb_Trips.OutboundFlightID = _getBookingResponse.Booking.BookingID.ToString();
-                            tb_Trips.TripType = "OneWay";
-                            tb_Trips.TripStatus = "active";
-                            tb_Trips.BookingDate = DateTime.Now;
-                            tb_Trips.UserID = "";
-                            tb_Trips.ReturnFlightID = "";
+                            //Trips tb_Trips = new Trips();
+                            //tb_Trips.OutboundFlightID = _getBookingResponse.Booking.BookingID.ToString();
+                            //tb_Trips.TripType = "OneWay";
+                            //tb_Trips.TripStatus = "active";
+                            //tb_Trips.BookingDate = DateTime.Now;
+                            //tb_Trips.UserID = "";
+                            //tb_Trips.ReturnFlightID = "";
 
                             airLineFlightTicketBooking.tb_Booking = tb_Booking;
                             airLineFlightTicketBooking.GSTDetails = gSTDetails;
@@ -1273,7 +1274,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
                             airLineFlightTicketBooking.tb_PassengerTotal = tb_PassengerTotalobj;
                             airLineFlightTicketBooking.tb_PassengerDetails = tb_PassengerDetailsList;
                             airLineFlightTicketBooking.ContactDetail = contactDetail;
-                            airLineFlightTicketBooking.tb_Trips = tb_Trips;
+                            //airLineFlightTicketBooking.tb_Trips = tb_Trips;
 
                             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             HttpResponseMessage responsePassengers = await client.PostAsJsonAsync(AppUrlConstant.BaseURL + "api/AirLineTicketBooking/PostairlineTicketData", airLineFlightTicketBooking);

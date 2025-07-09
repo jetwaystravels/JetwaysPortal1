@@ -41,5 +41,6 @@ namespace DomainLayer.Model
         public String BookingType { get; set; } = null;
         public String TripType { get; set; } = null;
         public String CompanyName { get; set; } = null;
+        public String BookingRelationId { get; set; } = null;
     }
 }

@@ -699,6 +699,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
                             tb_Booking.CompanyName = legal.BillingEntityFullName;
                             tb_Booking.TripType = "OneWay";
+                            tb_Booking.BookingRelationId = Guid;
                             tb_Booking.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                             tb_Booking.RecordLocator = _getBookingResponse.Booking.RecordLocator;
                             tb_Booking.CurrencyCode = _getBookingResponse.Booking.CurrencyCode;
@@ -1174,13 +1175,13 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                                 segmentReturnsListt.Add(segmentReturnobj);
                             }
 
-                            Trips tb_Trips = new Trips();
-                            tb_Trips.OutboundFlightID = _getBookingResponse.Booking.BookingID.ToString();
-                            tb_Trips.TripType = "OneWay";
-                            tb_Trips.TripStatus = "active";
-                            tb_Trips.BookingDate = DateTime.Now;
-                            tb_Trips.UserID = "";
-                            tb_Trips.ReturnFlightID = "";
+                            //Trips tb_Trips = new Trips();
+                            //tb_Trips.OutboundFlightID = _getBookingResponse.Booking.BookingID.ToString();
+                            //tb_Trips.TripType = "OneWay";
+                            //tb_Trips.TripStatus = "active";
+                            //tb_Trips.BookingDate = DateTime.Now;
+                            //tb_Trips.UserID = "";
+                            //tb_Trips.ReturnFlightID = "";
 
                             airLineFlightTicketBooking.tb_Booking = tb_Booking;
                             airLineFlightTicketBooking.GSTDetails = gSTDetails;
@@ -1190,7 +1191,7 @@ namespace OnionConsumeWebAPI.Controllers.Indigo
                             airLineFlightTicketBooking.tb_PassengerTotal = tb_PassengerTotalobj;
                             airLineFlightTicketBooking.tb_PassengerDetails = tb_PassengerDetailsList;
                             airLineFlightTicketBooking.ContactDetail = contactDetail;
-                            airLineFlightTicketBooking.tb_Trips = tb_Trips;
+                            //airLineFlightTicketBooking.tb_Trips = tb_Trips;
 
                             client1.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                             HttpResponseMessage responsePassengers = await client1.PostAsJsonAsync(AppUrlConstant.BaseURL + "api/AirLineTicketBooking/PostairlineTicketData", airLineFlightTicketBooking);

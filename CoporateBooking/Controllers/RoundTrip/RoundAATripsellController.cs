@@ -645,6 +645,12 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     _ContactModelSG.updateContactsRequestData.BookingContactList = new BookingContact[1];
                     _ContactModelSG.updateContactsRequestData.BookingContactList[0] = new BookingContact();
 
+                    _ContactModelSG.updateContactsRequestData.BookingContactList[0].Names = new BookingName[1];
+                    _ContactModelSG.updateContactsRequestData.BookingContactList[0].Names[0] = new BookingName();
+                    _ContactModelSG.updateContactsRequestData.BookingContactList[0].Names[0].Title = contactobject.title;
+                    _ContactModelSG.updateContactsRequestData.BookingContactList[0].Names[0].FirstName = contactobject.first;
+                    _ContactModelSG.updateContactsRequestData.BookingContactList[0].Names[0].LastName = contactobject.last;
+
                     if (contactobject.customerNumber != null && contactobject.customerNumber != "")
                     {
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].TypeCode = "G";
@@ -656,15 +662,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                     {
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].TypeCode = "P";
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].CountryCode = "IN";
-                        _ContactModelSG.updateContactsRequestData.BookingContactList[0].HomePhone = contactobject.countrycode + "-" + contactobject.number;
                         _ContactModelSG.updateContactsRequestData.BookingContactList[0].EmailAddress = contactobject.emailAddress;
-                        BookingName[] Name = new BookingName[1];
-                        Name[0] = new BookingName();
-                        Name[0].FirstName = contactobject.first;
-                        Name[0].LastName = contactobject.last;
-                        Name[0].Title = contactobject.title;
-                        _ContactModelSG.updateContactsRequestData.BookingContactList[0].Names = Name;
                     }
+                    _ContactModelSG.updateContactsRequestData.BookingContactList[0].HomePhone = contactobject.countrycode + "-" + contactobject.number;
+
                     SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                     UpdateContactsResponse responseAddContactSG = await objSpiceJet.GetUpdateContactsAsync(_ContactModelSG);
                     HttpContext.Session.SetString("ContactDetails", JsonConvert.SerializeObject(_ContactModelSG));

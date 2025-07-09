@@ -21,7 +21,7 @@ namespace DomainLayer.ViewModel
         public List<tb_PassengerDetails> tb_PassengerDetails { get; set; }
         public List<tb_journeys> tb_journeys { get; set; }
         public List<tb_Segments> tb_Segments { get; set; }
-        public Trips tb_Trips { get; set; }
+        //public Trips tb_Trips { get; set; }
 
     }
 
