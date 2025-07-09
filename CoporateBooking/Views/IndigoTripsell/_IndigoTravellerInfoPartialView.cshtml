@@ -67,8 +67,7 @@
 		    <p id="error-Fname" class="error-message  error-CFname" style="display: none;"></p>
 		    <p class="error-message-val " style="display:none"></p>
 		</div>
-		<div class="col-md-3">
-
+		<div class="col-md-2">
 		    <div class="form-input">
 			<input type="text" class="contactLname validate-field" data-validate="last" oninput="validateInputI(event,@i)" maxlength="32" placeholder="Last name" name="passengerdetails[@i].Last" style='text-transform:uppercase' required />
 
@@ -85,11 +84,50 @@
 			<p class="error-message error-emailname" style="display:none"></p>
 			<p class="error-message-val " style="display:none"></p>
 
-			<div class="col-md-2">
-			    <div class="form-input"><input type="text" data-validate="phone" maxlength="10" id="contactphoneID" class="contactphone validate-field" oninput="validateInputI(event,@i)" placeholder="phone" name="passengerdetails[@i].mobile" required /></div>
-			</div>
+			// <div class="col-md-2">
+			//     <div class="form-input"><input type="text" data-validate="phone" maxlength="10" id="contactphoneID" class="contactphone validate-field" oninput="validateInputI(event,@i)" placeholder="phone" name="passengerdetails[@i].mobile" required /></div>
+			// </div>
+
+						<div class="col-md-1 phone-code">
+							<select name="passengerdetails[@i].countrycode" class="form-control form-control-lg">
+								<option value="+91">+91 (India)</option>
+								<option value="+1">+1 (USA)</option>
+								<option value="+44">+44 (UK)</option>
+								<option value="+61">+61 (Australia)</option>
+								<option value="+81">+81 (Japan)</option>
+							</select>
+						</div>
+						<div class="col-md-2 ">
+						<div class="form-input">
+								<input type="text" data-validate="phone" id="contactphoneID"
+									   maxlength="20"
+									   class="contactphone validate-field"
+									   oninput="validateInputT(event,@i)"
+									   placeholder="phone"
+									   name="passengerdetails[@i].mobile"
+									   required />
+							</div>
+						</div>
+
+
 			<p class="error-message error-phoneN" style="display:none"></p>
 			<p class="error-message-val" style="display:none"></p>
+						<div class="col-md-3 mt-10 pl-2 frequent-bx">
+							<div class="form-input">
+								<div class="frequent-logo">
+									<img class="size-30" src="~/img/flight-logo-icon/6E.png" alt="image">
+								</div>
+								<input type="text" data-validate="ff" id="FFID"
+									   maxlength="15"
+									   class=""
+									   oninput=""
+									   placeholder="Frequent Flyer Numbers"
+									   name="passengerdetails[@i].FrequentFlyer"
+									   required style="border-radius: 0 4px 4px 0;" />
+							</div>
+						</div>
+
+
 		    }
 		    if (@Model.passeengerlist.passengers[i].passengerTypeCode == "INFT")
 		    {
