@@ -3111,6 +3111,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         tb_Booking.SpecialServicesTotal_Tax = (double)TotalBagtax;
                                         tb_Booking.SeatTotalAmount = returnSeats.total;
                                         tb_Booking.SeatTotalAmount_Tax = returnSeats.taxes;
+                                        tb_Booking.SpecialServicesTotal -= tb_Booking.SpecialServicesTotal_Tax;
+                                        tb_Booking.SeatTotalAmount -= tb_Booking.SeatTotalAmount_Tax;
                                         tb_Booking.ExpirationDate = _getBookingResponse.Booking.BookingInfo.ExpiredDate;
                                         //tb_Booking.ArrivalDate = _getBookingResponse.Booking.Journeys[0].Segments[segmentcount - 1].STA.ToString().Replace('T',' ');//DateTime.Now;
                                         //tb_Booking.DepartureDate = _getBookingResponse.Booking.Journeys[0].Segments[0].Legs[0].STD.ToString().Replace('T', ' ');//DateTime.Now;
@@ -3187,6 +3189,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             tb_PassengerTotalobj.SpecialServicesAmount_Tax = (double)TotalBagtax; // FFWD + MEAL + BAGGAGE
                                             tb_PassengerTotalobj.TotalSeatAmount = returnSeats.total;
                                             tb_PassengerTotalobj.TotalSeatAmount_Tax = returnSeats.taxes;
+                                            tb_PassengerTotalobj.SpecialServicesAmount -= tb_PassengerTotalobj.SpecialServicesAmount_Tax;
+                                            tb_PassengerTotalobj.TotalSeatAmount -= tb_PassengerTotalobj.TotalSeatAmount_Tax;
                                         }
                                         tb_PassengerTotalobj.TotalBookingAmount = (double)breakdown.journeyTotals.totalAmount;
                                         tb_PassengerTotalobj.totalBookingAmount_Tax = (double)breakdown.journeyTotals.totalTax;
@@ -4140,8 +4144,10 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         tb_Booking.TotalAmount = (double)_getBookingResponse.Booking.BookingSum.TotalCost;
                                         tb_Booking.SpecialServicesTotal = (double)Totatamountmb;
                                         tb_Booking.SpecialServicesTotal_Tax = (double)TotalBagtax;
+                                        tb_Booking.SpecialServicesTotal -= tb_Booking.SpecialServicesTotal_Tax;
                                         tb_Booking.SeatTotalAmount = returnSeats.total;
                                         tb_Booking.SeatTotalAmount_Tax = returnSeats.taxes;
+                                        tb_Booking.SeatTotalAmount -= tb_Booking.SeatTotalAmount_Tax;
                                         tb_Booking.ExpirationDate = _getBookingResponse.Booking.BookingInfo.ExpiredDate;
                                         //tb_Booking.ArrivalDate = _getBookingResponse.Booking.Journeys[0].Segments[segmentcount - 1].STA.ToString().Replace('T',' ');//DateTime.Now;
                                         //tb_Booking.DepartureDate = _getBookingResponse.Booking.Journeys[0].Segments[0].Legs[0].STD.ToString().Replace('T', ' ');//DateTime.Now;
@@ -4218,6 +4224,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             tb_PassengerTotalobj.SpecialServicesAmount_Tax = (double)TotalBagtax; // FFWD + MEAL + BAGGAGE
                                             tb_PassengerTotalobj.TotalSeatAmount = returnSeats.total;
                                             tb_PassengerTotalobj.TotalSeatAmount_Tax = returnSeats.taxes;
+                                            tb_PassengerTotalobj.SpecialServicesAmount -= tb_PassengerTotalobj.SpecialServicesAmount_Tax;
+                                            tb_PassengerTotalobj.TotalSeatAmount -= tb_PassengerTotalobj.TotalSeatAmount_Tax;
                                         }
                                         tb_PassengerTotalobj.TotalBookingAmount = (double)breakdown.journeyTotals.totalAmount;
                                         tb_PassengerTotalobj.totalBookingAmount_Tax = (double)breakdown.journeyTotals.totalTax;
