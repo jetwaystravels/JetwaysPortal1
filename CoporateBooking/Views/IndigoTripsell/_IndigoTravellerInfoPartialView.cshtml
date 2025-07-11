@@ -422,50 +422,107 @@
 		{ className: 'contactphone', errorMessage: 'Phone number at least 10 digits', validationdata: /^[1-9][0-9]{9}$/ }
 	    ];
 
-	    let firstInvalidElement = null;
+	 //    let firstInvalidElement = null;
 
-	    fieldsToValidate.forEach(field => {
-		const elements = document.querySelectorAll(`.${field.className}`);
-		elements.forEach(element => {
-		    element.addEventListener("input", function () {
-			removeError(element);
-			if (field.className === 'contactFname' || field.className === 'contactLname') {
-			    element.value = element.value.replace(/[^A-Za-z]/g, ''); // Allow only alphabets
-			}
-			if (field.className === 'contactphone') {
-			    element.value = element.value.replace(/[^0-9]/g, '');
-			}
-		    });
+	 //    fieldsToValidate.forEach(field => {
+		// const elements = document.querySelectorAll(`.${field.className}`);
+		// elements.forEach(element => {
+		//     element.addEventListener("input", function () {
+		// 	removeError(element);
+		// 	if (field.className === 'contactFname' || field.className === 'contactLname') {
+		// 	    element.value = element.value.replace(/[^A-Za-z]/g, ''); Allow only alphabets
+		// 	}
+		// 	if (field.className === 'contactphone') {
+		// 	    element.value = element.value.replace(/[^0-9]/g, '');
+		// 	}
+		//     });
 
-		    if (element.value.trim() === "") {
-			if (field.className !== 'contactphone' && field.className !== 'contactemail') {
-			    showError(element, field.errorMessage);
-			    if (!firstInvalidElement) {
-				firstInvalidElement = element;
-			    }
-			}
-		    }
 
-		    else if (element.value.trim().startsWith('0')) {
-			showError(element, 'Phone number cannot start with 0');
-			if (!firstInvalidElement) {
-			    firstInvalidElement = element;
-			}
-		    }
+			let firstInvalidElement = null;
+			fieldsToValidate.forEach(field => {
+				const elements = document.querySelectorAll(`.${field.className}`);
+				elements.forEach(element => {
+					element.addEventListener("input", function () {
+						removeError(element);
+
+						// Restrict input to integers only for contactphone
+						if (field.className === 'contactphone') {
+							element.value = element.value.replace(/[^0-9]/g, '').slice(0, 10); // allow only 10 digits max
+						}
+
+
+						// Validate phone number for at least 10 digits
+						if (field.className === 'contactphone' && element.value.trim().length < 10) {
+							showError(element, 'Phone number must be at least 10 digits');
+							if (!firstInvalidElement) {
+								firstInvalidElement = element;
+							}
+						}
+					});
+			
+
+
+		 //    if (element.value.trim() === "") {
+			// if (field.className !== 'contactphone' && field.className !== 'contactemail') {
+			//     showError(element, field.errorMessage);
+			//     if (!firstInvalidElement) {
+			// 	firstInvalidElement = element;
+			//     }
+			// }
+		 //    }
+
+		 //    else if (element.value.trim().startsWith('0')) {
+			// showError(element, 'Phone number cannot start with 0');
+			// if (!firstInvalidElement) {
+			//     firstInvalidElement = element;
+			// }
+		 //    }
 		    
-		    else if (field.className === 'contactphone' && element.value.trim().length < 10) {
-			showError(element, 'Phone number must be at least 10 digits');
-			if (!firstInvalidElement) {
-			    firstInvalidElement = element;
-			}
-		    } 
+		 //    else if (field.className === 'contactphone' && element.value.trim().length < 10) {
+			// showError(element, 'Phone number must be at least 10 digits');
+			// if (!firstInvalidElement) {
+			//     firstInvalidElement = element;
+			// }
+		 //    } 
 		    
-		    else if (field.className !== 'contactphone' && !field.validationdata.test(element.value.trim())) {
-			showError(element, field.errorMessage);
-			if (!firstInvalidElement) {
-			    firstInvalidElement = element;
-			}
-		    }
+		 //    else if (field.className !== 'contactphone' && !field.validationdata.test(element.value.trim())) {
+			// showError(element, field.errorMessage);
+			// if (!firstInvalidElement) {
+			//     firstInvalidElement = element;
+			// }
+		 //    }
+
+
+					if (element.value.trim() === "") {
+						// Ensure all fields are mandatory, including contactphone and contactemail
+						showError(element, `${field.className.replace('contact', '')} is required`);
+						if (!firstInvalidElement) {
+							firstInvalidElement = element;
+						}
+					}
+					else if (field.className === 'contactphone' && element.value.trim().startsWith('0')) {
+						showError(element, 'Phone number cannot start with 0');
+						if (!firstInvalidElement) {
+							firstInvalidElement = element;
+						}
+					}
+					// else if (field.className === 'contactphone' && element.value.trim().length < 10) {
+					// 	showError(element, 'Phone number must be at least 10 digits');
+					// 	if (!firstInvalidElement) {
+					// 		firstInvalidElement = element;
+					// 	}
+					// }
+
+
+					else if (field.className === 'contactphone' && element.value.trim().length !== 10) {
+						showError(element, 'Phone number must be exactly 10 digits');
+						if (!firstInvalidElement) {
+							firstInvalidElement = element;
+						}
+					}
+
+
+
 		});
 	    });
 

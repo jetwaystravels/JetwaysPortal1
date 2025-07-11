@@ -472,58 +472,149 @@
 				{ className: 'contactFname', errorMessage: 'First name is required', validationdata: /^[A-Za-z]{1,32}$/ },
 				{ className: 'contactLname', errorMessage: 'Last name is required', validationdata: /^[A-Za-z]{1,32}$/ },
 				{ className: 'contactemail', errorMessage: 'Email is invalid', validationdata: /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/ },
-				{ className: 'contactphone', errorMessage: 'Enter valid phone number', validationdata: /^\d{10,}$/ }
+				{ className: 'contactphone', errorMessage: 'Phone number at least 10 digits', validationdata: /^\d{10,}$/ }
 			];
 
-			let firstInvalidElement = null;
+			// let firstInvalidElement = null;
 
+			// fieldsToValidate.forEach(field => {
+			// 	const elements = document.querySelectorAll(`.${field.className}`);
+			// 	elements.forEach(element => {
+			// 		element.addEventListener("input", function () {
+			// 			removeError(element);
+
+
+			// 			// Restrict input to alphabetic characters for contactFname and contactLname
+			// 			if (field.className === 'contactFname' || field.className === 'contactLname') {
+			// 				element.value = element.value.replace(/[^A-Za-z]/g, ''); // Allow only alphabets
+			// 			}
+			// 			// Restrict input to integers only for contactphone
+			// 			if (field.className === 'contactphone') {
+			// 				element.value = element.value.replace(/[^0-9]/g, '');
+			// 			}
+			// 		});
+
+
+			// let firstInvalidElement = null;
+			// fieldsToValidate.forEach(field => {
+			// 	const elements = document.querySelectorAll(`.${field.className}`);
+			// 	elements.forEach(element => {
+			// 		element.addEventListener("input", function () {
+			// 			removeError(element);
+
+			// 			// Restrict input to integers only for contactphone
+			// 			if (field.className === 'contactphone') {
+			// 				element.value = element.value.replace(/[^0-9]/g, '').slice(0, 10); // allow only 10 digits max
+			// 			}
+
+
+			// 			// Validate phone number for at least 10 digits
+			// 			if (field.className === 'contactphone' && element.value.trim().length < 10) {
+			// 				showError(element, 'Phone number must be at least 10 digits');
+			// 				if (!firstInvalidElement) {
+			// 					firstInvalidElement = element;
+			// 				}
+			// 			}
+			// 		});
+
+
+
+
+			let firstInvalidElement = null;
 			fieldsToValidate.forEach(field => {
 				const elements = document.querySelectorAll(`.${field.className}`);
 				elements.forEach(element => {
 					element.addEventListener("input", function () {
 						removeError(element);
 
-
-						// Restrict input to alphabetic characters for contactFname and contactLname
-						if (field.className === 'contactFname' || field.className === 'contactLname') {
-							element.value = element.value.replace(/[^A-Za-z]/g, ''); // Allow only alphabets
-						}
 						// Restrict input to integers only for contactphone
 						if (field.className === 'contactphone') {
-							element.value = element.value.replace(/[^0-9]/g, '');
+							element.value = element.value.replace(/[^0-9]/g, '').slice(0, 10); // allow only 10 digits max
 						}
-					});
 
-					if (element.value.trim() === "") {
-						if (field.className !== 'contactphone' && field.className !== 'contactemail') {
-							// If the field is blank and it's not the phone field, show the error message
-							showError(element, field.errorMessage);
+
+						// Validate phone number for at least 10 digits
+						if (field.className === 'contactphone' && element.value.trim().length < 10) {
+							showError(element, 'Phone number must be at least 10 digits');
 							if (!firstInvalidElement) {
 								firstInvalidElement = element;
 							}
 						}
-					}
+					});
 
-					else if (element.value.trim().startsWith('0')) {
+
+
+					// if (element.value.trim() === "") {
+					// 	if (field.className !== 'contactphone' && field.className !== 'contactemail') {
+					// 		// If the field is blank and it's not the phone field, show the error message
+					// 		showError(element, field.errorMessage);
+					// 		if (!firstInvalidElement) {
+					// 			firstInvalidElement = element;
+					// 		}
+					// 	}
+					// }
+
+					// else if (element.value.trim().startsWith('0')) {
+					// 	showError(element, 'Phone number cannot start with 0');
+					// 	if (!firstInvalidElement) {
+					// 		firstInvalidElement = element;
+					// 	}
+					// }
+
+					// else if (field.className === 'contactphone' && element.value.trim().length < 10) {
+					// 	// If the phone number has fewer than 10 digits, show an error message
+					// 	showError(element, 'Phone number must be at least 10 digits');
+					// 	if (!firstInvalidElement) {
+					// 		firstInvalidElement = element;
+					// 	}
+					// } else if (field.className !== 'contactphone' && !field.validationdata.test(element.value.trim())) {
+					// 	// For other fields, check their pattern validation
+					// 	showError(element, field.errorMessage);
+					// 	if (!firstInvalidElement) {
+					// 		firstInvalidElement = element;
+					// 	}
+					// }
+
+
+					if (element.value.trim() === "") {
+						// Ensure all fields are mandatory, including contactphone and contactemail
+						showError(element, `${field.className.replace('contact', '')} is required`);
+						if (!firstInvalidElement) {
+							firstInvalidElement = element;
+						}
+					}
+					else if (field.className === 'contactphone' && element.value.trim().startsWith('0')) {
 						showError(element, 'Phone number cannot start with 0');
 						if (!firstInvalidElement) {
 							firstInvalidElement = element;
 						}
 					}
+					// else if (field.className === 'contactphone' && element.value.trim().length < 10) {
+					// 	showError(element, 'Phone number must be at least 10 digits');
+					// 	if (!firstInvalidElement) {
+					// 		firstInvalidElement = element;
+					// 	}
+					// }
 
-					else if (field.className === 'contactphone' && element.value.trim().length < 10) {
-						// If the phone number has fewer than 10 digits, show an error message
-						showError(element, 'Phone number must be at least 10 digits');
+
+					else if (field.className === 'contactphone' && element.value.trim().length !== 10) {
+						showError(element, 'Phone number must be exactly 10 digits');
 						if (!firstInvalidElement) {
 							firstInvalidElement = element;
 						}
-					} else if (field.className !== 'contactphone' && !field.validationdata.test(element.value.trim())) {
+					}
+
+
+
+					else if (!field.validationdata.test(element.value.trim())) {
 						// For other fields, check their pattern validation
 						showError(element, field.errorMessage);
 						if (!firstInvalidElement) {
 							firstInvalidElement = element;
 						}
 					}
+
+
 				});
 			});
 
