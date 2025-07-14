@@ -156,6 +156,7 @@ namespace OnionConsumeWebAPI.Controllers.AirAsia
             }
             catch (Exception ex)
             {
+                return RedirectToAction("UserLogin", "Login");
                 // Ideally log the exception
                 // You could use ViewBag.Error = "Something went wrong." or TempData["Error"]
             }

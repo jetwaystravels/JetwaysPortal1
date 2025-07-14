@@ -2990,7 +2990,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                             passengerTotals.specialServices.total += Convert.ToInt32(item2.Amount);
                                                             TotalMeal = passengerTotals.specialServices.total;
                                                         }
-                                                        if (item2.ChargeCode.StartsWith("E", StringComparison.OrdinalIgnoreCase) == true)
+                                                        else if (item2.ChargeCode.StartsWith("E", StringComparison.OrdinalIgnoreCase) == true)
                                                         {
                                                             passengerTotals.baggage.total += Convert.ToInt32(item2.Amount);
                                                             TotalBag = passengerTotals.baggage.total;
@@ -3345,8 +3345,8 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                             }
                                                         }
                                                         else if (!ssrCode.Equals("SFBO") && !ssrCode.Equals("INFT") && ssrCode.StartsWith("E", StringComparison.OrdinalIgnoreCase) == false)
-                                                        {
-                                                            if (fee.FlightReference.ToString().Contains(oridest) == true)
+                                                        {       //|| (fee.ServiceCharges.Length > 1 && fee.ServiceCharges[1].ChargeDetail.Trim().ToUpper().ToString().Replace("-", "").Contains(oridest.Trim().ToUpper()))
+                                                            if (fee.FlightReference.Trim().ToUpper().ToString().Contains(oridest.Trim().ToUpper()))
                                                             {
                                                                 Hashtable htssr = new Hashtable();
                                                                 SpicejetMealImageList.GetAllmealSG(htssr);
@@ -3397,6 +3397,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                                             double amount = (serviceCharge.Amount != null) ? Convert.ToDouble(serviceCharge.Amount) : 0;
                                                             if (serviceChargeCode != null)
                                                             {
+                                                                //|| (fee.ServiceCharges.Length > 1 && fee.ServiceCharges[1].ChargeDetail.Trim().ToUpper().ToString().Replace("-", "").Contains(oridest.Trim().ToUpper()))
                                                                 if (fee.FlightReference.ToString().Contains(oridest) == true)
                                                                 {
 
@@ -3582,7 +3583,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         //}
                                         //}
                                         #endregion
-                                        
+
                                     }
                                     else
                                     {
@@ -4131,7 +4132,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         tb_Booking.BookingType = "Corporate-" + _getBookingResponse.Booking.Journeys[0].Segments[0].Fares[0].ProductClass + " (" + fareName.Faredesc + ")";
                                         LegalEntity legal = new LegalEntity();
                                         legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
-                                        tb_Booking.CompanyName = legal.BillingEntityFullName;
+                                        if (legal != null)
+                                        {
+                                            tb_Booking.CompanyName = legal.BillingEntityFullName;
+                                        }
+                                        else
+                                        {
+                                            tb_Booking.CompanyName = "";
+                                        }
                                         tb_Booking.BookingRelationId = Guid;
                                         tb_Booking.TripType = "RoundTrip";
                                         tb_Booking.BookingID = _getBookingResponse.Booking.BookingID.ToString();
@@ -4613,7 +4621,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             segmentReturnsListt.Add(segmentReturnobj);
                                         }
 
-                                        
+
                                         #endregion
                                     }
                                 }

@@ -255,7 +255,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                     //FrequentFlyer Number
                     p1.PassengerProgram = new PassengerProgram();
                     p1.PassengerProgram.ProgramCode = "6E";
-                    p1.PassengerProgram.ProgramNumber = "123456789";
+                    p1.PassengerProgram.ProgramNumber = _paxes.Adults_[cntAdt].FrequentFlyer;
 
                     p1.PassengerTypeInfos = new PassengerTypeInfo[1];
                     p1.PassengerTypeInfos[0] = new PassengerTypeInfo();
@@ -340,7 +340,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                         //Frequent flyer Number
                         p1.PassengerProgram = new PassengerProgram();
                         p1.PassengerProgram.ProgramCode = "6E";
-                        p1.PassengerProgram.ProgramNumber = "245678958";
+                        p1.PassengerProgram.ProgramNumber = _paxes.Childs_[cntChd].FrequentFlyer;
 
                         p1.PassengerTypeInfos = new PassengerTypeInfo[1];
                         p1.PassengerTypeInfos[0] = new PassengerTypeInfo();

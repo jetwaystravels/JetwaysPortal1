@@ -234,6 +234,11 @@ namespace OnionConsumeWebAPI.Controllers
                 SpiceJetApiController objSpiceJet = new SpiceJetApiController();
                 _getSellRS = await objSpiceJet.GetSellAsync(_getSellRQ);
 
+                if (_getSellRS == null || _getSellRS.BookingUpdateResponseData.Error != null)
+                {
+                    ViewBag.ErrorMessage = _getSellRS.BookingUpdateResponseData.Error.ErrorText;
+                    return View("service-error-msg");
+                }
                 //string str = JsonConvert.SerializeObject(_getSellRS);
 
                 //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_getSellRQ) + "\n\n Response: " + JsonConvert.SerializeObject(_getSellRS), "SellRequest", "SpicejetOneWay", "oneway");

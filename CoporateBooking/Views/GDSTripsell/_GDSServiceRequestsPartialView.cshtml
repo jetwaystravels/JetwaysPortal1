@@ -994,6 +994,11 @@
 
                                                     <select id="ddlbagOptions" class="servc-bordr servc-bordrbaggage">
                                                         <option selected="selected" value="">Please Select</option>
+													@{
+														var sortedBaggageOptions = BaggageOptions
+														.OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
+														.ToList();
+													}
                                                         @foreach (var option in BaggageOptions)
                                                         { 
                                                             <option value="@option.Text" data-bagkey=@bagkey>

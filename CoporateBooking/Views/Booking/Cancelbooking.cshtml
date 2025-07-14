@@ -1,5 +1,5 @@
 ﻿@using static CoporateBooking.Models.CancelBookingResponse
-@model BookingData
+@model List<BookingData>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -134,10 +134,13 @@
     </style>
 </head>
 <body>
-
+    @foreach (var mdl in Model)
+    {
+        
+    
     <div class="booking-card">
         @{
-            var journey = Model.journeys.FirstOrDefault();
+                var journey = mdl.journeys.FirstOrDefault();
             var duration = journey != null ? journey.designator.arrival - journey.designator.departure : TimeSpan.Zero;
         }
 
@@ -146,7 +149,7 @@
                 Air India Express - @string.Join(", ", journey.segments.Select(s => s.identifier.carrierCode + " " + s.identifier.identifier))<br />
                 <small>Class: Economy (@journey.segments.FirstOrDefault()?.fares.FirstOrDefault()?.classOfService ?? "—") | Type: Corporate</small>
             </h3>
-            <p><strong>Airline PNR :</strong> @Model.recordLocator</p>
+                <p><strong>Airline PNR :</strong> @mdl.recordLocator</p>
         </div>
 
         <div class="flight-info">
@@ -169,13 +172,13 @@
 
         <div class="booking-meta">
             <div class="meta-item">Fare Basis<br><span>@(journey.segments.FirstOrDefault()?.fares.FirstOrDefault()?.fareBasisCode ?? "—")</span></div>
-            <div class="meta-item">GDS PNR<br><span>@Model.recordLocator</span></div>
+                <div class="meta-item">GDS PNR<br><span>@mdl.recordLocator</span></div>
             <div class="meta-item">Passive PNR<br><span>—</span></div>
             <div class="meta-item">Deal Code<br><span>—</span></div>
             <div class="meta-item">Tour Code<br><span>—</span></div>
         </div>
 
-        <form asp-controller="CancelBooking" asp-action="CancelAction" asp-route-pnr="@Model.recordLocator"
+            <form asp-controller="CancelBooking" asp-action="CancelAction" asp-route-pnr="@mdl.recordLocator"
               asp-route-airline="@ViewBag.AirlineId" method="post" id="cancelForm">
             @Html.AntiForgeryToken()
             <input type="hidden" name="cancellationType" id="cancellationType" value="complete" />
@@ -192,7 +195,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var pax in Model.passengers.Values)
+                        @foreach (var pax in mdl.passengers.Values)
                     {
                         <tr>
                             <td>
@@ -203,8 +206,8 @@
                                 <small>Passenger Key: @pax.passengerKey</small><br />
                                 <small>—</small>
                             </td>
-                            <td>@Model.recordLocator</td>
-                            <td>INR @Model.breakdown.totalAmount.ToString("N0")</td>
+                                <td>@mdl.recordLocator</td>
+                                <td>INR @mdl.breakdown.totalAmount.ToString("N0")</td>
                             <td><span class="status-cancelled">Confirm</span></td>
                         </tr>
                     }
@@ -217,7 +220,7 @@
             </div>
         </form>
     </div>
-
+    }
     <script>
         // Select All checkbox handler
         document.getElementById("selectAll").addEventListener("change", function () {

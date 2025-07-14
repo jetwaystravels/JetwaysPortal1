@@ -1,12 +1,14 @@
 ﻿using CoporateBooking.Comman;
 using DomainLayer.Model;
 using Microsoft.AspNetCore.Mvc;
+using Nancy.Json;
 using Newtonsoft.Json;
 using OnionConsumeWebAPI.Extensions;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.ServiceModel.Channels;
 using System.Text;
+using System.Text.Json;
 using Utility;
 using static DomainLayer.Model.ReturnTicketBooking;
 
@@ -157,6 +159,7 @@ namespace CoporateBooking.Controllers.common
 
         private async Task<IActionResult> CancelPartialAirAsiaBooking(string pnr, List<string> passengerKeys)
         {
+            string PartialMessage = string.Empty;
             // TODO: Call AirAsia SSR delete or passenger-specific cancel API if available
             using (HttpClient client = new HttpClient())
             {
@@ -235,6 +238,43 @@ namespace CoporateBooking.Controllers.common
                 // ✅ Deserialize success response
                 var divideResponseContent = await divideResponse.Content.ReadAsStringAsync();
 
+                var doc = JsonDocument.Parse(divideResponseContent);
+                var root = doc.RootElement;
+
+                var data = root.GetProperty("data");
+
+                // Navigate to the "passengers" dictionary
+                var passengers = data.GetProperty("passengers");
+
+                foreach (var passenger in passengers.EnumerateObject())
+                {
+                    string passengerKey = passenger.Name;
+                    var passengerData = passenger.Value;
+
+                    var nameObj = passengerData.GetProperty("name");
+                    string firstName = nameObj.GetProperty("first").GetString();
+                    string lastName = nameObj.GetProperty("last").GetString();
+                    string title = nameObj.GetProperty("title").GetString();
+
+                    //Console.WriteLine($"Passenger Key: {passengerKey}");
+                    //Console.WriteLine($"Name: {title} {firstName} {lastName}");
+
+                    PartialMessage += $"Passenger Key: {passengerKey}, Name: {title} {firstName} {lastName}\n";
+
+                    // Check for infant data
+                    //if (passengerData.TryGetProperty("infant", out var infant))
+                    //{
+                    //    var infantName = infant.GetProperty("name");
+                    //    string infantFirst = infantName.GetProperty("first").GetString();
+                    //    string infantLast = infantName.GetProperty("last").GetString();
+                    //    string infantTitle = infantName.GetProperty("title").GetString();
+                    //    string dob = infant.GetProperty("dateOfBirth").GetString();
+
+                    //   // Console.WriteLine($"  Infant: {infantTitle} {infantFirst} {infantLast}, DOB: {dob}");
+                    //    PartialMessage += $"  Infant: {infantTitle} {infantFirst} {infantLast}, DOB: {dob}\n";
+                    //}
+                }
+
                 // Optional: log response
                 Logs logs = new Logs();
                 logs.WriteLogs(divideResponseContent, "DivideBooking", "AirAsiaOneWay", "oneway");
@@ -243,7 +283,8 @@ namespace CoporateBooking.Controllers.common
                 dynamic divideResult = JsonConvert.DeserializeObject<dynamic>(divideResponseContent);
 
                 // Extract new record locator and key
-                string newRecordLocator = divideResult?.data?.booking?.recordLocator;
+                //string newRecordLocator = divideResult?.data?.booking?.recordLocator;
+                string newRecordLocator = divideResult?.data?.recordLocator;
                 string bookingKey = divideResult?.data?.bookingKey;
 
                 // Store or pass forward for next operations
@@ -300,7 +341,7 @@ namespace CoporateBooking.Controllers.common
 
                 TempData["Success"] = "Booking cancellation session flow completed successfully.";
                 TempData["FinalStatus"] = _finalStatus;
-                return RedirectToAction("MyBooking", "Booking");
+                return RedirectToAction("MyBooking", "Booking", new { Mess = PartialMessage });
             }
         }
 
@@ -373,3 +414,4 @@ namespace CoporateBooking.Controllers.common
     }
 
 }
+

@@ -34,6 +34,34 @@ namespace ServiceLayer.Service.Implementation
                 .ToListAsync();
         }
 
+        public async Task<string> GetPNRAsync(string guid)
+        {
+
+            string result = "";
+
+            using var conn = _dbContext.Database.GetDbConnection(); // Fixed 'dbContext' to '_dbContext'  
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "sp_GetPNR";
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            var param = cmd.CreateParameter();
+            param.ParameterName = "@guid";
+            param.Value = guid;
+            cmd.Parameters.Add(param);
+
+            await conn.OpenAsync();
+            using var reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                if(result.Length > 0)
+                    result += ","; // Add a comma to separate multiple PNRs
+                result += reader["RecordLocator"].ToString() + "-" + reader["AirLineID"].ToString() ; // Assuming RecordLocator is the column name in the result set
+            }
+            return result;
+        }
+
+
+
         public async Task<bool> UpdateCancelStatusAsync( string recordLocator, int status,string userEmail,decimal balanceDue, decimal totalAmount)
         {
             var recordLocatorParam = new SqlParameter("@RecordLocator", recordLocator);

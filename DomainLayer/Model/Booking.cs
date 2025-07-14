@@ -23,5 +23,8 @@ namespace DomainLayer.Model
 
         public int cancelstatus { get; set; }
 
+        public string? BookingRelationId { get; set; }
+
+
     }
 }

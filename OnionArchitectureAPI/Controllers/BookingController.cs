@@ -35,6 +35,16 @@ namespace OnionArchitectureAPI.Controllers
             return Ok(data);
         }
 
+        [HttpGet("GetbookingPNRs")]
+        public async Task<IActionResult> GetbookingPNRs([FromQuery] string guid)
+        {
+            if (string.IsNullOrWhiteSpace(guid))
+                return BadRequest("userEmail is required.");
+
+            var data = await _bookingDetail.GetPNRAsync(guid);
+            return Ok(data);
+        }
+
 
         [HttpPost("UpdateCancelStatus")]
        

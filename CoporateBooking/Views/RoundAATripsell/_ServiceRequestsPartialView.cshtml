@@ -1187,6 +1187,9 @@
 														<option selected="selected" value="">Please select baggage</option>
 														@if(AirLine.ToLower() == "airindia")
 														{
+														var sortedBaggageOptions = BaggageOptions
+														.OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
+														.ToList();
 															foreach (var option in BaggageOptions)
 															{
 																<option value="@option.Value" data-bagkey=@bagkey>
@@ -2085,6 +2088,9 @@
 															<option selected="selected" value="">Please select baggage</option>
 															@if (AirLine.ToLower() == "airindia")
 															{
+														var sortedBaggageOptions = BaggageOptions
+														.OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
+														.ToList();
 																@foreach (var option in BaggageOptions)
 																{
 																	<option value="@option.Value" data-bagkey=@bagkeyAA>

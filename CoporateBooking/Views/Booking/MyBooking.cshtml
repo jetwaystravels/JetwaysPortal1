@@ -219,7 +219,7 @@
                                                     <div class="booking-row">
                                                         <!-- Cancel Button Form -->
                                                         <form asp-controller="Booking" asp-action="Cancelbooking" class="d-inline"
-                                                              asp-route-pnr="@books.RecordLocator" asp-route-airline="@books.AirLineID" method="post">
+                                                              asp-route-brid="@books.BookingRelationId" asp-route-pnr="@books.RecordLocator" asp-route-airline="@books.AirLineID" method="post">
                                                             @Html.AntiForgeryToken()
                                                             <button type="submit" class="cancel-btn action-btn"
                                                                     style="color: #fff; border: #ddd 1px solid; background: #EF0000;">

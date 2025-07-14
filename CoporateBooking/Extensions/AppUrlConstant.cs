@@ -15,6 +15,7 @@
         
         public static string AirlineLogin = "api/Login/GetAirlinelogin";
         public static string Getflightbooking = BaseURL+"api/Booking/GetbookingDetail";
+        public static string GetflightPNR = BaseURL + "api/Booking/GetbookingPNRs";
         public static string CancleStatus = BaseURL + "api/Booking/UpdateCancelStatus";
         public static string GetRefund = BaseURL + "api/RefundRequests/GetRefund";
         #region AirAsia URLs
