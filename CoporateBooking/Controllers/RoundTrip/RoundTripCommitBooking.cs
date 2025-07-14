@@ -736,7 +736,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             else
                                 tb_Booking.CompanyName = "";
                             tb_Booking.BookingRelationId = Guid;
-                            tb_Booking.TripType = "RoundTrip";
+                            if (k1 == 0)
+                            {
+                                tb_Booking.TripType = "RoundTrip";
+                            }
+                            else
+                            {
+                                tb_Booking.TripType = "ReturnTrip";
+                            }
                             tb_Booking.BookingID = JsonObjPNRBooking.data.bookingKey;
                             tb_Booking.RecordLocator = JsonObjPNRBooking.data.recordLocator;
                             tb_Booking.CurrencyCode = JsonObjPNRBooking.data.currencyCode;
@@ -1864,7 +1871,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                             {
                                 tb_Booking.CompanyName = "";
                             }
-                            tb_Booking.TripType = "RoundTrip";
+                            if (k1 == 0)
+                            {
+                                tb_Booking.TripType = "RoundTrip";
+                            }
+                            else
+                            {
+                                tb_Booking.TripType = "ReturnTrip";
+                            }
                             tb_Booking.BookingRelationId = Guid;
                             tb_Booking.BookingID = JsonObjPNRBooking.data.bookingKey;
                             tb_Booking.RecordLocator = JsonObjPNRBooking.data.recordLocator;
@@ -2300,7 +2314,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                     tb_Passengerobj.BaggageTotalAmountTax = TotalAmount_Baggage_tax;
                                     tb_Passengerobj.BaggageTotalAmountTax_discount = TotalAmount_Baggage_discount;
                                     tb_Passengerobj.Carrybages = carryBagesConcatenation.TrimEnd(',');
-                                    if (string.IsNullOrEmpty(MealConcatenation.TrimEnd(',')))
+                                    if (string.IsNullOrEmpty(MealConcatenation.TrimEnd(',')) && htmealdata.Count > 0)
                                     {
                                         string data2 = htmealdata[tb_Passengerobj.PassengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[0].segments[isegment].designator.origin + "_" + JsonObjPNRBooking.data.journeys[0].segments[isegment].designator.destination].ToString();
                                         var MealName = MealImageList.GetAllmeal()
@@ -3098,7 +3112,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
                                         tb_Booking.CompanyName = legal.BillingEntityFullName;
                                         tb_Booking.BookingRelationId = Guid;
-                                        tb_Booking.TripType = "RoundTrip";
+                                        if (k1 == 0)
+                                        {
+                                            tb_Booking.TripType = "RoundTrip";
+                                        }
+                                        else
+                                        {
+                                            tb_Booking.TripType = "ReturnTrip";
+                                        }
                                         tb_Booking.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                                         tb_Booking.RecordLocator = _getBookingResponse.Booking.RecordLocator;
                                         tb_Booking.CurrencyCode = _getBookingResponse.Booking.CurrencyCode;
@@ -4141,7 +4162,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             tb_Booking.CompanyName = "";
                                         }
                                         tb_Booking.BookingRelationId = Guid;
-                                        tb_Booking.TripType = "RoundTrip";
+                                        if (k1 == 0)
+                                        {
+                                            tb_Booking.TripType = "RoundTrip";
+                                        }
+                                        else
+                                        {
+                                            tb_Booking.TripType = "ReturnTrip";
+                                        }
                                         tb_Booking.BookingID = _getBookingResponse.Booking.BookingID.ToString();
                                         tb_Booking.RecordLocator = _getBookingResponse.Booking.RecordLocator;
                                         tb_Booking.CurrencyCode = _getBookingResponse.Booking.CurrencyCode;
@@ -5239,7 +5267,14 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
                                             tb_Booking.CompanyName = legal.BillingEntityFullName;
                                             tb_Booking.BookingRelationId = Guid;
-                                            tb_Booking.TripType = "RoundTrip";
+                                            if (k1 == 0)
+                                            {
+                                                tb_Booking.TripType = "RoundTrip";
+                                            }
+                                            else
+                                            {
+                                                tb_Booking.TripType = "ReturnTrip";
+                                            }
                                             tb_Booking.BookingID = Bookingid;
                                             tb_Booking.RecordLocator = returnTicketBooking.recordLocator;
                                             tb_Booking.CurrencyCode = "INR";

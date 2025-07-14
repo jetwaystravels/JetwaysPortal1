@@ -253,9 +253,12 @@ namespace OnionArchitectureAPI.Services.Indigo
                         p1.PassengerInfo.WeightCategory = WeightCategory.Female;
                     }
                     //FrequentFlyer Number
-                    p1.PassengerProgram = new PassengerProgram();
-                    p1.PassengerProgram.ProgramCode = "6E";
-                    p1.PassengerProgram.ProgramNumber = _paxes.Adults_[cntAdt].FrequentFlyer;
+                    if (!string.IsNullOrEmpty(_paxes.Adults_[cntAdt].FrequentFlyer))
+                    {
+                        p1.PassengerProgram = new PassengerProgram();
+                        p1.PassengerProgram.ProgramCode = "6E";
+                        p1.PassengerProgram.ProgramNumber = _paxes.Adults_[cntAdt].FrequentFlyer;
+                    }
 
                     p1.PassengerTypeInfos = new PassengerTypeInfo[1];
                     p1.PassengerTypeInfos[0] = new PassengerTypeInfo();
@@ -338,10 +341,12 @@ namespace OnionArchitectureAPI.Services.Indigo
                             p1.PassengerInfo.WeightCategory = WeightCategory.Child;
                         }
                         //Frequent flyer Number
-                        p1.PassengerProgram = new PassengerProgram();
-                        p1.PassengerProgram.ProgramCode = "6E";
-                        p1.PassengerProgram.ProgramNumber = _paxes.Childs_[cntChd].FrequentFlyer;
-
+                        if (!string.IsNullOrEmpty(_paxes.Childs_[cntChd].FrequentFlyer))
+                        {
+                            p1.PassengerProgram = new PassengerProgram();
+                            p1.PassengerProgram.ProgramCode = "6E";
+                            p1.PassengerProgram.ProgramNumber = _paxes.Childs_[cntChd].FrequentFlyer;
+                        }
                         p1.PassengerTypeInfos = new PassengerTypeInfo[1];
                         p1.PassengerTypeInfos[0] = new PassengerTypeInfo();
                         p1.PassengerTypeInfos[0].DOBSpecified = true;

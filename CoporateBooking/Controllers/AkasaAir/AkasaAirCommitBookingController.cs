@@ -1026,7 +1026,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                 {
                                     if (ssrCode.StartsWith("X"))
                                     {
-                                        if (fee.flightReference.ToString().Contains(oridest) == true)
+                                        if (fee.flightReference.ToString().Contains(oridest) == true && TicketCarryBag.Count > 0)
                                         {
                                             TicketCarryBag[tb_Passengerobj.PassengerKey.ToString()] = fee.ssrCode;
                                             var BaggageName = MealImageList.GetAllmeal()
@@ -1038,7 +1038,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                     }
                                     else if (ssrCode.StartsWith("P") || ssrCode.StartsWith("C"))
                                     {
-                                        if (fee.flightReference.ToString().Contains(oridest) == true)
+                                        if (fee.flightReference.ToString().Contains(oridest) == true && TicketMeal.Count > 0)
                                         {
                                             TicketMeal[tb_Passengerobj.PassengerKey.ToString()] = fee.ssrCode;
                                             var MealName = MealImageList.GetAllmeal()
@@ -1065,7 +1065,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                         {
                                             if (fee.flightReference.ToString().Contains(oridest) == true)
                                             {
-                                                if (serviceChargeCode.StartsWith("SFE") && serviceCharge.type == "6")
+                                                if (serviceChargeCode.StartsWith("SFE") && serviceCharge.type == "6" && TicketSeat.Count > 0)
                                                 {
                                                     TotalAmount_Seat = amount;
                                                     TicketSeat[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Seat;
@@ -1094,7 +1094,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                             if (fee.flightReference.ToString().Contains(oridest) == true)
                                             {
 
-                                                if ((serviceChargeCode.StartsWith("P") || serviceChargeCode.StartsWith("C")) && serviceCharge.type == "6")
+                                                if ((serviceChargeCode.StartsWith("P") || serviceChargeCode.StartsWith("C")) && serviceCharge.type == "6" && TicketMealAmount.Count > 0)
                                                 {
                                                     TotalAmount_Meals = amount;
                                                     TicketMealAmount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Meals;
@@ -1121,7 +1121,7 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                                         double amount = (serviceCharge.amount != null) ? Convert.ToDouble(serviceCharge.amount) : 0;
                                         if (serviceChargeCode != null && isegment == 0)
                                         {
-                                            if (serviceChargeCode.StartsWith("X") && serviceCharge.type == "6")
+                                            if (serviceChargeCode.StartsWith("X") && serviceCharge.type == "6" && TicketCarryBagAMount.Count > 0)
                                             {
                                                 TotalAmount_Baggage = amount;
                                                 TicketCarryBagAMount[tb_Passengerobj.PassengerKey.ToString()] = TotalAmount_Baggage;
@@ -1149,9 +1149,9 @@ namespace OnionConsumeWebAPI.Controllers.AkasaAir
                             tb_Passengerobj.BaggageTotalAmountTax = TotalAmount_Baggage_tax;
                             tb_Passengerobj.BaggageTotalAmountTax_discount = TotalAmount_Baggage_discount;
                             tb_Passengerobj.Carrybages = carryBagesConcatenation.TrimEnd(',');
-                            if (string.IsNullOrEmpty(MealConcatenation.TrimEnd(',')))
+                            if (string.IsNullOrEmpty(MealConcatenation.TrimEnd(',')) && htmealdata.Count > 0)
                             {
-                                string data=htmealdata[tb_Passengerobj.PassengerKey.ToString()+"_"+ JsonObjPNRBooking.data.journeys[0].segments[isegment].designator.origin+"_"+ JsonObjPNRBooking.data.journeys[0].segments[isegment].designator.destination].ToString();
+                                string data = htmealdata[tb_Passengerobj.PassengerKey.ToString() + "_" + JsonObjPNRBooking.data.journeys[0].segments[isegment].designator.origin + "_" + JsonObjPNRBooking.data.journeys[0].segments[isegment].designator.destination].ToString();
                                 var MealName = MealImageList.GetAllmeal()
                                                 .Where(x => ((string)data).Contains(x.MealCode))
                                                 .Select(x => x.MealImage)
