@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\JetwaysPortal\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|d:\\jetwaysportal\\onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{607614FA-A2E2-44DF-92AE-3D6C4087C0CF}|OnionArchitectureAPI\\OnionArchitectureAPI.csproj|solutionrelative:onionarchitectureapi\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|d:\\jetwaysportal\\coporatebooking\\controllers\\common\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{91DC60AD-7A85-4A09-8927-5174B42BBF8B}|CoporateBooking\\CoporateBooking.csproj|solutionrelative:coporatebooking\\controllers\\common\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +27,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "RelativeDocumentMoniker": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "RelativeToolTip": "OnionArchitectureAPI\\Controllers\\BookingController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAewCcAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T10:48:59.348Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\BookingController.cs",
+              "RelativeDocumentMoniker": "CoporateBooking\\Controllers\\common\\BookingController.cs",
+              "ToolTip": "D:\\JetwaysPortal\\CoporateBooking\\Controllers\\common\\BookingController.cs",
+              "RelativeToolTip": "CoporateBooking\\Controllers\\common\\BookingController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAewD8AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T10:48:59.367Z",
+              "EditorCaption": ""
             }
           ]
         }
