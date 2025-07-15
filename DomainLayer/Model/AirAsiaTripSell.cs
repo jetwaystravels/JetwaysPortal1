@@ -63,6 +63,8 @@ namespace DomainLayer.Model
         public string? Email { get; set; }
         public string? mobile { get; set; }
         public string? FrequentFlyer { get; set; }
+        public string? ReturnFrequentFlyer { get; set; }
+        public string? DepartFrequentFlyer { get; set; }
 
     }
 

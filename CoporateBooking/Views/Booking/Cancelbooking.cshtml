@@ -1,11 +1,14 @@
-﻿@using static CoporateBooking.Models.CancelBookingResponse
-@model List<BookingData>
+﻿@model List<FullBookingDetailsDto>
+
+@{
+    ViewBag.Title = "Air India Express Booking Summary";
+}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AirIndiaExpress Airline Booking Summary</title>
+    <title>@ViewBag.Title</title>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -18,7 +21,7 @@
             background: #fff;
             padding: 24px;
             max-width: 920px;
-            margin: auto;
+            margin: 30px auto;
             border-radius: 8px;
             box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
         }
@@ -86,8 +89,7 @@
             margin-bottom: 20px;
         }
 
-            .passenger-table th,
-            .passenger-table td {
+            .passenger-table th, .passenger-table td {
                 padding: 12px;
                 text-align: left;
                 border-bottom: 1px solid #ddd;
@@ -134,101 +136,111 @@
     </style>
 </head>
 <body>
+
     @foreach (var mdl in Model)
     {
-        
-    
-    <div class="booking-card">
-        @{
-                var journey = mdl.journeys.FirstOrDefault();
-            var duration = journey != null ? journey.designator.arrival - journey.designator.departure : TimeSpan.Zero;
-        }
+        var booking = mdl.Booking;
+        var segments = mdl.Segments;
+        var passengers = mdl.Passengers;
+        var duration = booking.ArrivalDate - booking.DepartureDate;
 
-        <div class="flight-header">
-            <h3>
-                Air India Express - @string.Join(", ", journey.segments.Select(s => s.identifier.carrierCode + " " + s.identifier.identifier))<br />
-                <small>Class: Economy (@journey.segments.FirstOrDefault()?.fares.FirstOrDefault()?.classOfService ?? "—") | Type: Corporate</small>
-            </h3>
-                <p><strong>Airline PNR :</strong> @mdl.recordLocator</p>
-        </div>
-
-        <div class="flight-info">
-            <div>
-                <div class="airport">@journey.designator.origin</div>
-                <div class="datetime">@journey.designator.departure.ToString("HH:mm ddd dd MMM, yyyy")</div>
-                <div>Terminal: —</div>
+        <div class="booking-card">
+            <div class="flight-header">
+                <h3>
+                    Air India Express - @string.Join(", ", segments.Select(s => s.CarrierCode + " " + s.Identifier))<br />
+                    <small>Class: Economy | Type: @booking.BookingType</small>
+                </h3>
+                <p><strong>Airline PNR :</strong> @booking.RecordLocator</p>
             </div>
-            <div>
-                <div>@($"{duration.Hours} h {duration.Minutes} m")</div>
-                <div>● ● ●</div>
-                <div>Non-Stop</div>
+
+            <div class="flight-info">
+                <div>
+                    <div class="airport">@booking.Origin</div>
+                    <div class="datetime">@booking.DepartureDate.ToString("HH:mm ddd dd MMM, yyyy")</div>
+                    <div>Terminal: @segments.FirstOrDefault()?.DepartureTerminal</div>
+                </div>
+                <div>
+                    <div>@($"{duration.Hours} h {duration.Minutes} m")</div>
+                    <div>● ● ●</div>
+                    <div>@(segments.Count > 1 ? "Multi-Leg" : "Non-Stop")</div>
+                </div>
+                <div>
+                    <div class="airport">@booking.Destination</div>
+                    <div class="datetime">@booking.ArrivalDate.ToString("HH:mm ddd dd MMM, yyyy")</div>
+                    <div>Terminal: @segments.LastOrDefault()?.ArrivalTerminal</div>
+                </div>
             </div>
-            <div>
-                <div class="airport">@journey.designator.destination</div>
-                <div class="datetime">@journey.designator.arrival.ToString("HH:mm ddd dd MMM, yyyy")</div>
-                <div>Terminal: —</div>
+
+            <div class="booking-meta">
+                <div class="meta-item">Trip Type<br><span>@booking.TripType</span></div>
+                <div class="meta-item">Booked Date<br><span>@booking.BookedDate.ToString("dd MMM yyyy")</span></div>
+                <div class="meta-item">Total Amount<br><span>INR @booking.TotalAmount.ToString("N0")</span></div>
+                <div class="meta-item">Booking Status<br><span>@booking.BookingStatus</span></div>
             </div>
-        </div>
 
-        <div class="booking-meta">
-            <div class="meta-item">Fare Basis<br><span>@(journey.segments.FirstOrDefault()?.fares.FirstOrDefault()?.fareBasisCode ?? "—")</span></div>
-                <div class="meta-item">GDS PNR<br><span>@mdl.recordLocator</span></div>
-            <div class="meta-item">Passive PNR<br><span>—</span></div>
-            <div class="meta-item">Deal Code<br><span>—</span></div>
-            <div class="meta-item">Tour Code<br><span>—</span></div>
-        </div>
+            <form asp-controller="CancelBooking" asp-action="CancelAction" asp-route-pnr="@booking.RecordLocator"
+                  asp-route-airline="@ViewBag.AirlineId" method="post" id="cancelForm">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="cancellationType" id="cancellationType" value="complete" />
 
-            <form asp-controller="CancelBooking" asp-action="CancelAction" asp-route-pnr="@mdl.recordLocator"
-              asp-route-airline="@ViewBag.AirlineId" method="post" id="cancelForm">
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="cancellationType" id="cancellationType" value="complete" />
-
-            <h4>Passenger Details</h4>
-            <table class="passenger-table">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" id="selectAll" /></th>
-                        <th>Name</th>
-                        <th>Ticket</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        @foreach (var pax in mdl.passengers.Values)
-                    {
+                <h4>Passenger Details</h4>
+                <table class="passenger-table">
+                    <thead>
                         <tr>
-                            <td>
-                                <input type="checkbox" class="passenger-checkbox" name="passengerKeys" value="@pax.passengerKey" />
-                            </td>
-                            <td>
-                                Mr/Ms @pax.name.first @pax.name.last<br />
-                                <small>Passenger Key: @pax.passengerKey</small><br />
-                                <small>—</small>
-                            </td>
-                                <td>@mdl.recordLocator</td>
-                                <td>INR @mdl.breakdown.totalAmount.ToString("N0")</td>
-                            <td><span class="status-cancelled">Confirm</span></td>
+                            <th><input type="checkbox" id="selectAll" /></th>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Seatnumber</th>
+                            <th>Status</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @{
+                            var groupedPassengers = passengers
+                            .GroupBy(p => $"{p.FirstName} {p.LastName}")
+                            .Select(g => new
+                            {
+                                Name = g.Key,
+                                Seat = g.FirstOrDefault()?.SeatNumber ?? "—",
+                                Total = g.Sum(p => p.TotalAmount + p.TotalAmount_Tax),
+                                IsCancelled = g.All(p => p.TotalAmount == 0)
+                            })
+                            .ToList();
+                        }
 
-            <div class="footer-btns">
-                <a href="#" class="btn btn-secondary">Back</a>
-                <button type="submit" class="btn" id="cancelBtn">Cancel Booking</button>
-            </div>
-        </form>
-    </div>
+                        @for (int i = 0; i < groupedPassengers.Count; i++)
+                        {
+                            var pax = groupedPassengers[i];
+                            <tr>
+                                <td><input type="checkbox" class="passenger-checkbox" name="passengerIndexes" value="@i" /></td>
+                                <td>@pax.Name</td>
+                                <td>INR @pax.Total.ToString("N0")</td>
+                                <td>@pax.Seat</td>
+                                <td>
+                                    <span class="status-cancelled">
+                                        @(pax.IsCancelled ? "Cancelled" : "Confirmed")
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+
+                <div class="footer-btns">
+                    <a href="#" class="btn btn-secondary">Back</a>
+                    <button type="submit" class="btn" id="cancelBtn">Cancel Booking</button>
+                </div>
+            </form>
+        </div>
     }
+
     <script>
-        // Select All checkbox handler
         document.getElementById("selectAll").addEventListener("change", function () {
             const checkboxes = document.querySelectorAll(".passenger-checkbox");
             checkboxes.forEach(cb => cb.checked = this.checked);
         });
 
-        // Confirm Cancel Booking and set cancellation type
         document.getElementById("cancelForm").addEventListener("submit", function (e) {
             const all = document.querySelectorAll(".passenger-checkbox");
             const selected = document.querySelectorAll(".passenger-checkbox:checked");

@@ -160,8 +160,24 @@
 
                                     var userName = claims.Where(c => c.Type == ClaimTypes.Name).ToList()[0].Value;
                                     var userEmail = claims.Where(c => c.Type == ClaimTypes.Email).ToList()[0].Value;
+                                    
+                                    var initials = "";
+                                    var parts = userName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                                    if (parts.Length >= 2)
+                                    {
+                                        initials = parts[0][0].ToString().ToUpper() + parts[1][0].ToString().ToUpper();
+                                    }
+                                    else if (parts.Length == 1)
+                                    {
+                                        initials = parts[0][0].ToString().ToUpper();
+                                    }
 
-                                    <div class="profile-initials">@(userName.Split(' ')[0][0].ToString().ToUpper() + userName.Split(' ')[1][0].ToString().ToUpper())</div>
+                                <div class="profile-initials">@initials</div>
+
+
+
+                                   @*  <div class="profile-initials">@(userName.Split(' ')[0][0].ToString().ToUpper() + userName.Split(' ')[1][0].ToString().ToUpper())</div> *@
+
 
                                     <div class="profile-popup" style="display:none;">
                                         <p class="greeting">Hi,@userName</p>

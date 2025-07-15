@@ -43,5 +43,7 @@ namespace DomainLayer.Model
         public string CarryBages { get; set; }
         public int TotalAmount { get; set; }
         public int TotalAmount_Tax { get; set; }
+
+        public string MobileNumber { get; set; }
     }
 }

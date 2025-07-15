@@ -62,7 +62,8 @@ namespace CoporateBooking.Controllers.common
 
         public async Task<IActionResult> CancelbookingAsync(int airline, string pnr, string brid)
         {
-            List<BookingData> bookingResponses = new List<BookingData>();
+            // List<BookingData> bookingResponses = new List<BookingData>();
+            List<FullBookingDetailsDto> bookingResponses = new List<FullBookingDetailsDto>();
             using (HttpClient client = new HttpClient())
             {
                 string result = "";
@@ -74,14 +75,7 @@ namespace CoporateBooking.Controllers.common
                 if (response1.IsSuccessStatusCode)
                 {
                     result = await response1.Content.ReadAsStringAsync();
-                    //bookingList = JsonConvert.DeserializeObject<List<Booking>>(result);
-
-                    //if (Mess != "")
-                    //{
-                    //    ViewBag.Message = Mess;
-                    //}
-
-                    //return View(bookingList); // Pass to Razor View
+                   
                 }
 
                 for (int i = 0; i < result.Split(',').Length; i++)
@@ -90,54 +84,15 @@ namespace CoporateBooking.Controllers.common
                     pnr = result.Split(',')[i].Split('-')[0];
                     airline = Convert.ToInt32(result.Split(',')[i].Split('-')[1]);
 
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-
-                    // Step 1: Fetch Airline Credentials
-                    HttpResponseMessage response = await client.GetAsync(AppUrlConstant.AirlineLogin);
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        ModelState.AddModelError(string.Empty, "Failed to retrieve airline credentials.");
-                        return View("Error");
-                    }
-
-                    var results = await response.Content.ReadAsStringAsync();
-                    var jsonObject = JsonConvert.DeserializeObject<List<_credentials>>(results);
+                   
 
                     switch (airline)
                     {
                         case 1: // AirAsia
-                            var _credentialsAirasia = jsonObject.FirstOrDefault(cred => cred?.FlightCode == 1);
-                            if (_credentialsAirasia == null)
-                            {
-                                ModelState.AddModelError("", "AirAsia credentials not found.");
-                                return View("Error");
-                            }
-
-                            var login = new airlineLogin { credentials = _credentialsAirasia };
-                            var airasiaToken = new AirasiaTokan();
-
-                            client.DefaultRequestHeaders.Accept.Clear();
-                            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                            HttpResponseMessage tokenResponse = await client.PostAsJsonAsync(AppUrlConstant.AirasiaTokan, login);
-                            if (!tokenResponse.IsSuccessStatusCode)
-                            {
-                                ModelState.AddModelError("", "AirAsia token request failed.");
-                                return View("Error");
-                            }
-
-                            var tokenResult = await tokenResponse.Content.ReadAsStringAsync();
-                            dynamic tokenJson = JsonConvert.DeserializeObject<dynamic>(tokenResult);
-                            airasiaToken.token = tokenJson.data.token;
-
-                            // Set Auth Header
-                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", airasiaToken.token);
-
+                          
                             // Step 3: GET /booking/retrieve/byRecordLocator/{pnr}
-                            string retrieveUrl = $"{AppUrlConstant.AirasiaPNRBooking}/{pnr}";
+                            //string retrieveUrl = $"{AppUrlConstant.AirasiaPNRBooking}/{pnr}";
+                            string retrieveUrl = $"{AppUrlConstant.GetflightPNRByRecordLocator}?recordLocator={Uri.EscapeDataString(pnr)}";
                             HttpResponseMessage retrieveResponse = await client.GetAsync(retrieveUrl);
                             if (!retrieveResponse.IsSuccessStatusCode)
                             {
@@ -147,11 +102,11 @@ namespace CoporateBooking.Controllers.common
                             }
 
                             string bookingResult = await retrieveResponse.Content.ReadAsStringAsync();
-                            var booking = JsonConvert.DeserializeObject<CancelBookingResponse>(bookingResult);
+                            var booking = JsonConvert.DeserializeObject<FullBookingDetailsDto>(bookingResult);
 
                             ViewBag.AirlineId = airline;
 
-                            bookingResponses.Add(booking.data);
+                            bookingResponses.Add(booking);
 
                             if(i == result.Split(',').Length - 1)
                             {

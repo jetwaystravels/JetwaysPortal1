@@ -142,6 +142,7 @@ namespace ServiceLayer.Service.Implementation
                     Title = reader["Title"].ToString(),
                     FirstName = reader["FirstName"].ToString(),
                     LastName = reader["LastName"].ToString(),
+                    MobileNumber = reader["contact_Mobileno"].ToString(),
                     SeatNumber = reader["Seatnumber"].ToString(),
                     CarryBages = reader["Carrybages"].ToString(),
                     TotalAmount = Convert.ToInt32(reader["TotalAmount"]),

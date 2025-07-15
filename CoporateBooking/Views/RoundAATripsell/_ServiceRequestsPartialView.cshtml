@@ -1188,9 +1188,21 @@
 														@if(AirLine.ToLower() == "airindia")
 														{
 														var sortedBaggageOptions = BaggageOptions
-														.OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
+														.OrderBy(o =>
+														{
+															var parts = o.Text.Split('_');
+															if (parts.Length > 2)
+															{
+																string pricePart = parts[2].Split('₹')[0].Trim();
+																if (int.TryParse(pricePart, out int price))
+																{
+																	return price;
+																}
+															}
+															return int.MaxValue; // fallback to push invalid entries to the end
+														})
 														.ToList();
-															foreach (var option in BaggageOptions)
+														foreach (var option in sortedBaggageOptions)
 															{
 																<option value="@option.Value" data-bagkey=@bagkey>
 																	@option.Text.Split('_')[0].ToString() ₹  @option.Text.Split('_')[2].ToString().Split('₹')[0]
@@ -2088,10 +2100,22 @@
 															<option selected="selected" value="">Please select baggage</option>
 															@if (AirLine.ToLower() == "airindia")
 															{
-														var sortedBaggageOptions = BaggageOptions
-														.OrderBy(o => int.Parse(new string(o.Text.Where(char.IsDigit).ToArray())))
-														.ToList();
-																@foreach (var option in BaggageOptions)
+															var sortedBaggageOptions = BaggageOptions
+															.OrderBy(o =>
+															{
+																var parts = o.Text.Split('_');
+																if (parts.Length > 2)
+																{
+																	string pricePart = parts[2].Split('₹')[0].Trim();
+																	if (int.TryParse(pricePart, out int price))
+																	{
+																		return price;
+																	}
+																}
+																return int.MaxValue; // fallback to push invalid entries to the end
+															})
+															.ToList();
+															@foreach (var option in sortedBaggageOptions)
 																{
 																	<option value="@option.Value" data-bagkey=@bagkeyAA>
 																		@*option.Text.Split('*')[0].ToString()*@

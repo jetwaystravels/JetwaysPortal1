@@ -3110,7 +3110,13 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                         tb_Booking.BookingType = "Corporate-" + _getBookingResponse.Booking.Journeys[0].Segments[0].Fares[0].ProductClass + " (" + fareName.Faredesc + ")";
                                         LegalEntity legal = new LegalEntity();
                                         legal = _mongoDBHelper.GetlegalEntityByGUID(Guid).Result;
-                                        tb_Booking.CompanyName = legal.BillingEntityFullName;
+                                        //tb_Booking.CompanyName = legal.BillingEntityFullName;
+                                        if (legal != null)
+                                        {
+                                            tb_Booking.CompanyName = legal.BillingEntityFullName;
+                                        }
+                                        else
+                                            tb_Booking.CompanyName = "";
                                         tb_Booking.BookingRelationId = Guid;
                                         if (k1 == 0)
                                         {
@@ -4633,7 +4639,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                                             }
                                             if (!string.IsNullOrEmpty(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal))
                                             {
-                                                segmentReturnobj.ArrivalTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal);
+                                                //segmentReturnobj.ArrivalTerminal = Convert.ToInt32(_getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal);
                                                 string terminalValue = _getBookingResponse.Booking.Journeys[0].Segments[j].Legs[0].LegInfo.ArrivalTerminal;
                                                 Match match = Regex.Match(terminalValue, @"\d+");
                                                 if (match.Success)

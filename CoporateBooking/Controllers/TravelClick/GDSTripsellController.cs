@@ -355,54 +355,15 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             string newGuid = tokenData.Token;
             //retrive PNR
 
-            //string res = _objAvail.CreatePNR(_testURL, createPNRReq, newGuid.ToString(), _targetBranch, _userName, _password, AdultTraveller, _data, _Total, "GDSOneWay", _unitkey, _SSRkey, _pricesolution);
             string segmentdata = string.Empty;
-            //foreach (Match item in Regex.Matches(res, "<air:AirSegment Key=\"[\\s\\S]*?</air:AirSegment><air:AirPricingInfo", RegexOptions.IgnoreCase|RegexOptions.Multiline))
-            //{
-            //    segmentdata += item.Value.Replace("<air:AirPricingInfo","");
-            //}
-
-            //if (segmentdata == "")
-            //{
             foreach (Match item in Regex.Matches(_pricesolution.Replace("\\", ""), "<air:AirSegment Key=\"[\\s\\S]*?</air:AirSegment><air:AirPricingInfo", RegexOptions.IgnoreCase | RegexOptions.Multiline))
             {
                 segmentdata += item.Value.Replace("<air:AirPricingInfo", "");
             }
-            //}
-
-
-
-            //getdetails
-            //string strResponse = _objAvail.RetrivePnr(RecordLocator, _UniversalRecordURL, newGuid.ToString(), _targetBranch, _userName, _password, "GDSOneWay");
-
-            // to do
-            //for (int i = 0; i < passengerdetails.Count; i++)
-            //{
-            //    foreach (Match mitem in Regex.Matches(strResponse, "common_v52_0:BookingTraveler Key=\"(?<Key>[\\s\\S]*?)\"[\\s\\S]*?TravelerType=\"(?<TravellerType>[\\s\\S]*?)\"[\\s\\S]*?First=\"(?<Fname>[\\s\\S]*?)\"[\\s\\S]*?Last=\"(?<Lname>[\\s\\S]*?)\"", RegexOptions.IgnoreCase | RegexOptions.Multiline))
-            //    {
-            //        if (passengerdetails[i].first.ToUpper() == mitem.Groups["Fname"].ToString().ToUpper() && passengerdetails[i].last.ToUpper() == mitem.Groups["Lname"].ToString().ToUpper())
-            //        {
-            //            passengerdetails[i].passengerkey = mitem.Groups["Key"].Value;
-            //        }
-            //        else
-            //        {
-            //            continue;
-            //        }
-            //    }
-
-            //}
-            //int a = passengerNamedetails.Length;
-            
-            //string ProvidelocatorCode = Regex.Match(strResponse, @"universal:ProviderReservationInfo[\s\S]*?LocatorCode=""(?<ProviderLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["ProviderLocatorCode"].Value.Trim();
-            //string supplierLocatorCode = Regex.Match(strResponse, @"SupplierLocatorCode=""(?<SupplierLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["SupplierLocatorCode"].Value.Trim();
-            //string UniversalLocatorCode = Regex.Match(strResponse, @"UniversalRecord\s*LocatorCode=""(?<UniversalLocatorCode>[\s\S]*?)""", RegexOptions.IgnoreCase | RegexOptions.Multiline).Groups["UniversalLocatorCode"].Value.Trim();
-            //HttpContext.Session.SetString("Segmentdetails", segmentdata+"@"+ ProvidelocatorCode+"@"+ supplierLocatorCode+"@"+ UniversalLocatorCode);
             HttpContext.Session.SetString("Segmentdetails", segmentdata);
 
 
             //Seat Map
-
-            //AirMerchandisngofferAvailability
             string stravailibitilityrequest = HttpContext.Session.GetString("GDSAvailibilityRequest");
             SimpleAvailabilityRequestModel availibiltyRQGDS = Newtonsoft.Json.JsonConvert.DeserializeObject<SimpleAvailabilityRequestModel>(stravailibitilityrequest);
             Hashtable _htpaxwiseBaggage = new Hashtable();
@@ -491,6 +452,7 @@ namespace OnionConsumeWebAPI.Controllers.TravelClick
             }
 
             SeatMapResponceModel Seatmaplist = new SeatMapResponceModel(); //(SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
+            //SeatMapResponceModel Seatmaplist = (SeatMapResponceModel)JsonConvert.DeserializeObject(Seatmap, typeof(SeatMapResponceModel));
             SSRAvailabiltyResponceModel Mealslist = (SSRAvailabiltyResponceModel)JsonConvert.DeserializeObject(Meals, typeof(SSRAvailabiltyResponceModel));
 
             Baggage = HttpContext.Session.GetString("Baggage");

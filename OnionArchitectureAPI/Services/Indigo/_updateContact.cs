@@ -10,7 +10,7 @@ using static DomainLayer.Model.ReturnTicketBooking;
 
 namespace OnionArchitectureAPI.Services.Indigo
 {
-    public class _updateContact:ControllerBase
+    public class _updateContact : ControllerBase
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -92,7 +92,8 @@ namespace OnionArchitectureAPI.Services.Indigo
                 _ContactModel6E.updateContactsRequestData.BookingContactList[0].EmailAddress = emailAddressgst;
             }
 
-            else {
+            else
+            {
                 _ContactModel6E.updateContactsRequestData.BookingContactList[0].TypeCode = "P";
                 _ContactModel6E.updateContactsRequestData.BookingContactList[0].EmailAddress = emailAddress;
             }
@@ -118,7 +119,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             return (UpdateContactsResponse)responseAddContact6E;
 
         }
-        public async Task<UpdatePassengersResponse> UpdatePassengers(string Signature, List<passkeytype> passengerdetails,string _Airlineway="")
+        public async Task<UpdatePassengersResponse> UpdatePassengersRT(string Signature, List<passkeytype> passengerdetails, int i1, string _Airlineway = "")
         {
             UpdatePassengersResponse updatePaxResp = null;
             UpdatePassengersRequest updatePaxReq = null;
@@ -129,7 +130,67 @@ namespace OnionArchitectureAPI.Services.Indigo
                 updatePaxReq.Signature = Signature;
                 updatePaxReq.ContractVersion = 452;
                 updatePaxReq.updatePassengersRequestData = new UpdatePassengersRequestData();
-                updatePaxReq.updatePassengersRequestData.Passengers = GetPassenger(passengerdetails);
+                updatePaxReq.updatePassengersRequestData.Passengers = GetPassenger(passengerdetails, i1);
+
+                try
+                {
+                    _getapiIndigo objIndigo = new _getapiIndigo();
+                    updatePaxResp = await objIndigo.UpdatePassengers(updatePaxReq);
+
+                    string Str2 = JsonConvert.SerializeObject(updatePaxResp);
+                    Logs logs = new Logs();
+                    //if (_Airlineway.ToLower() == "oneway")
+                    //{
+                    //    logs.WriteLogs("Request: " + JsonConvert.SerializeObject(updatePaxReq) + "\n\n Response: " + JsonConvert.SerializeObject(updatePaxResp), "UpdatePassenger", "IndigoOneWay", "oneway");
+                    //}
+                    //else
+                    //{
+                    //    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(updatePaxReq) + "\n\n Response: " + JsonConvert.SerializeObject(updatePaxResp), "UpdatePassenger", "IndigoRT");
+                    //}
+
+                    if (_Airlineway.ToLower() == "oneway")
+                    {
+                        //logs.WriteLogs("Request: " + JsonConvert.SerializeObject(_ContactModel6E) + "\n\n Response: " + JsonConvert.SerializeObject(responseAddContact6E), "UpdateContact", "IndigoOneWay", "oneway");
+                        logs.WriteLogs(JsonConvert.SerializeObject(updatePaxReq), "10-UpdatePassengerReq", "IndigoOneWay", "oneway");
+                        logs.WriteLogs(JsonConvert.SerializeObject(updatePaxResp), "10-UpdatePassengerRes", "IndigoOneWay", "oneway");
+                    }
+                    else
+                    {
+                        //logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(_ContactModel6E) + "\n\n Response: " + JsonConvert.SerializeObject(responseAddContact6E), "UpdateContact", "IndigoRT");
+                        //
+                        logs.WriteLogsR(JsonConvert.SerializeObject(updatePaxReq), "10-UpdatePassengerReq", "IndigoRT");
+                        logs.WriteLogsR(JsonConvert.SerializeObject(updatePaxResp), "10-UpdatePassengerRes", "IndigoRT");
+
+                    }
+                    //return (UpdatePassengersResponse)updatePaxResp;
+                }
+                catch (Exception ex)
+                {
+                    logs.WriteLogsR("Request: " + JsonConvert.SerializeObject(updatePaxReq) + "\n\n Response: " + JsonConvert.SerializeObject(ex.ToString()), "UpdatePassengerException", "IndigoRT");
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+            SetSessionValue("PassengerNameDetailsIndigo", JsonConvert.SerializeObject(passengerdetails));
+            return (UpdatePassengersResponse)updatePaxResp;
+        }
+
+        public async Task<UpdatePassengersResponse> UpdatePassengers(string Signature, List<passkeytype> passengerdetails, string _Airlineway = "")
+        {
+            UpdatePassengersResponse updatePaxResp = null;
+            UpdatePassengersRequest updatePaxReq = null;
+
+            try
+            {
+                updatePaxReq = new UpdatePassengersRequest(); //Assign Signature generated from Session
+                updatePaxReq.Signature = Signature;
+                updatePaxReq.ContractVersion = 452;
+                updatePaxReq.updatePassengersRequestData = new UpdatePassengersRequestData();
+                updatePaxReq.updatePassengersRequestData.Passengers = GetPassenger(passengerdetails,-1);
 
                 try
                 {
@@ -185,7 +246,7 @@ namespace OnionArchitectureAPI.Services.Indigo
             public List<passkeytype> Infant_ { get; set; }
         }
         Paxes _paxes = new Paxes();
-        public Passenger[] GetPassenger(List<passkeytype> travellers_)
+        public Passenger[] GetPassenger(List<passkeytype> travellers_, int i1)
         {
 
             _paxes.Adults_ = new List<passkeytype>();
@@ -252,11 +313,19 @@ namespace OnionArchitectureAPI.Services.Indigo
                         p1.PassengerInfo.Gender = Gender.Female;
                         p1.PassengerInfo.WeightCategory = WeightCategory.Female;
                     }
+                    p1.PassengerProgram = new PassengerProgram();
+                    p1.PassengerProgram.ProgramCode = "6E";
                     //FrequentFlyer Number
-                    if (!string.IsNullOrEmpty(_paxes.Adults_[cntAdt].FrequentFlyer))
+                    if (i1 == 0)
                     {
-                        p1.PassengerProgram = new PassengerProgram();
-                        p1.PassengerProgram.ProgramCode = "6E";
+                        p1.PassengerProgram.ProgramNumber = _paxes.Adults_[cntAdt].DepartFrequentFlyer;
+                    }
+                    else if (i1 == 1)
+                    {
+                        p1.PassengerProgram.ProgramNumber = _paxes.Adults_[cntAdt].ReturnFrequentFlyer;
+                    }
+                    else if (i1 == -1)
+                    {
                         p1.PassengerProgram.ProgramNumber = _paxes.Adults_[cntAdt].FrequentFlyer;
                     }
 
@@ -271,7 +340,7 @@ namespace OnionArchitectureAPI.Services.Indigo
                             p1.Infant = new PassengerInfant();
                             p1.Infant.DOBSpecified = true;
                             p1.Infant.DOB = Convert.ToDateTime(_paxes.Infant_[cntAdt].dateOfBirth);
-                                                                             //p1.Infant.Gender = Gender.Male;
+                            //p1.Infant.Gender = Gender.Male;
                             if (_paxes.Infant_[cntAdt].title.ToUpper().Replace(".", "") == "MSTR")
                             {
                                 p1.Infant.Gender = Gender.Male;
@@ -340,11 +409,19 @@ namespace OnionArchitectureAPI.Services.Indigo
                             p1.PassengerInfo.Gender = Gender.Female;
                             p1.PassengerInfo.WeightCategory = WeightCategory.Child;
                         }
+                        p1.PassengerProgram = new PassengerProgram();
+                        p1.PassengerProgram.ProgramCode = "6E";
                         //Frequent flyer Number
-                        if (!string.IsNullOrEmpty(_paxes.Childs_[cntChd].FrequentFlyer))
+                        if (i1 == 0)
                         {
-                            p1.PassengerProgram = new PassengerProgram();
-                            p1.PassengerProgram.ProgramCode = "6E";
+                            p1.PassengerProgram.ProgramNumber = _paxes.Childs_[cntChd].DepartFrequentFlyer;
+                        }
+                        else if (i1 == 1)
+                        {
+                            p1.PassengerProgram.ProgramNumber = _paxes.Childs_[cntChd].ReturnFrequentFlyer;
+                        }
+                        else if (i1 == -1)
+                        {
                             p1.PassengerProgram.ProgramNumber = _paxes.Childs_[cntChd].FrequentFlyer;
                         }
                         p1.PassengerTypeInfos = new PassengerTypeInfo[1];

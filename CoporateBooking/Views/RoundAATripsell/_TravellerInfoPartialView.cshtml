@@ -168,39 +168,53 @@
 											<img class="size-30" src="@departLogoPath" alt="Depart Logo" />
 										</div>
 										<input type="text"
-											   id="FFID_Dep_@i"
-											   maxlength="15"
-											   placeholder="Departure Frequent Flyer"
-											   name="passengerdetails[@i].FrequentFlyer"
-											   required />
+										id="FFID_Dep_@i"
+										maxlength="15"
+										placeholder="Departure Frequent Flyer"
+										name="passengerdetails[@i].DepartFrequentFlyer"
+										required />
 									</div>
 								</div>
 
-                                @* If return leg exists *@
-                                if (Model.passeengerlistRT.Count > 1 && Model.passeengerlistRT[1].passengers.Count > i)
-                                {
-                                    var returnPassenger = Model.passeengerlistRT[1].passengers[i];
-                                    var returnAirline = returnPassenger._Airlinename;
-                                    var returnLogoPath = GetAirlineLogoPath(returnAirline);
-                                    @if (departAirline != returnAirline)
-                                    {
-                                        <div class="col-md-3 mt-10 pl-2 frequent-bx">
-                                            <div class="form-input">
-                                                <div class="frequent-logo">
-                                                    <img class="size-30" src="@returnLogoPath" alt="Return Logo" />
-                                                </div>
+								@* If return leg exists *@
+								if (Model.passeengerlistRT.Count > 1 && Model.passeengerlistRT[1].passengers.Count > i)
+								{
+									var returnPassenger = Model.passeengerlistRT[1].passengers[i];
+									var returnAirline = returnPassenger._Airlinename;
+									var returnLogoPath = GetAirlineLogoPath(returnAirline);
+									@if (departAirline != returnAirline) // diferent airline
+									{
+										<div class="col-md-3 mt-10 pl-2 frequent-bx">
+											<div class="form-input">
+												<div class="frequent-logo">
+													<img class="size-30" src="@returnLogoPath" alt="Return Logo" />
+												</div>
 
-                                                <input type="text"
-                                                       id="FFID_Ret_@i"
-                                                       maxlength="15"
-                                                       placeholder="Return Frequent Flyer"
-                                                       name="passengerdetails[@i].FrequentFlyer"
-                                                       required />
+												<input type="text"
+												id="FFID_Ret_@i"
+												maxlength="15"
+												placeholder="Return Frequent Flyer"
+												name="passengerdetails[@i].ReturnFrequentFlyer"
+												required />
 
-                                            </div>
-                                        </div>
-                                    }
-                                }
+											</div>
+										</div>
+									}
+									else
+									{
+										<div class="col-md-3 mt-10 pl-2 frequent-bx">
+											<div class="form-input">
+												<input type="hidden"
+													   id="FFID_Ret_@i"
+													   maxlength="15"
+													   placeholder="Return Frequent Flyer"
+													   name="Model.passeengerlistRT[0].passengers[i].DepartFrequentFlyer"
+													   required />
+
+											</div>
+										</div>
+									}
+								}
                             }
                         </div>
                         // ✅ End frquent flyer section

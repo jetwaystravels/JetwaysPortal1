@@ -888,6 +888,17 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
                 string _data = JsonConvert.SerializeObject(passengerdetails);
                 List<passkeytype> _newPassengerdetailsSG = (List<passkeytype>)JsonConvert.DeserializeObject(_data, typeof(List<passkeytype>));
 
+                if (i1 == 1 && dataArray[i1].ToLower() == "indigo")
+                {
+                    foreach (var p in _newPassengerdetailsSG)
+                    {
+                        if (string.IsNullOrEmpty(p.ReturnFrequentFlyer))
+                        {
+                            p.ReturnFrequentFlyer = p.DepartFrequentFlyer;
+                        }
+                    }
+                }
+
                 if (dataArray[i1] == null)
                     continue;
                 using (HttpClient client = new HttpClient())
@@ -1299,7 +1310,7 @@ namespace OnionConsumeWebAPI.Controllers.RoundTrip
 
                         if (Signature == null) { Signature = ""; }
                         _updateContact obj = new _updateContact(httpContextAccessorInstance);
-                        IndigoBookingManager_.UpdatePassengersResponse updatePaxResp = await obj.UpdatePassengers(Signature, _newPassengerdetailsSG);
+                        IndigoBookingManager_.UpdatePassengersResponse updatePaxResp = await obj.UpdatePassengersRT(Signature, _newPassengerdetailsSG, i1,"");
                         string Str2 = JsonConvert.SerializeObject(updatePaxResp);
 
                         #region GetState
